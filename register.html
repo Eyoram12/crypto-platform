@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Create Account | CryptoVault</title>
+    <title>Create Demo Account | CryptoVault</title>
+
+    <meta name="description"
+        content="Create a demonstration account for the CryptoVault digital asset platform.">
 
     <style>
         * {
@@ -13,10 +16,16 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             min-height: 100vh;
-            background: #07111f;
+            background:
+                radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 35%),
+                #07111f;
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -26,26 +35,46 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
         }
 
         .logo {
             text-align: center;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 800;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .logo span {
             color: #3b82f6;
         }
 
+        .tagline {
+            text-align: center;
+            color: #91a5ba;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
         .card {
-            background: #0d1c2e;
+            background: rgba(13, 28, 46, 0.96);
             border: 1px solid #203952;
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .demo-badge {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         h1 {
@@ -57,6 +86,7 @@
             color: #91a5ba;
             margin-bottom: 28px;
             font-size: 14px;
+            line-height: 1.6;
         }
 
         .form-group {
@@ -72,17 +102,23 @@
 
         input {
             width: 100%;
-            padding: 13px;
+            padding: 13px 14px;
             border-radius: 9px;
             border: 1px solid #29445f;
             background: #081525;
             color: white;
             outline: none;
             font-size: 15px;
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #60758a;
         }
 
         input:focus {
             border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .password-box {
@@ -103,6 +139,11 @@
             color: #60a5fa;
             cursor: pointer;
             font-size: 13px;
+            font-weight: 700;
+        }
+
+        .show-btn:hover {
+            color: #93c5fd;
         }
 
         .strength {
@@ -117,6 +158,13 @@
             height: 100%;
             width: 0;
             transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .strength-text {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #91a5ba;
         }
 
         .terms {
@@ -126,15 +174,23 @@
             margin: 20px 0;
             color: #91a5ba;
             font-size: 13px;
+            line-height: 1.5;
+            font-weight: normal;
         }
 
         .terms input {
             width: auto;
             margin-top: 3px;
+            accent-color: #2563eb;
         }
 
         .terms a {
             color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
         }
 
         button.submit {
@@ -147,10 +203,29 @@
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         button.submit:hover {
             background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        button.submit:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 9px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.5;
         }
 
         .login {
@@ -163,15 +238,32 @@
         .login a {
             color: #60a5fa;
             font-weight: 700;
+            text-decoration: none;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
         }
 
         .demo {
             margin-top: 22px;
-            padding: 13px;
+            padding: 14px;
             border: 1px solid #5a4718;
             background: #211b0b;
             border-radius: 9px;
             color: #fbbf24;
+            font-size: 12px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .security {
+            margin-top: 14px;
+            padding: 12px;
+            border: 1px solid #203952;
+            background: #081525;
+            border-radius: 9px;
+            color: #91a5ba;
             font-size: 12px;
             line-height: 1.5;
             text-align: center;
@@ -183,6 +275,7 @@
             margin-top: 20px;
             color: #91a5ba;
             font-size: 13px;
+            text-decoration: none;
         }
 
         .home:hover {
@@ -201,6 +294,10 @@
             h1 {
                 font-size: 26px;
             }
+
+            .logo {
+                font-size: 27px;
+            }
         }
     </style>
 </head>
@@ -213,59 +310,79 @@
         Crypto<span>Vault</span>
     </div>
 
+    <div class="tagline">
+        Secure Digital Asset Platform Demonstration
+    </div>
+
     <div class="card">
+
+        <div class="demo-badge">
+            DEMO ACCOUNT
+        </div>
 
         <h1>Create your account</h1>
 
         <p class="subtitle">
-            Create a demo account to explore the CryptoVault platform.
+            Create a demonstration account and explore the CryptoVault
+            platform, portfolio dashboard, market data, and transaction
+            features.
         </p>
 
-        <form action="login.html" method="get" onsubmit="return validateForm()">
+        <form id="registerForm" onsubmit="return validateForm()">
 
             <div class="form-group">
                 <label for="fullname">Full Name</label>
+
                 <input
                     type="text"
                     id="fullname"
                     name="fullname"
                     placeholder="Enter your full name"
+                    autocomplete="name"
                     required
                 >
             </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
+
                 <input
                     type="email"
                     id="email"
                     name="email"
                     placeholder="Enter your email"
+                    autocomplete="email"
                     required
                 >
             </div>
 
             <div class="form-group">
                 <label for="username">Username</label>
+
                 <input
                     type="text"
                     id="username"
                     name="username"
                     placeholder="Choose a username"
+                    autocomplete="username"
                     required
                 >
             </div>
 
             <div class="form-group">
 
-                <label for="password">Password</label>
+                <label for="password">
+                    Password
+                </label>
 
                 <div class="password-box">
+
                     <input
                         type="password"
                         id="password"
                         name="password"
                         placeholder="Create a password"
+                        autocomplete="new-password"
                         required
                         oninput="checkPassword()"
                     >
@@ -277,10 +394,20 @@
                     >
                         Show
                     </button>
+
                 </div>
 
                 <div class="strength">
-                    <div class="strength-bar" id="strengthBar"></div>
+                    <div
+                        class="strength-bar"
+                        id="strengthBar">
+                    </div>
+                </div>
+
+                <div
+                    class="strength-text"
+                    id="strengthText">
+                    Password strength
                 </div>
 
             </div>
@@ -298,6 +425,7 @@
                         id="confirmPassword"
                         name="confirmPassword"
                         placeholder="Confirm your password"
+                        autocomplete="new-password"
                         required
                     >
 
@@ -314,20 +442,35 @@
             </div>
 
             <label class="terms">
-                <input type="checkbox" id="terms" required>
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
 
                 <span>
-                    I understand that this is a demonstration website and
-                    does not process real cryptocurrency or financial
-                    transactions.
+                    I understand that this is a demonstration website
+                    and does not process real cryptocurrency, financial
+                    transactions, payments, deposits, or withdrawals.
                 </span>
+
             </label>
 
-            <button type="submit" class="submit">
+            <button
+                type="submit"
+                class="submit">
                 Create Demo Account
             </button>
 
         </form>
+
+        <div
+            class="success-message"
+            id="successMessage">
+            Demo account created successfully.
+            Redirecting to the login page...
+        </div>
 
         <div class="login">
             Already have an account?
@@ -335,11 +478,19 @@
         </div>
 
         <div class="demo">
-            DEMO ONLY: No real account, cryptocurrency, payment,
+            <strong>DEMO ONLY:</strong>
+            No real account, cryptocurrency, wallet, payment,
             investment, or withdrawal is created or processed.
         </div>
 
-        <a href="index.html" class="home">
+        <div class="security">
+            🔒 Your information is used only for this website demonstration.
+            This page does not connect to a real authentication system.
+        </div>
+
+        <a
+            href="index.html"
+            class="home">
             ← Back to Home
         </a>
 
@@ -354,9 +505,12 @@
         const input = document.getElementById(id);
 
         if (input.type === "password") {
+
             input.type = "text";
             button.textContent = "Hide";
+
         } else {
+
             input.type = "password";
             button.textContent = "Show";
         }
@@ -370,6 +524,9 @@
 
         const bar =
             document.getElementById("strengthBar");
+
+        const text =
+            document.getElementById("strengthText");
 
         let strength = 0;
 
@@ -390,26 +547,68 @@
         }
 
         if (strength === 0) {
+
             bar.style.width = "0%";
+            text.textContent = "Password strength";
+
         } else if (strength === 1) {
+
             bar.style.width = "25%";
+            text.textContent = "Weak password";
+
         } else if (strength === 2) {
+
             bar.style.width = "50%";
+            text.textContent = "Fair password";
+
         } else if (strength === 3) {
+
             bar.style.width = "75%";
+            text.textContent = "Good password";
+
         } else {
+
             bar.style.width = "100%";
+            text.textContent = "Strong password";
         }
     }
 
 
     function validateForm() {
 
+        const fullname =
+            document.getElementById("fullname").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const username =
+            document.getElementById("username").value.trim();
+
         const password =
             document.getElementById("password").value;
 
         const confirmPassword =
             document.getElementById("confirmPassword").value;
+
+        const terms =
+            document.getElementById("terms").checked;
+
+        if (fullname === "" ||
+            email === "" ||
+            username === "") {
+
+            alert("Please complete all required fields.");
+
+            return false;
+        }
+
+        if (password.length < 6) {
+
+            alert("Password must contain at least 6 characters.");
+
+            return false;
+        }
 
         if (password !== confirmPassword) {
 
@@ -418,7 +617,25 @@
             return false;
         }
 
-        return true;
+        if (!terms) {
+
+            alert("Please confirm that you understand this is a demonstration website.");
+
+            return false;
+        }
+
+        const success =
+            document.getElementById("successMessage");
+
+        success.style.display = "block";
+
+        setTimeout(function () {
+
+            window.location.href = "login.html";
+
+        }, 1200);
+
+        return false;
     }
 
 </script>
