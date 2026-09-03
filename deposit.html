@@ -106,13 +106,13 @@
 
         .hero p {
             color: #64748b;
-            max-width: 700px;
             line-height: 1.7;
+            max-width: 700px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
+            grid-template-columns: 1fr 1fr;
             gap: 22px;
             margin-bottom: 30px;
         }
@@ -121,24 +121,23 @@
             background: white;
             border: 1px solid #e5eaf2;
             border-radius: 16px;
-            padding: 26px;
+            padding: 25px;
             box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
         }
 
         .card h2 {
-            font-size: 21px;
-            margin-bottom: 7px;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
 
-        .description {
+        .card p {
             color: #64748b;
             font-size: 13px;
             line-height: 1.6;
-            margin-bottom: 24px;
         }
 
         .form-group {
-            margin-bottom: 19px;
+            margin-top: 20px;
         }
 
         label {
@@ -152,7 +151,7 @@
         select,
         input {
             width: 100%;
-            padding: 14px;
+            padding: 13px 14px;
             border: 1px solid #d7dee9;
             border-radius: 10px;
             font-size: 14px;
@@ -166,156 +165,88 @@
         }
 
         .address-box {
-            display: flex;
-            gap: 8px;
+            margin-top: 20px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 12px;
         }
 
-        .address-box input {
-            background: #f8fafc;
+        .address-title {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .address {
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 13px;
+            color: #172033;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
         .copy-btn {
-            flex-shrink: 0;
-            background: #e8f0ff;
-            color: #2563eb;
+            background: #e2e8f0;
+            color: #334155;
             border: none;
-            padding: 0 16px;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-size: 12px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .copy-btn:hover {
-            background: #dbeafe;
+            background: #cbd5e1;
         }
 
-        .amount-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .amount-row input {
-            flex: 1;
-        }
-
-        .asset-label {
-            display: inline-block;
-            margin-top: 7px;
-            color: #64748b;
-            font-size: 12px;
-        }
-
-        .primary-btn {
+        .deposit-btn {
             width: 100%;
+            margin-top: 22px;
             background: #2563eb;
             color: white;
-            padding: 14px;
             border: none;
             border-radius: 10px;
+            padding: 14px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
         }
 
-        .primary-btn:hover {
+        .deposit-btn:hover {
             background: #1d4ed8;
-        }
-
-        .security-card {
-            background: #0b1324;
-            color: white;
-        }
-
-        .security-card h2 {
-            margin-bottom: 20px;
-        }
-
-        .security-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-        }
-
-        .security-item:last-child {
-            border-bottom: none;
-        }
-
-        .security-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: #1e3a8a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .security-item strong {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-
-        .security-item span {
-            color: #94a3b8;
-            font-size: 11px;
-            line-height: 1.5;
-        }
-
-        .notice {
-            background: #eff6ff;
-            color: #1e40af;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 12px;
-            line-height: 1.6;
-            margin-bottom: 20px;
         }
 
         .success {
             display: none;
+            margin-top: 20px;
             background: #dcfce7;
             color: #166534;
-            padding: 17px;
+            padding: 16px;
             border-radius: 10px;
-            margin-top: 18px;
-            line-height: 1.6;
             font-size: 13px;
-        }
-
-        .success strong {
-            display: block;
-            margin-bottom: 5px;
+            line-height: 1.7;
         }
 
         .steps {
-            margin-bottom: 50px;
-        }
-
-        .steps h2 {
-            margin-bottom: 18px;
-        }
-
-        .step-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 18px;
+            margin-bottom: 50px;
         }
 
         .step {
             background: white;
             border: 1px solid #e5eaf2;
             border-radius: 14px;
-            padding: 22px;
+            padding: 20px;
         }
 
         .step-number {
-            width: 35px;
-            height: 35px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: #e8f0ff;
             color: #2563eb;
@@ -323,7 +254,7 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            margin-bottom: 13px;
+            margin-bottom: 12px;
         }
 
         .step h3 {
@@ -335,6 +266,16 @@
             color: #64748b;
             font-size: 12px;
             line-height: 1.6;
+        }
+
+        .demo-note {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
         footer {
@@ -354,7 +295,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .step-grid {
+            .steps {
                 grid-template-columns: 1fr;
             }
         }
@@ -368,12 +309,12 @@
                 font-size: 30px;
             }
 
-            .address-box {
-                flex-direction: column;
+            .card {
+                padding: 20px;
             }
 
-            .copy-btn {
-                padding: 12px;
+            header {
+                padding: 14px 4%;
             }
         }
     </style>
@@ -415,36 +356,35 @@
         <h1>Deposit Assets</h1>
 
         <p>
-            Add assets to your CryptoVault demo account using
-            the simulated deposit interface below.
+            Select a digital asset and network to view the
+            simulated deposit address.
         </p>
 
     </section>
 
 
-    <section class="grid">
+    <div class="demo-note">
+        This CryptoVault website is a simulated interface for
+        educational and presentation purposes. No real cryptocurrency,
+        ETB, bank transfers, wallets, or financial transactions are processed.
+    </div>
 
+
+    <section class="grid">
 
         <div class="card">
 
-            <h2>Create a Deposit</h2>
+            <h2>Deposit Asset</h2>
 
-            <p class="description">
-                Select an asset and network, then enter the amount
-                you want to simulate depositing.
+            <p>
+                Choose the asset and network you want to use
+                for this simulated deposit.
             </p>
-
-
-            <div class="notice">
-                <strong>Demo Notice:</strong>
-                This deposit page does not connect to a real
-                blockchain, wallet, bank account, or payment processor.
-            </div>
 
 
             <div class="form-group">
 
-                <label for="asset">Select Asset</label>
+                <label for="asset">Asset</label>
 
                 <select id="asset" onchange="updateDepositAddress()">
 
@@ -461,42 +401,34 @@
 
                 <label for="network">Network</label>
 
-                <select id="network">
+                <select id="network" onchange="updateDepositAddress()">
 
-                    <option value="Ethereum">Ethereum</option>
-                    <option value="Bitcoin">Bitcoin</option>
-                    <option value="BSC">BNB Smart Chain</option>
+                    <option value="TRC20">TRON (TRC20)</option>
+                    <option value="ERC20">Ethereum (ERC20)</option>
+                    <option value="BEP20">BNB Smart Chain (BEP20)</option>
 
                 </select>
 
             </div>
 
 
-            <div class="form-group">
+            <div class="address-box">
 
-                <label>Demo Deposit Address</label>
-
-                <div class="address-box">
-
-                    <input
-                        type="text"
-                        id="depositAddress"
-                        value="CV-DEMO-USDT-ETH-2026"
-                        readonly
-                    >
-
-                    <button
-                        class="copy-btn"
-                        onclick="copyAddress()"
-                    >
-                        Copy
-                    </button>
-
+                <div class="address-title">
+                    Simulated Deposit Address
                 </div>
 
-                <span class="asset-label">
-                    Sample address for demonstration only
-                </span>
+                <div class="address" id="depositAddress">
+                    TVDemoCryptoVault123456789
+                </div>
+
+                <button
+                    type="button"
+                    class="copy-btn"
+                    onclick="copyAddress()"
+                >
+                    Copy Address
+                </button>
 
             </div>
 
@@ -505,156 +437,81 @@
 
                 <label for="amount">Amount</label>
 
-                <div class="amount-row">
-
-                    <input
-                        type="number"
-                        id="amount"
-                        placeholder="Enter amount"
-                        min="0"
-                        step="any"
-                    >
-
-                </div>
+                <input
+                    type="number"
+                    id="amount"
+                    min="0"
+                    step="0.01"
+                    placeholder="Enter amount"
+                >
 
             </div>
 
 
             <button
-                class="primary-btn"
+                type="button"
+                class="deposit-btn"
                 onclick="createDeposit()"
             >
-                Create Demo Deposit
+                Confirm Demo Deposit
             </button>
 
 
-            <div id="successMessage" class="success">
-
-                <strong>Deposit Created Successfully</strong>
-
-                <span id="successText"></span>
-
-            </div>
+            <div id="success" class="success"></div>
 
         </div>
 
 
-        <div class="card security-card">
+        <div class="card">
 
-            <h2>Security First</h2>
+            <h2>Deposit Information</h2>
+
+            <p>
+                Follow the steps below when using this simulated
+                CryptoVault interface.
+            </p>
 
 
-            <div class="security-item">
+            <div class="steps">
 
-                <div class="security-icon">✓</div>
+                <div class="step">
 
-                <div>
-                    <strong>Protected Interface</strong>
+                    <div class="step-number">1</div>
 
-                    <span>
-                        Designed with account protection
-                        and secure UI principles.
-                    </span>
+                    <h3>Select Asset</h3>
+
+                    <p>
+                        Choose the digital asset you want to deposit.
+                    </p>
+
                 </div>
 
-            </div>
 
+                <div class="step">
 
-            <div class="security-item">
+                    <div class="step-number">2</div>
 
-                <div class="security-icon">✓</div>
+                    <h3>Select Network</h3>
 
-                <div>
-                    <strong>Demo Environment</strong>
+                    <p>
+                        Choose the network associated with the asset.
+                    </p>
 
-                    <span>
-                        No real funds are received or transferred.
-                    </span>
                 </div>
 
-            </div>
 
+                <div class="step">
 
-            <div class="security-item">
+                    <div class="step-number">3</div>
 
-                <div class="security-icon">✓</div>
+                    <h3>Confirm Demo Deposit</h3>
 
-                <div>
-                    <strong>Transaction Review</strong>
+                    <p>
+                        Enter an amount and create a simulated
+                        deposit record.
+                    </p>
 
-                    <span>
-                        Simulated activity can be reviewed
-                        from the Transactions page.
-                    </span>
                 </div>
-
-            </div>
-
-
-            <div class="security-item">
-
-                <div class="security-icon">✓</div>
-
-                <div>
-                    <strong>Account Status</strong>
-
-                    <span>
-                        Demo account status: Active.
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="steps">
-
-        <h2>How Deposit Works</h2>
-
-
-        <div class="step-grid">
-
-            <div class="step">
-
-                <div class="step-number">1</div>
-
-                <h3>Select Asset</h3>
-
-                <p>
-                    Choose USDT, BTC, or ETH from the
-                    asset selection menu.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">2</div>
-
-                <h3>Enter Amount</h3>
-
-                <p>
-                    Enter the amount you want to use
-                    for the simulated deposit.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">3</div>
-
-                <h3>Confirm</h3>
-
-                <p>
-                    Create the demo deposit and receive
-                    a simulated confirmation message.
-                </p>
 
             </div>
 
@@ -682,6 +539,29 @@
 
 <script>
 
+const depositAddresses = {
+
+    USDT: {
+        TRC20: "TVDemoCryptoVault123456789",
+        ERC20: "0xDemoCryptoVaultUSDT123456",
+        BEP20: "0xDemoCryptoVaultBEP20123456"
+    },
+
+    BTC: {
+        TRC20: "BTC-Demo-Network-Address",
+        ERC20: "BTC-Demo-Ethereum-Address",
+        BEP20: "BTC-Demo-BNB-Address"
+    },
+
+    ETH: {
+        TRC20: "ETH-Demo-TRON-Address",
+        ERC20: "0xDemoCryptoVaultETH123456",
+        BEP20: "0xDemoCryptoVaultETHBEP20123"
+    }
+
+};
+
+
 function updateDepositAddress() {
 
     const asset =
@@ -691,31 +571,30 @@ function updateDepositAddress() {
         document.getElementById("network").value;
 
     const address =
-        document.getElementById("depositAddress");
+        depositAddresses[asset][network];
 
-    if (asset === "USDT") {
-        address.value = "CV-DEMO-USDT-" + network.toUpperCase() + "-2026";
-    }
-
-    else if (asset === "BTC") {
-        address.value = "CV-DEMO-BTC-" + network.toUpperCase() + "-2026";
-    }
-
-    else {
-        address.value = "CV-DEMO-ETH-" + network.toUpperCase() + "-2026";
-    }
+    document.getElementById("depositAddress").textContent =
+        address;
 
 }
 
 
-function copyAddress() {
+async function copyAddress() {
 
     const address =
-        document.getElementById("depositAddress");
+        document.getElementById("depositAddress").textContent;
 
-    navigator.clipboard.writeText(address.value);
+    try {
 
-    alert("Demo address copied.");
+        await navigator.clipboard.writeText(address);
+
+        alert("Demo deposit address copied.");
+
+    } catch (error) {
+
+        alert("Copy was not available. Please copy the address manually.");
+
+    }
 
 }
 
@@ -725,17 +604,14 @@ function createDeposit() {
     const asset =
         document.getElementById("asset").value;
 
-    const amount =
-        document.getElementById("amount").value;
-
     const network =
         document.getElementById("network").value;
 
-    const success =
-        document.getElementById("successMessage");
+    const amount =
+        document.getElementById("amount").value;
 
-    const successText =
-        document.getElementById("successText");
+    const success =
+        document.getElementById("success");
 
 
     if (!amount || Number(amount) <= 0) {
@@ -748,15 +624,17 @@ function createDeposit() {
 
 
     const transactionId =
-        "CV-DP-" + Math.floor(10000 + Math.random() * 90000);
+        "CV-DP-" +
+        Math.floor(10000 + Math.random() * 90000);
 
 
-    successText.textContent =
-        amount + " " + asset +
-        " deposit created on " +
-        network +
-        ". Demo Transaction ID: " +
-        transactionId;
+    success.innerHTML =
+        "<strong>Demo Deposit Created</strong><br>" +
+        "Asset: " + asset + "<br>" +
+        "Network: " + network + "<br>" +
+        "Amount: " + amount + "<br>" +
+        "Transaction ID: " + transactionId + "<br>" +
+        "Status: Demo Pending";
 
 
     success.style.display = "block";
@@ -771,6 +649,9 @@ function createDeposit() {
     });
 
 }
+
+
+updateDepositAddress();
 
 </script>
 
