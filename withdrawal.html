@@ -322,6 +322,10 @@ select:focus {
     margin-top: 20px;
 }
 
+.success p {
+    color: #166534;
+}
+
 .demo {
     text-align: center;
     background: #eef2ff;
@@ -339,7 +343,25 @@ footer {
     line-height: 1.6;
 }
 
-@media (max-width: 800px) {
+.mobile-menu {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
     .grid {
         grid-template-columns: 1fr;
     }
@@ -348,12 +370,41 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    nav {
-        display: none;
-    }
-
     h1 {
         font-size: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 35px 15px;
+    }
+
+    .navbar {
+        padding: 14px 15px;
+    }
+
+    nav {
+        gap: 4px;
+    }
+
+    nav a {
+        font-size: 12px;
+        padding: 8px 9px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .balance-value {
+        font-size: 29px;
+    }
+
+    .quick-buttons button {
+        flex: 1;
+        min-width: 70px;
     }
 }
 </style>
@@ -362,15 +413,21 @@ footer {
 <body>
 
 <header>
+
     <div class="navbar">
 
-        <div class="brand">
+        <a href="index.html"
+           class="brand"
+           style="text-decoration:none;color:white;">
+
             <div class="logo">CV</div>
+
             <div class="brand-text">
                 <strong>CryptoVault</strong>
                 <span>DIGITAL ASSET PLATFORM</span>
             </div>
-        </div>
+
+        </a>
 
         <nav>
             <a href="index.html">Home</a>
@@ -382,11 +439,14 @@ footer {
         </nav>
 
     </div>
+
 </header>
+
 
 <main class="container">
 
     <section class="hero">
+
         <span class="badge">WITHDRAWAL</span>
 
         <h1>Withdraw Assets</h1>
@@ -395,13 +455,16 @@ footer {
             Create a simulated withdrawal request and review the transaction
             details before confirmation.
         </p>
+
     </section>
+
 
     <div class="grid">
 
         <div>
 
             <div class="card balance">
+
                 <small>Available Portfolio Balance</small>
 
                 <div class="balance-value" id="balance">
@@ -411,7 +474,9 @@ footer {
                 <span class="status">
                     ● Account Active
                 </span>
+
             </div>
+
 
             <div class="card">
 
@@ -422,23 +487,49 @@ footer {
                     demonstration.
                 </p>
 
-                <label for="asset">Asset</label>
 
-                <select id="asset">
+                <label for="asset">
+                    Asset
+                </label>
+
+                <select
+                    id="asset"
+                    onchange="updateWithdrawalNetwork()"
+                >
                     <option value="USDT">USDT</option>
                     <option value="BTC">BTC</option>
                     <option value="ETH">ETH</option>
                 </select>
 
-                <label for="network">Network</label>
+
+                <label for="network">
+                    Network
+                </label>
 
                 <select id="network">
-                    <option>Ethereum</option>
-                    <option>Bitcoin</option>
-                    <option>BNB Smart Chain</option>
+
+                    <option value="TRC20">
+                        TRON (TRC20)
+                    </option>
+
+                    <option value="ERC20">
+                        Ethereum (ERC20)
+                    </option>
+
+                    <option value="BEP20">
+                        BNB Smart Chain (BEP20)
+                    </option>
+
+                    <option value="BTC">
+                        Bitcoin
+                    </option>
+
                 </select>
 
-                <label for="destination">Destination Address</label>
+
+                <label for="destination">
+                    Destination Address
+                </label>
 
                 <input
                     type="text"
@@ -446,7 +537,10 @@ footer {
                     placeholder="Enter demo destination address"
                 >
 
-                <label for="amount">Withdrawal Amount</label>
+
+                <label for="amount">
+                    Withdrawal Amount
+                </label>
 
                 <input
                     type="number"
@@ -456,27 +550,56 @@ footer {
                     step="0.01"
                 >
 
+
                 <div class="quick-buttons">
-                    <button type="button" onclick="setAmount(50)">50</button>
-                    <button type="button" onclick="setAmount(100)">100</button>
-                    <button type="button" onclick="setAmount(250)">250</button>
-                    <button type="button" onclick="setAmount(500)">500</button>
-                    <button type="button" onclick="setAmount(1000)">1000</button>
+
+                    <button type="button" onclick="setAmount(50)">
+                        50
+                    </button>
+
+                    <button type="button" onclick="setAmount(100)">
+                        100
+                    </button>
+
+                    <button type="button" onclick="setAmount(250)">
+                        250
+                    </button>
+
+                    <button type="button" onclick="setAmount(500)">
+                        500
+                    </button>
+
+                    <button type="button" onclick="setAmount(1000)">
+                        1000
+                    </button>
+
                 </div>
 
-                <button class="primary-btn" onclick="createWithdrawal()">
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="createWithdrawal()"
+                >
                     Create Demo Withdrawal
                 </button>
 
-                <div class="success" id="successBox">
 
-                    <strong>Withdrawal Request Created</strong>
+                <div
+                    class="success"
+                    id="successBox"
+                >
+
+                    <strong>
+                        Withdrawal Request Created
+                    </strong>
 
                     <p id="successText"></p>
 
                     <button
+                        type="button"
                         class="secondary-btn"
-                        onclick="location.reload()"
+                        onclick="resetWithdrawalForm()"
                     >
                         Create Another Request
                     </button>
@@ -486,6 +609,7 @@ footer {
             </div>
 
         </div>
+
 
         <div>
 
@@ -519,6 +643,7 @@ footer {
 
             </div>
 
+
             <div class="card warning">
 
                 <h2>Important</h2>
@@ -534,6 +659,7 @@ footer {
 
     </div>
 
+
     <div class="card">
 
         <h2>How Withdrawal Works</h2>
@@ -542,7 +668,9 @@ footer {
 
             <div class="step">
 
-                <div class="step-number">1</div>
+                <div class="step-number">
+                    1
+                </div>
 
                 <h3>Select Asset</h3>
 
@@ -552,9 +680,12 @@ footer {
 
             </div>
 
+
             <div class="step">
 
-                <div class="step-number">2</div>
+                <div class="step-number">
+                    2
+                </div>
 
                 <h3>Enter Details</h3>
 
@@ -564,9 +695,12 @@ footer {
 
             </div>
 
+
             <div class="step">
 
-                <div class="step-number">3</div>
+                <div class="step-number">
+                    3
+                </div>
 
                 <h3>Review Request</h3>
 
@@ -580,9 +714,12 @@ footer {
 
     </div>
 
+
     <div class="card demo">
 
-        <strong>Demo Environment</strong>
+        <strong>
+            Demo Environment
+        </strong>
 
         <p>
             This website is a demonstration interface for educational and
@@ -595,53 +732,134 @@ footer {
 
 </main>
 
+
 <footer>
+
     © 2026 CryptoVault. Demo interface for educational and presentation purposes.
     No real cryptocurrency or financial transactions are processed.
+
 </footer>
+
 
 <script>
 
 function setAmount(value) {
+
     document.getElementById("amount").value = value;
+
 }
+
+
+function updateWithdrawalNetwork() {
+
+    const asset =
+        document.getElementById("asset").value;
+
+    const network =
+        document.getElementById("network");
+
+
+    if (asset === "BTC") {
+
+        network.value = "BTC";
+
+    } else if (asset === "ETH") {
+
+        network.value = "ERC20";
+
+    } else if (asset === "USDT") {
+
+        network.value = "TRC20";
+
+    }
+
+}
+
 
 function createWithdrawal() {
 
-    const asset = document.getElementById("asset").value;
-    const network = document.getElementById("network").value;
-    const destination = document.getElementById("destination").value.trim();
-    const amount = document.getElementById("amount").value;
+    const asset =
+        document.getElementById("asset").value;
+
+    const network =
+        document.getElementById("network").value;
+
+    const destination =
+        document.getElementById("destination").value.trim();
+
+    const amount =
+        document.getElementById("amount").value;
+
 
     if (!destination) {
+
         alert("Please enter a demo destination address.");
+
         return;
+
     }
 
+
     if (!amount || Number(amount) <= 0) {
+
         alert("Please enter a valid withdrawal amount.");
+
         return;
+
     }
+
 
     const transactionId =
         "CV-WD-" +
-        Math.random().toString(36).substring(2, 8).toUpperCase();
+        Math.random()
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
 
-    document.getElementById("successText").innerHTML =
-        "Demo withdrawal created successfully.<br><br>" +
-        "<strong>Asset:</strong> " + asset + "<br>" +
-        "<strong>Network:</strong> " + network + "<br>" +
-        "<strong>Amount:</strong> " + amount + " " + asset + "<br>" +
-        "<strong>Transaction ID:</strong> " + transactionId + "<br>" +
-        "<strong>Status:</strong> Demo Pending";
 
-    document.getElementById("successBox").style.display = "block";
+    const successText =
+        document.getElementById("successText");
 
-    window.scrollTo({
-        top: document.getElementById("successBox").offsetTop - 100,
-        behavior: "smooth"
+
+    successText.textContent =
+        "Demo withdrawal created successfully. " +
+        "Asset: " + asset +
+        ". Network: " + network +
+        ". Amount: " + amount + " " + asset +
+        ". Transaction ID: " + transactionId +
+        ". Status: Demo Pending.";
+
+
+    document.getElementById("successBox").style.display =
+        "block";
+
+
+    document.getElementById("successBox").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
     });
+
 }
+
+
+function resetWithdrawalForm() {
+
+    document.getElementById("destination").value = "";
+
+    document.getElementById("amount").value = "";
+
+    document.getElementById("successBox").style.display =
+        "none";
+
+    document.getElementById("asset").value =
+        "USDT";
+
+    updateWithdrawalNetwork();
+
+}
+
+
+updateWithdrawalNetwork();
 
 </script>
 
