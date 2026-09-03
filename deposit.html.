@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,138 +14,257 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #080d1c;
-            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07111f;
+            color: #f8fafc;
             line-height: 1.6;
         }
 
-        header {
-            background: #11182c;
-            border-bottom: 1px solid #273252;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
-        .nav {
-            max-width: 1100px;
+        .container {
+            width: 92%;
+            max-width: 1050px;
             margin: auto;
-            padding: 18px 25px;
+        }
+
+        header {
+            background: #0a1626;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .header-inner {
+            min-height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            color: #6ea0ff;
             font-size: 25px;
-            font-weight: bold;
+            font-weight: 800;
         }
 
-        .nav a {
-            color: white;
-            text-decoration: none;
+        .logo span {
+            color: #38bdf8;
         }
 
-        .container {
-            max-width: 650px;
-            margin: 50px auto;
-            padding: 0 25px;
+        .dashboard-link {
+            color: #94a3b8;
+            font-size: 14px;
         }
 
-        .box {
-            background: #11182c;
-            border: 1px solid #273252;
-            border-radius: 15px;
-            padding: 35px;
+        .dashboard-link:hover {
+            color: #38bdf8;
         }
 
-        h1 {
+        main {
+            padding: 55px 0 80px;
+        }
+
+        .page-title {
             text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 36px;
             margin-bottom: 8px;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #9da8bb;
-            margin-bottom: 30px;
+        .page-title p {
+            color: #94a3b8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: #0d1b2d;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         select,
         input {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 22px;
-            border: 1px solid #344263;
-            border-radius: 8px;
-            background: #0b1020;
+            padding: 13px 14px;
+            background: #081525;
+            border: 1px solid #334155;
+            border-radius: 9px;
             color: white;
             font-size: 15px;
+            outline: none;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #38bdf8;
         }
 
         .address-box {
-            background: #0b1020;
-            border: 1px solid #344263;
-            border-radius: 8px;
+            background: #081525;
+            border: 1px solid #334155;
+            border-radius: 9px;
             padding: 15px;
-            margin-bottom: 22px;
             word-break: break-all;
-            color: #8fb2ff;
+            color: #7dd3fc;
+            font-family: monospace;
+            font-size: 13px;
+            margin-top: 8px;
         }
 
-        .warning {
-            background: #2b2412;
-            border: 1px solid #66531e;
-            color: #e8c86a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            background: #4f8cff;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
+        .copy-button {
+            margin-top: 9px;
+            padding: 9px 13px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #cbd5e1;
+            border-radius: 7px;
             cursor: pointer;
         }
 
-        button:hover {
-            opacity: 0.9;
+        .copy-button:hover {
+            border-color: #38bdf8;
+            color: #38bdf8;
         }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 22px;
-            color: #6ea0ff;
-            text-decoration: none;
+        .submit-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #38bdf8;
+            color: #03111f;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #7dd3fc;
         }
 
         .notice {
-            text-align: center;
-            color: #78859d;
+            padding: 15px;
+            border-radius: 10px;
+            background: #451a03;
+            border: 1px solid #92400e;
+            color: #fed7aa;
             font-size: 13px;
-            margin-top: 25px;
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 600px) {
-            .nav {
-                flex-direction: column;
-                gap: 12px;
+        .instruction-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .instruction {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: #091524;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+        }
+
+        .number {
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #12324a;
+            color: #7dd3fc;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .instruction strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .instruction span {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .demo-balance {
+            margin-top: 20px;
+            padding: 16px;
+            background: #091524;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+        }
+
+        .balance-label {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .balance-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            color: #64748b;
+            margin-top: 25px;
+            font-size: 13px;
+        }
+
+        .back-link:hover {
+            color: #38bdf8;
+        }
+
+        footer {
+            border-top: 1px solid #1e293b;
+            padding: 25px 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
 
-            .box {
-                padding: 25px;
+            .page-title h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 22px;
             }
         }
     </style>
@@ -154,114 +272,239 @@
 
 <body>
 
-    <header>
+<header>
+    <div class="container header-inner">
 
-        <div class="nav">
+        <a href="index.html" class="logo">
+            Crypto<span>Vault</span>
+        </a>
 
-            <div class="logo">
-                CryptoVault
-            </div>
+        <a href="dashboard.html" class="dashboard-link">
+            ← Dashboard
+        </a>
 
-            <a href="dashboard.html">
-                ← Dashboard
-            </a>
+    </div>
+</header>
 
+
+<main>
+
+    <div class="container">
+
+        <div class="page-title">
+            <h1>Deposit Crypto</h1>
+            <p>Add digital assets to your demonstration portfolio.</p>
         </div>
 
-    </header>
+
+        <div class="grid">
+
+            <!-- DEPOSIT FORM -->
+
+            <div class="card">
+
+                <h2>Deposit Details</h2>
+
+                <div class="notice">
+                    <strong>Demo environment:</strong>
+                    Do not send real cryptocurrency to the address shown
+                    on this page.
+                </div>
+
+                <form action="dashboard.html" method="get">
+
+                    <div class="form-group">
+                        <label for="asset">
+                            Select Asset
+                        </label>
+
+                        <select id="asset" name="asset" required>
+                            <option value="">Choose an asset</option>
+                            <option value="BTC">Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="USDT">Tether (USDT)</option>
+                        </select>
+                    </div>
 
 
-    <main class="container">
+                    <div class="form-group">
 
-        <div class="box">
+                        <label>
+                            Demo Deposit Address
+                        </label>
 
-            <h1>
-                Deposit Crypto
-            </h1>
+                        <div class="address-box" id="address">
+                            0xDEMO1234567890CRYPTOADDRESS
+                        </div>
 
-            <p class="subtitle">
-                Add digital assets to your demo portfolio
-            </p>
+                        <button
+                            type="button"
+                            class="copy-button"
+                            onclick="copyAddress()">
+                            Copy Address
+                        </button>
+
+                    </div>
 
 
-            <div class="warning">
-                ⚠️ <strong>Demo Platform:</strong>
-                Do not send real cryptocurrency to this address.
-                This website does not process real deposits.
+                    <div class="form-group">
+
+                        <label for="amount">
+                            Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            id="amount"
+                            name="amount"
+                            placeholder="Enter amount"
+                            min="0"
+                            step="any"
+                            required>
+
+                    </div>
+
+
+                    <button type="submit" class="submit-button">
+                        Submit Deposit Request
+                    </button>
+
+                </form>
+
             </div>
 
 
-            <form action="dashboard.html" method="get">
+            <!-- INSTRUCTIONS -->
 
-                <label for="asset">
-                    Select Cryptocurrency
-                </label>
+            <div class="card">
 
-                <select id="asset" name="asset" required>
+                <h2>How It Works</h2>
 
-                    <option value="">
-                        Choose an asset
-                    </option>
+                <div class="instruction-list">
 
-                    <option value="BTC">
-                        Bitcoin (BTC)
-                    </option>
+                    <div class="instruction">
 
-                    <option value="ETH">
-                        Ethereum (ETH)
-                    </option>
+                        <div class="number">1</div>
 
-                    <option value="USDT">
-                        Tether (USDT)
-                    </option>
+                        <div>
+                            <strong>Select an asset</strong>
+                            <span>
+                                Choose Bitcoin, Ethereum or USDT
+                                for this demonstration.
+                            </span>
+                        </div>
 
-                </select>
+                    </div>
 
 
-                <label>
-                    Demo Deposit Address
-                </label>
+                    <div class="instruction">
 
-                <div class="address-box">
-                    0xDEMO1234567890CRYPTOADDRESS
+                        <div class="number">2</div>
+
+                        <div>
+                            <strong>Review the address</strong>
+                            <span>
+                                The displayed address is a
+                                demonstration address only.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="instruction">
+
+                        <div class="number">3</div>
+
+                        <div>
+                            <strong>Enter an amount</strong>
+                            <span>
+                                Enter a demonstration amount
+                                to simulate a deposit.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="instruction">
+
+                        <div class="number">4</div>
+
+                        <div>
+                            <strong>Submit request</strong>
+                            <span>
+                                The request returns you to the
+                                demonstration dashboard.
+                            </span>
+                        </div>
+
+                    </div>
+
                 </div>
 
 
-                <label for="amount">
-                    Deposit Amount
-                </label>
+                <div class="demo-balance">
 
-                <input
-                    type="number"
-                    id="amount"
-                    name="amount"
-                    placeholder="Enter amount"
-                    min="0"
-                    step="any"
-                    required
-                >
+                    <div class="balance-label">
+                        CURRENT DEMO PORTFOLIO
+                    </div>
 
+                    <div class="balance-value">
+                        $10,000.00
+                    </div>
 
-                <button type="submit">
-                    Submit Deposit Request
-                </button>
+                </div>
 
-            </form>
-
-
-            <a href="dashboard.html" class="back">
-                ← Back to Dashboard
-            </a>
+            </div>
 
         </div>
 
 
-        <p class="notice">
-            CryptoVault Demo Platform. No real cryptocurrency or money is processed.
-        </p>
+        <a href="dashboard.html" class="back-link">
+            ← Back to Dashboard
+        </a>
 
-    </main>
+    </div>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+        © 2026 CryptoVault. Demonstration platform only.
+    </div>
+
+</footer>
+
+
+<script>
+
+    function copyAddress() {
+
+        const address =
+            document.getElementById("address").textContent.trim();
+
+        navigator.clipboard.writeText(address)
+            .then(function() {
+
+                const button =
+                    document.querySelector(".copy-button");
+
+                button.textContent = "Copied!";
+
+                setTimeout(function() {
+                    button.textContent = "Copy Address";
+                }, 1800);
+
+            })
+            .catch(function() {
+                alert("Copy is not available in this browser.");
+            });
+    }
+
+</script>
 
 </body>
-
 </html>
