@@ -14,96 +14,48 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
             background: #07111f;
             color: #ffffff;
-            min-height: 100vh;
-        }
-
-        .header {
-            padding: 20px 6%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #1c2b3d;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: #35d0ba;
-        }
-
-        .home-link {
-            color: #35d0ba;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 92%;
-            max-width: 1050px;
-            margin: 45px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .intro {
+            justify-content: center;
             padding: 25px;
         }
 
-        .intro h1 {
-            font-size: 42px;
-            line-height: 1.15;
-            margin-bottom: 18px;
+        .container {
+            width: 100%;
+            max-width: 480px;
         }
 
-        .intro h1 span {
-            color: #35d0ba;
-        }
-
-        .intro p {
-            color: #9caec1;
-            line-height: 1.7;
+        .logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
             margin-bottom: 25px;
         }
 
-        .benefits {
-            list-style: none;
-        }
-
-        .benefits li {
-            margin: 16px 0;
-            color: #dbe7f2;
-        }
-
-        .benefits li::before {
-            content: "✓";
-            color: #35d0ba;
-            font-weight: bold;
-            margin-right: 10px;
+        .logo span {
+            color: #3b82f6;
         }
 
         .card {
-            background: #0d1b2a;
-            border: 1px solid #203349;
+            background: #0d1c2e;
+            border: 1px solid #203952;
             border-radius: 18px;
-            padding: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            padding: 35px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
         }
 
-        .card h2 {
+        h1 {
+            font-size: 30px;
             margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #91a4b8;
-            margin-bottom: 25px;
+            color: #91a5ba;
+            margin-bottom: 28px;
             font-size: 14px;
         }
 
@@ -113,24 +65,24 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
             font-size: 14px;
-            color: #dce7f2;
+            font-weight: 700;
         }
 
         input {
             width: 100%;
-            padding: 13px 14px;
-            border: 1px solid #2a3e55;
+            padding: 13px;
             border-radius: 9px;
-            background: #091522;
+            border: 1px solid #29445f;
+            background: #081525;
             color: white;
             outline: none;
             font-size: 15px;
         }
 
         input:focus {
-            border-color: #35d0ba;
+            border-color: #3b82f6;
         }
 
         .password-box {
@@ -138,23 +90,24 @@
         }
 
         .password-box input {
-            padding-right: 70px;
+            padding-right: 75px;
         }
 
-        .toggle {
+        .show-btn {
             position: absolute;
             right: 10px;
-            top: 9px;
+            top: 50%;
+            transform: translateY(-50%);
             border: none;
-            background: transparent;
-            color: #35d0ba;
+            background: none;
+            color: #60a5fa;
             cursor: pointer;
-            padding: 5px;
+            font-size: 13px;
         }
 
         .strength {
             height: 5px;
-            background: #26384b;
+            background: #203952;
             border-radius: 5px;
             margin-top: 8px;
             overflow: hidden;
@@ -162,104 +115,91 @@
 
         .strength-bar {
             height: 100%;
-            width: 0%;
+            width: 0;
             transition: 0.3s;
         }
 
-        .requirements {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #8fa2b6;
-        }
-
-        .checkbox {
+        .terms {
             display: flex;
+            gap: 9px;
             align-items: flex-start;
-            gap: 8px;
             margin: 20px 0;
+            color: #91a5ba;
             font-size: 13px;
-            color: #9caec1;
         }
 
-        .checkbox input {
+        .terms input {
             width: auto;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
-        .checkbox a {
-            color: #35d0ba;
+        .terms a {
+            color: #60a5fa;
         }
 
-        .btn {
+        button.submit {
             width: 100%;
             padding: 14px;
             border: none;
             border-radius: 9px;
-            background: #35d0ba;
-            color: #06121f;
-            font-weight: bold;
+            background: #2563eb;
+            color: white;
             font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .message {
-            margin-top: 12px;
-            font-size: 13px;
-            color: #ff8f8f;
-            display: none;
+        button.submit:hover {
+            background: #1d4ed8;
         }
 
         .login {
             text-align: center;
-            margin-top: 20px;
-            color: #91a4b8;
+            margin-top: 22px;
+            color: #91a5ba;
             font-size: 14px;
         }
 
         .login a {
-            color: #35d0ba;
-            text-decoration: none;
-            font-weight: bold;
+            color: #60a5fa;
+            font-weight: 700;
         }
 
         .demo {
             margin-top: 22px;
             padding: 13px;
+            border: 1px solid #5a4718;
+            background: #211b0b;
             border-radius: 9px;
-            background: #102437;
-            border: 1px solid #25445e;
-            color: #9fb3c7;
+            color: #fbbf24;
             font-size: 12px;
             line-height: 1.5;
-        }
-
-        footer {
             text-align: center;
-            color: #718398;
-            font-size: 12px;
-            padding: 20px;
         }
 
-        @media (max-width: 800px) {
-            .container {
-                grid-template-columns: 1fr;
-                margin: 25px auto;
-            }
+        .home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #91a5ba;
+            font-size: 13px;
+        }
 
-            .intro {
-                padding: 10px;
-            }
+        .home:hover {
+            color: white;
+        }
 
-            .intro h1 {
-                font-size: 32px;
+        @media (max-width: 500px) {
+            body {
+                padding: 15px;
             }
 
             .card {
-                padding: 25px;
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
             }
         }
     </style>
@@ -267,39 +207,21 @@
 
 <body>
 
-<header class="header">
-    <div class="logo">Crypto<span>Vault</span></div>
-    <a class="home-link" href="index.html">Home</a>
-</header>
+<div class="container">
 
-<main class="container">
+    <div class="logo">
+        Crypto<span>Vault</span>
+    </div>
 
-    <section class="intro">
-        <h1>Start Your <span>Crypto Journey</span></h1>
+    <div class="card">
 
-        <p>
-            Create your CryptoVault demo account and explore a professional
-            digital asset management experience.
-        </p>
-
-        <ul class="benefits">
-            <li>Professional crypto dashboard</li>
-            <li>Portfolio and asset tracking</li>
-            <li>Transaction history</li>
-            <li>Security-focused interface</li>
-            <li>Responsive design for mobile devices</li>
-        </ul>
-    </section>
-
-    <section class="card">
-
-        <h2>Create Account</h2>
+        <h1>Create your account</h1>
 
         <p class="subtitle">
-            Enter your information to create a demo account.
+            Create a demo account to explore the CryptoVault platform.
         </p>
 
-        <form id="registerForm" action="login.html" method="get">
+        <form action="login.html" method="get" onsubmit="return validateForm()">
 
             <div class="form-group">
                 <label for="fullname">Full Name</label>
@@ -318,7 +240,7 @@
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="you@example.com"
+                    placeholder="Enter your email"
                     required
                 >
             </div>
@@ -330,12 +252,12 @@
                     id="username"
                     name="username"
                     placeholder="Choose a username"
-                    minlength="4"
                     required
                 >
             </div>
 
             <div class="form-group">
+
                 <label for="password">Password</label>
 
                 <div class="password-box">
@@ -344,13 +266,13 @@
                         id="password"
                         name="password"
                         placeholder="Create a password"
-                        minlength="8"
                         required
+                        oninput="checkPassword()"
                     >
 
                     <button
                         type="button"
-                        class="toggle"
+                        class="show-btn"
                         onclick="togglePassword('password', this)"
                     >
                         Show
@@ -361,73 +283,69 @@
                     <div class="strength-bar" id="strengthBar"></div>
                 </div>
 
-                <div class="requirements">
-                    Use at least 8 characters.
-                </div>
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
 
                 <div class="password-box">
+
                     <input
                         type="password"
                         id="confirmPassword"
                         name="confirmPassword"
                         placeholder="Confirm your password"
-                        minlength="8"
                         required
                     >
 
                     <button
                         type="button"
-                        class="toggle"
+                        class="show-btn"
                         onclick="togglePassword('confirmPassword', this)"
                     >
                         Show
                     </button>
+
                 </div>
+
             </div>
 
-            <label class="checkbox">
+            <label class="terms">
                 <input type="checkbox" id="terms" required>
 
                 <span>
-                    I understand that this is a
-                    <a href="index.html">demo platform</a>
-                    and does not process real cryptocurrency.
+                    I understand that this is a demonstration website and
+                    does not process real cryptocurrency or financial
+                    transactions.
                 </span>
             </label>
 
-            <button class="btn" type="submit">
+            <button type="submit" class="submit">
                 Create Demo Account
             </button>
-
-            <div class="message" id="message">
-                Passwords do not match.
-            </div>
 
         </form>
 
         <div class="login">
             Already have an account?
-            <a href="login.html">Login</a>
+            <a href="login.html">Log In</a>
         </div>
 
         <div class="demo">
-            <strong>Demo Notice:</strong>
-            This website is a front-end demonstration.
-            It does not create real accounts, store passwords,
-            process deposits, or perform real cryptocurrency transactions.
+            DEMO ONLY: No real account, cryptocurrency, payment,
+            investment, or withdrawal is created or processed.
         </div>
 
-    </section>
+        <a href="index.html" class="home">
+            ← Back to Home
+        </a>
 
-</main>
+    </div>
 
-<footer>
-    © 2026 CryptoVault. Demo platform for educational purposes.
-</footer>
+</div>
 
 <script>
 
@@ -444,44 +362,64 @@
         }
     }
 
-    const password = document.getElementById("password");
-    const strengthBar = document.getElementById("strengthBar");
 
-    password.addEventListener("input", function () {
+    function checkPassword() {
 
-        const value = password.value;
-        let strength = 0;
-
-        if (value.length >= 8) strength += 25;
-        if (/[A-Z]/.test(value)) strength += 25;
-        if (/[0-9]/.test(value)) strength += 25;
-        if (/[^A-Za-z0-9]/.test(value)) strength += 25;
-
-        strengthBar.style.width = strength + "%";
-    });
-
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
-
-        const passwordValue =
+        const password =
             document.getElementById("password").value;
 
-        const confirmValue =
+        const bar =
+            document.getElementById("strengthBar");
+
+        let strength = 0;
+
+        if (password.length >= 6) {
+            strength++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (strength === 0) {
+            bar.style.width = "0%";
+        } else if (strength === 1) {
+            bar.style.width = "25%";
+        } else if (strength === 2) {
+            bar.style.width = "50%";
+        } else if (strength === 3) {
+            bar.style.width = "75%";
+        } else {
+            bar.style.width = "100%";
+        }
+    }
+
+
+    function validateForm() {
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
             document.getElementById("confirmPassword").value;
 
-        const message =
-            document.getElementById("message");
+        if (password !== confirmPassword) {
 
-        if (passwordValue !== confirmValue) {
+            alert("Passwords do not match.");
 
-            event.preventDefault();
-
-            message.style.display = "block";
-
-        } else {
-
-            message.style.display = "none";
+            return false;
         }
-    });
+
+        return true;
+    }
 
 </script>
 
