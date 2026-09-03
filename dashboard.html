@@ -34,12 +34,24 @@
             font-weight: bold;
         }
 
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+        }
+
+        .settings {
+            background: #4f8cff;
+        }
+
         .logout {
             background: #e05252;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 7px;
-            text-decoration: none;
         }
 
         .container {
@@ -91,7 +103,7 @@
         }
 
         .asset-card h3 {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .asset-card p {
@@ -101,17 +113,17 @@
         .asset-amount {
             font-size: 22px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .actions {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-bottom: 35px;
         }
 
         .action-btn {
-            flex: 1;
             text-align: center;
             padding: 15px;
             border-radius: 8px;
@@ -144,27 +156,17 @@
             border-bottom: 1px solid #303a55;
         }
 
-        .transaction:last-child {
+        .transaction:last-of-type {
             border-bottom: none;
         }
 
         .deposit {
             color: #52d273;
+            font-weight: bold;
         }
 
         .withdrawal {
             color: #ff7070;
-        }
-
-        .status {
-            margin-top: 20px;
-            padding: 15px;
-            background: #202a45;
-            border-radius: 8px;
-        }
-
-        .active {
-            color: #52d273;
             font-weight: bold;
         }
 
@@ -179,26 +181,53 @@
             font-weight: bold;
         }
 
+        .status {
+            padding: 15px;
+            background: #202a45;
+            border-radius: 8px;
+        }
+
+        .active {
+            color: #52d273;
+            font-weight: bold;
+        }
+
+        .notice {
+            background: #202a45;
+            color: #aab3c5;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
         @media (max-width: 700px) {
-            .assets {
-                grid-template-columns: 1fr;
-            }
 
+            .assets,
             .actions {
-                flex-direction: column;
-            }
-
-            .transaction {
-                gap: 10px;
+                grid-template-columns: 1fr;
             }
 
             header {
                 padding: 18px 5%;
             }
 
+            .header-links {
+                gap: 5px;
+            }
+
+            .header-links a {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
             .container {
                 margin: 25px auto;
                 padding: 15px;
+            }
+
+            .balance {
+                font-size: 30px;
             }
         }
     </style>
@@ -207,11 +236,21 @@
 <body>
 
     <header>
+
         <div class="logo">CryptoVault</div>
 
-        <a href="index.html" class="logout">
-            Logout
-        </a>
+        <div class="header-links">
+
+            <a href="settings.html" class="settings">
+                ⚙️ Settings
+            </a>
+
+            <a href="index.html" class="logout">
+                Logout
+            </a>
+
+        </div>
+
     </header>
 
     <div class="container">
@@ -251,11 +290,15 @@
         <div class="actions">
 
             <a href="deposit.html" class="action-btn">
-                Deposit
+                💰 Deposit
             </a>
 
             <a href="withdrawal.html" class="action-btn">
-                Withdrawal
+                💸 Withdrawal
+            </a>
+
+            <a href="settings.html" class="action-btn">
+                ⚙️ Settings
             </a>
 
         </div>
@@ -275,7 +318,7 @@
             </div>
 
             <div class="transaction">
-                <span>Withdrawal</span>
+                <span>Bitcoin Withdrawal</span>
                 <span class="withdrawal">-$100</span>
             </div>
 
@@ -297,6 +340,12 @@
             <div class="status">
                 Account Status:
                 <span class="active">Active</span>
+            </div>
+
+            <div class="notice">
+                This is a demonstration platform. The displayed balances
+                and transactions are sample data and do not represent
+                real cryptocurrency or real money.
             </div>
 
         </div>
