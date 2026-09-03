@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,9 +16,9 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            background: #f4f7fb;
             color: #111827;
             display: flex;
             align-items: center;
@@ -26,180 +27,218 @@
         }
 
         body.dark {
-            background: linear-gradient(135deg, #0f172a, #111827);
+            background: #0b1120;
             color: #f9fafb;
         }
 
-        .container {
+        .page {
             width: 100%;
             max-width: 430px;
         }
 
-        .top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        /* Logo */
+
+        .brand {
+            text-align: center;
+            margin-bottom: 22px;
         }
 
-        .logo {
-            font-size: 25px;
-            font-weight: bold;
+        .brand-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 12px;
+            border-radius: 16px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 800;
             color: #2563eb;
         }
 
-        .theme-btn {
-            border: none;
+        .brand-text {
+            margin-top: 5px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        body.dark .brand-text {
+            color: #9ca3af;
+        }
+
+        /* Card */
+
+        .login-card {
             background: white;
-            padding: 10px 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 18px;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.10);
         }
 
-        body.dark .theme-btn {
-            background: #1f2937;
-            color: white;
+        body.dark .login-card {
+            background: #111827;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
         }
 
-        .card {
-            background: white;
-            padding: 32px;
-            border-radius: 18px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.10);
-        }
-
-        body.dark .card {
-            background: #1f2937;
-        }
-
-        h1 {
+        .title {
             text-align: center;
+            font-size: 25px;
             margin-bottom: 8px;
         }
 
         .subtitle {
             text-align: center;
             color: #6b7280;
+            font-size: 14px;
             margin-bottom: 25px;
         }
 
         body.dark .subtitle {
-            color: #d1d5db;
+            color: #9ca3af;
         }
 
-        .demo-box {
-            background: #eff6ff;
+        /* Demo */
+
+        .demo {
             border: 1px solid #bfdbfe;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 22px;
+            background: #eff6ff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 23px;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        body.dark .demo-box {
+        body.dark .demo {
             background: #172554;
             border-color: #1d4ed8;
         }
 
-        label {
-            display: block;
-            margin-bottom: 7px;
+        .demo-title {
             font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 3px;
         }
 
-        .input-group {
+        /* Form */
+
+        .field {
             margin-bottom: 18px;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        .field label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
             width: 100%;
-            padding: 13px 14px;
+            height: 50px;
             border: 1px solid #d1d5db;
             border-radius: 10px;
-            font-size: 16px;
+            padding: 0 14px;
+            font-size: 15px;
             outline: none;
             background: white;
             color: #111827;
         }
 
-        body.dark input[type="text"],
-        body.dark input[type="password"] {
-            background: #111827;
+        body.dark .input-wrapper input {
+            background: #0f172a;
             border-color: #374151;
             color: white;
         }
 
-        input:focus {
+        .input-wrapper input:focus {
             border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
-        .password-wrapper {
-            position: relative;
+        .password-input {
+            padding-right: 70px !important;
         }
 
-        .password-wrapper input {
-            padding-right: 75px;
-        }
-
-        .show-btn {
+        .show-password {
             position: absolute;
             right: 10px;
-            top: 9px;
+            top: 10px;
+            height: 30px;
             border: none;
             background: transparent;
             color: #2563eb;
-            cursor: pointer;
             font-weight: bold;
-            padding: 5px;
+            cursor: pointer;
         }
+
+        /* Options */
 
         .options {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            font-size: 14px;
+            justify-content: space-between;
+            margin: 5px 0 22px;
+            font-size: 13px;
         }
 
         .remember {
             display: flex;
             align-items: center;
             gap: 7px;
+            cursor: pointer;
         }
 
         .remember input {
-            width: auto;
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
         }
 
         .forgot {
             color: #2563eb;
             cursor: pointer;
+            font-weight: 600;
         }
 
-        .login-btn {
+        /* Login button */
+
+        .login-button {
             width: 100%;
+            height: 52px;
             border: none;
+            border-radius: 11px;
             background: #2563eb;
             color: white;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        .login-btn:hover {
+        .login-button:hover {
             background: #1d4ed8;
+            transform: translateY(-1px);
         }
 
-        .login-btn:disabled {
+        .login-button:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+            transform: none;
         }
+
+        /* Message */
 
         .message {
             display: none;
@@ -208,110 +247,158 @@
             border-radius: 10px;
             text-align: center;
             font-size: 14px;
+            font-weight: 600;
         }
 
-        .error {
+        .message.error {
             display: block;
             background: #fee2e2;
             color: #991b1b;
         }
 
-        .success {
+        .message.success {
             display: block;
             background: #dcfce7;
             color: #166534;
         }
 
+        /* Register */
+
         .register {
             text-align: center;
-            margin-top: 22px;
+            margin-top: 23px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
             color: #6b7280;
         }
 
         body.dark .register {
-            color: #d1d5db;
+            border-color: #374151;
+            color: #9ca3af;
         }
 
         .register a {
             color: #2563eb;
-            font-weight: bold;
             text-decoration: none;
+            font-weight: 700;
         }
 
+        /* Security */
+
         .security {
-            margin-top: 20px;
-            padding: 12px;
+            margin-top: 18px;
+            padding: 13px;
             border-radius: 10px;
             background: #f3f4f6;
-            font-size: 13px;
             text-align: center;
+            font-size: 12px;
             color: #4b5563;
             line-height: 1.5;
         }
 
         body.dark .security {
-            background: #111827;
-            color: #d1d5db;
+            background: #0f172a;
+            color: #9ca3af;
         }
 
-        .back {
-            text-align: center;
-            margin-top: 18px;
+        /* Bottom */
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 13px;
         }
 
-        .back a {
+        .home-link {
             color: #2563eb;
             text-decoration: none;
+            font-weight: 600;
         }
 
-        @media (max-width: 500px) {
-            .card {
-                padding: 24px;
+        .theme-button {
+            border: 1px solid #d1d5db;
+            background: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        body.dark .theme-button {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
             }
 
-            .options {
-                gap: 10px;
+            .login-card {
+                padding: 23px;
+            }
+
+            .brand-name {
+                font-size: 25px;
             }
         }
     </style>
 </head>
 
+
 <body>
 
-    <div class="container">
+    <div class="page">
 
-        <div class="top">
+        <!-- BRAND -->
 
-            <div class="logo">
-                🔐 CryptoVault
+        <div class="brand">
+
+            <div class="brand-icon">
+                🔐
             </div>
 
-            <button
-                class="theme-btn"
-                id="themeButton"
-                type="button"
-                onclick="toggleTheme()">
-                🌙
-            </button>
+            <div class="brand-name">
+                CryptoVault
+            </div>
+
+            <div class="brand-text">
+                Secure Digital Asset Demo Platform
+            </div>
 
         </div>
 
 
-        <div class="card">
+        <!-- LOGIN CARD -->
 
-            <h1>Welcome Back</h1>
+        <div class="login-card">
+
+            <h1 class="title">
+                Welcome Back
+            </h1>
 
             <p class="subtitle">
-                Login to your CryptoVault account
+                Sign in to continue to your dashboard
             </p>
 
 
-            <div class="demo-box">
+            <!-- DEMO ACCOUNT -->
 
-                <strong>Demo Account</strong><br>
+            <div class="demo">
+
+                <div class="demo-title">
+                    🧪 Demo Account
+                </div>
 
                 Username:
-                <strong>demo</strong><br>
+                <strong>demo</strong>
+                <br>
 
                 Password:
                 <strong>123456</strong>
@@ -319,51 +406,62 @@
             </div>
 
 
+            <!-- LOGIN FORM -->
+
             <form id="loginForm">
 
-                <div class="input-group">
+                <div class="field">
 
                     <label for="username">
                         Username or Email
                     </label>
 
-                    <input
-                        type="text"
-                        id="username"
-                        placeholder="Enter username or email"
-                        autocomplete="username"
-                        required>
+                    <div class="input-wrapper">
+
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required>
+
+                    </div>
 
                 </div>
 
 
-                <div class="input-group">
+                <div class="field">
 
                     <label for="password">
                         Password
                     </label>
 
-                    <div class="password-wrapper">
+                    <div class="input-wrapper">
 
                         <input
                             type="password"
                             id="password"
-                            placeholder="Enter password"
+                            class="password-input"
+                            placeholder="Enter your password"
                             autocomplete="current-password"
                             required>
 
                         <button
                             type="button"
-                            class="show-btn"
-                            id="showPasswordButton"
+                            class="show-password"
+                            id="showPassword"
                             onclick="togglePassword()">
+
                             Show
+
                         </button>
 
                     </div>
 
                 </div>
 
+
+                <!-- OPTIONS -->
 
                 <div class="options">
 
@@ -377,7 +475,6 @@
 
                     </label>
 
-
                     <span
                         class="forgot"
                         onclick="forgotPassword()">
@@ -389,15 +486,19 @@
                 </div>
 
 
+                <!-- LOGIN -->
+
                 <button
                     type="submit"
-                    class="login-btn"
+                    class="login-button"
                     id="loginButton">
 
-                    Login
+                    LOGIN
 
                 </button>
 
+
+                <!-- MESSAGE -->
 
                 <div
                     id="message"
@@ -406,6 +507,8 @@
 
             </form>
 
+
+            <!-- REGISTER -->
 
             <div class="register">
 
@@ -418,24 +521,42 @@
             </div>
 
 
+            <!-- SECURITY -->
+
             <div class="security">
 
                 🛡️ <strong>Demo Environment</strong><br>
 
-                No real cryptocurrency, money,
-                bank transfer, or payment processing
-                is connected to this website.
+                This website does not process real cryptocurrency,
+                ETB, bank transfers, or payments.
 
             </div>
 
+        </div>
 
-            <div class="back">
 
-                <a href="index.html">
-                    ← Back to Home
-                </a>
+        <!-- BOTTOM -->
 
-            </div>
+        <div class="bottom">
+
+            <a
+                href="index.html"
+                class="home-link">
+
+                ← Back to Home
+
+            </a>
+
+
+            <button
+                type="button"
+                class="theme-button"
+                id="themeButton"
+                onclick="toggleTheme()">
+
+                🌙
+
+            </button>
 
         </div>
 
@@ -444,9 +565,9 @@
 
     <script>
 
-        /* ==============================
+        /* =====================================
            THEME
-        ============================== */
+        ===================================== */
 
         function loadTheme() {
 
@@ -467,18 +588,20 @@
                 document.body.classList.remove("dark");
 
                 button.textContent = "🌙";
+
             }
         }
 
 
         function toggleTheme() {
 
-            document.body.classList.toggle("dark");
+            const dark =
+                document.body.classList.toggle("dark");
 
             const button =
                 document.getElementById("themeButton");
 
-            if (document.body.classList.contains("dark")) {
+            if (dark) {
 
                 localStorage.setItem(
                     "cryptoVaultTheme",
@@ -495,13 +618,14 @@
                 );
 
                 button.textContent = "🌙";
+
             }
         }
 
 
-        /* ==============================
-           SHOW / HIDE PASSWORD
-        ============================== */
+        /* =====================================
+           SHOW PASSWORD
+        ===================================== */
 
         function togglePassword() {
 
@@ -509,9 +633,7 @@
                 document.getElementById("password");
 
             const button =
-                document.getElementById(
-                    "showPasswordButton"
-                );
+                document.getElementById("showPassword");
 
             if (password.type === "password") {
 
@@ -524,159 +646,175 @@
                 password.type = "password";
 
                 button.textContent = "Show";
+
             }
         }
 
 
-        /* ==============================
+        /* =====================================
            LOGIN
-        ============================== */
+        ===================================== */
 
         document
             .getElementById("loginForm")
-            .addEventListener("submit", function(event) {
+            .addEventListener(
+                "submit",
+                function(event) {
 
-                event.preventDefault();
-
-                const username =
-                    document
-                        .getElementById("username")
-                        .value
-                        .trim()
-                        .toLowerCase();
-
-                const password =
-                    document
-                        .getElementById("password")
-                        .value;
-
-                const remember =
-                    document
-                        .getElementById("remember")
-                        .checked;
-
-                const message =
-                    document
-                        .getElementById("message");
-
-                const loginButton =
-                    document
-                        .getElementById("loginButton");
+                    event.preventDefault();
 
 
-                /* Demo credentials */
-
-                const correctUsername = "demo";
-
-                const correctPassword = "123456";
-
-
-                /* Check credentials */
-
-                if (
-                    username !== correctUsername &&
-                    username !== "demo@cryptovault.com"
-                ) {
-
-                    message.className =
-                        "message error";
-
-                    message.textContent =
-                        "❌ Incorrect username.";
-
-                    return;
-                }
+                    const username =
+                        document
+                            .getElementById("username")
+                            .value
+                            .trim()
+                            .toLowerCase();
 
 
-                if (password !== correctPassword) {
-
-                    message.className =
-                        "message error";
-
-                    message.textContent =
-                        "❌ Incorrect password.";
-
-                    return;
-                }
+                    const password =
+                        document
+                            .getElementById("password")
+                            .value;
 
 
-                /* Login successful */
-
-                localStorage.setItem(
-                    "cryptoVaultLoggedIn",
-                    "true"
-                );
-
-                localStorage.setItem(
-                    "cryptoVaultUsername",
-                    "demo"
-                );
+                    const remember =
+                        document
+                            .getElementById("remember")
+                            .checked;
 
 
-                if (remember) {
+                    const message =
+                        document
+                            .getElementById("message");
+
+
+                    const button =
+                        document
+                            .getElementById("loginButton");
+
+
+                    /* Demo credentials */
+
+                    const validUsername =
+                        username === "demo" ||
+                        username === "demo@cryptovault.com";
+
+                    const validPassword =
+                        password === "123456";
+
+
+                    /* Check username */
+
+                    if (!validUsername) {
+
+                        message.className =
+                            "message error";
+
+                        message.textContent =
+                            "❌ Incorrect username.";
+
+                        return;
+                    }
+
+
+                    /* Check password */
+
+                    if (!validPassword) {
+
+                        message.className =
+                            "message error";
+
+                        message.textContent =
+                            "❌ Incorrect password.";
+
+                        return;
+                    }
+
+
+                    /* Save login status */
 
                     localStorage.setItem(
-                        "cryptoVaultRemember",
+                        "cryptoVaultLoggedIn",
                         "true"
                     );
 
-                } else {
-
-                    localStorage.removeItem(
-                        "cryptoVaultRemember"
+                    localStorage.setItem(
+                        "cryptoVaultUsername",
+                        "demo"
                     );
-                }
 
 
-                message.className =
-                    "message success";
+                    if (remember) {
 
-                message.textContent =
-                    "✅ Login successful. Opening Dashboard...";
+                        localStorage.setItem(
+                            "cryptoVaultRemember",
+                            "true"
+                        );
+
+                    } else {
+
+                        localStorage.removeItem(
+                            "cryptoVaultRemember"
+                        );
+                    }
 
 
-                loginButton.disabled = true;
+                    /* Success message */
 
-                loginButton.textContent =
-                    "Opening Dashboard...";
+                    message.className =
+                        "message success";
+
+                    message.textContent =
+                        "✓ Login successful. Opening Dashboard...";
 
 
-                /*
-                   Direct GitHub Pages redirect
-                */
+                    button.disabled = true;
 
-                setTimeout(function() {
+                    button.textContent =
+                        "OPENING DASHBOARD...";
 
-                    window.location.href =
-                        window.location.origin +
-                        window.location.pathname
-                            .replace(
-                                /\/[^\/]*$/,
-                                "/dashboard.html"
+
+                    /*
+                       GitHub Pages compatible
+                       dashboard redirect
+                    */
+
+                    setTimeout(function() {
+
+                        const dashboard =
+                            new URL(
+                                "dashboard.html",
+                                window.location.href
                             );
 
-                }, 700);
+                        window.location.assign(
+                            dashboard.href
+                        );
 
-            });
+                    }, 700);
+
+                }
+            );
 
 
-        /* ==============================
+        /* =====================================
            FORGOT PASSWORD
-        ============================== */
+        ===================================== */
 
         function forgotPassword() {
 
             alert(
-                "Demo password:\n\n" +
-                "123456\n\n" +
+                "Demo account password is: 123456\n\n" +
                 "Password recovery is simulated."
             );
+
         }
 
 
-        /* ==============================
-           LOAD THEME
-        ============================== */
+        /* =====================================
+           START
+        ===================================== */
 
         loadTheme();
 
