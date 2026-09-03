@@ -8,7 +8,7 @@
     <title>CryptoVault | Digital Asset Platform</title>
 
     <meta name="description"
-        content="CryptoVault is a modern demo platform for managing digital assets, balances and transactions.">
+        content="CryptoVault is a modern demo platform for exploring digital asset management, market information, balances and transactions.">
 
     <style>
         * {
@@ -22,22 +22,26 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #0b1020;
-            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080d1c;
+            color: #ffffff;
             line-height: 1.6;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         header {
-            background: #11182c;
-            border-bottom: 1px solid #263252;
             position: sticky;
             top: 0;
             z-index: 1000;
+            background: rgba(12, 18, 38, 0.96);
+            border-bottom: 1px solid #273252;
         }
 
         .nav {
-            max-width: 1150px;
+            max-width: 1200px;
             margin: auto;
             padding: 18px 25px;
             display: flex;
@@ -46,15 +50,19 @@
         }
 
         .logo {
-            font-size: 25px;
+            font-size: 26px;
             font-weight: bold;
             color: #6ea0ff;
         }
 
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
         nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 22px;
+            color: #dce3f3;
             font-size: 15px;
         }
 
@@ -62,16 +70,36 @@
             color: #6ea0ff;
         }
 
+        .nav-register {
+            background: #4f8cff;
+            padding: 9px 15px;
+            border-radius: 7px;
+            color: white !important;
+        }
+
         .hero {
-            max-width: 1150px;
+            max-width: 1200px;
             margin: auto;
-            padding: 100px 25px;
+            padding: 105px 25px 90px;
             text-align: center;
         }
 
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid #304066;
+            border-radius: 30px;
+            color: #8fb2ff;
+            background: #10182d;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
         .hero h1 {
-            font-size: 52px;
-            margin-bottom: 20px;
+            max-width: 900px;
+            margin: auto;
+            font-size: 56px;
+            line-height: 1.1;
         }
 
         .hero h1 span {
@@ -79,8 +107,8 @@
         }
 
         .hero p {
-            max-width: 700px;
-            margin: auto;
+            max-width: 720px;
+            margin: 25px auto 0;
             color: #aab3c5;
             font-size: 18px;
         }
@@ -93,7 +121,6 @@
             display: inline-block;
             padding: 14px 28px;
             border-radius: 8px;
-            text-decoration: none;
             font-weight: bold;
             margin: 5px;
         }
@@ -105,91 +132,167 @@
 
         .secondary {
             border: 1px solid #4f8cff;
-            color: #6ea0ff;
+            color: #8fb2ff;
+        }
+
+        .primary:hover {
+            opacity: 0.9;
+        }
+
+        .secondary:hover {
+            background: #101b35;
         }
 
         section {
-            max-width: 1150px;
+            max-width: 1200px;
             margin: auto;
-            padding: 70px 25px;
+            padding: 75px 25px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 32px;
-            margin-bottom: 40px;
+            font-size: 34px;
+            margin-bottom: 15px;
         }
 
-        .market {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+        .section-subtitle {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+            color: #9ca7bc;
         }
 
-        .card {
-            background: #151c32;
-            border: 1px solid #263252;
+        /* MARKET */
+
+        .market-table-wrapper {
+            overflow-x: auto;
+            background: #11182c;
+            border: 1px solid #273252;
             border-radius: 14px;
-            padding: 25px;
         }
 
-        .coin {
-            font-size: 20px;
+        .market-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .market-table th {
+            text-align: left;
+            padding: 18px;
+            color: #8e9bb3;
+            font-size: 13px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #273252;
+        }
+
+        .market-table td {
+            padding: 20px 18px;
+            border-bottom: 1px solid #202a46;
+        }
+
+        .market-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .asset {
             font-weight: bold;
         }
 
-        .price {
-            font-size: 28px;
-            margin: 15px 0;
+        .symbol {
+            color: #8993a8;
+            font-size: 13px;
         }
 
-        .change {
-            color: #67d68c;
+        .price {
+            font-weight: bold;
+            font-size: 17px;
         }
+
+        .positive {
+            color: #61d88b;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #ff7070;
+            font-weight: bold;
+        }
+
+        .market-note {
+            text-align: center;
+            margin-top: 20px;
+            color: #78859d;
+            font-size: 13px;
+        }
+
+        /* FEATURES */
 
         .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 22px;
+        }
+
+        .card {
+            background: #11182c;
+            border: 1px solid #273252;
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .card:hover {
+            border-color: #4f8cff;
         }
 
         .feature-icon {
-            font-size: 35px;
+            font-size: 36px;
             margin-bottom: 15px;
         }
 
         .card h3 {
             margin-bottom: 10px;
+            font-size: 20px;
         }
 
         .card p {
-            color: #aab3c5;
+            color: #9da8bb;
         }
 
-        .security {
+        /* SECURITY */
+
+        .security-box {
             background: #11182c;
-            border-radius: 18px;
-            text-align: center;
+            border: 1px solid #273252;
+            border-radius: 16px;
             padding: 55px 30px;
+            text-align: center;
         }
 
-        .security p {
+        .security-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .security-box p {
             max-width: 750px;
             margin: auto;
             color: #aab3c5;
         }
 
+        /* FAQ */
+
         .faq {
-            max-width: 800px;
+            max-width: 850px;
             margin: auto;
         }
 
         details {
-            background: #151c32;
-            border: 1px solid #263252;
+            background: #11182c;
+            border: 1px solid #273252;
             border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 12px;
+            padding: 19px;
+            margin-bottom: 13px;
         }
 
         summary {
@@ -198,36 +301,92 @@
         }
 
         details p {
-            color: #aab3c5;
+            color: #9da8bb;
             margin-top: 12px;
         }
 
-        footer {
-            background: #080c18;
+        /* CTA */
+
+        .cta {
             text-align: center;
-            padding: 30px 20px;
-            color: #8993a8;
-            border-top: 1px solid #263252;
+            background: #11182c;
+            border: 1px solid #273252;
+            border-radius: 16px;
+            padding: 55px 25px;
         }
 
-        @media (max-width: 800px) {
+        .cta h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
 
-            .hero h1 {
-                font-size: 38px;
-            }
+        .cta p {
+            color: #9da8bb;
+            margin-bottom: 20px;
+        }
 
-            .market,
-            .features {
-                grid-template-columns: 1fr;
-            }
+        /* FOOTER */
+
+        footer {
+            background: #050914;
+            border-top: 1px solid #273252;
+            padding: 40px 25px;
+            text-align: center;
+            color: #7e899e;
+        }
+
+        footer .footer-logo {
+            color: #6ea0ff;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
 
             .nav {
                 flex-direction: column;
                 gap: 15px;
             }
 
-            nav a {
-                margin: 0 7px;
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .hero {
+                padding-top: 70px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 29px;
             }
         }
     </style>
@@ -235,8 +394,10 @@
 
 <body>
 
-    <!-- Navigation -->
+    <!-- NAVIGATION -->
+
     <header>
+
         <div class="nav">
 
             <div class="logo">
@@ -250,33 +411,39 @@
                 <a href="#security">Security</a>
                 <a href="#faq">FAQ</a>
                 <a href="register.html">Register</a>
-                <a href="login.html">Login</a>
+                <a href="login.html" class="nav-register">Login</a>
             </nav>
 
         </div>
+
     </header>
 
 
-    <!-- Hero -->
+    <!-- HERO -->
+
     <section class="hero">
+
+        <div class="hero-badge">
+            Digital Asset Management Demo
+        </div>
 
         <h1>
             Manage Your <span>Crypto</span> With Confidence
         </h1>
 
         <p>
-            A modern demo platform designed to help users explore
-            digital asset management, balances, deposits, withdrawals
-            and transaction history.
+            Explore a modern cryptocurrency platform interface
+            for managing digital assets, viewing market information,
+            checking balances and exploring transactions.
         </p>
 
         <div class="buttons">
 
-            <a class="btn primary" href="register.html">
+            <a href="register.html" class="btn primary">
                 Create Account
             </a>
 
-            <a class="btn secondary" href="login.html">
+            <a href="login.html" class="btn secondary">
                 Login
             </a>
 
@@ -285,56 +452,196 @@
     </section>
 
 
-    <!-- Market -->
+    <!-- MARKET -->
+
     <section id="market">
 
         <h2 class="section-title">
             Crypto Market
         </h2>
 
-        <div class="market">
+        <p class="section-subtitle">
+            Explore popular digital assets and sample market information.
+        </p>
 
-            <div class="card">
-                <div class="coin">₿ Bitcoin</div>
-                <div class="price">$67,450</div>
-                <div class="change">+2.45%</div>
-            </div>
+        <div class="market-table-wrapper">
 
-            <div class="card">
-                <div class="coin">♦ Ethereum</div>
-                <div class="price">$3,520</div>
-                <div class="change">+1.87%</div>
-            </div>
+            <table class="market-table">
 
-            <div class="card">
-                <div class="coin">₮ USDT</div>
-                <div class="price">$1.00</div>
-                <div class="change">+0.01%</div>
-            </div>
+                <thead>
+
+                    <tr>
+                        <th>Asset</th>
+                        <th>Price</th>
+                        <th>24h Change</th>
+                        <th>Market Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <div class="asset">₿ Bitcoin</div>
+                            <div class="symbol">BTC</div>
+                        </td>
+
+                        <td class="price">
+                            $77,748
+                        </td>
+
+                        <td class="positive">
+                            +0.17%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div class="asset">♦ Ethereum</div>
+                            <div class="symbol">ETH</div>
+                        </td>
+
+                        <td class="price">
+                            $2,404
+                        </td>
+
+                        <td class="negative">
+                            -0.62%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div class="asset">₮ Tether</div>
+                            <div class="symbol">USDT</div>
+                        </td>
+
+                        <td class="price">
+                            $1.00
+                        </td>
+
+                        <td class="positive">
+                            +0.01%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div class="asset">◆ BNB</div>
+                            <div class="symbol">BNB</div>
+                        </td>
+
+                        <td class="price">
+                            $692
+                        </td>
+
+                        <td class="positive">
+                            +0.58%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div class="asset">✕ XRP</div>
+                            <div class="symbol">XRP</div>
+                        </td>
+
+                        <td class="price">
+                            $1.37
+                        </td>
+
+                        <td class="positive">
+                            +0.83%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div class="asset">◎ Solana</div>
+                            <div class="symbol">SOL</div>
+                        </td>
+
+                        <td class="price">
+                            $100.84
+                        </td>
+
+                        <td class="positive">
+                            +0.31%
+                        </td>
+
+                        <td>
+                            Active
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
 
         </div>
+
+        <p class="market-note">
+            Sample market data for demonstration purposes only.
+            Prices are not a live trading feed.
+        </p>
 
     </section>
 
 
-    <!-- Features -->
+    <!-- FEATURES -->
+
     <section id="features">
 
         <h2 class="section-title">
             Platform Features
         </h2>
 
+        <p class="section-subtitle">
+            Simple tools designed to demonstrate the experience
+            of a modern digital asset platform.
+        </p>
+
         <div class="features">
 
             <div class="card">
 
-                <div class="feature-icon">🔐</div>
+                <div class="feature-icon">
+                    🔐
+                </div>
 
-                <h3>Secure Account</h3>
+                <h3>
+                    Secure Account
+                </h3>
 
                 <p>
-                    Explore a simple account dashboard designed
-                    for digital asset management.
+                    Explore an account dashboard with profile,
+                    security and account status information.
                 </p>
 
             </div>
@@ -342,13 +649,17 @@
 
             <div class="card">
 
-                <div class="feature-icon">💰</div>
+                <div class="feature-icon">
+                    💰
+                </div>
 
-                <h3>Deposit</h3>
+                <h3>
+                    Deposit
+                </h3>
 
                 <p>
-                    View a demo deposit interface for different
-                    digital assets.
+                    Explore a demonstration deposit interface
+                    for different digital assets.
                 </p>
 
             </div>
@@ -356,13 +667,71 @@
 
             <div class="card">
 
-                <div class="feature-icon">💸</div>
+                <div class="feature-icon">
+                    💸
+                </div>
 
-                <h3>Withdrawal</h3>
+                <h3>
+                    Withdrawal
+                </h3>
 
                 <p>
-                    Explore a demo withdrawal workflow with
-                    wallet and network information.
+                    Explore a demonstration withdrawal workflow
+                    with wallet and network information.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Portfolio
+                </h3>
+
+                <p>
+                    View sample balances and digital assets
+                    from the demonstration dashboard.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="feature-icon">
+                    📋
+                </div>
+
+                <h3>
+                    Transactions
+                </h3>
+
+                <p>
+                    Review sample deposits and withdrawals
+                    through the transaction history page.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="feature-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Account Settings
+                </h3>
+
+                <p>
+                    Explore profile and security settings
+                    available in the demonstration account.
                 </p>
 
             </div>
@@ -372,10 +741,15 @@
     </section>
 
 
-    <!-- Security -->
+    <!-- SECURITY -->
+
     <section id="security">
 
-        <div class="security">
+        <div class="security-box">
+
+            <div class="security-icon">
+                🛡️
+            </div>
 
             <h2 class="section-title">
                 Security First
@@ -394,28 +768,35 @@
 
 
     <!-- FAQ -->
+
     <section id="faq">
 
         <h2 class="section-title">
             Frequently Asked Questions
         </h2>
 
+        <p class="section-subtitle">
+            Learn more about the CryptoVault demonstration platform.
+        </p>
+
         <div class="faq">
 
             <details>
+
                 <summary>
                     Is CryptoVault a real cryptocurrency exchange?
                 </summary>
 
                 <p>
                     No. CryptoVault is currently a demonstration
-                    website created to demonstrate a crypto platform
-                    interface.
+                    website. It does not operate as a real exchange.
                 </p>
+
             </details>
 
 
             <details>
+
                 <summary>
                     Can I deposit real cryptocurrency?
                 </summary>
@@ -424,23 +805,41 @@
                     No. Do not send real cryptocurrency to this
                     demonstration website.
                 </p>
+
             </details>
 
 
             <details>
+
                 <summary>
-                    Can I create an account?
+                    Can I create a real account?
                 </summary>
 
                 <p>
-                    You can explore the registration interface,
-                    but the current website does not use a real
-                    backend database for account creation.
+                    The registration page demonstrates the interface,
+                    but there is currently no real backend account
+                    database or authentication system.
                 </p>
+
             </details>
 
 
             <details>
+
+                <summary>
+                    Are the market prices live?
+                </summary>
+
+                <p>
+                    No. The prices shown on this page are sample
+                    values for demonstration purposes.
+                </p>
+
+            </details>
+
+
+            <details>
+
                 <summary>
                     Can I view transactions?
                 </summary>
@@ -449,6 +848,7 @@
                     Yes. The dashboard contains sample transaction
                     information for demonstration purposes.
                 </p>
+
             </details>
 
         </div>
@@ -456,8 +856,40 @@
     </section>
 
 
-    <!-- Footer -->
+    <!-- CALL TO ACTION -->
+
+    <section>
+
+        <div class="cta">
+
+            <h2>
+                Ready to Explore CryptoVault?
+            </h2>
+
+            <p>
+                Create a demonstration account and explore the platform.
+            </p>
+
+            <a href="register.html" class="btn primary">
+                Get Started
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
     <footer>
+
+        <div class="footer-logo">
+            CryptoVault
+        </div>
+
+        <p>
+            Modern digital asset management demonstration platform.
+        </p>
 
         <p>
             © 2026 CryptoVault. Demo platform.
