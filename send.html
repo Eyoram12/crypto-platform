@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CryptoVault | Send Assets</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -39,6 +42,7 @@ header {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .brand {
@@ -246,6 +250,10 @@ select:focus {
     cursor: pointer;
 }
 
+.secondary-btn:hover {
+    background: #cbd5e1;
+}
+
 .summary {
     background: #f8fafc;
     border-radius: 12px;
@@ -259,6 +267,7 @@ select:focus {
     padding: 9px 0;
     border-bottom: 1px solid #e2e8f0;
     font-size: 14px;
+    gap: 15px;
 }
 
 .summary-row:last-child {
@@ -305,6 +314,11 @@ select:focus {
     margin-top: 20px;
 }
 
+.success p {
+    color: #166534;
+    white-space: pre-line;
+}
+
 .process {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -348,6 +362,10 @@ select:focus {
     color: #3730a3;
 }
 
+.demo p {
+    color: #3730a3;
+}
+
 footer {
     background: #0b1220;
     color: #94a3b8;
@@ -358,7 +376,16 @@ footer {
     line-height: 1.6;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
+
+    .navbar {
+        align-items: flex-start;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
 
     .grid {
         grid-template-columns: 1fr;
@@ -368,316 +395,486 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    nav {
-        display: none;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 30px 15px;
     }
 
     h1 {
         font-size: 30px;
     }
+
+    .navbar {
+        padding: 14px 15px;
+    }
+
+    nav {
+        gap: 4px;
+    }
+
+    nav a {
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .balance-value {
+        font-size: 28px;
+    }
+
+    .summary-row {
+        font-size: 13px;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-    <div class="navbar">
+<div class="navbar">
 
-        <div class="brand">
+<div class="brand">
 
-            <div class="logo">CV</div>
+<div class="logo">
+CV
+</div>
 
-            <div class="brand-text">
-                <strong>CryptoVault</strong>
-                <span>DIGITAL ASSET PLATFORM</span>
-            </div>
+<div class="brand-text">
 
-        </div>
+<strong>CryptoVault</strong>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="p2p.html">P2P Trading</a>
-            <a href="transactions.html">Transactions</a>
-            <a href="settings.html">Settings</a>
-            <a href="send.html" class="active">Send</a>
-        </nav>
+<span>DIGITAL ASSET PLATFORM</span>
 
-    </div>
+</div>
+
+</div>
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="dashboard.html">
+Dashboard
+</a>
+
+<a href="p2p.html">
+P2P Trading
+</a>
+
+<a href="transactions.html">
+Transactions
+</a>
+
+<a href="settings.html">
+Settings
+</a>
+
+<a href="send.html" class="active">
+Send
+</a>
+
+</nav>
+
+</div>
 
 </header>
 
+
 <main class="container">
 
-    <section class="hero">
+<section class="hero">
 
-        <span class="badge">SEND ASSETS</span>
+<span class="badge">
+SEND ASSETS
+</span>
 
-        <h1>Send Assets</h1>
+<h1>
+Send Assets
+</h1>
 
-        <p>
-            Create a simulated asset transfer and review the transaction
-            details before confirmation.
-        </p>
+<p>
+Create a simulated asset transfer and review the transaction
+details before confirmation.
+</p>
 
-    </section>
+</section>
 
-    <div class="grid">
 
-        <div>
+<div class="grid">
 
-            <div class="card balance">
+<div>
 
-                <small>Available Balance</small>
+<div class="card balance">
 
-                <div class="balance-value">
-                    $8,500.00
-                </div>
+<small>
+Available Balance
+</small>
 
-                <span class="status">
-                    ● Account Active
-                </span>
+<div class="balance-value">
+$8,500.00
+</div>
 
-            </div>
+<span class="status">
+● Account Active
+</span>
 
-            <div class="card">
+</div>
 
-                <h2>Create Transfer</h2>
 
-                <p>
-                    Enter the recipient and amount for this demonstration.
-                </p>
+<div class="card">
 
-                <label for="recipient">
-                    Recipient Username or Email
-                </label>
+<h2>
+Create Transfer
+</h2>
 
-                <input
-                    type="text"
-                    id="recipient"
-                    placeholder="example@email.com"
-                >
+<p>
+Enter the recipient and amount for this demonstration.
+</p>
 
-                <label for="asset">
-                    Asset
-                </label>
 
-                <select id="asset">
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
-                </select>
+<label for="recipient">
+Recipient Username or Email
+</label>
 
-                <label for="amount">
-                    Amount
-                </label>
+<input
+type="text"
+id="recipient"
+placeholder="example@email.com"
+autocomplete="off"
+>
 
-                <input
-                    type="number"
-                    id="amount"
-                    placeholder="Enter amount"
-                    min="1"
-                    step="0.01"
-                    oninput="updateSummary()"
-                >
 
-                <div class="quick-buttons">
+<label for="asset">
+Asset
+</label>
 
-                    <button type="button" onclick="setAmount(100)">
-                        100
-                    </button>
+<select id="asset">
 
-                    <button type="button" onclick="setAmount(250)">
-                        250
-                    </button>
+<option value="USDT">
+USDT
+</option>
 
-                    <button type="button" onclick="setAmount(500)">
-                        500
-                    </button>
+<option value="BTC">
+BTC
+</option>
 
-                    <button type="button" onclick="setAmount(1000)">
-                        1000
-                    </button>
+<option value="ETH">
+ETH
+</option>
 
-                </div>
+</select>
 
-                <label for="note">
-                    Transfer Note
-                </label>
 
-                <input
-                    type="text"
-                    id="note"
-                    placeholder="Optional note"
-                >
+<label for="amount">
+Amount
+</label>
 
-                <div class="summary">
+<input
+type="number"
+id="amount"
+placeholder="Enter amount"
+min="0"
+step="0.01"
+oninput="updateSummary()"
+>
 
-                    <div class="summary-row">
-                        <span>Asset</span>
-                        <strong id="summaryAsset">USDT</strong>
-                    </div>
 
-                    <div class="summary-row">
-                        <span>Amount</span>
-                        <strong id="summaryAmount">0.00 USDT</strong>
-                    </div>
+<div class="quick-buttons">
 
-                    <div class="summary-row">
-                        <span>Network Fee</span>
-                        <strong>0.00</strong>
-                    </div>
+<button type="button" onclick="setAmount(100)">
+100
+</button>
 
-                    <div class="summary-row">
-                        <span>Total</span>
-                        <strong id="summaryTotal">0.00 USDT</strong>
-                    </div>
+<button type="button" onclick="setAmount(250)">
+250
+</button>
 
-                </div>
+<button type="button" onclick="setAmount(500)">
+500
+</button>
 
-                <button
-                    class="primary-btn"
-                    onclick="sendAsset()"
-                >
-                    Create Demo Transfer
-                </button>
+<button type="button" onclick="setAmount(1000)">
+1000
+</button>
 
-                <div class="success" id="successBox">
+</div>
 
-                    <strong>Transfer Created Successfully</strong>
 
-                    <p id="successText"></p>
+<label for="note">
+Transfer Note
+</label>
 
-                    <button
-                        class="secondary-btn"
-                        onclick="location.reload()"
-                    >
-                        Create Another Transfer
-                    </button>
+<input
+type="text"
+id="note"
+placeholder="Optional note"
+autocomplete="off"
+>
 
-                </div>
 
-            </div>
+<div class="summary">
 
-        </div>
+<div class="summary-row">
 
-        <div>
+<span>
+Asset
+</span>
 
-            <div class="card">
+<strong id="summaryAsset">
+USDT
+</strong>
 
-                <h2>Security Check</h2>
+</div>
 
-                <ul class="security-list">
 
-                    <li>
-                        <span>Account Status</span>
-                        <span class="good">Active</span>
-                    </li>
+<div class="summary-row">
 
-                    <li>
-                        <span>Two-Factor Authentication</span>
-                        <span class="good">Enabled</span>
-                    </li>
+<span>
+Amount
+</span>
 
-                    <li>
-                        <span>Account Protection</span>
-                        <span class="good">Active</span>
-                    </li>
+<strong id="summaryAmount">
+0.00 USDT
+</strong>
 
-                    <li>
-                        <span>Verification</span>
-                        <span class="good">Ready</span>
-                    </li>
+</div>
 
-                </ul>
 
-            </div>
+<div class="summary-row">
 
-            <div class="card warning">
+<span>
+Network Fee
+</span>
 
-                <h2>Review Carefully</h2>
+<strong>
+0.00
+</strong>
 
-                <p>
-                    Always review the recipient and amount before confirming
-                    a transfer.
-                </p>
+</div>
 
-            </div>
 
-        </div>
+<div class="summary-row">
 
-    </div>
+<span>
+Total
+</span>
 
-    <div class="card">
+<strong id="summaryTotal">
+0.00 USDT
+</strong>
 
-        <h2>How Sending Works</h2>
+</div>
 
-        <div class="process">
+</div>
 
-            <div class="step">
 
-                <div class="step-number">1</div>
+<button
+type="button"
+class="primary-btn"
+onclick="sendAsset()"
+>
+Create Demo Transfer
+</button>
 
-                <h3>Choose Recipient</h3>
 
-                <p>
-                    Enter a username or email address for the simulated
-                    recipient.
-                </p>
+<div class="success" id="successBox">
 
-            </div>
+<strong>
+Transfer Created Successfully
+</strong>
 
-            <div class="step">
+<p id="successText"></p>
 
-                <div class="step-number">2</div>
+<button
+type="button"
+class="secondary-btn"
+onclick="resetTransfer()"
+>
+Create Another Transfer
+</button>
 
-                <h3>Enter Amount</h3>
+</div>
 
-                <p>
-                    Select an asset and enter the amount you want to send.
-                </p>
+</div>
 
-            </div>
+</div>
 
-            <div class="step">
 
-                <div class="step-number">3</div>
+<div>
 
-                <h3>Confirm Transfer</h3>
+<div class="card">
 
-                <p>
-                    Review the details and generate a simulated transaction.
-                </p>
+<h2>
+Security Check
+</h2>
 
-            </div>
+<ul class="security-list">
 
-        </div>
+<li>
+<span>
+Account Status
+</span>
 
-    </div>
+<span class="good">
+Active
+</span>
+</li>
 
-    <div class="card demo">
+<li>
+<span>
+Two-Factor Authentication
+</span>
 
-        <strong>Demo Environment</strong>
+<span class="good">
+Enabled
+</span>
+</li>
 
-        <p>
-            This website is a demonstration interface for educational and
-            presentation purposes. No real cryptocurrency, money, bank
-            transfer, payment processor, wallet or blockchain transaction
-            is processed.
-        </p>
+<li>
+<span>
+Account Protection
+</span>
 
-    </div>
+<span class="good">
+Active
+</span>
+</li>
+
+<li>
+<span>
+Verification
+</span>
+
+<span class="good">
+Ready
+</span>
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="card warning">
+
+<h2>
+Review Carefully
+</h2>
+
+<p>
+Always review the recipient and amount before confirming
+a transfer.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+How Sending Works
+</h2>
+
+<div class="process">
+
+<div class="step">
+
+<div class="step-number">
+1
+</div>
+
+<h3>
+Choose Recipient
+</h3>
+
+<p>
+Enter a username or email address for the simulated
+recipient.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+2
+</div>
+
+<h3>
+Enter Amount
+</h3>
+
+<p>
+Select an asset and enter the amount you want to send.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+3
+</div>
+
+<h3>
+Confirm Transfer
+</h3>
+
+<p>
+Review the details and generate a simulated transaction.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card demo">
+
+<strong>
+Demo Environment
+</strong>
+
+<p>
+This website is a demonstration interface for educational and
+presentation purposes. No real cryptocurrency, money, bank
+transfer, payment processor, wallet or blockchain transaction
+is processed.
+</p>
+
+</div>
 
 </main>
 
+
 <footer>
 
-    © 2026 CryptoVault. Demo interface for educational and presentation
-    purposes. No real cryptocurrency or financial transactions are processed.
+© 2026 CryptoVault. Demo interface for educational and presentation
+purposes. No real cryptocurrency or financial transactions are processed.
 
 </footer>
+
 
 <script>
 
@@ -686,23 +883,35 @@ function setAmount(value) {
     document.getElementById("amount").value = value;
 
     updateSummary();
+
 }
+
 
 function updateSummary() {
 
-    const asset = document.getElementById("asset").value;
-    const amount = Number(document.getElementById("amount").value) || 0;
+    const asset =
+        document.getElementById("asset").value;
 
-    document.getElementById("summaryAsset").textContent = asset;
+    const amount =
+        Number(document.getElementById("amount").value) || 0;
+
+    document.getElementById("summaryAsset").textContent =
+        asset;
 
     document.getElementById("summaryAmount").textContent =
         amount.toFixed(2) + " " + asset;
 
     document.getElementById("summaryTotal").textContent =
         amount.toFixed(2) + " " + asset;
+
 }
 
-document.getElementById("asset").addEventListener("change", updateSummary);
+
+document.getElementById("asset").addEventListener(
+    "change",
+    updateSummary
+);
+
 
 function sendAsset() {
 
@@ -718,70 +927,116 @@ function sendAsset() {
     const note =
         document.getElementById("note").value.trim();
 
+
     if (!recipient) {
 
-        alert("Please enter a recipient username or email.");
+        alert(
+            "Please enter a recipient username or email."
+        );
 
         return;
+
     }
+
 
     if (!amount || amount <= 0) {
 
-        alert("Please enter a valid amount.");
+        alert(
+            "Please enter a valid amount."
+        );
 
         return;
+
     }
+
 
     if (amount > 8500) {
 
-        alert("The demo amount cannot exceed the available balance of $8,500.");
+        alert(
+            "The demo amount cannot exceed the available balance of $8,500."
+        );
 
         return;
+
     }
+
 
     const transactionId =
         "CV-SEND-" +
         Math.random()
-        .toString(36)
-        .substring(2, 8)
-        .toUpperCase();
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
 
-    document.getElementById("successText").innerHTML =
-        "Demo transfer created successfully.<br><br>" +
 
-        "<strong>Recipient:</strong> " +
+    const successText =
+        document.getElementById("successText");
+
+
+    successText.textContent =
+        "Demo transfer created successfully.\n\n" +
+
+        "Recipient: " +
         recipient +
-        "<br>" +
 
-        "<strong>Asset:</strong> " +
+        "\nAsset: " +
         asset +
-        "<br>" +
 
-        "<strong>Amount:</strong> " +
+        "\nAmount: " +
         amount.toFixed(2) +
         " " +
         asset +
-        "<br>" +
 
-        "<strong>Note:</strong> " +
+        "\nNote: " +
         (note || "No note") +
-        "<br>" +
 
-        "<strong>Transaction ID:</strong> " +
+        "\nTransaction ID: " +
         transactionId +
-        "<br>" +
 
-        "<strong>Status:</strong> Demo Pending";
+        "\nStatus: Demo Pending";
 
-    document.getElementById("successBox").style.display = "block";
 
-    window.scrollTo({
-        top: document.getElementById("successBox").offsetTop - 100,
-        behavior: "smooth"
+    document.getElementById("successBox").style.display =
+        "block";
+
+
+    document.getElementById("successBox").scrollIntoView({
+
+        behavior: "smooth",
+
+        block: "center"
+
     });
+
 }
+
+
+function resetTransfer() {
+
+    document.getElementById("recipient").value =
+        "";
+
+    document.getElementById("amount").value =
+        "";
+
+    document.getElementById("note").value =
+        "";
+
+    document.getElementById("asset").value =
+        "USDT";
+
+    document.getElementById("successBox").style.display =
+        "none";
+
+    updateSummary();
+
+}
+
+
+updateSummary();
 
 </script>
 
 </body>
+
 </html>
