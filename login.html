@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,15 +19,15 @@
             color: white;
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 430px;
-            background: #151e38;
+            max-width: 450px;
+            background: #151c32;
             padding: 35px;
             border-radius: 15px;
         }
@@ -38,22 +39,23 @@
 
         .subtitle {
             text-align: center;
-            color: #aeb8d0;
-            margin-bottom: 25px;
+            color: #aab3c5;
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 7px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
         input {
             width: 100%;
             padding: 13px;
+            margin-bottom: 20px;
             border: 1px solid #35405f;
-            border-radius: 7px;
-            background: #0b1020;
+            border-radius: 8px;
+            background: #0f1629;
             color: white;
             font-size: 15px;
         }
@@ -61,25 +63,23 @@
         button {
             width: 100%;
             padding: 14px;
-            margin-top: 25px;
             border: none;
-            border-radius: 7px;
-            background: #4f7cff;
+            border-radius: 8px;
+            background: #4f8cff;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        .register,
-        .home {
+        .links {
             text-align: center;
-            margin-top: 20px;
-            color: #aeb8d0;
+            margin-top: 25px;
+            line-height: 2;
         }
 
         a {
-            color: #6f94ff;
+            color: #6ea0ff;
             text-decoration: none;
         }
     </style>
@@ -87,46 +87,59 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Welcome Back</h1>
+        <h1>Welcome Back</h1>
 
-    <p class="subtitle">
-        Login to your CryptoVault account
-    </p>
+        <p class="subtitle">
+            Login to your CryptoVault account
+        </p>
 
-    <form>
+        <form action="dashboard.html" method="get">
 
-        <label for="email">Email or Username</label>
-        <input
-            type="text"
-            id="email"
-            placeholder="Enter your email or username"
-            required
-        >
+            <label for="username">
+                Email or Username
+            </label>
 
-        <label for="password">Password</label>
-        <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            required
-        >
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter email or username"
+                required
+            >
 
-        <button type="submit">Login</button>
+            <label for="password">
+                Password
+            </label>
 
-    </form>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
 
-    <div class="register">
-        Don't have an account?
-        <a href="register.html">Create Account</a>
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="links">
+
+            Don't have an account?
+            <a href="register.html">Create Account</a>
+
+            <br>
+
+            <a href="index.html">← Back to Home</a>
+
+        </div>
+
     </div>
-
-    <div class="home">
-        <a href="index.html">Back to Home</a>
-    </div>
-
-</div>
 
 </body>
+
 </html>
