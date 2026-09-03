@@ -11,6 +11,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -27,7 +31,7 @@ header {
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
 .logo {
@@ -48,135 +52,152 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline;
+    color: #93c5fd;
 }
 
 .container {
     width: 90%;
     max-width: 1000px;
-    margin: 30px auto;
+    margin: 35px auto;
 }
 
 .hero {
     background: #111827;
     color: white;
-    padding: 35px;
-    border-radius: 16px;
+    padding: 38px;
+    border-radius: 18px;
     margin-bottom: 25px;
 }
 
 .hero h1 {
-    margin: 0 0 10px;
-    font-size: 32px;
+    margin: 0 0 12px;
+    font-size: 34px;
 }
 
 .hero p {
     margin: 0;
     color: #d1d5db;
+    line-height: 1.6;
 }
 
-.demo {
+.platform-badge {
     display: inline-block;
-    margin-top: 18px;
-    background: #fff3cd;
-    color: #856404;
-    padding: 10px 15px;
-    border-radius: 8px;
+    margin-top: 20px;
+    background: #1d4ed8;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 20px;
     font-size: 13px;
     font-weight: bold;
 }
 
-.section {
+.card {
     background: white;
-    padding: 25px;
-    border-radius: 14px;
-    margin-bottom: 22px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+    padding: 27px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    margin-bottom: 24px;
 }
 
-.section h2 {
+.card h2 {
     margin-top: 0;
     margin-bottom: 20px;
 }
 
-.setting {
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 15px;
+    background: white;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #2563eb;
+}
+
+input:disabled {
+    background: #f7f9fc;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.security-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    padding: 18px 0;
+    padding: 16px 0;
     border-bottom: 1px solid #e5e7eb;
 }
 
-.setting:last-child {
+.security-row:last-child {
     border-bottom: none;
 }
 
-.setting-title {
-    font-weight: bold;
+.security-text strong {
+    display: block;
     margin-bottom: 5px;
 }
 
-.setting-description {
+.security-text span {
     color: #667085;
     font-size: 13px;
 }
 
-select,
-input {
-    padding: 11px 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 14px;
-    background: white;
-}
-
-input {
-    width: 280px;
-}
-
-button {
-    border: none;
-    padding: 11px 18px;
-    border-radius: 8px;
-    background: #2563eb;
-    color: white;
+.status {
+    color: #15803d;
     font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: .9;
 }
 
 .toggle {
     position: relative;
-    width: 50px;
+    width: 48px;
     height: 26px;
 }
 
 .toggle input {
-    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .slider {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background: #cbd5e1;
+    background: #d1d5db;
     border-radius: 30px;
+    transition: .3s;
 }
 
 .slider:before {
     content: "";
     position: absolute;
-    width: 20px;
     height: 20px;
+    width: 20px;
     left: 3px;
     top: 3px;
     background: white;
     border-radius: 50%;
-    transition: .2s;
+    transition: .3s;
 }
 
 .toggle input:checked + .slider {
@@ -184,47 +205,56 @@ button:hover {
 }
 
 .toggle input:checked + .slider:before {
-    transform: translateX(24px);
+    transform: translateX(22px);
 }
 
-.security-box {
-    background: #f8fafc;
-    padding: 18px;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-.security-status {
-    color: #15803d;
+.button {
+    width: 100%;
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 15px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: bold;
 }
 
-.warning {
-    background: #fff7ed;
-    border-left: 4px solid #f97316;
-    padding: 18px;
-    border-radius: 8px;
-    color: #7c2d12;
+.button:hover {
+    background: #1d4ed8;
+}
+
+.secondary-button {
+    margin-top: 12px;
+    background: #111827;
 }
 
 .success {
     display: none;
-    margin-top: 15px;
-    padding: 12px;
     background: #ecfdf3;
+    border: 1px solid #86efac;
     color: #166534;
-    border-radius: 8px;
-    font-weight: bold;
+    padding: 17px;
+    border-radius: 10px;
+    margin-top: 18px;
+}
+
+.info {
+    background: #f7f9fc;
+    padding: 18px;
+    border-radius: 12px;
+    line-height: 1.7;
+    color: #475467;
 }
 
 footer {
     text-align: center;
-    padding: 30px;
+    padding: 35px;
     color: #667085;
     font-size: 13px;
 }
 
-@media(max-width:700px) {
+@media (max-width: 700px) {
 
     header {
         flex-direction: column;
@@ -240,17 +270,16 @@ footer {
         font-size: 12px;
     }
 
+    .hero {
+        padding: 28px;
+    }
+
     .hero h1 {
-        font-size: 26px;
+        font-size: 27px;
     }
 
-    .setting {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    input {
-        width: 100%;
+    .row {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -280,135 +309,143 @@ footer {
 
     <section class="hero">
 
-        <h1>⚙️ Settings</h1>
+        <h1>⚙️ Account Settings</h1>
 
         <p>
-            Manage your CryptoVault demonstration account preferences.
+            Manage your CryptoVault account preferences and security settings.
         </p>
 
-        <div class="demo">
-            SECURE PLATFORM • No real financial account is connected
+        <div class="platform-badge">
+            Secure Platform
         </div>
 
     </section>
 
 
-    <section class="section">
+    <section class="card">
 
-        <h2>👤 Account Information</h2>
+        <h2>Account Information</h2>
 
-        <div class="setting">
+        <div class="row">
 
-            <div>
-                <div class="setting-title">Full Name</div>
-                <div class="setting-description">
-                    Name displayed on your demonstration account.
-                </div>
+            <div class="form-group">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                    id="fullName"
+                    type="text"
+                    value="CryptoVault User"
+                >
+
             </div>
 
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    value="user@example.com"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="accountStatus">
+                Account Status
+            </label>
+
             <input
+                id="accountStatus"
                 type="text"
-                id="name"
-                value="CryptoVault User"
+                value="Active"
+                disabled
             >
-
-        </div>
-
-
-        <div class="setting">
-
-            <div>
-                <div class="setting-title">Email</div>
-                <div class="setting-description">
-                    Demonstration account email.
-                </div>
-            </div>
-
-            <input
-                type="email"
-                id="email"
-                value="user@example.com"
-            >
-
-        </div>
-
-
-        <div class="setting">
-
-            <div>
-                <div class="setting-title">Account Status</div>
-                <div class="setting-description">
-                    Current demonstration account status.
-                </div>
-            </div>
-
-            <strong class="security-status">
-                Active
-            </strong>
 
         </div>
 
     </section>
 
 
-    <section class="section">
+    <section class="card">
 
-        <h2>🎨 Preferences</h2>
+        <h2>Preferences</h2>
 
 
-        <div class="setting">
+        <div class="form-group">
 
-            <div>
-                <div class="setting-title">Language</div>
-                <div class="setting-description">
-                    Select your preferred interface language.
-                </div>
-            </div>
+            <label for="language">
+                Language
+            </label>
 
             <select id="language">
 
-                <option>English</option>
-                <option>Afaan Oromoo</option>
-                <option>Amharic</option>
+                <option value="English">
+                    English
+                </option>
+
+                <option value="Afaan Oromoo">
+                    Afaan Oromoo
+                </option>
+
+                <option value="Amharic">
+                    Amharic
+                </option>
 
             </select>
 
         </div>
 
 
-        <div class="setting">
+        <div class="form-group">
 
-            <div>
-                <div class="setting-title">Currency</div>
-                <div class="setting-description">
-                    Display currency for the demonstration interface.
-                </div>
-            </div>
+            <label for="currency">
+                Display Currency
+            </label>
 
             <select id="currency">
 
-                <option>ETB</option>
-                <option>USDT</option>
+                <option value="ETB">
+                    ETB - Ethiopian Birr
+                </option>
+
+                <option value="USDT">
+                    USDT
+                </option>
 
             </select>
 
         </div>
 
 
-        <div class="setting">
+        <div class="security-row">
 
-            <div>
-                <div class="setting-title">Email Notifications</div>
-                <div class="setting-description">
-                    Receive demonstration notifications.
-                </div>
+            <div class="security-text">
+
+                <strong>Email Notifications</strong>
+
+                <span>
+                    Receive account activity notifications.
+                </span>
+
             </div>
 
             <label class="toggle">
 
                 <input
                     type="checkbox"
-                    id="notifications"
+                    id="emailNotifications"
                     checked
                 >
 
@@ -421,28 +458,28 @@ footer {
     </section>
 
 
-    <section class="section">
+    <section class="card">
 
-        <h2>🔒 Security</h2>
+        <h2>Security</h2>
 
 
-        <div class="setting">
+        <div class="security-row">
 
-            <div>
-                <div class="setting-title">
-                    Two-Factor Authentication
-                </div>
+            <div class="security-text">
 
-                <div class="setting-description">
-                    Additional protection for the demonstration account.
-                </div>
+                <strong>Two-Factor Authentication</strong>
+
+                <span>
+                    Add an additional security layer to your account.
+                </span>
+
             </div>
 
             <label class="toggle">
 
                 <input
                     type="checkbox"
-                    id="twoFactor"
+                    id="twoFA"
                     checked
                 >
 
@@ -453,61 +490,58 @@ footer {
         </div>
 
 
-        <div class="security-box">
+        <div class="security-row">
 
-            <strong>Security Status:</strong>
+            <div class="security-text">
 
-            <span class="security-status">
-                Protected
+                <strong>Account Protection</strong>
+
+                <span>
+                    Security monitoring is enabled.
+                </span>
+
+            </div>
+
+            <span class="status">
+                Active
             </span>
 
-            <p>
-                This is a demonstration security interface.
-                It does not connect to a real authentication service.
-            </p>
-
         </div>
 
     </section>
 
 
-    <section class="section">
+    <section class="card">
 
-        <h2>💾 Save Preferences</h2>
+        <h2>Save Changes</h2>
 
-        <p>
-            Save your demonstration account preferences locally in
-            this browser.
-        </p>
+        <div class="info">
 
-        <button onclick="saveSettings()">
+            Your preferences are stored locally in this browser
+            for this website interface.
+
+        </div>
+
+        <br>
+
+        <button
+            class="button"
+            onclick="saveSettings()"
+        >
             Save Settings
         </button>
 
-        <div
-            id="success"
-            class="success"
+        <button
+            class="button secondary-button"
+            onclick="resetSettings()"
         >
-            ✓ Settings saved successfully.
-        </div>
+            Reset Settings
+        </button>
 
-    </section>
-
-
-    <section class="section">
-
-        <div class="warning">
-
-            <strong>⚠️ Important Demo Notice</strong>
-
-            <p>
-                CryptoVault is a demonstration website.
-                Settings shown here do not control real cryptocurrency,
-                bank accounts, payment services, wallets, or financial
-                transactions.
-            </p>
-
-        </div>
+        <div
+            class="success"
+            id="success"
+        ></div>
 
     </section>
 
@@ -516,7 +550,7 @@ footer {
 
 <footer>
 
-    © 2026 CryptoVault | Demonstration website only
+    © 2026 CryptoVault | Digital Asset Platform
 
 </footer>
 
@@ -527,34 +561,73 @@ function saveSettings() {
 
     const settings = {
 
-        name: document.getElementById("name").value,
+        fullName:
+            document.getElementById("fullName").value,
 
-        email: document.getElementById("email").value,
+        email:
+            document.getElementById("email").value,
 
-        language: document.getElementById("language").value,
+        language:
+            document.getElementById("language").value,
 
-        currency: document.getElementById("currency").value,
+        currency:
+            document.getElementById("currency").value,
 
-        notifications:
-            document.getElementById("notifications").checked,
+        emailNotifications:
+            document.getElementById("emailNotifications").checked,
 
-        twoFactor:
-            document.getElementById("twoFactor").checked
+        twoFA:
+            document.getElementById("twoFA").checked
 
     };
+
 
     localStorage.setItem(
         "cryptoVaultSettings",
         JSON.stringify(settings)
     );
 
-    document.getElementById("success").style.display = "block";
 
-    setTimeout(function() {
+    const success =
+        document.getElementById("success");
 
-        document.getElementById("success").style.display = "none";
+    success.style.display = "block";
 
-    }, 3000);
+    success.textContent =
+        "Your settings have been saved successfully.";
+
+}
+
+
+function resetSettings() {
+
+    document.getElementById("fullName").value =
+        "CryptoVault User";
+
+    document.getElementById("email").value =
+        "user@example.com";
+
+    document.getElementById("language").value =
+        "English";
+
+    document.getElementById("currency").value =
+        "ETB";
+
+    document.getElementById("emailNotifications").checked =
+        true;
+
+    document.getElementById("twoFA").checked =
+        true;
+
+    localStorage.removeItem("cryptoVaultSettings");
+
+    const success =
+        document.getElementById("success");
+
+    success.style.display = "block";
+
+    success.textContent =
+        "Settings have been reset.";
 
 }
 
@@ -568,10 +641,13 @@ function loadSettings() {
         return;
     }
 
-    const settings = JSON.parse(saved);
 
-    document.getElementById("name").value =
-        settings.name || "CryptoVault User";
+    const settings =
+        JSON.parse(saved);
+
+
+    document.getElementById("fullName").value =
+        settings.fullName || "CryptoVault User";
 
     document.getElementById("email").value =
         settings.email || "user@example.com";
@@ -582,11 +658,11 @@ function loadSettings() {
     document.getElementById("currency").value =
         settings.currency || "ETB";
 
-    document.getElementById("notifications").checked =
-        settings.notifications !== false;
+    document.getElementById("emailNotifications").checked =
+        settings.emailNotifications !== false;
 
-    document.getElementById("twoFactor").checked =
-        settings.twoFactor !== false;
+    document.getElementById("twoFA").checked =
+        settings.twoFA !== false;
 
 }
 
