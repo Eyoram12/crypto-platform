@@ -51,7 +51,7 @@
 
         main {
             max-width: 1000px;
-            margin: 50px auto;
+            margin: 45px auto;
             padding: 0 20px;
         }
 
@@ -63,7 +63,7 @@
         .page-title h1 {
             color: white;
             font-size: 36px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .page-title p {
@@ -75,13 +75,20 @@
             border: 1px solid #263244;
             border-radius: 16px;
             padding: 28px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
         .section h2 {
             color: white;
-            margin-bottom: 20px;
             font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: -12px;
+            margin-bottom: 20px;
         }
 
         .profile-grid {
@@ -100,7 +107,7 @@
         .profile-item small {
             display: block;
             color: #64748b;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .profile-item strong {
@@ -111,8 +118,14 @@
             color: #4ade80 !important;
         }
 
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         label {
@@ -153,6 +166,36 @@
             background: #7dd3fc;
         }
 
+        .secondary-button {
+            padding: 13px 20px;
+            background: transparent;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .secondary-button:hover {
+            background: #0c4a6e;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .notice {
+            background: #0f172a;
+            border: 1px solid #263244;
+            border-radius: 10px;
+            padding: 16px;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
         .security-list {
             display: grid;
             gap: 14px;
@@ -164,22 +207,68 @@
             align-items: center;
             background: #0f172a;
             border: 1px solid #263244;
-            padding: 16px;
+            padding: 17px;
             border-radius: 10px;
         }
 
         .security-item strong {
             color: white;
+            display: block;
+        }
+
+        .security-item small {
+            color: #64748b;
+        }
+
+        .status {
+            font-weight: bold;
         }
 
         .enabled {
             color: #4ade80;
-            font-weight: bold;
         }
 
         .not-configured {
             color: #fbbf24;
-            font-weight: bold;
+        }
+
+        .toggle {
+            position: relative;
+            width: 48px;
+            height: 25px;
+        }
+
+        .toggle input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #334155;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle input:checked + .slider {
+            background: #38bdf8;
+        }
+
+        .toggle input:checked + .slider:before {
+            transform: translateX(23px);
         }
 
         .preference-grid {
@@ -188,20 +277,43 @@
             gap: 20px;
         }
 
-        .notice {
-            background: #0f172a;
-            border: 1px solid #263244;
+        .success-message {
+            display: none;
+            background: #052e16;
+            border: 1px solid #166534;
+            color: #86efac;
+            padding: 14px;
             border-radius: 10px;
-            padding: 16px;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+
+        .danger-zone {
+            border-color: #7f1d1d;
+        }
+
+        .danger-zone h2 {
+            color: #fca5a5;
+        }
+
+        .danger-button {
+            padding: 13px 20px;
+            background: #7f1d1d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .danger-button:hover {
+            background: #991b1b;
         }
 
         .back {
             display: inline-block;
             color: #38bdf8;
             text-decoration: none;
+            margin-top: 5px;
         }
 
         .back:hover {
@@ -217,6 +329,7 @@
 
         @media (max-width: 700px) {
             .profile-grid,
+            .form-grid,
             .preference-grid {
                 grid-template-columns: 1fr;
             }
@@ -225,10 +338,13 @@
                 font-size: 30px;
             }
 
+            .section {
+                padding: 20px;
+            }
+
             .security-item {
                 gap: 15px;
                 align-items: flex-start;
-                flex-direction: column;
             }
         }
     </style>
@@ -248,11 +364,17 @@
 
 </header>
 
+
 <main>
 
     <div class="page-title">
         <h1>Account Settings</h1>
-        <p>Manage your demonstration account preferences and security options.</p>
+        <p>Manage your CryptoVault account, security and preferences.</p>
+    </div>
+
+
+    <div id="successMessage" class="success-message">
+        ✓ Your settings have been saved successfully.
     </div>
 
 
@@ -262,101 +384,129 @@
 
         <h2>Profile Information</h2>
 
-        <div class="profile-grid">
+        <p class="section-description">
+            Update the information associated with your demonstration account.
+        </p>
 
-            <div class="profile-item">
-                <small>Full Name</small>
-                <strong>Getahun</strong>
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    value="Getahun"
+                >
             </div>
 
-            <div class="profile-item">
-                <small>Username</small>
-                <strong>cryptouser</strong>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    value="cryptouser"
+                >
             </div>
 
-            <div class="profile-item">
-                <small>Email Address</small>
-                <strong>user@example.com</strong>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    value="user@example.com"
+                >
             </div>
 
-            <div class="profile-item">
-                <small>Account Status</small>
-                <strong class="active">Active</strong>
+            <div class="form-group">
+
+                <label>Account Status</label>
+
+                <div class="profile-item">
+                    <strong class="active">● Active</strong>
+                </div>
+
             </div>
 
+        </div>
+
+        <div class="button-row">
+            <button class="button" onclick="saveSettings()">
+                Save Profile
+            </button>
         </div>
 
     </section>
 
 
-    <!-- Change Password -->
+    <!-- Password -->
 
     <section class="section">
 
         <h2>Change Password</h2>
 
         <div class="notice">
-            This is a demonstration form. Password changes are not connected
-            to a real authentication system.
+            This is a demonstration form. Your password is not connected to a
+            real authentication system.
         </div>
 
-        <form action="settings.html" method="get">
+        <div class="form-group">
 
-            <div class="form-group">
+            <label for="currentPassword">
+                Current Password
+            </label>
 
-                <label for="current-password">
-                    Current Password
-                </label>
+            <input
+                type="password"
+                id="currentPassword"
+                placeholder="Enter current password"
+            >
 
-                <input
-                    type="password"
-                    id="current-password"
-                    name="current_password"
-                    placeholder="Enter current password"
-                    required
-                >
+        </div>
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-group">
+            <label for="newPassword">
+                New Password
+            </label>
 
-                <label for="new-password">
-                    New Password
-                </label>
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password"
+                minlength="8"
+            >
 
-                <input
-                    type="password"
-                    id="new-password"
-                    name="new_password"
-                    placeholder="Enter new password"
-                    minlength="8"
-                    required
-                >
+        </div>
 
-            </div>
+        <div class="form-group">
 
-            <div class="form-group">
+            <label for="confirmPassword">
+                Confirm New Password
+            </label>
 
-                <label for="confirm-password">
-                    Confirm New Password
-                </label>
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm new password"
+                minlength="8"
+            >
 
-                <input
-                    type="password"
-                    id="confirm-password"
-                    name="confirm_password"
-                    placeholder="Confirm new password"
-                    minlength="8"
-                    required
-                >
+        </div>
 
-            </div>
+        <div class="button-row">
 
-            <button type="submit" class="button">
+            <button class="button" onclick="changePassword()">
                 Update Password
             </button>
 
-        </form>
+            <button
+                class="secondary-button"
+                onclick="clearPasswordFields()"
+            >
+                Clear
+            </button>
+
+        </div>
 
     </section>
 
@@ -367,41 +517,66 @@
 
         <h2>Security</h2>
 
+        <p class="section-description">
+            Manage security features for your demonstration account.
+        </p>
+
         <div class="security-list">
 
             <div class="security-item">
 
                 <div>
                     <strong>Account Protection</strong>
+                    <small>Basic account protection is enabled.</small>
                 </div>
 
-                <span class="enabled">
+                <span class="status enabled">
                     Enabled
                 </span>
 
             </div>
+
 
             <div class="security-item">
 
                 <div>
                     <strong>Two-Factor Authentication</strong>
+                    <small>Add another layer of account security.</small>
                 </div>
 
-                <span class="not-configured">
-                    Not Configured
-                </span>
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="twoFactor"
+                        onchange="toggleTwoFactor()"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
 
             </div>
+
 
             <div class="security-item">
 
                 <div>
                     <strong>Login Alerts</strong>
+                    <small>Receive alerts for new login activity.</small>
                 </div>
 
-                <span class="enabled">
-                    Enabled
-                </span>
+                <label class="toggle">
+
+                    <input
+                        type="checkbox"
+                        id="loginAlerts"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
 
             </div>
 
@@ -416,6 +591,10 @@
 
         <h2>Preferences</h2>
 
+        <p class="section-description">
+            Choose how information appears on your CryptoVault account.
+        </p>
+
         <div class="preference-grid">
 
             <div class="form-group">
@@ -424,7 +603,7 @@
                     Display Currency
                 </label>
 
-                <select id="currency" name="currency">
+                <select id="currency">
 
                     <option value="USD">
                         USD - US Dollar
@@ -446,13 +625,14 @@
 
             </div>
 
+
             <div class="form-group">
 
                 <label for="language">
                     Language
                 </label>
 
-                <select id="language" name="language">
+                <select id="language">
 
                     <option value="english">
                         English
@@ -472,6 +652,30 @@
 
         </div>
 
+        <button class="button" onclick="saveSettings()">
+            Save Preferences
+        </button>
+
+    </section>
+
+
+    <!-- Danger Zone -->
+
+    <section class="section danger-zone">
+
+        <h2>Account Actions</h2>
+
+        <p class="section-description">
+            These options are for demonstration purposes.
+        </p>
+
+        <button
+            class="danger-button"
+            onclick="logoutDemo()"
+        >
+            Log Out
+        </button>
+
     </section>
 
 
@@ -485,6 +689,121 @@
 <footer>
     © 2026 CryptoVault. Demonstration website only.
 </footer>
+
+
+<script>
+
+    function showSuccess(message) {
+
+        const box = document.getElementById("successMessage");
+
+        box.textContent = "✓ " + message;
+
+        box.style.display = "block";
+
+        setTimeout(function() {
+            box.style.display = "none";
+        }, 3000);
+    }
+
+
+    function saveSettings() {
+
+        const name = document.getElementById("fullName").value.trim();
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (name === "" || username === "" || email === "") {
+
+            alert("Please complete all profile fields.");
+
+            return;
+        }
+
+        showSuccess("Your settings have been saved successfully.");
+    }
+
+
+    function changePassword() {
+
+        const currentPassword =
+            document.getElementById("currentPassword").value;
+
+        const newPassword =
+            document.getElementById("newPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+
+        if (currentPassword === "") {
+
+            alert("Please enter your current password.");
+
+            return;
+        }
+
+
+        if (newPassword.length < 8) {
+
+            alert("Your new password must contain at least 8 characters.");
+
+            return;
+        }
+
+
+        if (newPassword !== confirmPassword) {
+
+            alert("The new passwords do not match.");
+
+            return;
+        }
+
+
+        clearPasswordFields();
+
+        showSuccess("Password updated in demonstration mode.");
+    }
+
+
+    function clearPasswordFields() {
+
+        document.getElementById("currentPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+    }
+
+
+    function toggleTwoFactor() {
+
+        const checkbox = document.getElementById("twoFactor");
+
+        if (checkbox.checked) {
+
+            showSuccess("Two-factor authentication enabled in demonstration mode.");
+
+        } else {
+
+            showSuccess("Two-factor authentication disabled in demonstration mode.");
+
+        }
+    }
+
+
+    function logoutDemo() {
+
+        const confirmed = confirm(
+            "Do you want to log out of the demonstration account?"
+        );
+
+        if (confirmed) {
+
+            window.location.href = "index.html";
+
+        }
+    }
+
+</script>
 
 </body>
 </html>
