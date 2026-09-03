@@ -1,636 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dashboard | CryptoVault</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #07111f;
-            color: #ffffff;
-        }
-
-        /* HEADER */
-
-        .header {
-            background: #091522;
-            border-bottom: 1px solid #203349;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav {
-            width: 94%;
-            max-width: 1250px;
-            margin: auto;
-            min-height: 70px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            position: relative;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: #35d0ba;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-links a {
-            color: #a9b9c9;
-            text-decoration: none;
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            background: #102b3a;
-            color: #35d0ba;
-        }
-
-        .nav-links .logout {
-            border: 1px solid #294057;
-            color: #ffffff;
-            margin-left: 5px;
-        }
-
-        .nav-links .logout:hover {
-            border-color: #35d0ba;
-        }
-
-        .menu {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        /* MAIN */
-
-        .container {
-            width: 94%;
-            max-width: 1250px;
-            margin: 35px auto;
-        }
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .welcome h1 {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            color: #8fa2b6;
-        }
-
-        .demo-badge {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 7px 12px;
-            border-radius: 20px;
-
-            background: #102b3a;
-            border: 1px solid #28536a;
-
-            color: #66dcca;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* STATS */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: #0d1b2a;
-            border: 1px solid #203349;
-            border-radius: 14px;
-            padding: 22px;
-        }
-
-        .stat-card p {
-            color: #8fa2b6;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card h2 {
-            font-size: 25px;
-        }
-
-        .positive {
-            color: #35d0ba;
-        }
-
-        .negative {
-            color: #ff8f8f;
-        }
-
-        /* GRID */
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .panel {
-            background: #0d1b2a;
-            border: 1px solid #203349;
-            border-radius: 14px;
-            padding: 22px;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .panel-header h2 {
-            font-size: 18px;
-        }
-
-        .panel-header span {
-            color: #8fa2b6;
-            font-size: 12px;
-        }
-
-        /* CHART */
-
-        .chart {
-            height: 210px;
-            display: flex;
-            align-items: flex-end;
-            gap: 12px;
-
-            padding: 15px 5px 5px;
-
-            border-bottom: 1px solid #294057;
-        }
-
-        .bar {
-            flex: 1;
-            min-width: 15px;
-
-            background: #35d0ba;
-
-            border-radius: 5px 5px 0 0;
-
-            opacity: 0.8;
-
-            transition: 0.3s;
-        }
-
-        .bar:hover {
-            opacity: 1;
-            transform: translateY(-4px);
-        }
-
-        .chart-labels {
-            display: flex;
-            justify-content: space-between;
-
-            color: #718398;
-            font-size: 11px;
-
-            margin-top: 8px;
-        }
-
-        /* ASSETS */
-
-        .asset {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 14px 0;
-
-            border-bottom: 1px solid #1d3044;
-        }
-
-        .asset:last-child {
-            border-bottom: none;
-        }
-
-        .asset-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .coin {
-            width: 38px;
-            height: 38px;
-
-            border-radius: 50%;
-
-            background: #13283a;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 10px;
-            font-weight: bold;
-
-            color: #35d0ba;
-        }
-
-        .asset-name strong {
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .asset-name span {
-            color: #718398;
-            font-size: 12px;
-        }
-
-        .asset-value {
-            text-align: right;
-        }
-
-        .asset-value strong {
-            display: block;
-        }
-
-        .asset-value span {
-            color: #718398;
-            font-size: 12px;
-        }
-
-        /* MARKET */
-
-        .market {
-            margin-bottom: 25px;
-        }
-
-        .table-scroll {
-            overflow-x: auto;
-        }
-
-        .market-table,
-        .transaction-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .market-table {
-            min-width: 650px;
-        }
-
-        .market-table th,
-        .market-table td,
-        .transaction-table th,
-        .transaction-table td {
-            padding: 14px 10px;
-            text-align: left;
-
-            border-bottom: 1px solid #1d3044;
-        }
-
-        .market-table th,
-        .transaction-table th {
-            color: #718398;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        .market-table td,
-        .transaction-table td {
-            font-size: 13px;
-        }
-
-        .coin-name {
-            font-weight: bold;
-        }
-
-        .coin-symbol {
-            color: #718398;
-            font-size: 11px;
-            margin-left: 5px;
-        }
-
-        .loading {
-            color: #718398;
-        }
-
-        .error {
-            color: #ff8f8f;
-        }
-
-        /* ACTIONS */
-
-        .actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .action {
-            display: block;
-
-            text-align: center;
-
-            padding: 14px;
-
-            border-radius: 9px;
-
-            text-decoration: none;
-
-            font-weight: bold;
-            font-size: 14px;
-
-            border: 1px solid #294057;
-
-            color: #ffffff;
-
-            background: #102033;
-        }
-
-        .action:hover {
-            border-color: #35d0ba;
-            color: #35d0ba;
-        }
-
-        /* SECURITY */
-
-        .security {
-            margin-top: 20px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            padding: 17px;
-
-            border-radius: 10px;
-
-            background: #0b2020;
-
-            border: 1px solid #204943;
-        }
-
-        .security strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .security span {
-            color: #91a4b8;
-            font-size: 12px;
-        }
-
-        .status {
-            color: #35d0ba;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        /* TRANSACTIONS */
-
-        .completed {
-            color: #35d0ba;
-        }
-
-        .pending {
-            color: #f2c66d;
-        }
-
-        .view-all {
-            display: inline-block;
-
-            margin-top: 15px;
-
-            color: #35d0ba;
-
-            text-decoration: none;
-
-            font-size: 13px;
-        }
-
-        /* NOTICE */
-
-        .notice {
-            margin-top: 25px;
-
-            text-align: center;
-
-            color: #718398;
-
-            font-size: 12px;
-
-            line-height: 1.6;
-        }
-
-        /* FOOTER */
-
-        footer {
-            text-align: center;
-
-            color: #64768a;
-
-            padding: 30px 15px;
-
-            font-size: 12px;
-        }
-
-        /* MOBILE */
-
-        @media (max-width: 950px) {
-
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 800px) {
-
-            .menu {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-
-                position: absolute;
-
-                top: 70px;
-                left: 0;
-
-                width: 100%;
-
-                padding: 15px;
-
-                background: #091522;
-
-                border-bottom: 1px solid #203349;
-
-                flex-direction: column;
-
-                align-items: stretch;
-
-                gap: 5px;
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .nav-links a {
-                width: 100%;
-                padding: 13px;
-            }
-
-            .nav-links .logout {
-                margin-left: 0;
-            }
-
-            .actions {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 500px) {
-
-            .container {
-                margin-top: 25px;
-            }
-
-            .welcome h1 {
-                font-size: 25px;
-            }
-
-            .panel {
-                padding: 17px;
-            }
-
-            .chart {
-                gap: 6px;
-            }
-
-            .security {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | CryptoVault</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #07111f;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.header {
+    background: #091522;
+    border-bottom: 1px solid #203349;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #35d0ba;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-links a {
+    color: #a9b9c9;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: #102b3a;
+    color: #35d0ba;
+}
+
+.logout {
+    border: 1px solid #294057;
+    color: white !important;
+    margin-left: 5px;
+}
+
+.menu {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.container {
+    width: 94%;
+    max-width: 1250px;
+    margin: 35px auto;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.welcome p {
+    color: #8fa2b6;
+}
+
+.demo-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #102b3a;
+    border: 1px solid #28536a;
+    color: #66dcca;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.small-button {
+    border: 1px solid #294057;
+    background: #102033;
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.small-button:hover {
+    border-color: #35d0ba;
+    color: #35d0ba;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: #0d1b2a;
+    border: 1px solid #203349;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.stat-card p {
+    color: #8fa2b6;
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.stat-card h2 {
+    font-size: 25px;
+}
+
+.positive {
+    color: #35d0ba;
+}
+
+.negative {
+    color: #ff8f8f;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.panel {
+    background: #0d1b2a;
+    border: 1px solid #203349;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.panel-header h2 {
+    font-size: 18px;
+}
+
+.panel-header span {
+    color: #8fa2b6;
+    font-size: 12px;
+}
+
+.chart {
+    height: 210px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 15px 5px 5px;
+    border-bottom: 1px solid #294057;
+}
+
+.bar {
+    flex: 1;
+    min-width: 15px;
+    background: #35d0ba;
+    border-radius: 5px 5px 0 0;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.bar:hover {
+    opacity: 1;
+    transform: translateY(-4px);
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #718398;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+.asset {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #1d3044;
+}
+
+.asset:last-child {
+    border-bottom: none;
+}
+
+.asset-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.coin {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #13283a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #35d0ba;
+}
+
+.asset-name strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.asset-name span,
+.asset-value span {
+    color: #718398;
+    font-size: 12px;
+}
+
+.asset-value {
+    text-align: right;
+}
+
+.asset-value strong {
+    display: block;
+}
+
+.market {
+    margin-bottom: 25px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+.market-table,
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.market-table {
+    min-width: 650px;
+}
+
+.market-table th,
+.market-table td,
+.transaction-table th,
+.transaction-table td {
+    padding: 14px 10px;
+    text-align: left;
+    border-bottom: 1px solid #1d3044;
+}
+
+.market-table th,
+.transaction-table th {
+    color: #718398;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.market-table td,
+.transaction-table td {
+    font-size: 13px;
+}
+
+.coin-name {
+    font-weight: bold;
+}
+
+.coin-symbol {
+    color: #718398;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.loading {
+    color: #718398;
+}
+
+.error {
+    color: #ff8f8f;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.action {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #294057;
+    color: #ffffff;
+    background: #102033;
+}
+
+.action:hover {
+    border-color: #35d0ba;
+    color: #35d0ba;
+}
+
+.security {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px;
+    border-radius: 10px;
+    background: #0b2020;
+    border: 1px solid #204943;
+}
+
+.security strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.security span {
+    color: #91a4b8;
+    font-size: 12px;
+}
+
+.status {
+    color: #35d0ba;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.completed {
+    color: #35d0ba;
+}
+
+.pending {
+    color: #f2c66d;
+}
+
+.view-all {
+    display: inline-block;
+    margin-top: 15px;
+    color: #35d0ba;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.notice {
+    margin-top: 25px;
+    text-align: center;
+    color: #718398;
+    font-size: 12px;
+}
+
+footer {
+    text-align: center;
+    color: #64768a;
+    padding: 30px 15px;
+    font-size: 12px;
+}
+
+@media (max-width: 950px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 800px) {
+    .menu {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 15px;
+        background: #091522;
+        border-bottom: 1px solid #203349;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 13px;
+    }
+
+    .logout {
+        margin-left: 0;
+    }
+
+    .actions {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        margin-top: 25px;
+    }
+
+    .welcome h1 {
+        font-size: 25px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .chart {
+        gap: 6px;
+    }
+
+    .security {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .balance-actions {
+        width: 100%;
+    }
+
+    .small-button {
+        flex: 1;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
-
 <header class="header">
 
-    <nav class="nav">
+<nav class="nav">
 
-        <div class="logo">
-            Crypto<span>Vault</span>
-        </div>
+<a href="index.html" class="logo">
+Crypto<span>Vault</span>
+</a>
 
+<button class="menu" onclick="toggleMenu()" aria-label="Open navigation">
+☰
+</button>
 
-        <button
-            class="menu"
-            onclick="toggleMenu()"
-            aria-label="Open navigation"
-        >
-            ☰
-        </button>
+<div class="nav-links" id="navLinks">
 
+<a href="index.html">Home</a>
 
-        <div
-            class="nav-links"
-            id="navLinks"
-        >
+<a href="dashboard.html" class="active">Dashboard</a>
 
-            <a href="index.html">
-                Home
-            </a>
+<a href="deposit.html">Deposit</a>
 
-            <a
-                href="dashboard.html"
-                class="active"
-            >
-                Dashboard
-            </a>
+<a href="withdrawal.html">Withdrawal</a>
 
-            <a href="deposit.html">
-                Deposit
-            </a>
+<a href="transactions.html">Transactions</a>
 
-            <a href="withdrawal.html">
-                Withdrawal
-            </a>
+<a href="settings.html">Settings</a>
 
-            <a href="transactions.html">
-                Transactions
-            </a>
+<a href="login.html" class="logout">Logout</a>
 
-            <a href="settings.html">
-                Settings
-            </a>
+</div>
 
-            <a
-                href="login.html"
-                class="logout"
-            >
-                Logout
-            </a>
-
-        </div>
-
-    </nav>
+</nav>
 
 </header>
 
@@ -638,562 +545,388 @@
 <main class="container">
 
 
-    <section class="welcome">
+<section class="welcome">
 
-        <h1>
-            Welcome back, Getahun
-        </h1>
+<div>
 
-        <p>
-            Here's an overview of your CryptoVault demo portfolio.
-        </p>
+<h1>Welcome back, Getahun</h1>
 
-        <div class="demo-badge">
-            DEMO ACCOUNT
-        </div>
+<p>Here's an overview of your CryptoVault demo portfolio.</p>
 
-    </section>
+<div class="demo-badge">
+DEMO ACCOUNT
+</div>
 
+</div>
 
-    <section class="stats">
+<div class="balance-actions">
 
+<button class="small-button" onclick="toggleBalance()">
+Hide Balance
+</button>
 
-        <div class="stat-card">
+<button class="small-button" onclick="loadMarketData()">
+Refresh Market
+</button>
 
-            <p>
-                Total Portfolio Balance
-            </p>
+</div>
 
-            <h2>
-                $10,000.00
-            </h2>
+</section>
 
-        </div>
 
+<section class="stats">
 
-        <div class="stat-card">
+<div class="stat-card">
 
-            <p>
-                Today's Change
-            </p>
+<p>Total Portfolio Balance</p>
 
-            <h2 class="positive">
-                +$184.20
-            </h2>
+<h2 id="portfolioBalance">$10,000.00</h2>
 
-            <p class="positive">
-                +1.86%
-            </p>
+</div>
 
-        </div>
 
+<div class="stat-card">
 
-        <div class="stat-card">
+<p>Today's Change</p>
 
-            <p>
-                Assets
-            </p>
+<h2 class="positive">+$184.20</h2>
 
-            <h2>
-                3
-            </h2>
+<p class="positive">+1.86%</p>
 
-        </div>
+</div>
 
 
-    </section>
+<div class="stat-card">
 
+<p>Total Assets</p>
 
-    <section class="main-grid">
+<h2>3</h2>
 
+</div>
 
-        <div class="panel">
+</section>
 
-            <div class="panel-header">
 
-                <h2>
-                    Portfolio Performance
-                </h2>
+<section class="main-grid">
 
-                <span>
-                    Last 7 days
-                </span>
 
-            </div>
+<div class="panel">
 
+<div class="panel-header">
 
-            <div class="chart">
+<h2>Portfolio Performance</h2>
 
-                <div class="bar" style="height:45%;"></div>
-                <div class="bar" style="height:58%;"></div>
-                <div class="bar" style="height:50%;"></div>
-                <div class="bar" style="height:70%;"></div>
-                <div class="bar" style="height:64%;"></div>
-                <div class="bar" style="height:82%;"></div>
-                <div class="bar" style="height:92%;"></div>
+<span>Last 7 days</span>
 
-            </div>
+</div>
 
+<div class="chart">
 
-            <div class="chart-labels">
+<div class="bar" style="height:45%;"></div>
+<div class="bar" style="height:58%;"></div>
+<div class="bar" style="height:50%;"></div>
+<div class="bar" style="height:70%;"></div>
+<div class="bar" style="height:64%;"></div>
+<div class="bar" style="height:82%;"></div>
+<div class="bar" style="height:92%;"></div>
 
-                <span>Mon</span>
-                <span>Tue</span>
-                <span>Wed</span>
-                <span>Thu</span>
-                <span>Fri</span>
-                <span>Sat</span>
-                <span>Sun</span>
+</div>
 
-            </div>
+<div class="chart-labels">
 
-        </div>
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
 
+</div>
 
-        <div class="panel">
+</div>
 
-            <div class="panel-header">
 
-                <h2>
-                    Your Assets
-                </h2>
+<div class="panel">
 
-                <span>
-                    Demo balances
-                </span>
+<div class="panel-header">
 
-            </div>
+<h2>Your Assets</h2>
 
+<span>Demo balances</span>
 
-            <div class="asset">
+</div>
 
-                <div class="asset-left">
 
-                    <div class="coin">
-                        BTC
-                    </div>
+<div class="asset">
 
-                    <div class="asset-name">
+<div class="asset-left">
 
-                        <strong>
-                            Bitcoin
-                        </strong>
+<div class="coin">BTC</div>
 
-                        <span>
-                            0.050 BTC
-                        </span>
+<div class="asset-name">
 
-                    </div>
+<strong>Bitcoin</strong>
 
-                </div>
+<span>0.050 BTC</span>
 
+</div>
 
-                <div class="asset-value">
+</div>
 
-                    <strong>
-                        $3,887.40
-                    </strong>
+<div class="asset-value">
 
-                    <span>
-                        BTC
-                    </span>
+<strong>$3,887.40</strong>
 
-                </div>
+<span>BTC</span>
 
-            </div>
+</div>
 
+</div>
 
-            <div class="asset">
 
-                <div class="asset-left">
+<div class="asset">
 
-                    <div class="coin">
-                        ETH
-                    </div>
+<div class="asset-left">
 
-                    <div class="asset-name">
+<div class="coin">ETH</div>
 
-                        <strong>
-                            Ethereum
-                        </strong>
+<div class="asset-name">
 
-                        <span>
-                            1.250 ETH
-                        </span>
+<strong>Ethereum</strong>
 
-                    </div>
+<span>1.250 ETH</span>
 
-                </div>
+</div>
 
+</div>
 
-                <div class="asset-value">
+<div class="asset-value">
 
-                    <strong>
-                        $3,005.00
-                    </strong>
+<strong>$3,005.00</strong>
 
-                    <span>
-                        ETH
-                    </span>
+<span>ETH</span>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
 
-            <div class="asset">
+<div class="asset">
 
-                <div class="asset-left">
+<div class="asset-left">
 
-                    <div class="coin">
-                        USDT
-                    </div>
+<div class="coin">USDT</div>
 
-                    <div class="asset-name">
+<div class="asset-name">
 
-                        <strong>
-                            Tether
-                        </strong>
+<strong>Tether</strong>
 
-                        <span>
-                            3,107.60 USDT
-                        </span>
+<span>3,107.60 USDT</span>
 
-                    </div>
+</div>
 
-                </div>
+</div>
 
+<div class="asset-value">
 
-                <div class="asset-value">
+<strong>$3,107.60</strong>
 
-                    <strong>
-                        $3,107.60
-                    </strong>
+<span>USDT</span>
 
-                    <span>
-                        USDT
-                    </span>
+</div>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
-        </div>
+</section>
 
-    </section>
 
+<section class="panel market">
 
-    <section class="panel market">
+<div class="panel-header">
 
-        <div class="panel-header">
+<h2>Live Crypto Market</h2>
 
-            <h2>
-                Live Crypto Market
-            </h2>
+<span id="marketStatus">Updating...</span>
 
-            <span id="marketStatus">
-                Updating...
-            </span>
+</div>
 
-        </div>
+<div class="table-scroll">
 
+<table class="market-table">
 
-        <div class="table-scroll">
+<thead>
 
-            <table class="market-table">
+<tr>
 
-                <thead>
+<th>Asset</th>
+<th>Price</th>
+<th>24h Change</th>
+<th>24h Volume</th>
 
-                    <tr>
+</tr>
 
-                        <th>
-                            Asset
-                        </th>
+</thead>
 
-                        <th>
-                            Price
-                        </th>
+<tbody id="marketBody">
 
-                        <th>
-                            24h Change
-                        </th>
+<tr>
 
-                        <th>
-                            24h Volume
-                        </th>
+<td colspan="4" class="loading">
+Loading live market data...
+</td>
 
-                    </tr>
+</tr>
 
-                </thead>
+</tbody>
 
+</table>
 
-                <tbody id="marketBody">
+</div>
 
-                    <tr>
+</section>
 
-                        <td
-                            colspan="4"
-                            class="loading"
-                        >
-                            Loading live market data...
-                        </td>
 
-                    </tr>
+<section class="panel">
 
-                </tbody>
+<div class="panel-header">
 
-            </table>
+<h2>Quick Actions</h2>
 
-        </div>
+<span>Demo functions</span>
 
-    </section>
+</div>
 
+<div class="actions">
 
-    <section class="panel">
+<a href="deposit.html" class="action">
+Deposit Crypto
+</a>
 
-        <div class="panel-header">
+<a href="withdrawal.html" class="action">
+Withdraw Crypto
+</a>
 
-            <h2>
-                Quick Actions
-            </h2>
+<a href="transactions.html" class="action">
+View Transactions
+</a>
 
-            <span>
-                Demo functions
-            </span>
+</div>
 
-        </div>
+</section>
 
 
-        <div class="actions">
+<section class="security">
 
-            <a
-                href="deposit.html"
-                class="action"
-            >
-                Deposit Crypto
-            </a>
+<div>
 
+<strong>Account Security</strong>
 
-            <a
-                href="withdrawal.html"
-                class="action"
-            >
-                Withdraw Crypto
-            </a>
+<span>
+Security monitoring is enabled for this demo account.
+</span>
 
+</div>
 
-            <a
-                href="transactions.html"
-                class="action"
-            >
-                View Transactions
-            </a>
+<div class="status">
+● Active
+</div>
 
-        </div>
+</section>
 
-    </section>
 
+<section class="panel" style="margin-top:20px;">
 
-    <section class="security">
+<div class="panel-header">
 
-        <div>
+<h2>Recent Transactions</h2>
 
-            <strong>
-                Account Security
-            </strong>
+<span>Latest activity</span>
 
-            <span>
-                Security monitoring is enabled for this demo account.
-            </span>
+</div>
 
-        </div>
+<div class="table-scroll">
 
+<table class="transaction-table">
 
-        <div class="status">
-            ● Active
-        </div>
+<thead>
 
-    </section>
+<tr>
 
+<th>Date</th>
+<th>Asset</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Status</th>
 
-    <section
-        class="panel"
-        style="margin-top:20px;"
-    >
+</tr>
 
-        <div class="panel-header">
+</thead>
 
-            <h2>
-                Recent Transactions
-            </h2>
+<tbody>
 
-            <span>
-                Latest activity
-            </span>
+<tr>
 
-        </div>
+<td>03 Sep 2026</td>
+<td>BTC</td>
+<td>Deposit</td>
+<td class="positive">+$500.00</td>
+<td class="completed">Completed</td>
 
+</tr>
 
-        <div class="table-scroll">
+<tr>
 
-            <table class="transaction-table">
+<td>02 Sep 2026</td>
+<td>USDT</td>
+<td>Deposit</td>
+<td class="positive">+$300.00</td>
+<td class="completed">Completed</td>
 
-                <thead>
+</tr>
 
-                    <tr>
+<tr>
 
-                        <th>
-                            Date
-                        </th>
+<td>01 Sep 2026</td>
+<td>BTC</td>
+<td>Withdrawal</td>
+<td class="negative">-$100.00</td>
+<td class="completed">Completed</td>
 
-                        <th>
-                            Asset
-                        </th>
+</tr>
 
-                        <th>
-                            Type
-                        </th>
+<tr>
 
-                        <th>
-                            Amount
-                        </th>
+<td>30 Aug 2026</td>
+<td>USDT</td>
+<td>Withdrawal</td>
+<td class="negative">-$150.00</td>
+<td class="pending">Pending</td>
 
-                        <th>
-                            Status
-                        </th>
+</tr>
 
-                    </tr>
+</tbody>
 
-                </thead>
+</table>
 
+</div>
 
-                <tbody>
+<a href="transactions.html" class="view-all">
+View all transactions →
+</a>
 
+</section>
 
-                    <tr>
 
-                        <td>
-                            03 Sep 2026
-                        </td>
+<div class="notice">
 
-                        <td>
-                            BTC
-                        </td>
+This is a demonstration platform only.
+No real cryptocurrency deposits, withdrawals,
+wallet transfers, or financial transactions are processed.
 
-                        <td>
-                            Deposit
-                        </td>
-
-                        <td class="positive">
-                            +$500.00
-                        </td>
-
-                        <td class="completed">
-                            Completed
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            02 Sep 2026
-                        </td>
-
-                        <td>
-                            USDT
-                        </td>
-
-                        <td>
-                            Deposit
-                        </td>
-
-                        <td class="positive">
-                            +$300.00
-                        </td>
-
-                        <td class="completed">
-                            Completed
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            01 Sep 2026
-                        </td>
-
-                        <td>
-                            BTC
-                        </td>
-
-                        <td>
-                            Withdrawal
-                        </td>
-
-                        <td class="negative">
-                            -$100.00
-                        </td>
-
-                        <td class="completed">
-                            Completed
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            30 Aug 2026
-                        </td>
-
-                        <td>
-                            USDT
-                        </td>
-
-                        <td>
-                            Withdrawal
-                        </td>
-
-                        <td class="negative">
-                            -$150.00
-                        </td>
-
-                        <td class="pending">
-                            Pending
-                        </td>
-
-                    </tr>
-
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-        <a
-            href="transactions.html"
-            class="view-all"
-        >
-            View all transactions →
-        </a>
-
-    </section>
-
-
-    <div class="notice">
-
-        This is a demonstration platform only.
-        No real cryptocurrency deposits, withdrawals,
-        wallet transfers, or financial transactions are processed.
-
-    </div>
+</div>
 
 
 </main>
@@ -1201,202 +934,218 @@
 
 <footer>
 
-    © 2026 CryptoVault.
-    Demo platform for educational purposes.
+© 2026 CryptoVault.
+Demo platform for educational purposes.
 
 </footer>
 
 
 <script>
 
+let balanceVisible = true;
 
-    function toggleMenu() {
 
-        const nav =
-            document.getElementById("navLinks");
+function toggleMenu() {
 
-        nav.classList.toggle("show");
+const nav = document.getElementById("navLinks");
 
-    }
+nav.classList.toggle("show");
 
+}
 
-    async function loadMarketData() {
 
-        const marketBody =
-            document.getElementById("marketBody");
+function toggleBalance() {
 
-        const marketStatus =
-            document.getElementById("marketStatus");
+const balance = document.getElementById("portfolioBalance");
 
+const button = document.querySelector(".balance-actions .small-button");
 
-        try {
+if (balanceVisible) {
 
-            const response =
-                await fetch(
-                    "https://data-api.binance.vision/api/v3/ticker/24hr"
-                );
+balance.textContent = "••••••••";
 
+button.textContent = "Show Balance";
 
-            if (!response.ok) {
+balanceVisible = false;
 
-                throw new Error(
-                    "Market data unavailable"
-                );
+} else {
 
-            }
+balance.textContent = "$10,000.00";
 
+button.textContent = "Hide Balance";
 
-            const data =
-                await response.json();
+balanceVisible = true;
 
+}
 
-            const symbols = [
+}
 
-                "BTCUSDT",
-                "ETHUSDT",
-                "BNBUSDT",
-                "XRPUSDT",
-                "SOLUSDT"
 
-            ];
+async function loadMarketData() {
 
+const marketBody =
+document.getElementById("marketBody");
 
-            marketBody.innerHTML = "";
+const marketStatus =
+document.getElementById("marketStatus");
 
 
-            symbols.forEach(function(symbol) {
+marketStatus.textContent = "Updating...";
 
 
-                const coin =
-                    data.find(
-                        item =>
-                            item.symbol === symbol
-                    );
+try {
 
+const response =
+await fetch(
+"https://data-api.binance.vision/api/v3/ticker/24hr"
+);
 
-                if (!coin) {
-                    return;
-                }
 
+if (!response.ok) {
 
-                const price =
-                    Number(
-                        coin.lastPrice
-                    ).toLocaleString(
-                        "en-US",
-                        {
-                            style: "currency",
-                            currency: "USD",
-                            maximumFractionDigits: 6
-                        }
-                    );
+throw new Error("Market data unavailable");
 
+}
 
-                const change =
-                    Number(
-                        coin.priceChangePercent
-                    ).toFixed(2);
 
+const data = await response.json();
 
-                const volume =
-                    Number(
-                        coin.quoteVolume
-                    ).toLocaleString(
-                        "en-US",
-                        {
-                            maximumFractionDigits: 0
-                        }
-                    );
 
+const symbols = [
+"BTCUSDT",
+"ETHUSDT",
+"BNBUSDT",
+"XRPUSDT",
+"SOLUSDT"
+];
 
-                const row =
-                    document.createElement("tr");
 
+marketBody.innerHTML = "";
 
-                row.innerHTML = `
 
-                    <td>
+symbols.forEach(function(symbol) {
 
-                        <span class="coin-name">
-                            ${symbol.replace("USDT", "")}
-                        </span>
+const coin =
+data.find(
+item => item.symbol === symbol
+);
 
-                        <span class="coin-symbol">
-                            / USDT
-                        </span>
 
-                    </td>
+if (!coin) {
+return;
+}
 
 
-                    <td>
-                        ${price}
-                    </td>
+const price =
+Number(
+coin.lastPrice
+).toLocaleString(
+"en-US",
+{
+style: "currency",
+currency: "USD",
+maximumFractionDigits: 6
+}
+);
 
 
-                    <td class="${change >= 0 ? "positive" : "negative"}">
+const change =
+Number(
+coin.priceChangePercent
+).toFixed(2);
 
-                        ${change >= 0 ? "+" : ""}
-                        ${change}%
 
-                    </td>
+const volume =
+Number(
+coin.quoteVolume
+).toLocaleString(
+"en-US",
+{
+maximumFractionDigits: 0
+}
+);
 
 
-                    <td>
-                        $${volume}
-                    </td>
+const row =
+document.createElement("tr");
 
-                `;
 
+row.innerHTML = `
 
-                marketBody.appendChild(row);
+<td>
 
-            });
+<span class="coin-name">
+${symbol.replace("USDT", "")}
+</span>
 
+<span class="coin-symbol">
+/ USDT
+</span>
 
-            marketStatus.textContent =
-                "Updated " +
-                new Date().toLocaleTimeString();
+</td>
 
+<td>
+${price}
+</td>
 
-        } catch (error) {
+<td class="${change >= 0 ? "positive" : "negative"}">
 
+${change >= 0 ? "+" : ""}
+${change}%
 
-            marketBody.innerHTML = `
+</td>
 
-                <tr>
+<td>
+$${volume}
+</td>
 
-                    <td
-                        colspan="4"
-                        class="error"
-                    >
-                        Live market data is temporarily unavailable.
-                    </td>
+`;
 
-                </tr>
 
-            `;
+marketBody.appendChild(row);
 
+});
 
-            marketStatus.textContent =
-                "Update unavailable";
 
-        }
+marketStatus.textContent =
+"Updated " +
+new Date().toLocaleTimeString();
 
-    }
 
+} catch (error) {
 
-    loadMarketData();
+marketBody.innerHTML = `
 
+<tr>
 
-    setInterval(
-        loadMarketData,
-        60000
-    );
+<td colspan="4" class="error">
 
+Live market data is temporarily unavailable.
+
+</td>
+
+</tr>
+
+`;
+
+
+marketStatus.textContent =
+"Update unavailable";
+
+}
+
+}
+
+
+loadMarketData();
+
+
+setInterval(
+loadMarketData,
+60000
+);
 
 </script>
 
-
 </body>
-
 </html>
