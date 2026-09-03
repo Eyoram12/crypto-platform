@@ -50,7 +50,7 @@
 
         .theme-btn {
             border: none;
-            background: #ffffff;
+            background: white;
             padding: 10px 14px;
             border-radius: 10px;
             cursor: pointer;
@@ -63,7 +63,7 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.97);
+            background: white;
             padding: 32px;
             border-radius: 18px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.10);
@@ -91,19 +91,16 @@
         .demo-box {
             background: #eff6ff;
             border: 1px solid #bfdbfe;
-            padding: 14px;
+            padding: 15px;
             border-radius: 10px;
             margin-bottom: 22px;
             font-size: 14px;
+            line-height: 1.6;
         }
 
         body.dark .demo-box {
             background: #172554;
             border-color: #1d4ed8;
-        }
-
-        .demo-box strong {
-            color: #2563eb;
         }
 
         label {
@@ -113,11 +110,11 @@
         }
 
         .input-group {
-            position: relative;
             margin-bottom: 18px;
         }
 
-        input {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 13px 14px;
             border: 1px solid #d1d5db;
@@ -128,7 +125,8 @@
             color: #111827;
         }
 
-        body.dark input {
+        body.dark input[type="text"],
+        body.dark input[type="password"] {
             background: #111827;
             border-color: #374151;
             color: white;
@@ -139,8 +137,12 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
-        .password-input {
-            padding-right: 80px;
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 75px;
         }
 
         .show-btn {
@@ -152,6 +154,7 @@
             color: #2563eb;
             cursor: pointer;
             font-weight: bold;
+            padding: 5px;
         }
 
         .options {
@@ -191,6 +194,11 @@
 
         .login-btn:hover {
             background: #1d4ed8;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .message {
@@ -238,6 +246,7 @@
             font-size: 13px;
             text-align: center;
             color: #4b5563;
+            line-height: 1.5;
         }
 
         body.dark .security {
@@ -259,6 +268,10 @@
             .card {
                 padding: 24px;
             }
+
+            .options {
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -268,26 +281,43 @@
     <div class="container">
 
         <div class="top">
-            <div class="logo">🔐 CryptoVault</div>
 
-            <button class="theme-btn" onclick="toggleTheme()" id="themeButton">
+            <div class="logo">
+                🔐 CryptoVault
+            </div>
+
+            <button
+                class="theme-btn"
+                id="themeButton"
+                type="button"
+                onclick="toggleTheme()">
                 🌙
             </button>
+
         </div>
+
 
         <div class="card">
 
             <h1>Welcome Back</h1>
 
             <p class="subtitle">
-                Login to your CryptoVault demo account
+                Login to your CryptoVault account
             </p>
 
+
             <div class="demo-box">
-                <strong>Demo Login</strong><br><br>
-                Username: <strong>demo</strong><br>
-                Password: <strong>123456</strong>
+
+                <strong>Demo Account</strong><br>
+
+                Username:
+                <strong>demo</strong><br>
+
+                Password:
+                <strong>123456</strong>
+
             </div>
+
 
             <form id="loginForm">
 
@@ -302,10 +332,10 @@
                         id="username"
                         placeholder="Enter username or email"
                         autocomplete="username"
-                        required
-                    >
+                        required>
 
                 </div>
+
 
                 <div class="input-group">
 
@@ -313,25 +343,345 @@
                         Password
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        class="password-input"
-                        placeholder="Enter password"
-                        autocomplete="current-password"
-                        required
-                    >
+                    <div class="password-wrapper">
 
-                    <button
-                        type="button"
-                        class="show-btn"
-                        onclick="togglePassword()"
-                        id="showPasswordButton">
-                        Show
-                    </button>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-btn"
+                            id="showPasswordButton"
+                            onclick="togglePassword()">
+                            Show
+                        </button>
+
+                    </div>
 
                 </div>
 
+
                 <div class="options">
 
-                    <label class="
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="remember">
+
+                        Remember me
+
+                    </label>
+
+
+                    <span
+                        class="forgot"
+                        onclick="forgotPassword()">
+
+                        Forgot password?
+
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginButton">
+
+                    Login
+
+                </button>
+
+
+                <div
+                    id="message"
+                    class="message">
+                </div>
+
+            </form>
+
+
+            <div class="register">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <div class="security">
+
+                🛡️ <strong>Demo Environment</strong><br>
+
+                No real cryptocurrency, money,
+                bank transfer, or payment processing
+                is connected to this website.
+
+            </div>
+
+
+            <div class="back">
+
+                <a href="index.html">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* ==============================
+           THEME
+        ============================== */
+
+        function loadTheme() {
+
+            const theme =
+                localStorage.getItem("cryptoVaultTheme");
+
+            const button =
+                document.getElementById("themeButton");
+
+            if (theme === "dark") {
+
+                document.body.classList.add("dark");
+
+                button.textContent = "☀️";
+
+            } else {
+
+                document.body.classList.remove("dark");
+
+                button.textContent = "🌙";
+            }
+        }
+
+
+        function toggleTheme() {
+
+            document.body.classList.toggle("dark");
+
+            const button =
+                document.getElementById("themeButton");
+
+            if (document.body.classList.contains("dark")) {
+
+                localStorage.setItem(
+                    "cryptoVaultTheme",
+                    "dark"
+                );
+
+                button.textContent = "☀️";
+
+            } else {
+
+                localStorage.setItem(
+                    "cryptoVaultTheme",
+                    "light"
+                );
+
+                button.textContent = "🌙";
+            }
+        }
+
+
+        /* ==============================
+           SHOW / HIDE PASSWORD
+        ============================== */
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.getElementById(
+                    "showPasswordButton"
+                );
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                button.textContent = "Hide";
+
+            } else {
+
+                password.type = "password";
+
+                button.textContent = "Show";
+            }
+        }
+
+
+        /* ==============================
+           LOGIN
+        ============================== */
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                const username =
+                    document
+                        .getElementById("username")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+                const remember =
+                    document
+                        .getElementById("remember")
+                        .checked;
+
+                const message =
+                    document
+                        .getElementById("message");
+
+                const loginButton =
+                    document
+                        .getElementById("loginButton");
+
+
+                /* Demo credentials */
+
+                const correctUsername = "demo";
+
+                const correctPassword = "123456";
+
+
+                /* Check credentials */
+
+                if (
+                    username !== correctUsername &&
+                    username !== "demo@cryptovault.com"
+                ) {
+
+                    message.className =
+                        "message error";
+
+                    message.textContent =
+                        "❌ Incorrect username.";
+
+                    return;
+                }
+
+
+                if (password !== correctPassword) {
+
+                    message.className =
+                        "message error";
+
+                    message.textContent =
+                        "❌ Incorrect password.";
+
+                    return;
+                }
+
+
+                /* Login successful */
+
+                localStorage.setItem(
+                    "cryptoVaultLoggedIn",
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "cryptoVaultUsername",
+                    "demo"
+                );
+
+
+                if (remember) {
+
+                    localStorage.setItem(
+                        "cryptoVaultRemember",
+                        "true"
+                    );
+
+                } else {
+
+                    localStorage.removeItem(
+                        "cryptoVaultRemember"
+                    );
+                }
+
+
+                message.className =
+                    "message success";
+
+                message.textContent =
+                    "✅ Login successful. Opening Dashboard...";
+
+
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "Opening Dashboard...";
+
+
+                /*
+                   Direct GitHub Pages redirect
+                */
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        window.location.origin +
+                        window.location.pathname
+                            .replace(
+                                /\/[^\/]*$/,
+                                "/dashboard.html"
+                            );
+
+                }, 700);
+
+            });
+
+
+        /* ==============================
+           FORGOT PASSWORD
+        ============================== */
+
+        function forgotPassword() {
+
+            alert(
+                "Demo password:\n\n" +
+                "123456\n\n" +
+                "Password recovery is simulated."
+            );
+        }
+
+
+        /* ==============================
+           LOAD THEME
+        ============================== */
+
+        loadTheme();
+
+    </script>
+
+</body>
+
+</html>
