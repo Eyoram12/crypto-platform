@@ -23,248 +23,337 @@ body {
 }
 
 header {
-    background: #111827;
+    background: #0b1220;
     color: white;
-    padding: 16px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .logo {
-    font-size: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
+    font-size: 18px;
+}
+
+.brand-text strong {
+    display: block;
+    font-size: 18px;
+}
+
+.brand-text span {
+    font-size: 10px;
+    color: #94a3b8;
+    letter-spacing: 1px;
 }
 
 nav {
     display: flex;
-    gap: 18px;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
 }
 
 nav a {
-    color: white;
+    color: #cbd5e1;
     text-decoration: none;
-    font-size: 14px;
+    padding: 9px 11px;
+    border-radius: 8px;
+    font-size: 13px;
 }
 
-nav a:hover {
-    color: #93c5fd;
+nav a:hover,
+nav a.active {
+    background: #1e293b;
+    color: white;
 }
 
 .container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 35px auto;
+    max-width: 1100px;
+    margin: auto;
+    padding: 45px 20px;
 }
 
 .hero {
-    background: #111827;
-    color: white;
-    padding: 38px;
-    border-radius: 18px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
-.hero h1 {
-    margin: 0 0 12px;
-    font-size: 34px;
+.badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 38px;
+    margin: 14px 0 10px;
 }
 
 .hero p {
-    margin: 0;
-    color: #d1d5db;
-    line-height: 1.6;
+    color: #64748b;
+    max-width: 700px;
+    line-height: 1.7;
 }
 
-.platform-badge {
-    display: inline-block;
-    margin-top: 20px;
-    background: #1d4ed8;
-    color: white;
-    padding: 9px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.notice {
-    background: #eef6ff;
-    border-left: 5px solid #2563eb;
-    padding: 17px;
-    border-radius: 8px;
-    margin-bottom: 22px;
-    line-height: 1.6;
+.grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 22px;
 }
 
 .card {
     background: white;
-    padding: 27px;
     border-radius: 16px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-    margin-bottom: 24px;
+    padding: 25px;
+    box-shadow: 0 8px 28px rgba(15,23,42,0.07);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 22px;
 }
 
 .card h2 {
     margin-top: 0;
-    margin-bottom: 20px;
+    font-size: 21px;
+}
+
+.card p {
+    color: #64748b;
+    line-height: 1.6;
 }
 
 .balance {
-    background: #f7f9fc;
-    padding: 20px;
-    border-radius: 12px;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white;
+    border: none;
 }
 
-.balance-label {
-    color: #667085;
-    margin-bottom: 8px;
+.balance small {
+    color: #cbd5e1;
 }
 
-.balance strong {
-    font-size: 28px;
+.balance-value {
+    font-size: 34px;
+    font-weight: bold;
+    margin-top: 8px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.status {
+    display: inline-block;
+    margin-top: 12px;
+    background: rgba(34,197,94,0.18);
+    color: #86efac;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 label {
     display: block;
+    margin: 17px 0 7px;
+    font-size: 13px;
     font-weight: bold;
-    margin-bottom: 8px;
 }
 
-select,
-input {
+input,
+select {
     width: 100%;
-    padding: 14px;
+    padding: 13px 14px;
     border: 1px solid #d1d5db;
     border-radius: 9px;
-    font-size: 15px;
+    font-size: 14px;
     background: white;
+    color: #172033;
+}
+
+input:focus,
+select:focus {
     outline: none;
-}
-
-select:focus,
-input:focus {
     border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
 }
 
-.security {
-    background: #f7f9fc;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 22px 0;
+.quick-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
 }
 
-.security-title {
+.quick-buttons button {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    padding: 8px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.quick-buttons button:hover {
+    background: #e0e7ff;
+    border-color: #6366f1;
+}
+
+.primary-btn {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
     font-weight: bold;
-    margin-bottom: 8px;
+    cursor: pointer;
 }
 
-.security-row {
+.primary-btn:hover {
+    background: #1d4ed8;
+}
+
+.secondary-btn {
+    border: none;
+    background: #e2e8f0;
+    color: #172033;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.warning {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+}
+
+.security-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.security-list li {
+    padding: 13px 0;
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
     justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #e5e7eb;
+    gap: 10px;
 }
 
-.security-row:last-child {
+.security-list li:last-child {
     border-bottom: none;
 }
 
-.status {
+.good {
     color: #15803d;
     font-weight: bold;
 }
 
-.button {
-    width: 100%;
-    border: none;
-    background: #2563eb;
-    color: white;
-    padding: 15px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
+.process {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
 }
 
-.button:hover {
-    background: #1d4ed8;
+.step {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.step h3 {
+    font-size: 15px;
+    margin: 0 0 7px;
+}
+
+.step p {
+    font-size: 13px;
+    margin: 0;
 }
 
 .success {
     display: none;
-    background: #ecfdf3;
-    border: 1px solid #86efac;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
     color: #166534;
-    padding: 19px;
-    border-radius: 10px;
-    margin-top: 18px;
-    line-height: 1.7;
-}
-
-.steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.step {
-    background: #f7f9fc;
-    padding: 20px;
     border-radius: 12px;
-    line-height: 1.5;
+    padding: 18px;
+    margin-top: 20px;
 }
 
-.step strong {
-    display: block;
-    margin-bottom: 8px;
-}
-
-.security-info {
-    line-height: 1.7;
-    color: #475467;
+.demo {
+    text-align: center;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    color: #3730a3;
 }
 
 footer {
+    background: #0b1220;
+    color: #94a3b8;
     text-align: center;
-    padding: 35px;
-    color: #667085;
+    padding: 25px 20px;
+    margin-top: 30px;
     font-size: 13px;
+    line-height: 1.6;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+    .process {
+        grid-template-columns: 1fr;
     }
 
     nav {
-        gap: 10px;
+        display: none;
     }
 
-    nav a {
-        font-size: 12px;
-    }
-
-    .hero {
-        padding: 28px;
-    }
-
-    .hero h1 {
-        font-size: 27px;
-    }
-
-    .steps {
-        grid-template-columns: 1fr;
+    h1 {
+        font-size: 30px;
     }
 }
 </style>
@@ -273,330 +362,285 @@ footer {
 <body>
 
 <header>
+    <div class="navbar">
 
-    <div class="logo">🔐 CryptoVault</div>
+        <div class="brand">
+            <div class="logo">CV</div>
+            <div class="brand-text">
+                <strong>CryptoVault</strong>
+                <span>DIGITAL ASSET PLATFORM</span>
+            </div>
+        </div>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="deposit.html">Deposit</a>
-        <a href="withdrawal.html">Withdrawal</a>
-        <a href="p2p.html">P2P Trading</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="settings.html">Settings</a>
-        <a href="login.html">Logout</a>
-    </nav>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="p2p.html">P2P Trading</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="settings.html">Settings</a>
+            <a href="withdrawal.html" class="active">Withdrawal</a>
+        </nav>
 
+    </div>
 </header>
-
 
 <main class="container">
 
     <section class="hero">
+        <span class="badge">WITHDRAWAL</span>
 
-        <h1>💸 Withdrawal</h1>
+        <h1>Withdraw Assets</h1>
 
         <p>
-            Manage your digital asset withdrawal requests through CryptoVault.
+            Create a simulated withdrawal request and review the transaction
+            details before confirmation.
         </p>
-
-        <div class="platform-badge">
-            Secure Platform
-        </div>
-
     </section>
 
+    <div class="grid">
 
-    <div class="notice">
+        <div>
 
-        <strong>Withdrawal Information</strong>
+            <div class="card balance">
+                <small>Available Portfolio Balance</small>
+
+                <div class="balance-value" id="balance">
+                    $10,000.00
+                </div>
+
+                <span class="status">
+                    ● Account Active
+                </span>
+            </div>
+
+            <div class="card">
+
+                <h2>Create Withdrawal</h2>
+
+                <p>
+                    Select an asset, network, destination and amount for this
+                    demonstration.
+                </p>
+
+                <label for="asset">Asset</label>
+
+                <select id="asset">
+                    <option value="USDT">USDT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
+                </select>
+
+                <label for="network">Network</label>
+
+                <select id="network">
+                    <option>Ethereum</option>
+                    <option>Bitcoin</option>
+                    <option>BNB Smart Chain</option>
+                </select>
+
+                <label for="destination">Destination Address</label>
+
+                <input
+                    type="text"
+                    id="destination"
+                    placeholder="Enter demo destination address"
+                >
+
+                <label for="amount">Withdrawal Amount</label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="Enter amount"
+                    min="1"
+                    step="0.01"
+                >
+
+                <div class="quick-buttons">
+                    <button type="button" onclick="setAmount(50)">50</button>
+                    <button type="button" onclick="setAmount(100)">100</button>
+                    <button type="button" onclick="setAmount(250)">250</button>
+                    <button type="button" onclick="setAmount(500)">500</button>
+                    <button type="button" onclick="setAmount(1000)">1000</button>
+                </div>
+
+                <button class="primary-btn" onclick="createWithdrawal()">
+                    Create Demo Withdrawal
+                </button>
+
+                <div class="success" id="successBox">
+
+                    <strong>Withdrawal Request Created</strong>
+
+                    <p id="successText"></p>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="location.reload()"
+                    >
+                        Create Another Request
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="card">
+
+                <h2>Security Check</h2>
+
+                <ul class="security-list">
+
+                    <li>
+                        <span>Account Status</span>
+                        <span class="good">Active</span>
+                    </li>
+
+                    <li>
+                        <span>Two-Factor Authentication</span>
+                        <span class="good">Enabled</span>
+                    </li>
+
+                    <li>
+                        <span>Account Protection</span>
+                        <span class="good">Active</span>
+                    </li>
+
+                    <li>
+                        <span>Verification</span>
+                        <span class="good">Ready</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="card warning">
+
+                <h2>Important</h2>
+
+                <p>
+                    Always review the destination address and selected network
+                    before confirming a withdrawal.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>How Withdrawal Works</h2>
+
+        <div class="process">
+
+            <div class="step">
+
+                <div class="step-number">1</div>
+
+                <h3>Select Asset</h3>
+
+                <p>
+                    Choose USDT, BTC or ETH for your simulated withdrawal.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">2</div>
+
+                <h3>Enter Details</h3>
+
+                <p>
+                    Enter a demo destination address and withdrawal amount.
+                </p>
+
+            </div>
+
+            <div class="step">
+
+                <div class="step-number">3</div>
+
+                <h3>Review Request</h3>
+
+                <p>
+                    The platform generates a simulated withdrawal confirmation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card demo">
+
+        <strong>Demo Environment</strong>
 
         <p>
-            Withdrawal requests on this website are simulated interface actions.
-            No cryptocurrency, bank funds, or mobile money are transferred.
+            This website is a demonstration interface for educational and
+            presentation purposes. No real cryptocurrency, money, bank
+            transfer, payment processor, wallet or blockchain transaction
+            is processed.
         </p>
 
     </div>
 
-
-    <section class="card">
-
-        <h2>Available Balance</h2>
-
-        <div class="balance">
-
-            <div class="balance-label">
-                Portfolio Balance
-            </div>
-
-            <strong>$10,000.00</strong>
-
-        </div>
-
-    </section>
-
-
-    <section class="card">
-
-        <h2>Withdrawal Details</h2>
-
-
-        <div class="form-group">
-
-            <label for="asset">
-                Select Asset
-            </label>
-
-            <select id="asset">
-
-                <option value="USDT">
-                    USDT - Tether
-                </option>
-
-                <option value="BTC">
-                    BTC - Bitcoin
-                </option>
-
-                <option value="ETH">
-                    ETH - Ethereum
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="network">
-                Network
-            </label>
-
-            <select id="network">
-
-                <option>
-                    Ethereum (ERC-20)
-                </option>
-
-                <option>
-                    BNB Smart Chain (BEP-20)
-                </option>
-
-                <option>
-                    TRON (TRC-20)
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="destination">
-                Destination
-            </label>
-
-            <input
-                id="destination"
-                type="text"
-                placeholder="Enter destination"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="amount">
-                Withdrawal Amount
-            </label>
-
-            <input
-                id="amount"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="Enter amount"
-            >
-
-        </div>
-
-
-        <div class="security">
-
-            <div class="security-title">
-                Security Check
-            </div>
-
-            <div class="security-row">
-
-                <span>Account Status</span>
-
-                <span class="status">
-                    Active
-                </span>
-
-            </div>
-
-            <div class="security-row">
-
-                <span>2FA</span>
-
-                <span class="status">
-                    Enabled
-                </span>
-
-            </div>
-
-            <div class="security-row">
-
-                <span>Verification</span>
-
-                <span class="status">
-                    Ready
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="button"
-            onclick="createWithdrawal()"
-        >
-            Create Withdrawal
-        </button>
-
-
-        <div
-            class="success"
-            id="success"
-        ></div>
-
-    </section>
-
-
-    <section class="card">
-
-        <h2>How Withdrawal Works</h2>
-
-        <div class="steps">
-
-            <div class="step">
-
-                <strong>1. Select Asset</strong>
-
-                Choose the digital asset you want to withdraw.
-
-            </div>
-
-
-            <div class="step">
-
-                <strong>2. Enter Details</strong>
-
-                Enter the destination and withdrawal amount.
-
-            </div>
-
-
-            <div class="step">
-
-                <strong>3. Confirm</strong>
-
-                Create the withdrawal request and view the confirmation.
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="card">
-
-        <h2>🛡️ Security</h2>
-
-        <div class="security-info">
-
-            <p>
-                CryptoVault uses a secure interface design for managing
-                digital asset information.
-            </p>
-
-            <p>
-                Never enter real private keys, seed phrases, passwords,
-                or financial credentials into an unverified website.
-            </p>
-
-        </div>
-
-    </section>
-
 </main>
 
-
 <footer>
-
-    © 2026 CryptoVault | Digital Asset Platform
-
+    © 2026 CryptoVault. Demo interface for educational and presentation purposes.
+    No real cryptocurrency or financial transactions are processed.
 </footer>
-
 
 <script>
 
+function setAmount(value) {
+    document.getElementById("amount").value = value;
+}
+
 function createWithdrawal() {
 
-    const asset =
-        document.getElementById("asset").value;
-
-    const network =
-        document.getElementById("network").value;
-
-    const destination =
-        document.getElementById("destination").value.trim();
-
-    const amount =
-        parseFloat(document.getElementById("amount").value);
-
-    const success =
-        document.getElementById("success");
-
+    const asset = document.getElementById("asset").value;
+    const network = document.getElementById("network").value;
+    const destination = document.getElementById("destination").value.trim();
+    const amount = document.getElementById("amount").value;
 
     if (!destination) {
-
-        alert("Please enter a destination.");
-
+        alert("Please enter a demo destination address.");
         return;
     }
 
-
-    if (!amount || amount <= 0) {
-
+    if (!amount || Number(amount) <= 0) {
         alert("Please enter a valid withdrawal amount.");
-
         return;
     }
 
+    const transactionId =
+        "CV-WD-" +
+        Math.random().toString(36).substring(2, 8).toUpperCase();
 
-    success.style.display = "block";
+    document.getElementById("successText").innerHTML =
+        "Demo withdrawal created successfully.<br><br>" +
+        "<strong>Asset:</strong> " + asset + "<br>" +
+        "<strong>Network:</strong> " + network + "<br>" +
+        "<strong>Amount:</strong> " + amount + " " + asset + "<br>" +
+        "<strong>Transaction ID:</strong> " + transactionId + "<br>" +
+        "<strong>Status:</strong> Demo Pending";
 
-    success.innerHTML =
-        "<strong>Withdrawal Request Created</strong><br><br>" +
-        "Asset: " + asset + "<br>" +
-        "Network: " + network + "<br>" +
-        "Amount: " + amount.toLocaleString() + " " + asset + "<br>" +
-        "Destination: " + destination + "<br><br>" +
-        "Your request has been recorded in this interface. " +
-        "No real cryptocurrency or money was transferred.";
+    document.getElementById("successBox").style.display = "block";
 
-    success.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
+    window.scrollTo({
+        top: document.getElementById("successBox").offsetTop - 100,
+        behavior: "smooth"
     });
-
 }
 
 </script>
