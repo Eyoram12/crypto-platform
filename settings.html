@@ -15,133 +15,241 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #0b1020;
-            color: white;
-            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080d1c;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
         }
 
         header {
-            background: #151c32;
-            padding: 20px 8%;
+            background: #0c1226;
+            border-bottom: 1px solid #273252;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
+            color: #6ea0ff;
             font-size: 25px;
             font-weight: bold;
         }
 
-        header a {
-            color: white;
-            text-decoration: none;
-            background: #4f8cff;
-            padding: 10px 18px;
+        .dashboard-link {
+            color: #dce3f3;
+            border: 1px solid #39476a;
+            padding: 9px 16px;
             border-radius: 7px;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 45px auto;
-            padding: 20px;
+        .dashboard-link:hover {
+            background: #17223e;
         }
 
-        h1 {
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 65px 25px;
+        }
+
+        .page-header {
             text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
             margin-bottom: 10px;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #aab3c5;
-            margin-bottom: 30px;
+        .page-header p {
+            color: #9da8bb;
         }
 
         .card {
-            background: #151c32;
+            background: #11182c;
+            border: 1px solid #273252;
+            border-radius: 14px;
             padding: 30px;
-            border-radius: 15px;
             margin-bottom: 25px;
         }
 
         .card h2 {
-            margin-bottom: 20px;
+            font-size: 23px;
+            margin-bottom: 22px;
         }
 
-        .info {
-            background: #202a45;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 12px;
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
         }
 
-        .info span {
+        .info-box {
+            background: #0c1326;
+            border: 1px solid #202a46;
+            border-radius: 9px;
+            padding: 17px;
+        }
+
+        .info-box span {
             display: block;
-            color: #aab3c5;
+            color: #7f8ba3;
             font-size: 13px;
             margin-bottom: 5px;
         }
 
+        .info-box strong {
+            font-size: 16px;
+        }
+
+        .active {
+            color: #61d88b;
+        }
+
         label {
             display: block;
-            margin-bottom: 8px;
+            color: #cbd4e6;
             font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 13px;
-            margin-bottom: 18px;
-            border: 1px solid #35405f;
-            border-radius: 8px;
-            background: #0f1629;
+            background: #0b1224;
+            border: 1px solid #34415f;
+            border-radius: 7px;
             color: white;
             font-size: 15px;
+            margin-bottom: 18px;
         }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4f8cff;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 24px;
             border-radius: 8px;
-            background: #4f8cff;
-            color: white;
-            font-size: 16px;
+            border: none;
             font-weight: bold;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #3677e8;
+        .primary {
+            background: #4f8cff;
+            color: white;
         }
 
-        .security {
-            padding: 15px;
-            background: #202a45;
-            border-radius: 8px;
-            margin-bottom: 12px;
+        .primary:hover {
+            opacity: 0.9;
         }
 
-        .active {
-            color: #52d273;
+        .security-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 0;
+            border-bottom: 1px solid #202a46;
+        }
+
+        .security-row:last-child {
+            border-bottom: none;
+        }
+
+        .security-row strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .security-row p {
+            color: #8995aa;
+            font-size: 14px;
+        }
+
+        .enabled {
+            color: #61d88b;
             font-weight: bold;
         }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #6ea0ff;
-            text-decoration: none;
+        .not-configured {
+            color: #f4c95d;
+            font-weight: bold;
         }
 
-        .demo {
+        .notice {
+            background: #10182d;
+            border: 1px solid #304066;
+            border-radius: 10px;
+            padding: 18px;
+            color: #9da8bb;
+            font-size: 14px;
             text-align: center;
-            color: #8f9ab0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        footer {
+            background: #050914;
+            border-top: 1px solid #273252;
+            text-align: center;
+            padding: 35px 20px;
+            color: #7e899e;
             font-size: 13px;
-            margin-top: 25px;
+        }
+
+        footer strong {
+            display: block;
+            color: #6ea0ff;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 700px) {
+
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 34px;
+            }
+
+            main {
+                padding: 45px 15px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .security-row {
+                align-items: flex-start;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -149,54 +257,61 @@
 <body>
 
     <header>
+        <div class="nav">
+            <div class="logo">CryptoVault</div>
 
-        <div class="logo">CryptoVault</div>
-
-        <a href="dashboard.html">
-            Dashboard
-        </a>
-
+            <a href="dashboard.html" class="dashboard-link">
+                ← Dashboard
+            </a>
+        </div>
     </header>
 
-    <div class="container">
+    <main>
 
-        <h1>Account Settings</h1>
+        <div class="page-header">
+            <h1>Account Settings</h1>
+            <p>Manage your profile and account security.</p>
+        </div>
 
-        <p class="subtitle">
-            Manage your account information and security.
-        </p>
+        <!-- Profile -->
 
         <div class="card">
 
             <h2>Profile Information</h2>
 
-            <div class="info">
-                <span>Full Name</span>
-                Getahun
-            </div>
+            <div class="profile-grid">
 
-            <div class="info">
-                <span>Email</span>
-                user@example.com
-            </div>
+                <div class="info-box">
+                    <span>Full Name</span>
+                    <strong>Getahun</strong>
+                </div>
 
-            <div class="info">
-                <span>Username</span>
-                cryptouser
-            </div>
+                <div class="info-box">
+                    <span>Username</span>
+                    <strong>cryptouser</strong>
+                </div>
 
-            <div class="info">
-                <span>Account Status</span>
-                <strong class="active">Active</strong>
+                <div class="info-box">
+                    <span>Email Address</span>
+                    <strong>user@example.com</strong>
+                </div>
+
+                <div class="info-box">
+                    <span>Account Status</span>
+                    <strong class="active">● Active</strong>
+                </div>
+
             </div>
 
         </div>
+
+        <!-- Password -->
 
         <div class="card">
 
             <h2>Change Password</h2>
 
-            <form action="settings.html">
+            <form action="settings.html" method="get">
 
                 <label for="current-password">
                     Current Password
@@ -206,7 +321,6 @@
                     type="password"
                     id="current-password"
                     placeholder="Enter current password"
-                    required
                 >
 
                 <label for="new-password">
@@ -217,7 +331,6 @@
                     type="password"
                     id="new-password"
                     placeholder="Enter new password"
-                    required
                 >
 
                 <label for="confirm-password">
@@ -228,10 +341,9 @@
                     type="password"
                     id="confirm-password"
                     placeholder="Confirm new password"
-                    required
                 >
 
-                <button type="submit">
+                <button type="submit" class="btn primary">
                     Update Password
                 </button>
 
@@ -239,34 +351,111 @@
 
         </div>
 
+        <!-- Security -->
+
         <div class="card">
 
             <h2>Security</h2>
 
-            <div class="security">
-                🔐 Account Protection
-                <br>
-                <span class="active">Enabled</span>
+            <div class="security-row">
+
+                <div>
+                    <strong>Account Protection</strong>
+                    <p>Basic account protection is enabled.</p>
+                </div>
+
+                <span class="enabled">
+                    Enabled
+                </span>
+
             </div>
 
-            <div class="security">
-                📱 Two-Factor Authentication
-                <br>
-                <span>Not configured in demo</span>
+            <div class="security-row">
+
+                <div>
+                    <strong>Two-Factor Authentication</strong>
+                    <p>Add an additional security layer to your account.</p>
+                </div>
+
+                <span class="not-configured">
+                    Not Configured
+                </span>
+
+            </div>
+
+            <div class="security-row">
+
+                <div>
+                    <strong>Login Alerts</strong>
+                    <p>Receive notifications when a new login occurs.</p>
+                </div>
+
+                <span class="enabled">
+                    Enabled
+                </span>
+
             </div>
 
         </div>
 
-        <a class="back" href="dashboard.html">
-            ← Back to Dashboard
-        </a>
+        <!-- Preferences -->
 
-        <p class="demo">
-            Demo platform only. Account information and password changes
-            are not stored on a real server.
-        </p>
+        <div class="card">
 
-    </div>
+            <h2>Preferences</h2>
+
+            <label for="currency">
+                Display Currency
+            </label>
+
+            <select id="currency">
+                <option>USD - US Dollar</option>
+                <option>EUR - Euro</option>
+                <option>GBP - British Pound</option>
+                <option>ETB - Ethiopian Birr</option>
+            </select>
+
+            <label for="language">
+                Language
+            </label>
+
+            <select id="language">
+                <option>English</option>
+                <option>Afaan Oromoo</option>
+                <option>Amharic</option>
+            </select>
+
+        </div>
+
+        <div class="notice">
+            This is a demonstration platform. Profile information,
+            passwords and preferences are not stored on a real server.
+            Do not enter real passwords or sensitive information.
+        </div>
+
+        <div class="actions">
+
+            <a href="dashboard.html" class="btn primary">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+
+        <strong>CryptoVault</strong>
+
+        Demo digital asset management platform.
+        <br>
+
+        No real cryptocurrency or money is processed.
+        <br><br>
+
+        © 2026 CryptoVault
+
+    </footer>
 
 </body>
 
