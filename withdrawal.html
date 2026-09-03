@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Withdraw Crypto | CryptoVault</title>
+    <title>Withdrawal | CryptoVault</title>
 
     <style>
         * {
@@ -15,191 +15,245 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: #0b1120;
-            color: #e5e7eb;
-            line-height: 1.6;
+            background: #07111f;
+            color: #ffffff;
         }
 
-        header {
-            background: #111827;
-            border-bottom: 1px solid #263244;
-            padding: 18px 6%;
+        .header {
+            background: #091522;
+            border-bottom: 1px solid #203349;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            min-height: 70px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            color: white;
-            text-decoration: none;
             font-size: 24px;
             font-weight: bold;
         }
 
         .logo span {
-            color: #38bdf8;
+            color: #35d0ba;
         }
 
-        .dashboard-link {
-            color: #cbd5e1;
+        .dashboard {
+            color: #35d0ba;
             text-decoration: none;
+            font-weight: bold;
         }
 
-        .dashboard-link:hover {
-            color: #38bdf8;
+        .container {
+            width: 92%;
+            max-width: 950px;
+            margin: 40px auto;
         }
 
-        main {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 0 20px;
+        .title {
+            margin-bottom: 25px;
         }
 
-        .page-title {
-            text-align: center;
-            margin-bottom: 35px;
+        .title h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
-        .page-title h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            color: white;
+        .title p {
+            color: #8fa2b6;
         }
 
-        .page-title p {
-            color: #94a3b8;
+        .warning {
+            padding: 16px;
+            border-radius: 10px;
+            background: #2b2111;
+            border: 1px solid #65501e;
+            color: #f2d37b;
+            line-height: 1.6;
+            font-size: 13px;
+            margin-bottom: 25px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 25px;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 22px;
         }
 
         .card {
-            background: #111827;
-            border: 1px solid #263244;
+            background: #0d1b2a;
+            border: 1px solid #203349;
             border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            padding: 25px;
         }
 
         .card h2 {
-            color: white;
+            font-size: 19px;
             margin-bottom: 20px;
         }
 
-        .warning {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid #92400e;
-            color: #fbbf24;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
         .balance {
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 25px;
+            background: #102437;
+            border: 1px solid #25445e;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 22px;
         }
 
-        .balance small {
-            color: #94a3b8;
+        .balance span {
+            display: block;
+            color: #8fa2b6;
+            font-size: 12px;
+            margin-bottom: 6px;
         }
 
         .balance strong {
-            display: block;
-            color: white;
-            font-size: 24px;
-            margin-top: 5px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-            font-weight: bold;
+            color: #35d0ba;
+            font-size: 22px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-        input,
-        select {
+        label {
+            display: block;
+            color: #dce7f2;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input {
             width: 100%;
-            padding: 13px 14px;
-            background: #0f172a;
-            color: white;
-            border: 1px solid #334155;
-            border-radius: 8px;
+            padding: 14px;
+            background: #091522;
+            color: #ffffff;
+            border: 1px solid #2a3e55;
+            border-radius: 9px;
+            font-size: 14px;
             outline: none;
-            font-size: 15px;
         }
 
-        input:focus,
-        select:focus {
-            border-color: #38bdf8;
+        select:focus,
+        input:focus {
+            border-color: #35d0ba;
         }
 
-        .submit-btn {
+        .network-note {
+            margin-top: 7px;
+            color: #718398;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .btn {
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 8px;
-            background: #38bdf8;
-            color: #082f49;
-            font-size: 16px;
+            border-radius: 9px;
+            background: #35d0ba;
+            color: #06121f;
             font-weight: bold;
+            font-size: 15px;
             cursor: pointer;
         }
 
-        .submit-btn:hover {
-            background: #7dd3fc;
+        .btn:hover {
+            opacity: 0.9;
         }
 
-        .instructions {
-            color: #cbd5e1;
+        .info {
+            margin-bottom: 20px;
         }
 
-        .instructions ol {
-            padding-left: 22px;
+        .info:last-child {
+            margin-bottom: 0;
         }
 
-        .instructions li {
-            margin-bottom: 15px;
+        .info strong {
+            display: block;
+            margin-bottom: 7px;
         }
 
-        .info-box {
-            margin-top: 25px;
-            background: #0f172a;
-            border: 1px solid #263244;
+        .info p {
+            color: #8fa2b6;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        .steps li {
+            counter-increment: steps;
+            position: relative;
+            padding-left: 38px;
+            margin-bottom: 18px;
+            color: #9caec1;
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        .steps li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #13283a;
+            color: #35d0ba;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .security {
+            margin-top: 20px;
+            padding: 15px;
             border-radius: 10px;
-            padding: 16px;
-            color: #94a3b8;
-            font-size: 14px;
+            background: #0b2020;
+            border: 1px solid #204943;
         }
 
-        .back {
-            display: inline-block;
+        .security strong {
+            display: block;
+            color: #35d0ba;
+            margin-bottom: 6px;
+        }
+
+        .security p {
+            color: #91a4b8;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .notice {
             margin-top: 25px;
-            color: #38bdf8;
-            text-decoration: none;
-        }
-
-        .back:hover {
-            text-decoration: underline;
+            text-align: center;
+            color: #718398;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         footer {
             text-align: center;
-            padding: 30px 20px;
-            color: #64748b;
-            font-size: 14px;
+            color: #64768a;
+            font-size: 12px;
+            padding: 30px 15px;
         }
 
         @media (max-width: 800px) {
@@ -207,12 +261,14 @@
                 grid-template-columns: 1fr;
             }
 
-            .page-title h1 {
-                font-size: 30px;
+            .title h1 {
+                font-size: 28px;
             }
+        }
 
-            header {
-                padding: 16px 20px;
+        @media (max-width: 500px) {
+            .card {
+                padding: 20px;
             }
         }
     </style>
@@ -220,142 +276,270 @@
 
 <body>
 
-<header>
-    <a href="index.html" class="logo">
-        Crypto<span>Vault</span>
-    </a>
+<header class="header">
 
-    <a href="dashboard.html" class="dashboard-link">
-        ← Dashboard
-    </a>
+    <nav class="nav">
+
+        <div class="logo">
+            Crypto<span>Vault</span>
+        </div>
+
+        <a href="dashboard.html" class="dashboard">
+            Dashboard
+        </a>
+
+    </nav>
+
 </header>
 
-<main>
 
-    <div class="page-title">
+<main class="container">
+
+    <section class="title">
+
         <h1>Withdraw Crypto</h1>
-        <p>Submit a cryptocurrency withdrawal request in the demonstration environment.</p>
+
+        <p>
+            Submit a withdrawal request from your CryptoVault demo portfolio.
+        </p>
+
+    </section>
+
+
+    <div class="warning">
+
+        <strong>Demo Safety Notice:</strong>
+        Do not enter a real wallet address or send real cryptocurrency.
+        This page is a demonstration only and does not perform real withdrawals.
+
     </div>
 
-    <div class="grid">
+
+    <section class="grid">
 
         <div class="card">
 
             <h2>Withdrawal Request</h2>
 
-            <div class="warning">
-                <strong>Demo Environment:</strong>
-                Do not enter a real wallet address or send real cryptocurrency through this website.
-                This page does not perform blockchain transactions.
-            </div>
-
             <div class="balance">
-                <small>Available Demo Balance</small>
-                <strong>0.050 BTC</strong>
+
+                <span>
+                    Available Demo Balance
+                </span>
+
+                <strong>
+                    $10,000.00
+                </strong>
+
             </div>
 
-            <form action="dashboard.html" method="get">
+
+            <form
+                action="dashboard.html"
+                method="get"
+                onsubmit="return validateWithdrawal()"
+            >
 
                 <div class="form-group">
-                    <label for="asset">Select Asset</label>
 
-                    <select id="asset" name="asset" required>
-                        <option value="">Choose an asset</option>
-                        <option value="BTC">Bitcoin (BTC)</option>
-                        <option value="ETH">Ethereum (ETH)</option>
-                        <option value="USDT">Tether (USDT)</option>
+                    <label for="asset">
+                        Select Asset
+                    </label>
+
+                    <select id="asset" name="asset">
+
+                        <option value="BTC">
+                            Bitcoin (BTC)
+                        </option>
+
+                        <option value="ETH">
+                            Ethereum (ETH)
+                        </option>
+
+                        <option value="USDT">
+                            Tether (USDT)
+                        </option>
+
                     </select>
+
                 </div>
 
+
                 <div class="form-group">
-                    <label for="wallet">Destination Wallet Address</label>
+
+                    <label for="address">
+                        Destination Wallet Address
+                    </label>
 
                     <input
                         type="text"
-                        id="wallet"
-                        name="wallet"
+                        id="address"
+                        name="address"
                         placeholder="Enter demo wallet address"
                         required
                     >
+
+                    <div class="network-note">
+                        Demo only. Real wallet validation is not connected.
+                    </div>
+
                 </div>
 
+
                 <div class="form-group">
-                    <label for="amount">Withdrawal Amount</label>
+
+                    <label for="network">
+                        Network
+                    </label>
+
+                    <select id="network" name="network">
+
+                        <option value="bitcoin">
+                            Bitcoin Network
+                        </option>
+
+                        <option value="ethereum">
+                            Ethereum Network
+                        </option>
+
+                        <option value="tron">
+                            TRON Network
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Withdrawal Amount
+                    </label>
 
                     <input
                         type="number"
                         id="amount"
                         name="amount"
+                        placeholder="Enter demo amount"
                         min="0"
                         step="any"
-                        placeholder="0.00"
                         required
                     >
+
                 </div>
 
-                <div class="form-group">
-                    <label for="network">Network</label>
 
-                    <select id="network" name="network" required>
-                        <option value="">Choose network</option>
-                        <option value="bitcoin">Bitcoin Network</option>
-                        <option value="ethereum">Ethereum Network</option>
-                        <option value="tron">TRON Network</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    Submit Withdrawal Request
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Submit Demo Withdrawal
                 </button>
 
             </form>
 
         </div>
 
+
         <div class="card">
 
-            <h2>Withdrawal Instructions</h2>
+            <h2>Withdrawal Process</h2>
 
-            <div class="instructions">
+            <ol class="steps">
 
-                <ol>
-                    <li>Select the cryptocurrency you want to withdraw.</li>
+                <li>
+                    Select the cryptocurrency you want to withdraw.
+                </li>
 
-                    <li>Enter a demo wallet address for testing the website interface.</li>
+                <li>
+                    Enter a demonstration destination address.
+                </li>
 
-                    <li>Select the appropriate demonstration network.</li>
+                <li>
+                    Select the appropriate demonstration network.
+                </li>
 
-                    <li>Enter the amount you want to request.</li>
+                <li>
+                    Enter the withdrawal amount and submit the request.
+                </li>
 
-                    <li>Click "Submit Withdrawal Request".</li>
-                </ol>
+            </ol>
+
+
+            <div class="security">
+
+                <strong>
+                    Security Check
+                </strong>
+
+                <p>
+                    In a production platform, withdrawals should require
+                    authentication, address validation, network verification,
+                    transaction monitoring, and secure backend processing.
+                </p>
 
             </div>
-
-            <div class="info-box">
-                <strong>Important:</strong><br><br>
-
-                In a real cryptocurrency platform, the asset and network
-                must be validated by a secure backend before any transaction
-                is processed.
-
-                This website is only a front-end demonstration and does not
-                connect to a blockchain or process real withdrawals.
-            </div>
-
-            <a href="dashboard.html" class="back">
-                ← Back to Dashboard
-            </a>
 
         </div>
+
+    </section>
+
+
+    <div class="notice">
+
+        This page is for UI demonstration only.
+        No real wallet addresses are processed and no cryptocurrency is transferred.
 
     </div>
 
 </main>
 
+
 <footer>
-    © 2026 CryptoVault. Demonstration website only.
+
+    © 2026 CryptoVault. Demo platform for educational purposes.
+
+    <br><br>
+
+    No real cryptocurrency is accepted, stored, or transferred.
+
 </footer>
+
+
+<script>
+
+    function validateWithdrawal() {
+
+        const address =
+            document.getElementById("address").value.trim();
+
+        const amount =
+            Number(document.getElementById("amount").value);
+
+        if (address.length < 5) {
+
+            alert("Please enter a demo wallet address.");
+
+            return false;
+        }
+
+        if (amount <= 0) {
+
+            alert("Please enter a valid demo withdrawal amount.");
+
+            return false;
+        }
+
+        alert(
+            "Demo withdrawal request submitted. " +
+            "No real cryptocurrency will be transferred."
+        );
+
+        return true;
+    }
+
+</script>
 
 </body>
 </html>
