@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,176 +14,251 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #0b1020;
-            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07111f;
+            color: #f8fafc;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            padding: 30px 15px;
         }
 
-        .container {
+        .page {
             width: 100%;
-            max-width: 450px;
-            background: #151c32;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            max-width: 460px;
         }
 
         .logo {
             text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        .card {
+            background: #0d1b2d;
+            border: 1px solid #1e293b;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
             font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            text-align: center;
-            color: #aab3c5;
-            margin-bottom: 30px;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #cbd5e1;
         }
 
         input {
             width: 100%;
-            padding: 13px;
-            margin-bottom: 18px;
-            border: 1px solid #35405f;
-            border-radius: 8px;
-            background: #0f1629;
+            padding: 13px 14px;
+            border: 1px solid #334155;
+            border-radius: 9px;
+            background: #081525;
             color: white;
             font-size: 15px;
+            outline: none;
         }
 
         input:focus {
-            outline: none;
-            border-color: #4f8cff;
+            border-color: #38bdf8;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        .password-note {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 6px;
         }
 
         button {
             width: 100%;
-            padding: 14px;
             border: none;
-            border-radius: 8px;
-            background: #4f8cff;
-            color: white;
+            padding: 14px;
+            border-radius: 9px;
+            background: #38bdf8;
+            color: #03111f;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         button:hover {
-            background: #3677e8;
+            background: #7dd3fc;
         }
 
-        .links {
+        .login-text {
             text-align: center;
-            margin-top: 25px;
-            line-height: 2;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 22px;
         }
 
-        .links a {
-            color: #6ea0ff;
-            text-decoration: none;
+        .login-text a {
+            color: #38bdf8;
+            font-weight: 700;
         }
 
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        .notice {
+        .home-link {
+            display: block;
+            text-align: center;
             margin-top: 20px;
-            padding: 12px;
-            background: #202a45;
-            border-radius: 8px;
-            color: #aab3c5;
+            color: #64748b;
             font-size: 13px;
-            text-align: center;
+        }
+
+        .home-link:hover {
+            color: #38bdf8;
+        }
+
+        .demo-notice {
+            margin-top: 22px;
+            padding: 13px;
+            background: #082f49;
+            border: 1px solid #164e63;
+            border-radius: 9px;
+            color: #bae6fd;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="page">
 
-        <div class="logo">CryptoVault</div>
+    <div class="logo">
+        Crypto<span>Vault</span>
+    </div>
 
-        <p class="subtitle">Create your account</p>
+    <div class="card">
 
-        <form action="login.html">
+        <h1>Create your account</h1>
 
-            <label for="fullname">Full Name</label>
-            <input
-                type="text"
-                id="fullname"
-                name="fullname"
-                placeholder="Enter your full name"
-                required
-            >
+        <p class="subtitle">
+            Create a demonstration account to explore CryptoVault.
+        </p>
 
-            <label for="email">Email</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-            >
+        <form action="login.html" method="get">
 
-            <label for="username">Username</label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Choose a username"
-                required
-            >
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input
+                    type="text"
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Enter your full name"
+                    required>
+            </div>
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Create a password"
-                required
-            >
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+            </div>
 
-            <label for="confirm-password">Confirm Password</label>
-            <input
-                type="password"
-                id="confirm-password"
-                name="confirm-password"
-                placeholder="Confirm your password"
-                required
-            >
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Choose a username"
+                    required>
+            </div>
 
-            <button type="submit">Create Account</button>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required>
+
+                <div class="password-note">
+                    Use at least 6 characters.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirm-password"
+                    name="confirm-password"
+                    placeholder="Confirm your password"
+                    minlength="6"
+                    required>
+            </div>
+
+            <button type="submit">
+                Create Demo Account
+            </button>
 
         </form>
 
-        <div class="links">
+        <div class="login-text">
             Already have an account?
             <a href="login.html">Login</a>
-            <br>
-            <a href="index.html">← Back to Home</a>
         </div>
 
-        <div class="notice">
-            Demo platform only. No real cryptocurrency or money is processed.
+        <a href="index.html" class="home-link">
+            ← Back to Home
+        </a>
+
+        <div class="demo-notice">
+            <strong>Demo platform:</strong>
+            This website is a front-end demonstration.
+            No real account, cryptocurrency, or financial transaction
+            is created through this form.
         </div>
 
     </div>
 
-</body>
+</div>
 
+</body>
 </html>
