@@ -16,53 +16,77 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: #0b1020;
+            background: #080d1c;
             color: white;
-            min-height: 100vh;
+            line-height: 1.6;
         }
 
         header {
-            background: #151c32;
-            padding: 20px 8%;
+            background: #11182c;
+            border-bottom: 1px solid #273252;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
+            color: #6ea0ff;
             font-size: 25px;
             font-weight: bold;
         }
 
-        header a {
+        .nav a {
             color: white;
             text-decoration: none;
-            background: #4f8cff;
-            padding: 10px 18px;
-            border-radius: 7px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 0 25px;
         }
 
-        .card {
-            background: #151c32;
-            padding: 35px;
+        .box {
+            background: #11182c;
+            border: 1px solid #273252;
             border-radius: 15px;
+            padding: 35px;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .description {
+        .subtitle {
             text-align: center;
-            color: #aab3c5;
+            color: #9da8bb;
             margin-bottom: 30px;
+        }
+
+        .balance {
+            background: #0b1020;
+            border: 1px solid #273252;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 25px;
+        }
+
+        .balance-label {
+            color: #8993a8;
+            font-size: 13px;
+        }
+
+        .balance-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
         }
 
         label {
@@ -74,35 +98,38 @@
         select,
         input {
             width: 100%;
-            padding: 13px;
-            margin-bottom: 20px;
-            border: 1px solid #35405f;
+            padding: 14px;
+            margin-bottom: 22px;
+            border: 1px solid #344263;
             border-radius: 8px;
-            background: #0f1629;
+            background: #0b1020;
             color: white;
             font-size: 15px;
         }
 
-        .balance {
-            background: #202a45;
-            padding: 18px;
+        .network-info {
+            background: #111f3b;
+            border: 1px solid #30466f;
+            color: #a9c4ff;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+
+        .warning {
+            background: #2b2412;
+            border: 1px solid #66531e;
+            color: #e8c86a;
+            padding: 15px;
             border-radius: 8px;
             margin-bottom: 25px;
-        }
-
-        .balance span {
-            display: block;
-            color: #aab3c5;
-            margin-bottom: 6px;
-        }
-
-        .balance strong {
-            font-size: 22px;
+            font-size: 14px;
         }
 
         button {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             border: none;
             border-radius: 8px;
             background: #4f8cff;
@@ -113,32 +140,33 @@
         }
 
         button:hover {
-            background: #3677e8;
+            opacity: 0.9;
         }
 
         .back {
             display: block;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 22px;
             color: #6ea0ff;
             text-decoration: none;
         }
 
-        .warning {
-            margin-top: 20px;
-            padding: 14px;
-            background: #202a45;
-            border-radius: 8px;
-            color: #ffcc66;
-            font-size: 13px;
+        .notice {
             text-align: center;
+            color: #78859d;
+            font-size: 13px;
+            margin-top: 25px;
         }
 
-        .demo {
-            text-align: center;
-            margin-top: 20px;
-            color: #8f9ab0;
-            font-size: 13px;
+        @media (max-width: 600px) {
+            .nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .box {
+                padding: 25px;
+            }
         }
     </style>
 </head>
@@ -146,47 +174,98 @@
 <body>
 
     <header>
-        <div class="logo">CryptoVault</div>
-        <a href="dashboard.html">Dashboard</a>
-    </header>
 
-    <div class="container">
+        <div class="nav">
 
-        <div class="card">
-
-            <h1>Withdraw Crypto</h1>
-
-            <p class="description">
-                Enter the wallet address and amount for your withdrawal request.
-            </p>
-
-            <div class="balance">
-                <span>Available Balance</span>
-                <strong>0.050 BTC</strong>
+            <div class="logo">
+                CryptoVault
             </div>
 
-            <form action="dashboard.html">
+            <a href="dashboard.html">
+                ← Dashboard
+            </a>
 
-                <label for="crypto">Cryptocurrency</label>
+        </div>
 
-                <select id="crypto" name="crypto" required>
-                    <option value="">Select cryptocurrency</option>
-                    <option value="BTC">Bitcoin (BTC)</option>
-                    <option value="ETH">Ethereum (ETH)</option>
-                    <option value="USDT">Tether (USDT)</option>
+    </header>
+
+
+    <main class="container">
+
+        <div class="box">
+
+            <h1>
+                Withdraw Crypto
+            </h1>
+
+            <p class="subtitle">
+                Send digital assets to an external wallet
+            </p>
+
+
+            <div class="balance">
+
+                <div class="balance-label">
+                    Available Demo Balance
+                </div>
+
+                <div class="balance-value">
+                    0.050 BTC
+                </div>
+
+            </div>
+
+
+            <div class="warning">
+                ⚠️ <strong>Demo Platform:</strong>
+                This withdrawal form does not send real cryptocurrency.
+                Do not enter real wallet information.
+            </div>
+
+
+            <form action="dashboard.html" method="get">
+
+                <label for="asset">
+                    Select Cryptocurrency
+                </label>
+
+                <select id="asset" name="asset" required>
+
+                    <option value="">
+                        Choose an asset
+                    </option>
+
+                    <option value="BTC">
+                        Bitcoin (BTC)
+                    </option>
+
+                    <option value="ETH">
+                        Ethereum (ETH)
+                    </option>
+
+                    <option value="USDT">
+                        Tether (USDT)
+                    </option>
+
                 </select>
 
-                <label for="address">Wallet Address</label>
+
+                <label for="address">
+                    Destination Wallet Address
+                </label>
 
                 <input
                     type="text"
                     id="address"
                     name="address"
-                    placeholder="Enter wallet address"
+                    placeholder="Enter demo wallet address"
                     required
                 >
 
-                <label for="amount">Withdrawal Amount</label>
+
+                <label for="amount">
+                    Withdrawal Amount
+                </label>
 
                 <input
                     type="number"
@@ -198,14 +277,37 @@
                     required
                 >
 
-                <label for="network">Network</label>
+
+                <label for="network">
+                    Network
+                </label>
 
                 <select id="network" name="network" required>
-                    <option value="">Select network</option>
-                    <option value="bitcoin">Bitcoin Network</option>
-                    <option value="ethereum">Ethereum Network</option>
-                    <option value="tron">TRON Network</option>
+
+                    <option value="">
+                        Select network
+                    </option>
+
+                    <option value="bitcoin">
+                        Bitcoin Network
+                    </option>
+
+                    <option value="ethereum">
+                        Ethereum Network
+                    </option>
+
+                    <option value="tron">
+                        TRON Network
+                    </option>
+
                 </select>
+
+
+                <div class="network-info">
+                    ℹ️ Network selection must match the selected
+                    cryptocurrency. This is a demonstration only.
+                </div>
+
 
                 <button type="submit">
                     Submit Withdrawal Request
@@ -213,22 +315,19 @@
 
             </form>
 
-            <div class="warning">
-                ⚠️ Demo platform only. Do not enter a real wallet address
-                or send real cryptocurrency.
-            </div>
 
-            <a class="back" href="dashboard.html">
+            <a href="dashboard.html" class="back">
                 ← Back to Dashboard
             </a>
 
-            <p class="demo">
-                No real cryptocurrency or money is processed.
-            </p>
-
         </div>
 
-    </div>
+
+        <p class="notice">
+            CryptoVault Demo Platform. No real cryptocurrency or money is processed.
+        </p>
+
+    </main>
 
 </body>
 
