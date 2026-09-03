@@ -7,169 +7,208 @@
     <title>Transactions | CryptoVault</title>
 
     <style>
+        :root {
+            --bg: #07111f;
+            --card: #101d30;
+            --card-hover: #14243a;
+            --text: #f5f7fb;
+            --muted: #9aa8ba;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --border: #20324a;
+            --input: #0b1728;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #07111f;
-            color: #ffffff;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .header {
-            background: #091522;
-            border-bottom: 1px solid #203349;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        /* HEADER */
+
+        header {
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: rgba(7, 17, 31, 0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
         }
 
-        .nav {
-            width: 92%;
+        .navbar {
             max-width: 1200px;
-            margin: auto;
             min-height: 70px;
+            margin: auto;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 25px;
+            font-weight: 800;
         }
 
         .logo span {
-            color: #35d0ba;
+            color: var(--primary);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 22px;
+            gap: 7px;
         }
 
         .nav-links a {
-            color: #a9bacb;
-            text-decoration: none;
+            color: var(--muted);
+            padding: 8px 11px;
+            border-radius: 8px;
             font-size: 14px;
-            font-weight: bold;
+            transition: 0.3s;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #35d0ba;
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.08);
         }
 
         .menu-btn {
             display: none;
             background: transparent;
-            border: 1px solid #2a3e55;
-            color: #ffffff;
-            padding: 8px 11px;
-            border-radius: 8px;
+            border: 0;
+            color: var(--text);
+            font-size: 28px;
             cursor: pointer;
-            font-size: 20px;
         }
 
-        .container {
-            width: 92%;
+        /* MAIN */
+
+        main {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: auto;
+            padding: 45px 20px 70px;
         }
 
-        .title {
-            margin-bottom: 25px;
-        }
-
-        .title h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .title p {
-            color: #8fa2b6;
-            line-height: 1.6;
+        .page-header {
+            margin-bottom: 30px;
         }
 
         .demo-badge {
             display: inline-block;
-            margin-top: 12px;
-            padding: 7px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            background: #102b3a;
-            border: 1px solid #28536a;
-            color: #66dcca;
-            font-size: 12px;
-            font-weight: bold;
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
-        .summary {
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: var(--muted);
+        }
+
+        /* SUMMARY */
+
+        .summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 22px;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .summary-card {
-            background: #0d1b2a;
-            border: 1px solid #203349;
-            border-radius: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
             padding: 20px;
         }
 
-        .summary-card span {
-            display: block;
-            color: #8fa2b6;
-            font-size: 12px;
-            margin-bottom: 9px;
+        .summary-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 6px;
         }
 
-        .summary-card strong {
-            font-size: 24px;
+        .summary-value {
+            font-size: 25px;
+            font-weight: 800;
         }
 
-        .positive {
-            color: #35d0ba;
+        .success {
+            color: var(--success);
         }
 
-        .pending {
-            color: #f2c66d;
+        .warning {
+            color: var(--warning);
         }
 
-        .panel {
-            background: #0d1b2a;
-            border: 1px solid #203349;
+        /* FILTERS */
+
+        .filter-card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 25px;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
+            padding: 20px;
             margin-bottom: 20px;
-        }
-
-        .panel-header h2 {
-            font-size: 19px;
-        }
-
-        .panel-header span {
-            color: #718398;
-            font-size: 12px;
         }
 
         .filters {
             display: grid;
-            grid-template-columns: 1fr 180px 180px;
+            grid-template-columns: 1.5fr 1fr 1fr;
             gap: 12px;
-            margin-bottom: 22px;
         }
 
         input,
@@ -177,80 +216,89 @@
             width: 100%;
             padding: 12px 13px;
             border-radius: 9px;
-            border: 1px solid #2a3e55;
-            background: #091522;
-            color: #ffffff;
+            border: 1px solid var(--border);
+            background: var(--input);
+            color: var(--text);
             outline: none;
+            font-size: 14px;
         }
 
         input:focus,
         select:focus {
-            border-color: #35d0ba;
+            border-color: var(--primary);
         }
 
-        .table-container {
+        /* TABLE */
+
+        .table-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-top h2 {
+            font-size: 20px;
+        }
+
+        .result-count {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .table-wrapper {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 760px;
-        }
-
-        th,
-        td {
-            padding: 15px 10px;
-            text-align: left;
-            border-bottom: 1px solid #1d3044;
+            min-width: 700px;
         }
 
         th {
-            color: #718398;
+            text-align: left;
+            padding: 15px 20px;
+            color: var(--muted);
             font-size: 12px;
-            font-weight: normal;
+            font-weight: 700;
+            background: var(--card-hover);
         }
 
         td {
+            padding: 17px 20px;
+            border-top: 1px solid var(--border);
             font-size: 13px;
         }
 
-        .asset {
-            display: flex;
-            align-items: center;
-            gap: 9px;
+        tbody tr:hover {
+            background: var(--card-hover);
         }
 
-        .coin {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #13283a;
-            color: #35d0ba;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            font-weight: bold;
+        .asset-name {
+            font-weight: 700;
         }
 
-        .asset strong {
-            display: block;
-        }
-
-        .asset small {
-            color: #718398;
-            font-size: 10px;
+        .asset-symbol {
+            color: var(--muted);
+            font-size: 11px;
+            margin-left: 5px;
         }
 
         .deposit {
-            color: #35d0ba;
-            font-weight: bold;
+            color: var(--success);
         }
 
         .withdrawal {
-            color: #ff8f8f;
-            font-weight: bold;
+            color: var(--danger);
         }
 
         .status {
@@ -258,115 +306,119 @@
             padding: 5px 9px;
             border-radius: 20px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .status.completed {
-            color: #35d0ba;
-            background: #0b2926;
-            border: 1px solid #1d554c;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
         }
 
         .status.pending {
-            color: #f2c66d;
-            background: #2b2414;
-            border: 1px solid #665323;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
         }
 
-        .empty {
+        /* EMPTY */
+
+        .empty-state {
+            display: none;
             text-align: center;
-            color: #718398;
-            padding: 35px 15px;
-            line-height: 1.6;
+            padding: 50px 20px;
+            color: var(--muted);
         }
 
-        .bottom-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 22px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 18px;
-            border-radius: 9px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 13px;
-            border: 1px solid #294057;
-            color: #ffffff;
-            background: #102033;
-        }
-
-        .btn.primary {
-            background: #35d0ba;
-            color: #06121f;
-            border-color: #35d0ba;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .info-box {
-            margin-top: 22px;
-            padding: 17px;
-            border-radius: 11px;
-            background: #102437;
-            border: 1px solid #25445e;
-        }
-
-        .info-box strong {
+        .empty-state strong {
             display: block;
-            margin-bottom: 7px;
-            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 5px;
         }
 
-        .info-box p {
-            color: #8fa2b6;
-            font-size: 12px;
-            line-height: 1.6;
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
         }
+
+        .action-btn {
+            padding: 11px 17px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn:hover {
+            background: var(--card-hover);
+        }
+
+        .action-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* NOTICE */
 
         .notice {
             margin-top: 25px;
-            text-align: center;
-            color: #718398;
-            font-size: 12px;
-            line-height: 1.6;
+            padding: 17px;
+            border-radius: 12px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--muted);
+            font-size: 13px;
         }
+
+        .notice strong {
+            color: var(--text);
+        }
+
+        /* FOOTER */
 
         footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
             text-align: center;
-            color: #64768a;
+            color: var(--muted);
             font-size: 12px;
-            padding: 30px 15px;
         }
 
-        @media (max-width: 900px) {
+        /* LIGHT MODE */
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: #091522;
-                border-bottom: 1px solid #203349;
-                padding: 18px;
-                flex-direction: column;
-                gap: 18px;
-            }
+        body.light-mode {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --card-hover: #f1f5f9;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d7dee8;
+            --input: #ffffff;
+        }
 
-            .nav-links.show {
-                display: flex;
-            }
+        body.light-mode header {
+            background: rgba(255, 255, 255, 0.95);
+        }
 
-            .menu-btn {
-                display: block;
-            }
+        body.light-mode .theme-btn {
+            background: #ffffff;
+        }
 
-            .summary {
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .summary-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -375,22 +427,56 @@
             }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 760px) {
 
-            .title h1 {
-                font-size: 28px;
+            .menu-btn {
+                display: block;
             }
 
-            .panel {
-                padding: 18px;
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                background: var(--card);
+                border-bottom: 1px solid var(--border);
+                padding: 15px 20px 20px;
             }
 
-            .bottom-actions {
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a,
+            .theme-btn {
+                width: 100%;
+                text-align: center;
+                border-radius: 8px;
+            }
+
+            .theme-btn {
+                height: 42px;
+                border-radius: 8px;
+                margin: 0;
+            }
+
+            main {
+                padding: 30px 15px 55px;
+            }
+
+            .page-header h1 {
+                font-size: 29px;
+            }
+
+            .actions {
                 flex-direction: column;
             }
 
-            .btn {
-                text-align: center;
+            .action-btn {
+                width: 100%;
             }
         }
     </style>
@@ -398,15 +484,18 @@
 
 <body>
 
-<header class="header">
+<header>
 
-    <nav class="nav">
+    <nav class="navbar">
 
-        <div class="logo">
+        <a href="index.html" class="logo">
             Crypto<span>Vault</span>
-        </div>
+        </a>
 
-        <button class="menu-btn" onclick="toggleMenu()">
+        <button
+            class="menu-btn"
+            onclick="toggleMenu()"
+            aria-label="Open navigation menu">
             ☰
         </button>
 
@@ -436,6 +525,14 @@
                 Settings
             </a>
 
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                onclick="toggleTheme()"
+                aria-label="Toggle light and dark mode">
+                ☀️
+            </button>
+
             <a href="login.html">
                 Logout
             </a>
@@ -446,90 +543,76 @@
 
 </header>
 
+<main>
 
-<main class="container">
-
-    <section class="title">
-
-        <h1>Transaction History</h1>
-
-        <p>
-            Review your recent CryptoVault demonstration activity.
-        </p>
+    <div class="page-header">
 
         <div class="demo-badge">
-            DEMO TRANSACTIONS
+            DEMO ACCOUNT
         </div>
 
-    </section>
+        <h1>
+            Transactions
+        </h1>
 
+        <p>
+            Review your simulated transaction history.
+        </p>
 
-    <section class="summary">
+    </div>
+
+    <!-- SUMMARY -->
+
+    <div class="summary-grid">
 
         <div class="summary-card">
 
-            <span>
+            <div class="summary-label">
                 Total Transactions
-            </span>
+            </div>
 
-            <strong id="totalCount">
+            <div class="summary-value">
                 5
-            </strong>
+            </div>
 
         </div>
 
-
         <div class="summary-card">
 
-            <span>
+            <div class="summary-label">
                 Completed
-            </span>
+            </div>
 
-            <strong class="positive" id="completedCount">
+            <div class="summary-value success">
                 4
-            </strong>
+            </div>
 
         </div>
-
 
         <div class="summary-card">
 
-            <span>
+            <div class="summary-label">
                 Pending
-            </span>
+            </div>
 
-            <strong class="pending" id="pendingCount">
+            <div class="summary-value warning">
                 1
-            </strong>
+            </div>
 
         </div>
 
-    </section>
+    </div>
 
+    <!-- FILTERS -->
 
-    <section class="panel">
-
-        <div class="panel-header">
-
-            <h2>
-                All Transactions
-            </h2>
-
-            <span id="resultCount">
-                5 records
-            </span>
-
-        </div>
-
+    <div class="filter-card">
 
         <div class="filters">
 
             <input
-                type="search"
+                type="text"
                 id="searchInput"
-                placeholder="Search transactions..."
-            >
-
+                placeholder="Search transactions...">
 
             <select id="typeFilter">
 
@@ -538,20 +621,19 @@
                 </option>
 
                 <option value="deposit">
-                    Deposits
+                    Deposit
                 </option>
 
                 <option value="withdrawal">
-                    Withdrawals
+                    Withdrawal
                 </option>
 
             </select>
 
-
             <select id="statusFilter">
 
                 <option value="all">
-                    All Status
+                    All Statuses
                 </option>
 
                 <option value="completed">
@@ -566,51 +648,76 @@
 
         </div>
 
+    </div>
 
-        <div class="table-container">
+    <!-- TRANSACTIONS -->
+
+    <div class="table-card">
+
+        <div class="table-top">
+
+            <h2>
+                Transaction History
+            </h2>
+
+            <span
+                class="result-count"
+                id="resultCount">
+                5 transactions
+            </span>
+
+        </div>
+
+        <div class="table-wrapper">
 
             <table>
 
                 <thead>
 
                     <tr>
-                        <th>Date</th>
-                        <th>Asset</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Status</th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Asset
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
                     </tr>
 
                 </thead>
 
-
                 <tbody id="transactionBody">
-
 
                     <tr
                         data-type="deposit"
-                        data-status="completed"
-                    >
+                        data-status="completed">
 
                         <td>
                             03 Sep 2026
                         </td>
 
                         <td>
+                            <span class="asset-name">
+                                Bitcoin
+                            </span>
 
-                            <div class="asset">
-
-                                <div class="coin">
-                                    BTC
-                                </div>
-
-                                <div>
-                                    <strong>Bitcoin</strong>
-                                    <small>BTC</small>
-                                </div>
-
-                            </div>
-
+                            <span class="asset-symbol">
+                                BTC
+                            </span>
                         </td>
 
                         <td class="deposit">
@@ -622,40 +729,29 @@
                         </td>
 
                         <td>
-
                             <span class="status completed">
                                 Completed
                             </span>
-
                         </td>
 
                     </tr>
 
-
                     <tr
                         data-type="deposit"
-                        data-status="completed"
-                    >
+                        data-status="completed">
 
                         <td>
                             02 Sep 2026
                         </td>
 
                         <td>
+                            <span class="asset-name">
+                                Tether
+                            </span>
 
-                            <div class="asset">
-
-                                <div class="coin">
-                                    USDT
-                                </div>
-
-                                <div>
-                                    <strong>Tether</strong>
-                                    <small>USDT</small>
-                                </div>
-
-                            </div>
-
+                            <span class="asset-symbol">
+                                USDT
+                            </span>
                         </td>
 
                         <td class="deposit">
@@ -667,40 +763,29 @@
                         </td>
 
                         <td>
-
                             <span class="status completed">
                                 Completed
                             </span>
-
                         </td>
 
                     </tr>
 
-
                     <tr
                         data-type="withdrawal"
-                        data-status="completed"
-                    >
+                        data-status="completed">
 
                         <td>
                             01 Sep 2026
                         </td>
 
                         <td>
+                            <span class="asset-name">
+                                Bitcoin
+                            </span>
 
-                            <div class="asset">
-
-                                <div class="coin">
-                                    BTC
-                                </div>
-
-                                <div>
-                                    <strong>Bitcoin</strong>
-                                    <small>BTC</small>
-                                </div>
-
-                            </div>
-
+                            <span class="asset-symbol">
+                                BTC
+                            </span>
                         </td>
 
                         <td class="withdrawal">
@@ -712,40 +797,29 @@
                         </td>
 
                         <td>
-
                             <span class="status completed">
                                 Completed
                             </span>
-
                         </td>
 
                     </tr>
 
-
                     <tr
                         data-type="deposit"
-                        data-status="completed"
-                    >
+                        data-status="completed">
 
                         <td>
                             31 Aug 2026
                         </td>
 
                         <td>
+                            <span class="asset-name">
+                                Ethereum
+                            </span>
 
-                            <div class="asset">
-
-                                <div class="coin">
-                                    ETH
-                                </div>
-
-                                <div>
-                                    <strong>Ethereum</strong>
-                                    <small>ETH</small>
-                                </div>
-
-                            </div>
-
+                            <span class="asset-symbol">
+                                ETH
+                            </span>
                         </td>
 
                         <td class="deposit">
@@ -757,40 +831,29 @@
                         </td>
 
                         <td>
-
                             <span class="status completed">
                                 Completed
                             </span>
-
                         </td>
 
                     </tr>
 
-
                     <tr
                         data-type="withdrawal"
-                        data-status="pending"
-                    >
+                        data-status="pending">
 
                         <td>
                             30 Aug 2026
                         </td>
 
                         <td>
+                            <span class="asset-name">
+                                Tether
+                            </span>
 
-                            <div class="asset">
-
-                                <div class="coin">
-                                    USDT
-                                </div>
-
-                                <div>
-                                    <strong>Tether</strong>
-                                    <small>USDT</small>
-                                </div>
-
-                            </div>
-
+                            <span class="asset-symbol">
+                                USDT
+                            </span>
                         </td>
 
                         <td class="withdrawal">
@@ -802,101 +865,142 @@
                         </td>
 
                         <td>
-
                             <span class="status pending">
                                 Pending
                             </span>
-
                         </td>
 
                     </tr>
-
 
                 </tbody>
 
             </table>
 
-
-            <div
-                class="empty"
-                id="emptyMessage"
-                style="display: none;"
-            >
-                No matching transactions found.
-            </div>
-
         </div>
 
-
-        <div class="bottom-actions">
-
-            <a
-                href="dashboard.html"
-                class="btn"
-            >
-                ← Back to Dashboard
-            </a>
-
-            <a
-                href="deposit.html"
-                class="btn primary"
-            >
-                Make a Deposit
-            </a>
-
-        </div>
-
-
-        <div class="info-box">
+        <div
+            class="empty-state"
+            id="emptyState">
 
             <strong>
-                Transaction Information
+                No transactions found
             </strong>
 
-            <p>
-                These records are demonstration data created for the
-                CryptoVault website. They are not connected to a
-                blockchain, cryptocurrency wallet, bank account,
-                or payment processor.
-            </p>
+            Try changing your search or filter.
 
         </div>
 
-    </section>
+    </div>
 
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <a
+            href="dashboard.html"
+            class="action-btn">
+            ← Back to Dashboard
+        </a>
+
+        <a
+            href="deposit.html"
+            class="action-btn primary">
+            Make a Deposit
+        </a>
+
+    </div>
+
+    <!-- NOTICE -->
 
     <div class="notice">
 
-        This transaction history is for demonstration purposes only.
-        No real cryptocurrency transactions are processed.
+        <strong>Important:</strong>
+
+        All transactions displayed on this page are simulated.
+        CryptoVault does not process real cryptocurrency
+        transactions or connect to real wallets, banks or
+        payment processors.
 
     </div>
 
 </main>
 
-
 <footer>
 
-    © 2026 CryptoVault. Demo platform for educational purposes.
-
-    <br><br>
-
-    No real cryptocurrency is accepted, stored, or transferred.
+    © 2026 CryptoVault. Demonstration website only.
 
 </footer>
 
-
 <script>
+
+    /* MOBILE MENU */
 
     function toggleMenu() {
 
-        const navLinks =
-            document.getElementById("navLinks");
-
-        navLinks.classList.toggle("show");
+        document
+            .getElementById("navLinks")
+            .classList.toggle("show");
 
     }
 
+
+    /* LIGHT / DARK MODE */
+
+    function toggleTheme() {
+
+        document.body.classList.toggle("light-mode");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        localStorage.setItem(
+            "cryptoVaultTheme",
+            isLight ? "light" : "dark"
+        );
+
+        updateThemeButton();
+
+    }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.getElementById("themeBtn");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        button.textContent =
+            isLight ? "🌙" : "☀️";
+
+        button.setAttribute(
+            "aria-label",
+            isLight
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    function loadTheme() {
+
+        const savedTheme =
+            localStorage.getItem("cryptoVaultTheme");
+
+        if (savedTheme === "light") {
+
+            document.body.classList.add("light-mode");
+
+        }
+
+        updateThemeButton();
+
+    }
+
+
+    /* FILTERS */
 
     const searchInput =
         document.getElementById("searchInput");
@@ -908,13 +1012,15 @@
         document.getElementById("statusFilter");
 
     const rows =
-        document.querySelectorAll("#transactionBody tr");
-
-    const emptyMessage =
-        document.getElementById("emptyMessage");
+        document.querySelectorAll(
+            "#transactionBody tr"
+        );
 
     const resultCount =
         document.getElementById("resultCount");
+
+    const emptyState =
+        document.getElementById("emptyState");
 
 
     function filterTransactions() {
@@ -922,14 +1028,13 @@
         const search =
             searchInput.value.toLowerCase().trim();
 
-        const selectedType =
+        const type =
             typeFilter.value;
 
-        const selectedStatus =
+        const status =
             statusFilter.value;
 
         let visibleCount = 0;
-
 
         rows.forEach(function(row) {
 
@@ -942,18 +1047,16 @@
             const rowStatus =
                 row.dataset.status;
 
-
             const matchesSearch =
                 rowText.includes(search);
 
             const matchesType =
-                selectedType === "all" ||
-                rowType === selectedType;
+                type === "all" ||
+                rowType === type;
 
             const matchesStatus =
-                selectedStatus === "all" ||
-                rowStatus === selectedStatus;
-
+                status === "all" ||
+                rowStatus === status;
 
             if (
                 matchesSearch &&
@@ -974,13 +1077,17 @@
         });
 
 
-        emptyMessage.style.display =
-            visibleCount === 0 ? "block" : "none";
-
-
         resultCount.textContent =
             visibleCount +
-            (visibleCount === 1 ? " record" : " records");
+            (visibleCount === 1
+                ? " transaction"
+                : " transactions");
+
+
+        emptyState.style.display =
+            visibleCount === 0
+                ? "block"
+                : "none";
 
     }
 
@@ -990,12 +1097,10 @@
         filterTransactions
     );
 
-
     typeFilter.addEventListener(
         "change",
         filterTransactions
     );
-
 
     statusFilter.addEventListener(
         "change",
@@ -1003,7 +1108,29 @@
     );
 
 
-    filterTransactions();
+    /* CLOSE MOBILE MENU */
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(function(link) {
+
+            link.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .getElementById("navLinks")
+                        .classList.remove("show");
+
+                }
+            );
+
+        });
+
+
+    /* START */
+
+    loadTheme();
 
 </script>
 
