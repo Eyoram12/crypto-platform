@@ -7,255 +7,303 @@
     <title>Settings | CryptoVault</title>
 
     <style>
+        :root {
+            --bg: #07111f;
+            --card: #101d30;
+            --card-hover: #14243a;
+            --text: #f5f7fb;
+            --muted: #9aa8ba;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --border: #20324a;
+            --input: #0b1728;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #0b1120;
-            color: #e5e7eb;
-            line-height: 1.6;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        /* HEADER */
+
         header {
-            background: #111827;
-            border-bottom: 1px solid #263244;
-            padding: 18px 6%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 17, 31, 0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            min-height: 70px;
+            margin: auto;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 25px;
+            font-weight: 800;
         }
 
         .logo span {
-            color: #38bdf8;
+            color: var(--primary);
         }
 
-        .dashboard-link {
-            color: #cbd5e1;
-            text-decoration: none;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        .dashboard-link:hover {
-            color: #38bdf8;
+        .nav-links a {
+            color: var(--muted);
+            padding: 8px 11px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
         }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: 0;
+            color: var(--text);
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* MAIN */
 
         main {
             max-width: 1000px;
-            margin: 45px auto;
-            padding: 0 20px;
+            margin: auto;
+            padding: 45px 20px 70px;
         }
 
-        .page-title {
-            text-align: center;
-            margin-bottom: 35px;
+        .page-header {
+            margin-bottom: 30px;
         }
 
-        .page-title h1 {
-            color: white;
+        .demo-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-header h1 {
             font-size: 36px;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
 
-        .page-title p {
-            color: #94a3b8;
+        .page-header p {
+            color: var(--muted);
         }
 
-        .section {
-            background: #111827;
-            border: 1px solid #263244;
+        /* CARDS */
+
+        .settings-card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 28px;
-            margin-bottom: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
         }
 
-        .section h2 {
-            color: white;
-            font-size: 21px;
-            margin-bottom: 20px;
+        .settings-card h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
         }
 
         .section-description {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: -12px;
-            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 22px;
         }
+
+        /* PROFILE */
 
         .profile-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
-
-        .profile-item {
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 10px;
-            padding: 16px;
-        }
-
-        .profile-item small {
-            display: block;
-            color: #64748b;
-            margin-bottom: 6px;
-        }
-
-        .profile-item strong {
-            color: #e5e7eb;
-        }
-
-        .active {
-            color: #4ade80 !important;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            gap: 15px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
-        label {
+        .form-group label {
             display: block;
-            color: #cbd5e1;
-            font-weight: bold;
-            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 7px;
         }
 
         input,
         select {
             width: 100%;
-            padding: 13px;
-            background: #0f172a;
-            color: white;
-            border: 1px solid #334155;
-            border-radius: 8px;
+            padding: 12px 13px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--input);
+            color: var(--text);
             outline: none;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         input:focus,
         select:focus {
-            border-color: #38bdf8;
+            border-color: var(--primary);
         }
 
-        .button {
-            padding: 13px 20px;
-            background: #38bdf8;
-            color: #082f49;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
+        input:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* BUTTONS */
+
+        .btn {
+            padding: 11px 18px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--card-hover);
+            color: var(--text);
             cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
         }
 
-        .button:hover {
-            background: #7dd3fc;
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
         }
 
-        .secondary-button {
-            padding: 13px 20px;
-            background: transparent;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
+        .btn-primary:hover {
+            background: var(--primary-dark);
         }
 
-        .secondary-button:hover {
-            background: #0c4a6e;
+        .btn:hover {
+            transform: translateY(-1px);
         }
 
-        .button-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+        /* SECURITY */
 
-        .notice {
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 10px;
-            padding: 16px;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 22px;
-        }
-
-        .security-list {
-            display: grid;
-            gap: 14px;
-        }
-
-        .security-item {
+        .security-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #0f172a;
-            border: 1px solid #263244;
-            padding: 17px;
-            border-radius: 10px;
+            gap: 20px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
         }
 
-        .security-item strong {
-            color: white;
+        .security-row:first-of-type {
+            border-top: 0;
+        }
+
+        .security-info strong {
             display: block;
+            margin-bottom: 3px;
         }
 
-        .security-item small {
-            color: #64748b;
+        .security-info span {
+            color: var(--muted);
+            font-size: 12px;
         }
 
-        .status {
-            font-weight: bold;
-        }
+        /* TOGGLE */
 
-        .enabled {
-            color: #4ade80;
-        }
-
-        .not-configured {
-            color: #fbbf24;
-        }
-
-        .toggle {
+        .switch {
             position: relative;
+            display: inline-block;
             width: 48px;
-            height: 25px;
+            height: 26px;
+            flex-shrink: 0;
         }
 
-        .toggle input {
-            display: none;
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
         .slider {
             position: absolute;
+            cursor: pointer;
             inset: 0;
             background: #334155;
             border-radius: 30px;
-            cursor: pointer;
             transition: 0.3s;
         }
 
         .slider:before {
             content: "";
             position: absolute;
-            width: 19px;
-            height: 19px;
+            width: 20px;
+            height: 20px;
             left: 3px;
             top: 3px;
             background: white;
@@ -263,87 +311,192 @@
             transition: 0.3s;
         }
 
-        .toggle input:checked + .slider {
-            background: #38bdf8;
+        .switch input:checked + .slider {
+            background: var(--success);
         }
 
-        .toggle input:checked + .slider:before {
-            transform: translateX(23px);
+        .switch input:checked + .slider:before {
+            transform: translateX(22px);
         }
 
-        .preference-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* ACCOUNT STATUS */
+
+        .status-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-radius: 11px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
-        .success-message {
-            display: none;
-            background: #052e16;
-            border: 1px solid #166534;
-            color: #86efac;
-            padding: 14px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+        .status-box strong {
+            color: var(--success);
         }
 
-        .danger-zone {
-            border-color: #7f1d1d;
+        .status-box span {
+            color: var(--muted);
+            font-size: 12px;
         }
 
-        .danger-zone h2 {
-            color: #fca5a5;
+        /* PASSWORD */
+
+        .password-strength {
+            height: 5px;
+            background: var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 8px;
         }
 
-        .danger-button {
-            padding: 13px 20px;
-            background: #7f1d1d;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
+        .strength-bar {
+            width: 0;
+            height: 100%;
+            transition: 0.3s;
         }
 
-        .danger-button:hover {
-            background: #991b1b;
-        }
-
-        .back {
-            display: inline-block;
-            color: #38bdf8;
-            text-decoration: none;
+        .password-message {
+            color: var(--muted);
+            font-size: 11px;
             margin-top: 5px;
         }
 
-        .back:hover {
-            text-decoration: underline;
+        /* SUCCESS MESSAGE */
+
+        .message {
+            display: none;
+            padding: 13px;
+            border-radius: 9px;
+            margin-top: 15px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: var(--success);
+            font-size: 13px;
         }
+
+        /* DANGER */
+
+        .danger-zone {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-zone h2 {
+            color: var(--danger);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.18);
+        }
+
+        /* NOTICE */
+
+        .notice {
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .notice strong {
+            color: var(--text);
+        }
+
+        /* FOOTER */
 
         footer {
-            text-align: center;
+            border-top: 1px solid var(--border);
             padding: 30px 20px;
-            color: #64748b;
-            font-size: 14px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
         }
 
+        /* LIGHT MODE */
+
+        body.light-mode {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --card-hover: #f1f5f9;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d7dee8;
+            --input: #ffffff;
+        }
+
+        body.light-mode header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        body.light-mode .theme-btn {
+            background: #ffffff;
+        }
+
+        /* RESPONSIVE */
+
         @media (max-width: 700px) {
-            .profile-grid,
-            .form-grid,
-            .preference-grid {
+
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                background: var(--card);
+                border-bottom: 1px solid var(--border);
+                padding: 15px 20px 20px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a,
+            .theme-btn {
+                width: 100%;
+                text-align: center;
+                border-radius: 8px;
+            }
+
+            .theme-btn {
+                height: 42px;
+                border-radius: 8px;
+                margin: 0;
+            }
+
+            main {
+                padding: 30px 15px 55px;
+            }
+
+            .page-header h1 {
+                font-size: 29px;
+            }
+
+            .profile-grid {
                 grid-template-columns: 1fr;
             }
 
-            .page-title h1 {
-                font-size: 30px;
+            .security-row {
+                align-items: flex-start;
             }
 
-            .section {
-                padding: 20px;
-            }
-
-            .security-item {
-                gap: 15px;
+            .status-box {
+                flex-direction: column;
                 align-items: flex-start;
             }
         }
@@ -354,248 +507,175 @@
 
 <header>
 
-    <a href="index.html" class="logo">
-        Crypto<span>Vault</span>
-    </a>
+    <nav class="navbar">
 
-    <a href="dashboard.html" class="dashboard-link">
-        ← Dashboard
-    </a>
+        <a href="index.html" class="logo">
+            Crypto<span>Vault</span>
+        </a>
+
+        <button
+            class="menu-btn"
+            onclick="toggleMenu()"
+            aria-label="Open navigation menu">
+            ☰
+        </button>
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="deposit.html">
+                Deposit
+            </a>
+
+            <a href="withdrawal.html">
+                Withdrawal
+            </a>
+
+            <a href="transactions.html">
+                Transactions
+            </a>
+
+            <a href="settings.html" class="active">
+                Settings
+            </a>
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                onclick="toggleTheme()"
+                aria-label="Toggle light and dark mode">
+                ☀️
+            </button>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
 
 </header>
 
-
 <main>
 
-    <div class="page-title">
-        <h1>Account Settings</h1>
-        <p>Manage your CryptoVault account, security and preferences.</p>
-    </div>
+    <div class="page-header">
 
+        <div class="demo-badge">
+            DEMO ACCOUNT
+        </div>
 
-    <div id="successMessage" class="success-message">
-        ✓ Your settings have been saved successfully.
-    </div>
+        <h1>
+            Settings
+        </h1>
 
-
-    <!-- Profile -->
-
-    <section class="section">
-
-        <h2>Profile Information</h2>
-
-        <p class="section-description">
-            Update the information associated with your demonstration account.
+        <p>
+            Manage your simulated CryptoVault account settings.
         </p>
 
-        <div class="form-grid">
+    </div>
+
+    <div class="notice">
+
+        <strong>Demo website:</strong>
+
+        These settings are for demonstration purposes only.
+        No real account, wallet, bank or payment service is connected.
+
+    </div>
+
+    <!-- ACCOUNT STATUS -->
+
+    <div class="settings-card">
+
+        <h2>
+            Account Status
+        </h2>
+
+        <p class="section-description">
+            Current status of your demonstration account.
+        </p>
+
+        <div class="status-box">
+
+            <div>
+                <strong>
+                    ✓ Demo Account Active
+                </strong>
+
+                <span>
+                    Your CryptoVault demonstration account is ready.
+                </span>
+            </div>
+
+            <strong>
+                DEMO
+            </strong>
+
+        </div>
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="settings-card">
+
+        <h2>
+            Profile Information
+        </h2>
+
+        <p class="section-description">
+            Update your demonstration profile information.
+        </p>
+
+        <div class="profile-grid">
 
             <div class="form-group">
-                <label for="fullName">Full Name</label>
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
                 <input
                     type="text"
                     id="fullName"
-                    value="Getahun"
-                >
+                    value="Getahun B">
+
             </div>
 
             <div class="form-group">
-                <label for="username">Username</label>
+
+                <label for="username">
+                    Username
+                </label>
+
                 <input
                     type="text"
                     id="username"
-                    value="cryptouser"
-                >
+                    value="getahun"
+                    disabled>
+
             </div>
 
             <div class="form-group">
-                <label for="email">Email Address</label>
+
+                <label for="email">
+                    Email Address
+                </label>
+
                 <input
                     type="email"
                     id="email"
-                    value="user@example.com"
-                >
-            </div>
-
-            <div class="form-group">
-
-                <label>Account Status</label>
-
-                <div class="profile-item">
-                    <strong class="active">● Active</strong>
-                </div>
+                    value="demo@example.com">
 
             </div>
-
-        </div>
-
-        <div class="button-row">
-            <button class="button" onclick="saveSettings()">
-                Save Profile
-            </button>
-        </div>
-
-    </section>
-
-
-    <!-- Password -->
-
-    <section class="section">
-
-        <h2>Change Password</h2>
-
-        <div class="notice">
-            This is a demonstration form. Your password is not connected to a
-            real authentication system.
-        </div>
-
-        <div class="form-group">
-
-            <label for="currentPassword">
-                Current Password
-            </label>
-
-            <input
-                type="password"
-                id="currentPassword"
-                placeholder="Enter current password"
-            >
-
-        </div>
-
-        <div class="form-group">
-
-            <label for="newPassword">
-                New Password
-            </label>
-
-            <input
-                type="password"
-                id="newPassword"
-                placeholder="Enter new password"
-                minlength="8"
-            >
-
-        </div>
-
-        <div class="form-group">
-
-            <label for="confirmPassword">
-                Confirm New Password
-            </label>
-
-            <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm new password"
-                minlength="8"
-            >
-
-        </div>
-
-        <div class="button-row">
-
-            <button class="button" onclick="changePassword()">
-                Update Password
-            </button>
-
-            <button
-                class="secondary-button"
-                onclick="clearPasswordFields()"
-            >
-                Clear
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- Security -->
-
-    <section class="section">
-
-        <h2>Security</h2>
-
-        <p class="section-description">
-            Manage security features for your demonstration account.
-        </p>
-
-        <div class="security-list">
-
-            <div class="security-item">
-
-                <div>
-                    <strong>Account Protection</strong>
-                    <small>Basic account protection is enabled.</small>
-                </div>
-
-                <span class="status enabled">
-                    Enabled
-                </span>
-
-            </div>
-
-
-            <div class="security-item">
-
-                <div>
-                    <strong>Two-Factor Authentication</strong>
-                    <small>Add another layer of account security.</small>
-                </div>
-
-                <label class="toggle">
-
-                    <input
-                        type="checkbox"
-                        id="twoFactor"
-                        onchange="toggleTwoFactor()"
-                    >
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="security-item">
-
-                <div>
-                    <strong>Login Alerts</strong>
-                    <small>Receive alerts for new login activity.</small>
-                </div>
-
-                <label class="toggle">
-
-                    <input
-                        type="checkbox"
-                        id="loginAlerts"
-                        checked
-                    >
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Preferences -->
-
-    <section class="section">
-
-        <h2>Preferences</h2>
-
-        <p class="section-description">
-            Choose how information appears on your CryptoVault account.
-        </p>
-
-        <div class="preference-grid">
 
             <div class="form-group">
 
@@ -617,14 +697,207 @@
                         GBP - British Pound
                     </option>
 
-                    <option value="ETB">
-                        ETB - Ethiopian Birr
-                    </option>
-
                 </select>
 
             </div>
 
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="saveProfile()">
+            Save Changes
+        </button>
+
+        <div
+            class="message"
+            id="profileMessage">
+            Profile changes saved successfully.
+        </div>
+
+    </div>
+
+    <!-- SECURITY -->
+
+    <div class="settings-card">
+
+        <h2>
+            Security
+        </h2>
+
+        <p class="section-description">
+            Configure security options for your demonstration account.
+        </p>
+
+        <div class="security-row">
+
+            <div class="security-info">
+
+                <strong>
+                    Two-Factor Authentication
+                </strong>
+
+                <span>
+                    Add an extra layer of account security.
+                </span>
+
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="twoFactor">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="security-row">
+
+            <div class="security-info">
+
+                <strong>
+                    Login Alerts
+                </strong>
+
+                <span>
+                    Receive alerts when a demo login occurs.
+                </span>
+
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="loginAlerts"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="security-row">
+
+            <div class="security-info">
+
+                <strong>
+                    Account Protection
+                </strong>
+
+                <span>
+                    Demo security monitoring is enabled.
+                </span>
+
+            </div>
+
+            <strong class="success">
+                Protected
+            </strong>
+
+        </div>
+
+    </div>
+
+    <!-- PASSWORD -->
+
+    <div class="settings-card">
+
+        <h2>
+            Change Password
+        </h2>
+
+        <p class="section-description">
+            Change your demonstration account password.
+        </p>
+
+        <div class="form-group">
+
+            <label for="currentPassword">
+                Current Password
+            </label>
+
+            <input
+                type="password"
+                id="currentPassword"
+                placeholder="Enter current password">
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="newPassword">
+                New Password
+            </label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password"
+                oninput="checkPasswordStrength()">
+
+            <div class="password-strength">
+
+                <div
+                    class="strength-bar"
+                    id="strengthBar">
+                </div>
+
+            </div>
+
+            <div
+                class="password-message"
+                id="passwordMessage">
+                Enter a password.
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="confirmPassword">
+                Confirm New Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm new password">
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="changePassword()">
+            Change Password
+        </button>
+
+        <div
+            class="message"
+            id="passwordSuccess">
+            Password changed successfully for this demo account.
+        </div>
+
+    </div>
+
+    <!-- PREFERENCES -->
+
+    <div class="settings-card">
+
+        <h2>
+            Preferences
+        </h2>
+
+        <p class="section-description">
+            Customize your demonstration account preferences.
+        </p>
+
+        <div class="profile-grid">
 
             <div class="form-group">
 
@@ -634,16 +907,36 @@
 
                 <select id="language">
 
-                    <option value="english">
+                    <option>
                         English
                     </option>
 
-                    <option value="oromo">
-                        Afaan Oromoo
+                    <option>
+                        Afaan Oromo
                     </option>
 
-                    <option value="amharic">
+                    <option>
                         Amharic
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="timezone">
+                    Time Zone
+                </label>
+
+                <select id="timezone">
+
+                    <option>
+                        East Africa Time (EAT)
+                    </option>
+
+                    <option>
+                        UTC
                     </option>
 
                 </select>
@@ -652,156 +945,326 @@
 
         </div>
 
-        <button class="button" onclick="saveSettings()">
+        <button
+            class="btn btn-primary"
+            onclick="savePreferences()">
             Save Preferences
         </button>
 
-    </section>
+        <div
+            class="message"
+            id="preferencesMessage">
+            Preferences saved successfully.
+        </div>
 
+    </div>
 
-    <!-- Danger Zone -->
+    <!-- DANGER ZONE -->
 
-    <section class="section danger-zone">
+    <div class="settings-card danger-zone">
 
-        <h2>Account Actions</h2>
+        <h2>
+            Danger Zone
+        </h2>
 
         <p class="section-description">
-            These options are for demonstration purposes.
+            Demonstration account actions.
         </p>
 
         <button
-            class="danger-button"
-            onclick="logoutDemo()"
-        >
+            class="btn btn-danger"
+            onclick="demoLogout()">
             Log Out
         </button>
 
-    </section>
-
-
-    <a href="dashboard.html" class="back">
-        ← Back to Dashboard
-    </a>
+    </div>
 
 </main>
 
-
 <footer>
-    © 2026 CryptoVault. Demonstration website only.
-</footer>
 
+    © 2026 CryptoVault. Demonstration website only.
+
+</footer>
 
 <script>
 
-    function showSuccess(message) {
+    /* MOBILE MENU */
 
-        const box = document.getElementById("successMessage");
+    function toggleMenu() {
 
-        box.textContent = "✓ " + message;
+        document
+            .getElementById("navLinks")
+            .classList.toggle("show");
 
-        box.style.display = "block";
-
-        setTimeout(function() {
-            box.style.display = "none";
-        }, 3000);
     }
 
 
-    function saveSettings() {
+    /* LIGHT / DARK MODE */
 
-        const name = document.getElementById("fullName").value.trim();
-        const username = document.getElementById("username").value.trim();
-        const email = document.getElementById("email").value.trim();
+    function toggleTheme() {
 
-        if (name === "" || username === "" || email === "") {
+        document.body.classList.toggle("light-mode");
 
-            alert("Please complete all profile fields.");
+        const isLight =
+            document.body.classList.contains("light-mode");
 
-            return;
+        localStorage.setItem(
+            "cryptoVaultTheme",
+            isLight ? "light" : "dark"
+        );
+
+        updateThemeButton();
+
+    }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.getElementById("themeBtn");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        button.textContent =
+            isLight ? "🌙" : "☀️";
+
+        button.setAttribute(
+            "aria-label",
+            isLight
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    function loadTheme() {
+
+        if (
+            localStorage.getItem("cryptoVaultTheme")
+            === "light"
+        ) {
+
+            document.body.classList.add("light-mode");
+
         }
 
-        showSuccess("Your settings have been saved successfully.");
+        updateThemeButton();
+
     }
 
+
+    /* PROFILE */
+
+    function saveProfile() {
+
+        const message =
+            document.getElementById("profileMessage");
+
+        message.style.display = "block";
+
+        setTimeout(function() {
+
+            message.style.display = "none";
+
+        }, 3000);
+
+    }
+
+
+    /* PASSWORD STRENGTH */
+
+    function checkPasswordStrength() {
+
+        const password =
+            document.getElementById("newPassword").value;
+
+        const bar =
+            document.getElementById("strengthBar");
+
+        const message =
+            document.getElementById("passwordMessage");
+
+        let strength = 0;
+
+        if (password.length >= 6) {
+            strength++;
+        }
+
+        if (password.length >= 10) {
+            strength++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (password.length === 0) {
+
+            bar.style.width = "0%";
+            message.textContent = "Enter a password.";
+
+        } else if (strength <= 2) {
+
+            bar.style.width = "35%";
+            message.textContent = "Weak password.";
+
+        } else if (strength <= 3) {
+
+            bar.style.width = "65%";
+            message.textContent = "Medium password.";
+
+        } else {
+
+            bar.style.width = "100%";
+            message.textContent = "Strong password.";
+
+        }
+
+    }
+
+
+    /* CHANGE PASSWORD */
 
     function changePassword() {
 
-        const currentPassword =
+        const current =
             document.getElementById("currentPassword").value;
 
         const newPassword =
             document.getElementById("newPassword").value;
 
-        const confirmPassword =
+        const confirm =
             document.getElementById("confirmPassword").value;
 
+        if (!current || !newPassword || !confirm) {
 
-        if (currentPassword === "") {
-
-            alert("Please enter your current password.");
-
-            return;
-        }
-
-
-        if (newPassword.length < 8) {
-
-            alert("Your new password must contain at least 8 characters.");
+            alert("Please complete all password fields.");
 
             return;
+
         }
 
+        if (newPassword.length < 6) {
 
-        if (newPassword !== confirmPassword) {
-
-            alert("The new passwords do not match.");
+            alert("New password must contain at least 6 characters.");
 
             return;
+
         }
 
+        if (newPassword !== confirm) {
 
-        clearPasswordFields();
+            alert("New passwords do not match.");
 
-        showSuccess("Password updated in demonstration mode.");
+            return;
+
+        }
+
+        document.getElementById(
+            "passwordSuccess"
+        ).style.display = "block";
+
+        document.getElementById(
+            "currentPassword"
+        ).value = "";
+
+        document.getElementById(
+            "newPassword"
+        ).value = "";
+
+        document.getElementById(
+            "confirmPassword"
+        ).value = "";
+
+        document.getElementById(
+            "strengthBar"
+        ).style.width = "0%";
+
+        document.getElementById(
+            "passwordMessage"
+        ).textContent = "Enter a password.";
+
+        setTimeout(function() {
+
+            document.getElementById(
+                "passwordSuccess"
+            ).style.display = "none";
+
+        }, 3000);
+
     }
 
 
-    function clearPasswordFields() {
+    /* PREFERENCES */
 
-        document.getElementById("currentPassword").value = "";
-        document.getElementById("newPassword").value = "";
-        document.getElementById("confirmPassword").value = "";
+    function savePreferences() {
+
+        const message =
+            document.getElementById("preferencesMessage");
+
+        message.style.display = "block";
+
+        setTimeout(function() {
+
+            message.style.display = "none";
+
+        }, 3000);
+
     }
 
 
-    function toggleTwoFactor() {
+    /* LOGOUT */
 
-        const checkbox = document.getElementById("twoFactor");
+    function demoLogout() {
 
-        if (checkbox.checked) {
-
-            showSuccess("Two-factor authentication enabled in demonstration mode.");
-
-        } else {
-
-            showSuccess("Two-factor authentication disabled in demonstration mode.");
-
-        }
-    }
-
-
-    function logoutDemo() {
-
-        const confirmed = confirm(
-            "Do you want to log out of the demonstration account?"
-        );
+        const confirmed =
+            confirm(
+                "Log out of the CryptoVault demonstration?"
+            );
 
         if (confirmed) {
 
-            window.location.href = "index.html";
+            window.location.href = "login.html";
 
         }
+
     }
+
+
+    /* CLOSE MOBILE MENU */
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(function(link) {
+
+            link.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .getElementById("navLinks")
+                        .classList.remove("show");
+
+                }
+            );
+
+        });
+
+
+    /* START */
+
+    loadTheme();
 
 </script>
 
