@@ -15,232 +15,307 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: #0b1120;
-            color: #e5e7eb;
-            line-height: 1.6;
+            background: #07111f;
+            color: #ffffff;
         }
 
-        header {
-            background: #111827;
-            border-bottom: 1px solid #263244;
-            padding: 18px 6%;
+        .header {
+            background: #091522;
+            border-bottom: 1px solid #203349;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            min-height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            color: white;
-            text-decoration: none;
             font-size: 24px;
             font-weight: bold;
         }
 
         .logo span {
-            color: #38bdf8;
+            color: #35d0ba;
         }
 
-        .dashboard-link {
-            color: #cbd5e1;
+        .dashboard {
+            color: #35d0ba;
             text-decoration: none;
+            font-weight: bold;
         }
 
-        .dashboard-link:hover {
-            color: #38bdf8;
-        }
-
-        main {
+        .container {
+            width: 92%;
             max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
+            margin: 40px auto;
         }
 
-        .page-title {
-            text-align: center;
-            margin-bottom: 35px;
+        .title {
+            margin-bottom: 25px;
         }
 
-        .page-title h1 {
-            color: white;
-            font-size: 36px;
-            margin-bottom: 10px;
+        .title h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
-        .page-title p {
-            color: #94a3b8;
+        .title p {
+            color: #8fa2b6;
+        }
+
+        .demo-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #102b3a;
+            border: 1px solid #28536a;
+            color: #66dcca;
+            font-size: 12px;
         }
 
         .summary {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 22px;
         }
 
         .summary-card {
-            background: #111827;
-            border: 1px solid #263244;
+            background: #0d1b2a;
+            border: 1px solid #203349;
             border-radius: 14px;
-            padding: 22px;
+            padding: 20px;
         }
 
         .summary-card span {
             display: block;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 8px;
+            color: #8fa2b6;
+            font-size: 12px;
+            margin-bottom: 9px;
         }
 
         .summary-card strong {
-            color: white;
-            font-size: 28px;
+            font-size: 24px;
         }
 
-        .table-card {
-            background: #111827;
-            border: 1px solid #263244;
+        .positive {
+            color: #35d0ba;
+        }
+
+        .pending {
+            color: #f2c66d;
+        }
+
+        .panel {
+            background: #0d1b2a;
+            border: 1px solid #203349;
             border-radius: 16px;
             padding: 25px;
-            overflow-x: auto;
         }
 
-        .table-header {
+        .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
         }
 
-        .table-header h2 {
-            color: white;
+        .panel-header h2 {
+            font-size: 19px;
         }
 
-        .demo-label {
-            color: #94a3b8;
-            font-size: 13px;
+        .panel-header span {
+            color: #718398;
+            font-size: 12px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr 180px 180px;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border-radius: 9px;
+            border: 1px solid #2a3e55;
+            background: #091522;
+            color: #ffffff;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #35d0ba;
+        }
+
+        .table-container {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 750px;
+            min-width: 720px;
+        }
+
+        th,
+        td {
+            padding: 15px 10px;
+            text-align: left;
+            border-bottom: 1px solid #1d3044;
         }
 
         th {
-            text-align: left;
-            padding: 15px;
-            color: #94a3b8;
-            font-size: 13px;
-            border-bottom: 1px solid #263244;
+            color: #718398;
+            font-size: 12px;
+            font-weight: normal;
         }
 
         td {
-            padding: 17px 15px;
-            border-bottom: 1px solid #1e293b;
-            color: #cbd5e1;
-        }
-
-        tr:hover {
-            background: #0f172a;
+            font-size: 13px;
         }
 
         .asset {
-            color: white;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .coin {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #13283a;
+            color: #35d0ba;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
             font-weight: bold;
         }
 
-        .positive {
-            color: #4ade80;
-            font-weight: bold;
+        .asset strong {
+            display: block;
         }
 
-        .negative {
-            color: #f87171;
-            font-weight: bold;
+        .asset small {
+            color: #718398;
+            font-size: 10px;
         }
 
         .status {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 5px 9px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
         }
 
-        .completed {
-            background: rgba(74, 222, 128, 0.12);
-            color: #4ade80;
+        .status.completed {
+            color: #35d0ba;
+            background: #0b2926;
+            border: 1px solid #1d554c;
         }
 
-        .pending {
-            background: rgba(251, 191, 36, 0.12);
-            color: #fbbf24;
+        .status.pending {
+            color: #f2c66d;
+            background: #2b2414;
+            border: 1px solid #665323;
         }
 
-        .actions {
+        .deposit {
+            color: #35d0ba;
+        }
+
+        .withdrawal {
+            color: #ff8f8f;
+        }
+
+        .empty {
+            text-align: center;
+            color: #718398;
+            padding: 30px;
+        }
+
+        .bottom-actions {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 22px;
         }
 
         .btn {
             display: inline-block;
-            text-decoration: none;
             padding: 12px 18px;
-            border-radius: 8px;
+            border-radius: 9px;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 13px;
+            border: 1px solid #294057;
+            color: #ffffff;
+            background: #102033;
         }
 
-        .primary {
-            background: #38bdf8;
-            color: #082f49;
+        .btn.primary {
+            background: #35d0ba;
+            color: #06121f;
+            border-color: #35d0ba;
         }
 
-        .secondary {
-            border: 1px solid #334155;
-            color: #cbd5e1;
-        }
-
-        .primary:hover {
-            background: #7dd3fc;
-        }
-
-        .secondary:hover {
-            border-color: #38bdf8;
-            color: #38bdf8;
+        .btn:hover {
+            opacity: 0.9;
         }
 
         .notice {
             margin-top: 25px;
-            padding: 16px;
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 10px;
-            color: #94a3b8;
-            font-size: 14px;
+            text-align: center;
+            color: #718398;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         footer {
             text-align: center;
-            padding: 30px 20px;
-            color: #64748b;
-            font-size: 14px;
+            color: #64768a;
+            font-size: 12px;
+            padding: 30px 15px;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
+
             .summary {
                 grid-template-columns: 1fr;
             }
 
-            .page-title h1 {
-                font-size: 30px;
+            .filters {
+                grid-template-columns: 1fr;
             }
 
-            .table-card {
+            .title h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .panel {
                 padding: 18px;
             }
 
-            .actions {
+            .bottom-actions {
                 flex-direction: column;
             }
 
@@ -253,141 +328,520 @@
 
 <body>
 
-<header>
-    <a href="index.html" class="logo">
-        Crypto<span>Vault</span>
-    </a>
+<header class="header">
 
-    <a href="dashboard.html" class="dashboard-link">
-        ← Dashboard
-    </a>
+    <nav class="nav">
+
+        <div class="logo">
+            Crypto<span>Vault</span>
+        </div>
+
+        <a href="dashboard.html" class="dashboard">
+            Dashboard
+        </a>
+
+    </nav>
+
 </header>
 
-<main>
 
-    <div class="page-title">
+<main class="container">
+
+    <section class="title">
+
         <h1>Transaction History</h1>
-        <p>Review your recent demonstration transactions.</p>
-    </div>
 
-    <div class="summary">
+        <p>
+            Review your recent CryptoVault demo activity.
+        </p>
+
+        <div class="demo-badge">
+            DEMO TRANSACTIONS
+        </div>
+
+    </section>
+
+
+    <section class="summary">
 
         <div class="summary-card">
-            <span>Total Transactions</span>
-            <strong>5</strong>
+
+            <span>
+                Total Transactions
+            </span>
+
+            <strong id="totalCount">
+                5
+            </strong>
+
         </div>
+
 
         <div class="summary-card">
-            <span>Completed</span>
-            <strong>4</strong>
+
+            <span>
+                Completed
+            </span>
+
+            <strong class="positive" id="completedCount">
+                4
+            </strong>
+
         </div>
+
 
         <div class="summary-card">
-            <span>Pending</span>
-            <strong>1</strong>
+
+            <span>
+                Pending
+            </span>
+
+            <strong class="pending" id="pendingCount">
+                1
+            </strong>
+
         </div>
 
-    </div>
+    </section>
 
-    <div class="table-card">
 
-        <div class="table-header">
-            <h2>Recent Transactions</h2>
-            <span class="demo-label">Demo Data</span>
+    <section class="panel">
+
+        <div class="panel-header">
+
+            <h2>All Transactions</h2>
+
+            <span>
+                Demo activity
+            </span>
+
         </div>
 
-        <table>
 
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Asset</th>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
+        <div class="filters">
 
-            <tbody>
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search transactions..."
+            >
 
-                <tr>
-                    <td>03 Sep 2026</td>
-                    <td class="asset">Bitcoin (BTC)</td>
-                    <td>Deposit</td>
-                    <td class="positive">+$500.00</td>
-                    <td>
-                        <span class="status completed">Completed</span>
-                    </td>
-                </tr>
+            <select id="typeFilter">
 
-                <tr>
-                    <td>02 Sep 2026</td>
-                    <td class="asset">Tether (USDT)</td>
-                    <td>Deposit</td>
-                    <td class="positive">+$300.00</td>
-                    <td>
-                        <span class="status completed">Completed</span>
-                    </td>
-                </tr>
+                <option value="all">
+                    All Types
+                </option>
 
-                <tr>
-                    <td>01 Sep 2026</td>
-                    <td class="asset">Bitcoin (BTC)</td>
-                    <td>Withdrawal</td>
-                    <td class="negative">-$100.00</td>
-                    <td>
-                        <span class="status completed">Completed</span>
-                    </td>
-                </tr>
+                <option value="deposit">
+                    Deposits
+                </option>
 
-                <tr>
-                    <td>31 Aug 2026</td>
-                    <td class="asset">Ethereum (ETH)</td>
-                    <td>Deposit</td>
-                    <td class="positive">+$250.00</td>
-                    <td>
-                        <span class="status completed">Completed</span>
-                    </td>
-                </tr>
+                <option value="withdrawal">
+                    Withdrawals
+                </option>
 
-                <tr>
-                    <td>30 Aug 2026</td>
-                    <td class="asset">Tether (USDT)</td>
-                    <td>Withdrawal</td>
-                    <td class="negative">-$150.00</td>
-                    <td>
-                        <span class="status pending">Pending</span>
-                    </td>
-                </tr>
+            </select>
 
-            </tbody>
 
-        </table>
+            <select id="statusFilter">
 
-        <div class="actions">
-            <a href="dashboard.html" class="btn secondary">
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="completed">
+                    Completed
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Asset</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="transactionBody">
+
+                    <tr
+                        data-type="deposit"
+                        data-status="completed"
+                    >
+
+                        <td>
+                            03 Sep 2026
+                        </td>
+
+                        <td>
+
+                            <div class="asset">
+
+                                <div class="coin">
+                                    BTC
+                                </div>
+
+                                <div>
+                                    <strong>Bitcoin</strong>
+                                    <small>BTC</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td class="deposit">
+                            Deposit
+                        </td>
+
+                        <td class="deposit">
+                            +$500.00
+                        </td>
+
+                        <td>
+                            <span class="status completed">
+                                Completed
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-type="deposit"
+                        data-status="completed"
+                    >
+
+                        <td>
+                            02 Sep 2026
+                        </td>
+
+                        <td>
+
+                            <div class="asset">
+
+                                <div class="coin">
+                                    USDT
+                                </div>
+
+                                <div>
+                                    <strong>Tether</strong>
+                                    <small>USDT</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td class="deposit">
+                            Deposit
+                        </td>
+
+                        <td class="deposit">
+                            +$300.00
+                        </td>
+
+                        <td>
+                            <span class="status completed">
+                                Completed
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-type="withdrawal"
+                        data-status="completed"
+                    >
+
+                        <td>
+                            01 Sep 2026
+                        </td>
+
+                        <td>
+
+                            <div class="asset">
+
+                                <div class="coin">
+                                    BTC
+                                </div>
+
+                                <div>
+                                    <strong>Bitcoin</strong>
+                                    <small>BTC</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td class="withdrawal">
+                            Withdrawal
+                        </td>
+
+                        <td class="withdrawal">
+                            -$100.00
+                        </td>
+
+                        <td>
+                            <span class="status completed">
+                                Completed
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-type="deposit"
+                        data-status="completed"
+                    >
+
+                        <td>
+                            31 Aug 2026
+                        </td>
+
+                        <td>
+
+                            <div class="asset">
+
+                                <div class="coin">
+                                    ETH
+                                </div>
+
+                                <div>
+                                    <strong>Ethereum</strong>
+                                    <small>ETH</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td class="deposit">
+                            Deposit
+                        </td>
+
+                        <td class="deposit">
+                            +$250.00
+                        </td>
+
+                        <td>
+                            <span class="status completed">
+                                Completed
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-type="withdrawal"
+                        data-status="pending"
+                    >
+
+                        <td>
+                            30 Aug 2026
+                        </td>
+
+                        <td>
+
+                            <div class="asset">
+
+                                <div class="coin">
+                                    USDT
+                                </div>
+
+                                <div>
+                                    <strong>Tether</strong>
+                                    <small>USDT</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td class="withdrawal">
+                            Withdrawal
+                        </td>
+
+                        <td class="withdrawal">
+                            -$150.00
+                        </td>
+
+                        <td>
+                            <span class="status pending">
+                                Pending
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div
+                class="empty"
+                id="emptyMessage"
+                style="display: none;"
+            >
+                No matching transactions found.
+            </div>
+
+        </div>
+
+
+        <div class="bottom-actions">
+
+            <a
+                href="dashboard.html"
+                class="btn"
+            >
                 ← Back to Dashboard
             </a>
 
-            <a href="deposit.html" class="btn primary">
-                + Make a Deposit
+            <a
+                href="deposit.html"
+                class="btn primary"
+            >
+                Make a Deposit
             </a>
+
         </div>
 
-        <div class="notice">
-            <strong>Demo Notice:</strong>
-            The transactions shown on this page are sample data for the
-            CryptoVault demonstration website. No real cryptocurrency
-            transactions are processed.
-        </div>
+    </section>
+
+
+    <div class="notice">
+
+        This transaction history contains demonstration data only.
+        It is not connected to a real blockchain, wallet, bank,
+        payment processor, or cryptocurrency account.
 
     </div>
 
 </main>
 
+
 <footer>
-    © 2026 CryptoVault. Demonstration website only.
+
+    © 2026 CryptoVault. Demo platform for educational purposes.
+
+    <br><br>
+
+    No real cryptocurrency transactions are processed.
+
 </footer>
+
+
+<script>
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const typeFilter =
+        document.getElementById("typeFilter");
+
+    const statusFilter =
+        document.getElementById("statusFilter");
+
+    const rows =
+        document.querySelectorAll("#transactionBody tr");
+
+    const emptyMessage =
+        document.getElementById("emptyMessage");
+
+
+    function filterTransactions() {
+
+        const search =
+            searchInput.value.toLowerCase();
+
+        const type =
+            typeFilter.value;
+
+        const status =
+            statusFilter.value;
+
+        let visible = 0;
+
+        rows.forEach(function(row) {
+
+            const text =
+                row.textContent.toLowerCase();
+
+            const rowType =
+                row.dataset.type;
+
+            const rowStatus =
+                row.dataset.status;
+
+            const matchesSearch =
+                text.includes(search);
+
+            const matchesType =
+                type === "all" ||
+                rowType === type;
+
+            const matchesStatus =
+                status === "all" ||
+                rowStatus === status;
+
+            if (
+                matchesSearch &&
+                matchesType &&
+                matchesStatus
+            ) {
+
+                row.style.display = "";
+                visible++;
+
+            } else {
+
+                row.style.display = "none";
+            }
+
+        });
+
+        emptyMessage.style.display =
+            visible === 0 ? "block" : "none";
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        filterTransactions
+    );
+
+    typeFilter.addEventListener(
+        "change",
+        filterTransactions
+    );
+
+    statusFilter.addEventListener(
+        "change",
+        filterTransactions
+    );
+
+</script>
 
 </body>
 </html>
