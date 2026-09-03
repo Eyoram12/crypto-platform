@@ -1,433 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CryptoVault | Withdrawal</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f7fb;
-    color: #172033;
-}
-
-header {
-    background: #0b1220;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-}
-
-.navbar {
-    max-width: 1200px;
-    margin: auto;
-    padding: 16px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.brand-text strong {
-    display: block;
-    font-size: 18px;
-}
-
-.brand-text span {
-    font-size: 10px;
-    color: #94a3b8;
-    letter-spacing: 1px;
-}
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 7px;
-}
-
-nav a {
-    color: #cbd5e1;
-    text-decoration: none;
-    padding: 9px 11px;
-    border-radius: 8px;
-    font-size: 13px;
-}
-
-nav a:hover,
-nav a.active {
-    background: #1e293b;
-    color: white;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 45px 20px;
-}
-
-.hero {
-    margin-bottom: 30px;
-}
-
-.badge {
-    display: inline-block;
-    background: #dbeafe;
-    color: #1d4ed8;
-    padding: 7px 12px;
-    border-radius: 30px;
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-h1 {
-    font-size: 38px;
-    margin: 14px 0 10px;
-}
-
-.hero p {
-    color: #64748b;
-    max-width: 700px;
-    line-height: 1.7;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 22px;
-}
-
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 8px 28px rgba(15,23,42,0.07);
-    border: 1px solid #e5e7eb;
-    margin-bottom: 22px;
-}
-
-.card h2 {
-    margin-top: 0;
-    font-size: 21px;
-}
-
-.card p {
-    color: #64748b;
-    line-height: 1.6;
-}
-
-.balance {
-    background: linear-gradient(135deg, #0f172a, #1e3a8a);
-    color: white;
-    border: none;
-}
-
-.balance small {
-    color: #cbd5e1;
-}
-
-.balance-value {
-    font-size: 34px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.status {
-    display: inline-block;
-    margin-top: 12px;
-    background: rgba(34,197,94,0.18);
-    color: #86efac;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-label {
-    display: block;
-    margin: 17px 0 7px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 14px;
-    background: white;
-    color: #172033;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
-}
-
-.quick-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.quick-buttons button {
-    border: 1px solid #cbd5e1;
-    background: #f8fafc;
-    padding: 8px 13px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.quick-buttons button:hover {
-    background: #e0e7ff;
-    border-color: #6366f1;
-}
-
-.primary-btn {
-    width: 100%;
-    margin-top: 22px;
-    padding: 14px;
-    border: none;
-    border-radius: 9px;
-    background: #2563eb;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.primary-btn:hover {
-    background: #1d4ed8;
-}
-
-.secondary-btn {
-    border: none;
-    background: #e2e8f0;
-    color: #172033;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.warning {
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
-    color: #9a3412;
-}
-
-.security-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.security-list li {
-    padding: 13px 0;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.security-list li:last-child {
-    border-bottom: none;
-}
-
-.good {
-    color: #15803d;
-    font-weight: bold;
-}
-
-.process {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.step {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 18px;
-}
-
-.step-number {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #2563eb;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.step h3 {
-    font-size: 15px;
-    margin: 0 0 7px;
-}
-
-.step p {
-    font-size: 13px;
-    margin: 0;
-}
-
-.success {
-    display: none;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-    border-radius: 12px;
-    padding: 18px;
-    margin-top: 20px;
-}
-
-.success p {
-    color: #166534;
-}
-
-.demo {
-    text-align: center;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
-    color: #3730a3;
-}
-
-footer {
-    background: #0b1220;
-    color: #94a3b8;
-    text-align: center;
-    padding: 25px 20px;
-    margin-top: 30px;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.mobile-menu {
-    display: none;
-}
-
-@media (max-width: 900px) {
-
-    .navbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .brand {
-        justify-content: center;
-    }
-
-    nav {
-        justify-content: center;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .process {
-        grid-template-columns: 1fr;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-}
-
-@media (max-width: 600px) {
-
-    .container {
-        padding: 35px 15px;
-    }
-
-    .navbar {
-        padding: 14px 15px;
-    }
-
-    nav {
-        gap: 4px;
-    }
-
-    nav a {
-        font-size: 12px;
-        padding: 8px 9px;
-    }
-
-    .card {
-        padding: 20px;
-    }
-
-    .balance-value {
-        font-size: 29px;
-    }
-
-    .quick-buttons button {
-        flex: 1;
-        min-width: 70px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Withdrawal | CryptoVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        header {
+            background: #0b1220;
+            color: white;
+            padding: 18px 6%;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #dbe4f0;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        main {
+            width: 92%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #1d4ed8;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 34px;
+        }
+
+        .intro {
+            color: #667085;
+            margin-bottom: 30px;
+        }
+
+        .balance-card {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .balance-label {
+            color: #667085;
+            font-size: 14px;
+        }
+
+        .balance {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .quick-buttons button {
+            border: 1px solid #cbd5e1;
+            background: white;
+            padding: 8px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .quick-buttons button:hover {
+            background: #eef2ff;
+        }
+
+        .primary-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .success {
+            display: none;
+            background: #ecfdf3;
+            border: 1px solid #abefc6;
+            color: #067647;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.7;
+        }
+
+        .security {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .security strong {
+            color: #c2410c;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .step {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .important {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+            padding: 18px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .demo {
+            text-align: center;
+            color: #667085;
+            font-size: 13px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        footer {
+            background: #0b1220;
+            color: #98a2b3;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .card,
+            .balance-card {
+                padding: 20px;
+            }
+
+            nav {
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 7px 8px;
+            }
+
+            .balance {
+                font-size: 27px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-
     <div class="navbar">
 
-        <a href="index.html"
-           class="brand"
-           style="text-decoration:none;color:white;">
-
-            <div class="logo">CV</div>
-
-            <div class="brand-text">
-                <strong>CryptoVault</strong>
-                <span>DIGITAL ASSET PLATFORM</span>
-            </div>
-
-        </a>
+        <a href="index.html" class="logo">CryptoVault</a>
 
         <nav>
             <a href="index.html">Home</a>
@@ -439,232 +323,209 @@ footer {
         </nav>
 
     </div>
-
 </header>
 
+<main>
 
-<main class="container">
+    <span class="badge">WITHDRAWAL</span>
 
-    <section class="hero">
+    <h1>Withdraw Assets</h1>
 
-        <span class="badge">WITHDRAWAL</span>
+    <p class="intro">
+        Create a demo withdrawal request from your CryptoVault account.
+    </p>
 
-        <h1>Withdraw Assets</h1>
+    <!-- BALANCE -->
+
+    <div class="balance-card">
+
+        <div class="balance-label">
+            Available Demo Balance
+        </div>
+
+        <div class="balance">
+            $10,000.00
+        </div>
+
+    </div>
+
+
+    <!-- WITHDRAWAL FORM -->
+
+    <div class="card">
+
+        <h2>Create Withdrawal</h2>
 
         <p>
-            Create a simulated withdrawal request and review the transaction
-            details before confirmation.
+            Enter the destination and amount for your demo withdrawal.
         </p>
 
-    </section>
+        <label for="asset">
+            Asset
+        </label>
+
+        <select id="asset" onchange="updateWithdrawalNetwork()">
+
+            <option value="USDT">
+                USDT
+            </option>
+
+            <option value="BTC">
+                BTC
+            </option>
+
+            <option value="ETH">
+                ETH
+            </option>
+
+        </select>
 
 
-    <div class="grid">
+        <label for="network">
+            Network
+        </label>
 
-        <div>
+        <select id="network">
 
-            <div class="card balance">
+            <option value="TRC20">
+                TRON (TRC20)
+            </option>
 
-                <small>Available Portfolio Balance</small>
+            <option value="ERC20">
+                Ethereum (ERC20)
+            </option>
 
-                <div class="balance-value" id="balance">
-                    $10,000.00
-                </div>
+            <option value="BEP20">
+                BNB Smart Chain (BEP20)
+            </option>
 
-                <span class="status">
-                    ● Account Active
-                </span>
+            <option value="BTC">
+                Bitcoin
+            </option>
 
-            </div>
-
-
-            <div class="card">
-
-                <h2>Create Withdrawal</h2>
-
-                <p>
-                    Select an asset, network, destination and amount for this
-                    demonstration.
-                </p>
+        </select>
 
 
-                <label for="asset">
-                    Asset
-                </label>
+        <label for="destination">
+            Destination Address
+        </label>
 
-                <select
-                    id="asset"
-                    onchange="updateWithdrawalNetwork()"
-                >
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
-                </select>
+        <input
+            type="text"
+            id="destination"
+            placeholder="Enter demo destination address"
+        >
 
 
-                <label for="network">
-                    Network
-                </label>
+        <label for="amount">
+            Amount
+        </label>
 
-                <select id="network">
-
-                    <option value="TRC20">
-                        TRON (TRC20)
-                    </option>
-
-                    <option value="ERC20">
-                        Ethereum (ERC20)
-                    </option>
-
-                    <option value="BEP20">
-                        BNB Smart Chain (BEP20)
-                    </option>
-
-                    <option value="BTC">
-                        Bitcoin
-                    </option>
-
-                </select>
+        <input
+            type="number"
+            id="amount"
+            min="0"
+            step="0.01"
+            placeholder="Enter amount"
+        >
 
 
-                <label for="destination">
-                    Destination Address
-                </label>
+        <div class="quick-buttons">
 
-                <input
-                    type="text"
-                    id="destination"
-                    placeholder="Enter demo destination address"
-                >
+            <button type="button" onclick="setAmount(50)">
+                50
+            </button>
 
+            <button type="button" onclick="setAmount(100)">
+                100
+            </button>
 
-                <label for="amount">
-                    Withdrawal Amount
-                </label>
+            <button type="button" onclick="setAmount(250)">
+                250
+            </button>
 
-                <input
-                    type="number"
-                    id="amount"
-                    placeholder="Enter amount"
-                    min="1"
-                    step="0.01"
-                >
+            <button type="button" onclick="setAmount(500)">
+                500
+            </button>
 
-
-                <div class="quick-buttons">
-
-                    <button type="button" onclick="setAmount(50)">
-                        50
-                    </button>
-
-                    <button type="button" onclick="setAmount(100)">
-                        100
-                    </button>
-
-                    <button type="button" onclick="setAmount(250)">
-                        250
-                    </button>
-
-                    <button type="button" onclick="setAmount(500)">
-                        500
-                    </button>
-
-                    <button type="button" onclick="setAmount(1000)">
-                        1000
-                    </button>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="primary-btn"
-                    onclick="createWithdrawal()"
-                >
-                    Create Demo Withdrawal
-                </button>
-
-
-                <div
-                    class="success"
-                    id="successBox"
-                >
-
-                    <strong>
-                        Withdrawal Request Created
-                    </strong>
-
-                    <p id="successText"></p>
-
-                    <button
-                        type="button"
-                        class="secondary-btn"
-                        onclick="resetWithdrawalForm()"
-                    >
-                        Create Another Request
-                    </button>
-
-                </div>
-
-            </div>
+            <button type="button" onclick="setAmount(1000)">
+                1000
+            </button>
 
         </div>
 
 
-        <div>
-
-            <div class="card">
-
-                <h2>Security Check</h2>
-
-                <ul class="security-list">
-
-                    <li>
-                        <span>Account Status</span>
-                        <span class="good">Active</span>
-                    </li>
-
-                    <li>
-                        <span>Two-Factor Authentication</span>
-                        <span class="good">Enabled</span>
-                    </li>
-
-                    <li>
-                        <span>Account Protection</span>
-                        <span class="good">Active</span>
-                    </li>
-
-                    <li>
-                        <span>Verification</span>
-                        <span class="good">Ready</span>
-                    </li>
-
-                </ul>
-
-            </div>
+        <button
+            type="button"
+            class="primary-btn"
+            onclick="createWithdrawal()"
+        >
+            Create Demo Withdrawal
+        </button>
 
 
-            <div class="card warning">
+        <button
+            type="button"
+            class="secondary-btn"
+            onclick="resetWithdrawalForm()"
+        >
+            Reset
+        </button>
 
-                <h2>Important</h2>
 
-                <p>
-                    Always review the destination address and selected network
-                    before confirming a withdrawal.
-                </p>
+        <!-- SUCCESS -->
 
-            </div>
+        <div id="successBox" class="success">
+
+            <strong>Withdrawal Created</strong>
+
+            <p id="successText"></p>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security">
+
+            <strong>Security Check</strong>
+
+            <p>
+                Always verify the destination address and network
+                before sending cryptocurrency. This CryptoVault
+                page is only a demonstration and does not process
+                real cryptocurrency.
+            </p>
 
         </div>
 
     </div>
 
 
+    <!-- IMPORTANT -->
+
+    <div class="card">
+
+        <h2>Important</h2>
+
+        <div class="important">
+
+            This website is a demo interface. No real cryptocurrency
+            is transferred, and no real payment or withdrawal is
+            processed.
+
+        </div>
+
+    </div>
+
+
+    <!-- HOW IT WORKS -->
+
     <div class="card">
 
         <h2>How Withdrawal Works</h2>
 
-        <div class="process">
+        <div class="steps">
 
             <div class="step">
 
@@ -672,10 +533,11 @@ footer {
                     1
                 </div>
 
-                <h3>Select Asset</h3>
+                <strong>Enter Details</strong>
 
                 <p>
-                    Choose USDT, BTC or ETH for your simulated withdrawal.
+                    Select the asset, network, destination address
+                    and amount.
                 </p>
 
             </div>
@@ -687,10 +549,11 @@ footer {
                     2
                 </div>
 
-                <h3>Enter Details</h3>
+                <strong>Create Request</strong>
 
                 <p>
-                    Enter a demo destination address and withdrawal amount.
+                    Submit the information to create a demo
+                    withdrawal request.
                 </p>
 
             </div>
@@ -702,10 +565,11 @@ footer {
                     3
                 </div>
 
-                <h3>Review Request</h3>
+                <strong>Track Status</strong>
 
                 <p>
-                    The platform generates a simulated withdrawal confirmation.
+                    The demo request receives a transaction ID
+                    and a Demo Pending status.
                 </p>
 
             </div>
@@ -715,18 +579,11 @@ footer {
     </div>
 
 
-    <div class="card demo">
+    <div class="demo">
 
-        <strong>
-            Demo Environment
-        </strong>
-
-        <p>
-            This website is a demonstration interface for educational and
-            presentation purposes. No real cryptocurrency, money, bank
-            transfer, payment processor, wallet or blockchain transaction
-            is processed.
-        </p>
+        CryptoVault Demo Environment<br>
+        No real funds, wallets, payments, or cryptocurrency
+        transactions are processed.
 
     </div>
 
@@ -735,8 +592,7 @@ footer {
 
 <footer>
 
-    © 2026 CryptoVault. Demo interface for educational and presentation purposes.
-    No real cryptocurrency or financial transactions are processed.
+    © 2026 CryptoVault. Demo platform only.
 
 </footer>
 
@@ -757,7 +613,6 @@ function updateWithdrawalNetwork() {
 
     const network =
         document.getElementById("network");
-
 
     if (asset === "BTC") {
 
@@ -835,8 +690,11 @@ function createWithdrawal() {
 
 
     document.getElementById("successBox").scrollIntoView({
+
         behavior: "smooth",
+
         block: "center"
+
     });
 
 }
@@ -844,15 +702,17 @@ function createWithdrawal() {
 
 function resetWithdrawalForm() {
 
-    document.getElementById("destination").value = "";
+    document.getElementById("asset").value =
+        "USDT";
 
-    document.getElementById("amount").value = "";
+    document.getElementById("destination").value =
+        "";
+
+    document.getElementById("amount").value =
+        "";
 
     document.getElementById("successBox").style.display =
         "none";
-
-    document.getElementById("asset").value =
-        "USDT";
 
     updateWithdrawalNetwork();
 
