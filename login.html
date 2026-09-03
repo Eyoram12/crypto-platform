@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Log In | CryptoVault</title>
+    <title>Login | CryptoVault</title>
 
     <style>
+        :root {
+            --bg: #07111f;
+            --card: #101d30;
+            --text: #f5f7fb;
+            --muted: #9aa8ba;
+            --border: #20324a;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,79 +26,117 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
             min-height: 100vh;
-            background:
-                radial-gradient(circle at top right, #12345a 0%, transparent 35%),
-                #07111f;
-            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: auto;
+            min-height: 70px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 25px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 460px;
-        }
-
-        .brand {
-            text-align: center;
-            margin-bottom: 25px;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 25px;
             font-weight: 800;
-            letter-spacing: -1px;
         }
 
         .logo span {
-            color: #3b82f6;
+            color: var(--primary);
         }
 
-        .brand-text {
-            color: #91a5ba;
-            font-size: 13px;
-            margin-top: 6px;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .card {
-            background: rgba(13, 28, 46, 0.97);
-            border: 1px solid #203952;
+        .home-link {
+            color: var(--muted);
+            padding: 8px 12px;
+        }
+
+        .home-link:hover {
+            color: var(--text);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.08);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
         .demo-badge {
             display: inline-block;
             padding: 6px 10px;
             border-radius: 20px;
-            background: #211b0b;
-            border: 1px solid #5a4718;
+            background: rgba(245, 158, 11, 0.12);
             color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.5px;
             margin-bottom: 18px;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 32px;
             margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #91a5ba;
+            color: var(--muted);
             margin-bottom: 28px;
             font-size: 14px;
-            line-height: 1.5;
         }
 
         .form-group {
-            margin-bottom: 19px;
+            margin-bottom: 18px;
         }
 
         label {
@@ -96,27 +146,19 @@
             font-weight: 700;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input {
             width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 1px solid #29445f;
-            background: #081525;
-            color: white;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--bg);
+            color: var(--text);
             outline: none;
             font-size: 15px;
-            transition: 0.2s;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
-        }
-
-        input::placeholder {
-            color: #61758a;
+        input:focus {
+            border-color: var(--primary);
         }
 
         .password-box {
@@ -124,27 +166,23 @@
         }
 
         .password-box input {
-            padding-right: 75px;
+            padding-right: 70px;
         }
 
-        .show-btn {
+        .show-password {
             position: absolute;
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
-            border: none;
-            background: none;
-            color: #60a5fa;
+            border: 0;
+            background: transparent;
+            color: var(--primary);
             cursor: pointer;
             font-size: 13px;
             font-weight: 700;
         }
 
-        .show-btn:hover {
-            color: white;
-        }
-
-        .login-options {
+        .form-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -156,167 +194,140 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            color: #91a5ba;
-            cursor: pointer;
+            color: var(--muted);
         }
 
         .remember input {
-            width: 15px;
-            height: 15px;
-            accent-color: #2563eb;
+            width: auto;
         }
 
         .forgot {
             color: #60a5fa;
             cursor: pointer;
-            font-weight: 600;
         }
 
-        .forgot:hover {
-            color: white;
-        }
-
-        button.submit {
+        .login-button {
             width: 100%;
             padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #2563eb;
+            border: 0;
+            border-radius: 9px;
+            background: var(--primary);
             color: white;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
 
-        button.submit:hover {
-            background: #1d4ed8;
+        .login-button:hover {
+            background: var(--primary-dark);
             transform: translateY(-1px);
-        }
-
-        button.submit:active {
-            transform: translateY(0);
-        }
-
-        .demo-login {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #0a1a2d;
-            border: 1px solid #29486b;
-        }
-
-        .demo-login-title {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 7px;
-            color: #dbeafe;
-        }
-
-        .demo-login-text {
-            color: #91a5ba;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-        .register {
-            text-align: center;
-            margin-top: 22px;
-            color: #91a5ba;
-            font-size: 14px;
-        }
-
-        .register a {
-            color: #60a5fa;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .register a:hover {
-            color: white;
-        }
-
-        .security {
-            margin-top: 18px;
-            padding: 14px;
-            border: 1px solid #29486b;
-            background: #0a1a2d;
-            border-radius: 10px;
-            color: #9fb2c6;
-            font-size: 12px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .demo {
-            margin-top: 12px;
-            padding: 13px;
-            border: 1px solid #5a4718;
-            background: #211b0b;
-            border-radius: 10px;
-            color: #fbbf24;
-            font-size: 12px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .home {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #91a5ba;
-            font-size: 13px;
-            text-decoration: none;
-        }
-
-        .home:hover {
-            color: white;
         }
 
         .message {
             display: none;
-            margin-bottom: 18px;
+            margin-top: 15px;
             padding: 12px;
-            border-radius: 9px;
-            font-size: 13px;
-            line-height: 1.5;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
         }
 
         .message.success {
             display: block;
-            background: #0b2a1c;
-            border: 1px solid #166534;
-            color: #86efac;
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.25);
         }
 
         .message.error {
             display: block;
-            background: #2a1111;
-            border: 1px solid #7f1d1d;
-            color: #fca5a5;
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.25);
         }
 
-        @media (max-width: 500px) {
+        .demo-box {
+            margin-top: 22px;
+            padding: 16px;
+            border-radius: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
 
-            body {
-                padding: 15px;
+        .demo-box strong {
+            color: var(--text);
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 22px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .register-text a {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        .security {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* LIGHT MODE */
+
+        body.light-mode {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d7dee8;
+        }
+
+        body.light-mode input {
+            background: #f8fafc;
+        }
+
+        body.light-mode .theme-btn {
+            background: #ffffff;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 0 15px;
             }
 
-            .card {
-                padding: 25px 20px;
+            .home-link {
+                display: none;
             }
 
-            .logo {
-                font-size: 28px;
+            main {
+                padding: 30px 15px;
+            }
+
+            .login-card {
+                padding: 28px 22px;
             }
 
             h1 {
-                font-size: 26px;
-            }
-
-            .login-options {
-                align-items: flex-start;
-                gap: 15px;
+                font-size: 28px;
             }
         }
     </style>
@@ -324,37 +335,45 @@
 
 <body>
 
-<div class="container">
+<header>
+    <nav class="navbar">
 
-    <div class="brand">
-
-        <div class="logo">
+        <a href="index.html" class="logo">
             Crypto<span>Vault</span>
+        </a>
+
+        <div class="nav-right">
+
+            <a href="index.html" class="home-link">
+                Home
+            </a>
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                onclick="toggleTheme()"
+                aria-label="Toggle light and dark mode">
+                ☀️
+            </button>
+
         </div>
 
-        <div class="brand-text">
-            Secure Crypto Portfolio Demonstration
-        </div>
+    </nav>
+</header>
 
-    </div>
+<main>
 
-
-    <div class="card">
+    <div class="login-card">
 
         <div class="demo-badge">
             DEMO ACCOUNT
         </div>
 
-        <h1>Welcome back</h1>
+        <h1>Welcome Back</h1>
 
         <p class="subtitle">
-            Log in to explore your CryptoVault dashboard and
-            demonstration portfolio.
+            Sign in to explore your CryptoVault demonstration account.
         </p>
-
-
-        <div id="message" class="message"></div>
-
 
         <form id="loginForm">
 
@@ -367,14 +386,10 @@
                 <input
                     type="text"
                     id="username"
-                    name="username"
-                    placeholder="Enter username or email"
-                    autocomplete="username"
-                    required
-                >
+                    placeholder="Enter your username or email"
+                    autocomplete="username">
 
             </div>
-
 
             <div class="form-group">
 
@@ -387,17 +402,14 @@
                     <input
                         type="password"
                         id="password"
-                        name="password"
                         placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
+                        autocomplete="current-password">
 
                     <button
                         type="button"
-                        class="show-btn"
+                        class="show-password"
                         onclick="togglePassword()"
-                    >
+                        id="showPasswordBtn">
                         Show
                     </button>
 
@@ -405,98 +417,66 @@
 
             </div>
 
-
-            <div class="login-options">
+            <div class="form-options">
 
                 <label class="remember">
-
-                    <input
-                        type="checkbox"
-                        name="remember"
-                    >
-
+                    <input type="checkbox" id="remember">
                     Remember me
-
                 </label>
 
-
-                <span
-                    class="forgot"
-                    onclick="forgotPassword()"
-                >
+                <span class="forgot" onclick="forgotPassword()">
                     Forgot password?
                 </span>
 
             </div>
 
-
-            <button
-                type="submit"
-                class="submit"
-            >
+            <button type="submit" class="login-button">
                 Log In
             </button>
 
+            <div id="message" class="message"></div>
+
         </form>
 
+        <div class="demo-box">
 
-        <div class="demo-login">
+            <strong>Demo Access</strong><br>
 
-            <div class="demo-login-title">
-                Demo Access
-            </div>
-
-            <div class="demo-login-text">
-                Enter any username and password to explore
-                the demonstration dashboard. No real account
-                authentication is performed.
-            </div>
+            This is a demonstration website.
+            You can enter any username and password to explore
+            the demo account. No real authentication or financial
+            transaction is performed.
 
         </div>
 
-
-        <div class="register">
+        <div class="register-text">
 
             Don't have an account?
 
             <a href="register.html">
-                Create Account
+                Create Demo Account
             </a>
 
         </div>
 
-
         <div class="security">
-
-            🔐 <strong>Security Notice</strong><br>
-
-            This demonstration does not store passwords
-            or authenticate real users.
-
+            🔒 Demonstration security interface
         </div>
-
-
-        <div class="demo">
-
-            <strong>DEMO ONLY</strong><br>
-
-            No real financial account, cryptocurrency,
-            bank account, wallet, or payment transaction
-            is connected to this website.
-
-        </div>
-
-
-        <a href="index.html" class="home">
-            ← Back to Home
-        </a>
 
     </div>
 
-</div>
+</main>
 
+<footer>
+
+    CryptoVault is a demonstration platform.
+    No real cryptocurrency transactions are processed.
+
+</footer>
 
 <script>
+
+    /* PASSWORD VISIBILITY */
 
     function togglePassword() {
 
@@ -504,7 +484,7 @@
             document.getElementById("password");
 
         const button =
-            document.querySelector(".show-btn");
+            document.getElementById("showPasswordBtn");
 
         if (password.type === "password") {
 
@@ -517,8 +497,11 @@
             button.textContent = "Show";
 
         }
+
     }
 
+
+    /* FORGOT PASSWORD */
 
     function forgotPassword() {
 
@@ -528,15 +511,12 @@
         message.className = "message error";
 
         message.textContent =
-            "Password recovery is not connected in this demonstration website.";
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+            "Password recovery is disabled in this demonstration website.";
 
     }
 
+
+    /* LOGIN */
 
     document
         .getElementById("loginForm")
@@ -553,7 +533,6 @@
             const message =
                 document.getElementById("message");
 
-
             if (!username || !password) {
 
                 message.className = "message error";
@@ -562,14 +541,13 @@
                     "Please enter your username and password.";
 
                 return;
-            }
 
+            }
 
             message.className = "message success";
 
             message.textContent =
-                "Demo login successful. Opening your dashboard...";
-
+                "Demo login successful. Opening dashboard...";
 
             setTimeout(function() {
 
@@ -579,6 +557,64 @@
             }, 700);
 
         });
+
+
+    /* LIGHT / DARK MODE */
+
+    function toggleTheme() {
+
+        document.body.classList.toggle("light-mode");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        localStorage.setItem(
+            "cryptoVaultTheme",
+            isLight ? "light" : "dark"
+        );
+
+        updateThemeButton();
+
+    }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.getElementById("themeBtn");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        button.textContent =
+            isLight ? "🌙" : "☀️";
+
+        button.setAttribute(
+            "aria-label",
+            isLight
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    function loadTheme() {
+
+        const savedTheme =
+            localStorage.getItem("cryptoVaultTheme");
+
+        if (savedTheme === "light") {
+
+            document.body.classList.add("light-mode");
+
+        }
+
+        updateThemeButton();
+
+    }
+
+    loadTheme();
 
 </script>
 
