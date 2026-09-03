@@ -3,11 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CryptoVault | Transactions</title>
 
 <style>
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -26,7 +31,7 @@ header {
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
 .logo {
@@ -47,99 +52,116 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline;
+    color: #93c5fd;
 }
 
 .container {
     width: 90%;
-    max-width: 1150px;
-    margin: 30px auto;
+    max-width: 1100px;
+    margin: 35px auto;
 }
 
 .hero {
     background: #111827;
     color: white;
-    padding: 35px;
-    border-radius: 16px;
+    padding: 38px;
+    border-radius: 18px;
     margin-bottom: 25px;
 }
 
 .hero h1 {
-    margin: 0 0 10px;
-    font-size: 32px;
+    margin: 0 0 12px;
+    font-size: 34px;
 }
 
 .hero p {
     margin: 0;
     color: #d1d5db;
+    line-height: 1.6;
 }
 
-.demo {
+.platform-badge {
     display: inline-block;
-    margin-top: 18px;
-    background: #fff3cd;
-    color: #856404;
-    padding: 10px 15px;
-    border-radius: 8px;
+    margin-top: 20px;
+    background: #1d4ed8;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 20px;
     font-size: 13px;
     font-weight: bold;
+}
+
+.notice {
+    background: #eef6ff;
+    border-left: 5px solid #2563eb;
+    padding: 17px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    line-height: 1.6;
 }
 
 .summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    margin-bottom: 25px;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+
+.summary-card span {
+    display: block;
+    color: #667085;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.summary-card strong {
+    font-size: 25px;
 }
 
 .card {
     background: white;
-    padding: 22px;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+    padding: 27px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    margin-bottom: 24px;
 }
 
-.card h3 {
-    margin: 0 0 10px;
-    color: #667085;
-    font-size: 14px;
-}
-
-.amount {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.table-card {
-    background: white;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.06);
-    overflow-x: auto;
-}
-
-.table-card h2 {
+.card h2 {
     margin-top: 0;
 }
 
 .filters {
-    display: flex;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 15px;
     margin-bottom: 20px;
-    flex-wrap: wrap;
 }
 
-select,
-input {
-    padding: 11px 13px;
+input,
+select {
+    width: 100%;
+    padding: 13px;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 9px;
+    font-size: 15px;
+    background: white;
+    outline: none;
 }
 
-.search {
-    flex: 1;
-    min-width: 200px;
+input:focus,
+select:focus {
+    border-color: #2563eb;
+}
+
+.table-container {
+    overflow-x: auto;
 }
 
 table {
@@ -150,15 +172,14 @@ table {
 
 th,
 td {
-    padding: 15px;
     text-align: left;
+    padding: 15px;
     border-bottom: 1px solid #e5e7eb;
 }
 
 th {
     background: #f7f9fc;
-    color: #667085;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 td {
@@ -166,82 +187,71 @@ td {
 }
 
 .type {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: bold;
-}
-
-.buy {
-    color: #15803d;
-}
-
-.sell {
-    color: #b91c1c;
 }
 
 .deposit {
-    color: #2563eb;
+    background: #dcfce7;
+    color: #166534;
 }
 
 .withdrawal {
-    color: #b45309;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.buy {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.sell {
+    background: #fef3c7;
+    color: #92400e;
 }
 
 .completed {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: #ecfdf3;
-    color: #166534;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.pending {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: #fff7ed;
-    color: #9a3412;
-    font-size: 12px;
+    color: #15803d;
     font-weight: bold;
 }
 
 .info {
-    background: white;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.06);
-    margin-top: 25px;
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 1.7;
 }
 
-.info h2 {
-    margin-top: 0;
-}
-
-.button {
-    display: inline-block;
-    background: #2563eb;
-    color: white;
-    text-decoration: none;
-    padding: 12px 18px;
-    border-radius: 8px;
+.rate {
+    font-size: 22px;
     font-weight: bold;
     margin-top: 10px;
 }
 
 footer {
     text-align: center;
-    padding: 30px;
+    padding: 35px;
     color: #667085;
     font-size: 13px;
 }
 
-@media(max-width:900px) {
+@media (max-width: 800px) {
+
     .summary {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
 }
 
-@media(max-width:600px) {
+@media (max-width: 600px) {
+
     header {
         flex-direction: column;
         align-items: flex-start;
@@ -256,8 +266,12 @@ footer {
         font-size: 12px;
     }
 
+    .hero {
+        padding: 28px;
+    }
+
     .hero h1 {
-        font-size: 25px;
+        font-size: 27px;
     }
 
     .summary {
@@ -294,53 +308,65 @@ footer {
         <h1>📋 Transactions</h1>
 
         <p>
-            View your CryptoVault demonstration transaction history.
+            Review your digital asset activity and transaction history.
         </p>
 
-        <div class="demo">
-            SECURE PLATFORM • Transactions are simulated
+        <div class="platform-badge">
+            Secure Platform
         </div>
 
     </section>
+
+
+    <div class="notice">
+
+        <strong>Transaction Information</strong>
+
+        <p>
+            The transaction records shown on this page are interface
+            records for the CryptoVault platform. They do not represent
+            blockchain transactions or actual financial transfers.
+        </p>
+
+    </div>
 
 
     <section class="summary">
 
-        <div class="card">
-            <h3>Total Transactions</h3>
-            <div class="amount">5</div>
+        <div class="summary-card">
+            <span>Total Transactions</span>
+            <strong id="totalCount">5</strong>
         </div>
 
-        <div class="card">
-            <h3>Deposits</h3>
-            <div class="amount">2</div>
+        <div class="summary-card">
+            <span>Deposits</span>
+            <strong>2</strong>
         </div>
 
-        <div class="card">
-            <h3>Withdrawals</h3>
-            <div class="amount">1</div>
+        <div class="summary-card">
+            <span>Withdrawals</span>
+            <strong>1</strong>
         </div>
 
-        <div class="card">
-            <h3>P2P Trades</h3>
-            <div class="amount">2</div>
+        <div class="summary-card">
+            <span>P2P Trades</span>
+            <strong>2</strong>
         </div>
 
     </section>
 
 
-    <section class="table-card">
+    <section class="card">
 
         <h2>Transaction History</h2>
 
         <div class="filters">
 
             <input
-                id="search"
-                class="search"
                 type="text"
+                id="search"
                 placeholder="Search transactions..."
-                oninput="filterTransactions()"
+                onkeyup="filterTransactions()"
             >
 
             <select
@@ -348,188 +374,214 @@ footer {
                 onchange="filterTransactions()"
             >
 
-                <option value="all">All Types</option>
-                <option value="deposit">Deposit</option>
-                <option value="withdrawal">Withdrawal</option>
-                <option value="buy">P2P Buy</option>
-                <option value="sell">P2P Sell</option>
+                <option value="all">
+                    All Transactions
+                </option>
+
+                <option value="deposit">
+                    Deposits
+                </option>
+
+                <option value="withdrawal">
+                    Withdrawals
+                </option>
+
+                <option value="buy">
+                    P2P Buy
+                </option>
+
+                <option value="sell">
+                    P2P Sell
+                </option>
 
             </select>
 
         </div>
 
 
-        <table>
+        <div class="table-container">
 
-            <thead>
+            <table>
 
-                <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Asset</th>
-                    <th>Amount</th>
-                    <th>Reference</th>
-                    <th>Status</th>
-                </tr>
+                <thead>
 
-            </thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Asset</th>
+                        <th>Amount</th>
+                        <th>Reference</th>
+                        <th>Status</th>
+                    </tr>
 
-            <tbody id="transactionBody">
+                </thead>
 
+                <tbody id="transactionTable">
 
-                <tr data-type="buy">
+                    <tr data-type="deposit">
 
-                    <td>03 Sep 2026</td>
+                        <td>03 Sep 2026</td>
 
-                    <td class="type buy">
-                        P2P Buy
-                    </td>
+                        <td>
+                            <span class="type deposit">
+                                Deposit
+                            </span>
+                        </td>
 
-                    <td>USDT</td>
+                        <td>USDT</td>
 
-                    <td>+500 USDT</td>
+                        <td>2,000 USDT</td>
 
-                    <td>P2P-ETB-001</td>
+                        <td>CV-DP-1001</td>
 
-                    <td>
-                        <span class="completed">
+                        <td class="completed">
                             Completed
-                        </span>
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
 
-                <tr data-type="deposit">
+                    <tr data-type="withdrawal">
 
-                    <td>02 Sep 2026</td>
+                        <td>02 Sep 2026</td>
 
-                    <td class="type deposit">
-                        Deposit
-                    </td>
+                        <td>
+                            <span class="type withdrawal">
+                                Withdrawal
+                            </span>
+                        </td>
 
-                    <td>USDT</td>
+                        <td>USDT</td>
 
-                    <td>+1,000 USDT</td>
+                        <td>500 USDT</td>
 
-                    <td>DEP-DEMO-001</td>
+                        <td>CV-WD-1002</td>
 
-                    <td>
-                        <span class="completed">
+                        <td class="completed">
                             Completed
-                        </span>
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
 
-                <tr data-type="sell">
+                    <tr data-type="buy">
 
-                    <td>01 Sep 2026</td>
+                        <td>01 Sep 2026</td>
 
-                    <td class="type sell">
-                        P2P Sell
-                    </td>
+                        <td>
+                            <span class="type buy">
+                                P2P Buy
+                            </span>
+                        </td>
 
-                    <td>USDT</td>
+                        <td>USDT</td>
 
-                    <td>-250 USDT</td>
+                        <td>100 USDT</td>
 
-                    <td>P2P-ETB-002</td>
+                        <td>CV-P2P-1003</td>
 
-                    <td>
-                        <span class="completed">
+                        <td class="completed">
                             Completed
-                        </span>
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
 
-                <tr data-type="withdrawal">
+                    <tr data-type="sell">
 
-                    <td>30 Aug 2026</td>
+                        <td>31 Aug 2026</td>
 
-                    <td class="type withdrawal">
-                        Withdrawal
-                    </td>
+                        <td>
+                            <span class="type sell">
+                                P2P Sell
+                            </span>
+                        </td>
 
-                    <td>BTC</td>
+                        <td>USDT</td>
 
-                    <td>-0.02 BTC</td>
+                        <td>75 USDT</td>
 
-                    <td>WDR-DEMO-001</td>
+                        <td>CV-P2P-1004</td>
 
-                    <td>
-                        <span class="completed">
+                        <td class="completed">
                             Completed
-                        </span>
-                    </td>
+                        </td>
 
-                </tr>
-
-
-                <tr data-type="deposit">
-
-                    <td>28 Aug 2026</td>
-
-                    <td class="type deposit">
-                        Deposit
-                    </td>
-
-                    <td>ETH</td>
-
-                    <td>+1.20 ETH</td>
-
-                    <td>DEP-DEMO-002</td>
-
-                    <td>
-                        <span class="pending">
-                            Pending
-                        </span>
-                    </td>
-
-                </tr>
+                    </tr>
 
 
-            </tbody>
+                    <tr data-type="deposit">
 
-        </table>
+                        <td>29 Aug 2026</td>
+
+                        <td>
+                            <span class="type deposit">
+                                Deposit
+                            </span>
+                        </td>
+
+                        <td>ETH</td>
+
+                        <td>1.25 ETH</td>
+
+                        <td>CV-DP-1005</td>
+
+                        <td class="completed">
+                            Completed
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </section>
 
 
-    <section class="info">
+    <section class="card">
 
-        <h2>🇪🇹 P2P Transaction Information</h2>
+        <h2>🇪🇹 P2P Exchange Rate</h2>
 
-        <p>
-            P2P transactions shown on this page are demonstrations
-            of USDT and ETB trading records.
-        </p>
+        <div class="info">
 
-        <p>
-            Fixed Exchange Rate used by the P2P marketplace:
-            <strong>1 USDT = 190 ETB</strong>.
-        </p>
+            <p>
+                The current P2P marketplace reference rate is:
+            </p>
 
-        <a class="button" href="p2p.html">
-            Open P2P Trading
-        </a>
+            <div class="rate">
+                1 USDT = 190 ETB
+            </div>
+
+            <p>
+                This rate is used throughout the CryptoVault P2P
+                interface.
+            </p>
+
+        </div>
 
     </section>
 
 
-    <section class="info">
+    <section class="card">
 
-        <h2>⚠️ Demo Notice</h2>
+        <h2>Transaction Security</h2>
 
-        <p>
-            CryptoVault is a demonstration website.
-            The transactions displayed here do not represent
-            real cryptocurrency, ETB, bank, wallet, or blockchain
-            transactions.
-        </p>
+        <div class="info">
+
+            <p>
+                Keep your account credentials private and use strong
+                passwords and two-factor authentication where available.
+            </p>
+
+            <p>
+                Always verify transaction details before confirming
+                any digital asset activity.
+            </p>
+
+        </div>
 
     </section>
 
@@ -538,7 +590,7 @@ footer {
 
 <footer>
 
-    © 2026 CryptoVault | Demonstration website only
+    © 2026 CryptoVault | Digital Asset Platform
 
 </footer>
 
@@ -548,37 +600,35 @@ footer {
 function filterTransactions() {
 
     const search =
-        document.getElementById("search")
-            .value
-            .toLowerCase();
+        document.getElementById("search").value.toLowerCase();
 
     const type =
-        document.getElementById("typeFilter")
-            .value;
+        document.getElementById("typeFilter").value;
 
     const rows =
-        document.querySelectorAll(
-            "#transactionBody tr"
-        );
+        document.querySelectorAll("#transactionTable tr");
+
+    let visibleCount = 0;
 
     rows.forEach(function(row) {
 
         const text =
-            row.textContent.toLowerCase();
+            row.innerText.toLowerCase();
 
         const rowType =
             row.getAttribute("data-type");
 
-        const searchMatch =
+        const matchesSearch =
             text.includes(search);
 
-        const typeMatch =
-            type === "all" ||
-            rowType === type;
+        const matchesType =
+            type === "all" || rowType === type;
 
-        if(searchMatch && typeMatch) {
+        if (matchesSearch && matchesType) {
 
             row.style.display = "";
+
+            visibleCount++;
 
         } else {
 
@@ -588,6 +638,8 @@ function filterTransactions() {
 
     });
 
+    document.getElementById("totalCount").textContent =
+        visibleCount;
 }
 
 </script>
