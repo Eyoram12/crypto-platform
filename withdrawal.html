@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal | CryptoVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+            background: #11182d;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .box {
+            background: #151e38;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #aeb8d0;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #35405f;
+            border-radius: 7px;
+            background: #0b1020;
+            color: white;
+            font-size: 15px;
+        }
+
+        .balance {
+            margin-top: 20px;
+            padding: 15px;
+            background: #0b1020;
+            border-radius: 8px;
+            color: #aeb8d0;
+        }
+
+        .balance strong {
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 7px;
+            background: #4f7cff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back a {
+            color: #6f94ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CryptoVault</div>
+    <a href="dashboard.html">Dashboard</a>
+</header>
+
+<div class="container">
+
+    <div class="box">
+
+        <h1>Withdraw Crypto</h1>
+
+        <p class="description">
+            Enter your withdrawal details and submit a withdrawal request.
+        </p>
+
+        <label for="crypto">Cryptocurrency</label>
+
+        <select id="crypto">
+            <option>Bitcoin (BTC)</option>
+            <option>Ethereum (ETH)</option>
+            <option>USDT</option>
+        </select>
+
+        <div class="balance">
+            Available Balance: <strong>0.050 BTC</strong>
+        </div>
+
+        <label for="address">Wallet Address</label>
+
+        <input
+            type="text"
+            id="address"
+            placeholder="Enter wallet address"
+        >
+
+        <label for="amount">Withdrawal Amount</label>
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Enter amount"
+            min="0"
+            step="any"
+        >
+
+        <label for="network">Network</label>
+
+        <select id="network">
+            <option>Bitcoin Network</option>
+            <option>Ethereum Network</option>
+            <option>TRON Network</option>
+        </select>
+
+        <button type="button">
+            Submit Withdrawal Request
+        </button>
+
+        <div class="back">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
