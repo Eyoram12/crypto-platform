@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CryptoVault | Login</title>
+<title>CryptoVault | Sign In</title>
 
 <style>
 * {
@@ -13,72 +13,114 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     background: #f4f7fb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #172033;
+    min-height: 100vh;
 }
 
-.container {
-    width: 92%;
-    max-width: 430px;
+header {
+    background: #0b1220;
+    color: white;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .logo {
-    text-align: center;
-    font-size: 28px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-    margin-bottom: 25px;
-    color: #111827;
+}
+
+.brand-text strong {
+    display: block;
+    font-size: 18px;
+}
+
+.brand-text span {
+    font-size: 10px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+}
+
+main {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
 .login-card {
+    width: 100%;
+    max-width: 440px;
     background: white;
-    padding: 35px;
+    border: 1px solid #e5e7eb;
     border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    padding: 32px;
+    box-shadow: 0 15px 45px rgba(15,23,42,0.10);
+}
+
+.badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 h1 {
-    margin: 0 0 8px;
-    text-align: center;
-    font-size: 28px;
+    font-size: 30px;
+    margin: 15px 0 8px;
 }
 
 .subtitle {
-    text-align: center;
-    color: #667085;
-    margin-bottom: 28px;
+    color: #64748b;
+    line-height: 1.6;
     font-size: 14px;
+    margin-bottom: 25px;
 }
 
 label {
     display: block;
-    margin-bottom: 7px;
+    margin: 17px 0 7px;
+    font-size: 13px;
     font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
     font-size: 14px;
 }
 
-.input-group {
-    margin-bottom: 18px;
-}
-
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 15px;
-    outline: none;
-}
-
 input:focus {
+    outline: none;
     border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
 }
 
 .password-box {
@@ -86,18 +128,19 @@ input:focus {
 }
 
 .password-box input {
-    padding-right: 75px;
+    padding-right: 70px;
 }
 
-.show-password {
+.show-btn {
     position: absolute;
     right: 10px;
-    top: 9px;
-    padding: 7px 9px;
+    top: 50%;
+    transform: translateY(-50%);
     border: none;
     background: transparent;
     color: #2563eb;
     cursor: pointer;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -105,7 +148,7 @@ input:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
+    margin-top: 15px;
     font-size: 13px;
 }
 
@@ -113,6 +156,7 @@ input:focus {
     display: flex;
     align-items: center;
     gap: 7px;
+    color: #64748b;
 }
 
 .remember input {
@@ -122,151 +166,160 @@ input:focus {
 .forgot {
     color: #2563eb;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.forgot:hover {
-    text-decoration: underline;
-}
-
-.login-button {
+.primary-btn {
     width: 100%;
+    margin-top: 22px;
     padding: 14px;
     border: none;
     border-radius: 9px;
     background: #2563eb;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.login-button:hover {
-    opacity: .9;
+.primary-btn:hover {
+    background: #1d4ed8;
 }
 
-.message {
-    display: none;
-    margin-top: 18px;
-    padding: 12px;
-    border-radius: 8px;
-    background: #ecfdf3;
-    color: #166534;
-    text-align: center;
-    font-size: 13px;
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+    color: #94a3b8;
+    font-size: 12px;
 }
 
-.register {
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    background: #e5e7eb;
+    flex: 1;
+}
+
+.create {
     text-align: center;
-    margin-top: 24px;
-    color: #667085;
     font-size: 14px;
+    color: #64748b;
 }
 
-.register a {
+.create a {
     color: #2563eb;
-    text-decoration: none;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .security {
     margin-top: 22px;
-    padding: 14px;
-    background: #f8fafc;
-    border-radius: 9px;
-    text-align: center;
-    color: #667085;
+    padding: 15px;
+    border-radius: 10px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
     font-size: 12px;
+    line-height: 1.6;
 }
 
-.back {
-    display: block;
+.demo {
     text-align: center;
-    margin-top: 20px;
-    color: #667085;
-    text-decoration: none;
-    font-size: 13px;
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.5;
 }
 
-.back:hover {
-    color: #2563eb;
+@media (max-width: 500px) {
+    .login-card {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+    <div class="navbar">
 
-    <div class="logo">
-        🔐 CryptoVault
+        <div class="brand">
+
+            <div class="logo">CV</div>
+
+            <div class="brand-text">
+                <strong>CryptoVault</strong>
+                <span>DIGITAL ASSET PLATFORM</span>
+            </div>
+
+        </div>
+
     </div>
+</header>
+
+<main>
 
     <div class="login-card">
 
+        <span class="badge">SECURE SIGN IN</span>
+
         <h1>Welcome Back</h1>
 
-        <div class="subtitle">
-            Sign in to your CryptoVault account
-        </div>
+        <p class="subtitle">
+            Sign in to access your CryptoVault dashboard and
+            simulated digital asset services.
+        </p>
 
+        <form onsubmit="signIn(event)">
 
-        <form onsubmit="login(event)">
+            <label for="email">
+                Email Address
+            </label>
 
-            <div class="input-group">
+            <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                required
+            >
 
-                <label for="email">
-                    Email Address
-                </label>
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-box">
 
                 <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
                     required
                 >
 
-            </div>
-
-
-            <div class="input-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show-password"
-                        onclick="togglePassword()"
-                    >
-                        Show
-                    </button>
-
-                </div>
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword()"
+                    id="showButton"
+                >
+                    Show
+                </button>
 
             </div>
-
 
             <div class="options">
 
                 <label class="remember">
-
-                    <input
-                        type="checkbox"
-                        id="remember"
-                    >
-
+                    <input type="checkbox" id="remember">
                     Remember me
-
                 </label>
 
                 <a
@@ -279,54 +332,38 @@ input:focus {
 
             </div>
 
-
             <button
                 type="submit"
-                class="login-button"
+                class="primary-btn"
             >
                 Sign In
             </button>
 
-
-            <div
-                id="message"
-                class="message"
-            >
-                Login successful. Opening your account...
-            </div>
-
         </form>
 
-
-        <div class="register">
-
-            Don't have an account?
-
-            <a href="register.html">
-                Create Account
-            </a>
-
+        <div class="divider">
+            OR
         </div>
 
+        <div class="create">
+            Don't have an account?
+            <a href="register.html">Create Account</a>
+        </div>
 
         <div class="security">
+            <strong>Security Notice</strong><br>
+            This is a demonstration website. Login information is
+            not connected to a real financial account or payment system.
+        </div>
 
-            🔒 Your account security is important to us.
-
+        <div class="demo">
+            Demo interface for educational and presentation purposes.
+            No real cryptocurrency or financial transactions are processed.
         </div>
 
     </div>
 
-
-    <a
-        href="index.html"
-        class="back"
-    >
-        ← Back to Home
-    </a>
-
-</div>
-
+</main>
 
 <script>
 
@@ -336,7 +373,7 @@ function togglePassword() {
         document.getElementById("password");
 
     const button =
-        document.querySelector(".show-password");
+        document.getElementById("showButton");
 
     if (password.type === "password") {
 
@@ -347,38 +384,43 @@ function togglePassword() {
 
         password.type = "password";
         button.textContent = "Show";
-
     }
-
 }
-
-
-function login(event) {
-
-    event.preventDefault();
-
-    const message =
-        document.getElementById("message");
-
-    message.style.display = "block";
-
-    setTimeout(function() {
-
-        window.location.href = "dashboard.html";
-
-    }, 1200);
-
-}
-
 
 function forgotPassword(event) {
 
     event.preventDefault();
 
     alert(
-        "Password recovery is currently available as a website interface."
+        "Password recovery is not connected in this demo."
     );
+}
 
+function signIn(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const remember =
+        document.getElementById("remember").checked;
+
+    if (!email) {
+        alert("Please enter your email address.");
+        return;
+    }
+
+    if (remember) {
+        localStorage.setItem(
+            "cryptoVaultRemember",
+            "true"
+        );
+    }
+
+    alert("Demo sign-in successful.");
+
+    window.location.href = "dashboard.html";
 }
 
 </script>
