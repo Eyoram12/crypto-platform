@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CryptoVault</title>
+    <title>CryptoVault | Digital Asset Platform</title>
+
+    <meta name="description"
+        content="CryptoVault is a modern demo platform for managing digital assets, balances and transactions.">
 
     <style>
         * {
@@ -13,116 +17,217 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #0b1020;
             color: white;
+            line-height: 1.6;
         }
 
         header {
+            background: #11182c;
+            border-bottom: 1px solid #263252;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1150px;
+            margin: auto;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 7%;
-            background: #11182d;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: bold;
+            color: #6ea0ff;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 22px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #6ea0ff;
         }
 
         .hero {
-            min-height: 75vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            max-width: 1150px;
+            margin: auto;
+            padding: 100px 25px;
             text-align: center;
-            padding: 40px 20px;
         }
 
-        .hero-content {
-            max-width: 800px;
-        }
-
-        h1 {
+        .hero h1 {
             font-size: 52px;
             margin-bottom: 20px;
         }
 
-        .hero p {
-            font-size: 19px;
-            color: #b8c1d9;
-            line-height: 1.6;
-            margin-bottom: 30px;
+        .hero h1 span {
+            color: #6ea0ff;
         }
 
-        .buttons a {
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: #aab3c5;
+            font-size: 18px;
+        }
+
+        .buttons {
+            margin-top: 35px;
+        }
+
+        .btn {
             display: inline-block;
-            padding: 14px 25px;
-            margin: 8px;
+            padding: 14px 28px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
+            margin: 5px;
         }
 
-        .register {
-            background: #4f7cff;
+        .primary {
+            background: #4f8cff;
             color: white;
         }
 
-        .login {
-            border: 1px solid #4f7cff;
-            color: white;
+        .secondary {
+            border: 1px solid #4f8cff;
+            color: #6ea0ff;
+        }
+
+        section {
+            max-width: 1150px;
+            margin: auto;
+            padding: 70px 25px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .market {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: #151c32;
+            border: 1px solid #263252;
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .coin {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 28px;
+            margin: 15px 0;
+        }
+
+        .change {
+            color: #67d68c;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            padding: 50px 7%;
         }
 
-        .card {
-            background: #151e38;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
+        .feature-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
         }
 
-        .card h2 {
-            margin-bottom: 12px;
+        .card h3 {
+            margin-bottom: 10px;
         }
 
         .card p {
-            color: #b8c1d9;
-            line-height: 1.5;
+            color: #aab3c5;
+        }
+
+        .security {
+            background: #11182c;
+            border-radius: 18px;
+            text-align: center;
+            padding: 55px 30px;
+        }
+
+        .security p {
+            max-width: 750px;
+            margin: auto;
+            color: #aab3c5;
+        }
+
+        .faq {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        details {
+            background: #151c32;
+            border: 1px solid #263252;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        details p {
+            color: #aab3c5;
+            margin-top: 12px;
         }
 
         footer {
+            background: #080c18;
             text-align: center;
-            padding: 25px;
-            background: #11182d;
-            color: #9da7c0;
+            padding: 30px 20px;
+            color: #8993a8;
+            border-top: 1px solid #263252;
         }
 
-        @media (max-width: 700px) {
-            h1 {
+        @media (max-width: 800px) {
+
+            .hero h1 {
                 font-size: 38px;
             }
 
+            .market,
             .features {
                 grid-template-columns: 1fr;
             }
 
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
             nav a {
-                margin-left: 8px;
+                margin: 0 7px;
             }
         }
     </style>
@@ -130,62 +235,240 @@
 
 <body>
 
-<header>
-    <div class="logo">CryptoVault</div>
+    <!-- Navigation -->
+    <header>
+        <div class="nav">
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="register.html">Register</a>
-        <a href="login.html">Login</a>
-    </nav>
-</header>
+            <div class="logo">
+                CryptoVault
+            </div>
 
-<section class="hero">
-    <div class="hero-content">
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="#market">Market</a>
+                <a href="#features">Features</a>
+                <a href="#security">Security</a>
+                <a href="#faq">FAQ</a>
+                <a href="register.html">Register</a>
+                <a href="login.html">Login</a>
+            </nav>
 
-        <h1>Manage Your Crypto With Confidence</h1>
+        </div>
+    </header>
+
+
+    <!-- Hero -->
+    <section class="hero">
+
+        <h1>
+            Manage Your <span>Crypto</span> With Confidence
+        </h1>
 
         <p>
-            A modern crypto platform for managing digital assets,
-            deposits, withdrawals, balances, and transaction history.
+            A modern demo platform designed to help users explore
+            digital asset management, balances, deposits, withdrawals
+            and transaction history.
         </p>
 
         <div class="buttons">
-            <a href="register.html" class="register">Create Account</a>
-            <a href="login.html" class="login">Login</a>
+
+            <a class="btn primary" href="register.html">
+                Create Account
+            </a>
+
+            <a class="btn secondary" href="login.html">
+                Login
+            </a>
+
         </div>
 
-    </div>
-</section>
+    </section>
 
-<section class="features">
 
-    <div class="card">
-        <h2>Secure Account</h2>
+    <!-- Market -->
+    <section id="market">
+
+        <h2 class="section-title">
+            Crypto Market
+        </h2>
+
+        <div class="market">
+
+            <div class="card">
+                <div class="coin">₿ Bitcoin</div>
+                <div class="price">$67,450</div>
+                <div class="change">+2.45%</div>
+            </div>
+
+            <div class="card">
+                <div class="coin">♦ Ethereum</div>
+                <div class="price">$3,520</div>
+                <div class="change">+1.87%</div>
+            </div>
+
+            <div class="card">
+                <div class="coin">₮ USDT</div>
+                <div class="price">$1.00</div>
+                <div class="change">+0.01%</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+    <section id="features">
+
+        <h2 class="section-title">
+            Platform Features
+        </h2>
+
+        <div class="features">
+
+            <div class="card">
+
+                <div class="feature-icon">🔐</div>
+
+                <h3>Secure Account</h3>
+
+                <p>
+                    Explore a simple account dashboard designed
+                    for digital asset management.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="feature-icon">💰</div>
+
+                <h3>Deposit</h3>
+
+                <p>
+                    View a demo deposit interface for different
+                    digital assets.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="feature-icon">💸</div>
+
+                <h3>Withdrawal</h3>
+
+                <p>
+                    Explore a demo withdrawal workflow with
+                    wallet and network information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Security -->
+    <section id="security">
+
+        <div class="security">
+
+            <h2 class="section-title">
+                Security First
+            </h2>
+
+            <p>
+                CryptoVault is designed with security and transparency
+                in mind. This website is currently a demonstration
+                platform and does not process real cryptocurrency,
+                payments or financial transactions.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FAQ -->
+    <section id="faq">
+
+        <h2 class="section-title">
+            Frequently Asked Questions
+        </h2>
+
+        <div class="faq">
+
+            <details>
+                <summary>
+                    Is CryptoVault a real cryptocurrency exchange?
+                </summary>
+
+                <p>
+                    No. CryptoVault is currently a demonstration
+                    website created to demonstrate a crypto platform
+                    interface.
+                </p>
+            </details>
+
+
+            <details>
+                <summary>
+                    Can I deposit real cryptocurrency?
+                </summary>
+
+                <p>
+                    No. Do not send real cryptocurrency to this
+                    demonstration website.
+                </p>
+            </details>
+
+
+            <details>
+                <summary>
+                    Can I create an account?
+                </summary>
+
+                <p>
+                    You can explore the registration interface,
+                    but the current website does not use a real
+                    backend database for account creation.
+                </p>
+            </details>
+
+
+            <details>
+                <summary>
+                    Can I view transactions?
+                </summary>
+
+                <p>
+                    Yes. The dashboard contains sample transaction
+                    information for demonstration purposes.
+                </p>
+            </details>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
         <p>
-            Create your account and manage your personal crypto dashboard.
+            © 2026 CryptoVault. Demo platform.
         </p>
-    </div>
 
-    <div class="card">
-        <h2>Deposit</h2>
         <p>
-            View your deposit information and track incoming transactions.
+            No real cryptocurrency or money is processed.
         </p>
-    </div>
 
-    <div class="card">
-        <h2>Withdrawal</h2>
-        <p>
-            Manage withdrawal requests and review your transaction history.
-        </p>
-    </div>
-
-</section>
-
-<footer>
-    © 2026 CryptoVault. Demo platform.
-</footer>
+    </footer>
 
 </body>
+
 </html>
