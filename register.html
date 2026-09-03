@@ -13,70 +13,114 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     background: #f4f7fb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #172033;
+    min-height: 100vh;
 }
 
-.container {
-    width: 92%;
-    max-width: 460px;
+header {
+    background: #0b1220;
+    color: white;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .logo {
-    text-align: center;
-    font-size: 28px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-    margin-bottom: 25px;
-    color: #111827;
 }
 
-.card {
+.brand-text strong {
+    display: block;
+    font-size: 18px;
+}
+
+.brand-text span {
+    font-size: 10px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+}
+
+main {
+    min-height: calc(100vh - 75px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 480px;
     background: white;
-    padding: 35px;
+    border: 1px solid #e5e7eb;
     border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    padding: 32px;
+    box-shadow: 0 15px 45px rgba(15,23,42,0.10);
+}
+
+.badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 h1 {
-    margin: 0 0 8px;
-    text-align: center;
-    font-size: 28px;
+    font-size: 30px;
+    margin: 15px 0 8px;
 }
 
 .subtitle {
-    text-align: center;
-    color: #667085;
-    margin-bottom: 25px;
+    color: #64748b;
+    line-height: 1.6;
     font-size: 14px;
-}
-
-.input-group {
-    margin-bottom: 17px;
+    margin-bottom: 25px;
 }
 
 label {
     display: block;
-    margin-bottom: 7px;
+    margin: 16px 0 7px;
+    font-size: 13px;
     font-weight: bold;
-    font-size: 14px;
 }
 
 input {
     width: 100%;
-    padding: 13px;
+    padding: 13px 14px;
     border: 1px solid #d1d5db;
     border-radius: 9px;
-    font-size: 15px;
-    outline: none;
+    font-size: 14px;
 }
 
 input:focus {
+    outline: none;
     border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
 }
 
 .password-box {
@@ -87,25 +131,47 @@ input:focus {
     padding-right: 70px;
 }
 
-.show {
+.show-btn {
     position: absolute;
-    right: 9px;
-    top: 8px;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     border: none;
     background: transparent;
     color: #2563eb;
-    font-weight: bold;
     cursor: pointer;
-    padding: 7px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.password-strength {
+    height: 5px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    margin-top: 9px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s;
+}
+
+.strength-text {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 6px;
 }
 
 .terms {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 9px;
+    margin-top: 18px;
+    color: #64748b;
     font-size: 12px;
-    color: #667085;
-    margin: 18px 0;
+    line-height: 1.5;
 }
 
 .terms input {
@@ -116,177 +182,208 @@ input:focus {
 .terms a {
     color: #2563eb;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.create {
+.primary-btn {
     width: 100%;
+    margin-top: 22px;
     padding: 14px;
     border: none;
     border-radius: 9px;
     background: #2563eb;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.create:hover {
-    opacity: .9;
+.primary-btn:hover {
+    background: #1d4ed8;
 }
 
-.message {
-    display: none;
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 8px;
-    background: #ecfdf3;
-    color: #166534;
-    text-align: center;
-    font-size: 13px;
-}
-
-.login {
-    text-align: center;
-    margin-top: 22px;
-    color: #667085;
-    font-size: 14px;
-}
-
-.login a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.security {
-    margin-top: 20px;
-    padding: 14px;
-    background: #f8fafc;
-    border-radius: 9px;
-    text-align: center;
-    color: #667085;
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+    color: #94a3b8;
     font-size: 12px;
 }
 
-.back {
-    display: block;
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    background: #e5e7eb;
+    flex: 1;
+}
+
+.signin {
     text-align: center;
-    margin-top: 20px;
-    color: #667085;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.signin a {
+    color: #2563eb;
+    font-weight: bold;
     text-decoration: none;
-    font-size: 13px;
+}
+
+.security {
+    margin-top: 22px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.demo {
+    text-align: center;
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+@media (max-width: 500px) {
+    .register-card {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-    <div class="logo">
-        🔐 CryptoVault
-    </div>
+    <div class="navbar">
 
-    <div class="card">
+        <div class="brand">
 
-        <h1>Create Account</h1>
+            <div class="logo">CV</div>
 
-        <div class="subtitle">
-            Create your CryptoVault account
+            <div class="brand-text">
+                <strong>CryptoVault</strong>
+                <span>DIGITAL ASSET PLATFORM</span>
+            </div>
+
         </div>
 
+    </div>
+
+</header>
+
+<main>
+
+    <div class="register-card">
+
+        <span class="badge">CREATE ACCOUNT</span>
+
+        <h1>Join CryptoVault</h1>
+
+        <p class="subtitle">
+            Create a demonstration account to explore the
+            CryptoVault digital asset interface.
+        </p>
 
         <form onsubmit="createAccount(event)">
 
-            <div class="input-group">
+            <label for="fullName">
+                Full Name
+            </label>
 
-                <label for="name">
-                    Full Name
-                </label>
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-box">
 
                 <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your full name"
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
                     required
+                    minlength="6"
+                    oninput="checkPassword()"
                 >
+
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword('password', 'showPassword')"
+                    id="showPassword"
+                >
+                    Show
+                </button>
 
             </div>
 
+            <div class="password-strength">
+                <div
+                    class="strength-bar"
+                    id="strengthBar"
+                ></div>
+            </div>
 
-            <div class="input-group">
+            <div
+                class="strength-text"
+                id="strengthText"
+            >
+                Enter at least 6 characters.
+            </div>
 
-                <label for="email">
-                    Email Address
-                </label>
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+            <div class="password-box">
 
                 <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
                     required
+                    minlength="6"
                 >
 
-            </div>
-
-
-            <div class="input-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Create a password"
-                        minlength="6"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show"
-                        onclick="togglePassword('password', this)"
-                    >
-                        Show
-                    </button>
-
-                </div>
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword('confirmPassword', 'showConfirm')"
+                    id="showConfirm"
+                >
+                    Show
+                </button>
 
             </div>
-
-
-            <div class="input-group">
-
-                <label for="confirmPassword">
-                    Confirm Password
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        placeholder="Confirm your password"
-                        minlength="6"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show"
-                        onclick="togglePassword('confirmPassword', this)"
-                    >
-                        Show
-                    </button>
-
-                </div>
-
-            </div>
-
 
             <label class="terms">
 
@@ -298,37 +395,37 @@ input:focus {
 
                 <span>
                     I agree to the
-                    <a href="#" onclick="showTerms(event)">
-                        Terms of Service
+                    <a
+                        href="#"
+                        onclick="showTerms(event)"
+                    >
+                        Terms of Use
                     </a>
                     and
-                    <a href="#" onclick="showPrivacy(event)">
-                        Privacy Policy
+                    <a
+                        href="#"
+                        onclick="showPrivacy(event)"
+                    >
+                        Privacy Notice
                     </a>.
                 </span>
 
             </label>
 
-
             <button
                 type="submit"
-                class="create"
+                class="primary-btn"
             >
-                Create Account
+                Create Demo Account
             </button>
-
-
-            <div
-                id="message"
-                class="message"
-            >
-                Account created successfully. Opening your account...
-            </div>
 
         </form>
 
+        <div class="divider">
+            OR
+        </div>
 
-        <div class="login">
+        <div class="signin">
 
             Already have an account?
 
@@ -338,32 +435,36 @@ input:focus {
 
         </div>
 
-
         <div class="security">
 
-            🔒 Account security is important to us.
+            <strong>Security Notice</strong><br>
+
+            This registration form is part of a demonstration
+            website. It does not create a real financial account
+            or connect to a real payment system.
+
+        </div>
+
+        <div class="demo">
+
+            Demo interface for educational and presentation purposes.
+            No real cryptocurrency or financial transactions are processed.
 
         </div>
 
     </div>
 
-
-    <a
-        href="index.html"
-        class="back"
-    >
-        ← Back to Home
-    </a>
-
-</div>
-
+</main>
 
 <script>
 
-function togglePassword(id, button) {
+function togglePassword(inputId, buttonId) {
 
     const input =
-        document.getElementById(id);
+        document.getElementById(inputId);
+
+    const button =
+        document.getElementById(buttonId);
 
     if (input.type === "password") {
 
@@ -374,15 +475,77 @@ function togglePassword(id, button) {
 
         input.type = "password";
         button.textContent = "Show";
-
     }
-
 }
 
+function checkPassword() {
+
+    const password =
+        document.getElementById("password").value;
+
+    const bar =
+        document.getElementById("strengthBar");
+
+    const text =
+        document.getElementById("strengthText");
+
+    let strength = 0;
+
+    if (password.length >= 6) {
+        strength++;
+    }
+
+    if (password.length >= 10) {
+        strength++;
+    }
+
+    if (/[A-Z]/.test(password)) {
+        strength++;
+    }
+
+    if (/[0-9]/.test(password)) {
+        strength++;
+    }
+
+    if (/[^A-Za-z0-9]/.test(password)) {
+        strength++;
+    }
+
+    if (password.length === 0) {
+
+        bar.style.width = "0%";
+        text.textContent =
+            "Enter at least 6 characters.";
+
+    } else if (strength <= 2) {
+
+        bar.style.width = "35%";
+        text.textContent =
+            "Password strength: Weak";
+
+    } else if (strength <= 4) {
+
+        bar.style.width = "70%";
+        text.textContent =
+            "Password strength: Good";
+
+    } else {
+
+        bar.style.width = "100%";
+        text.textContent =
+            "Password strength: Strong";
+    }
+}
 
 function createAccount(event) {
 
     event.preventDefault();
+
+    const fullName =
+        document.getElementById("fullName").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
 
     const password =
         document.getElementById("password").value;
@@ -390,45 +553,70 @@ function createAccount(event) {
     const confirmPassword =
         document.getElementById("confirmPassword").value;
 
+    const terms =
+        document.getElementById("terms").checked;
+
+    if (!fullName) {
+
+        alert("Please enter your full name.");
+        return;
+    }
+
+    if (!email) {
+
+        alert("Please enter your email address.");
+        return;
+    }
+
+    if (password.length < 6) {
+
+        alert("Password must contain at least 6 characters.");
+        return;
+    }
+
     if (password !== confirmPassword) {
 
         alert("Passwords do not match.");
-
         return;
-
     }
 
-    document.getElementById("message").style.display =
-        "block";
+    if (!terms) {
 
-    setTimeout(function() {
+        alert("Please accept the Terms of Use and Privacy Notice.");
+        return;
+    }
 
-        window.location.href = "dashboard.html";
+    localStorage.setItem(
+        "cryptoVaultDemoUser",
+        JSON.stringify({
+            name: fullName,
+            email: email
+        })
+    );
 
-    }, 1200);
+    alert(
+        "Demo account created successfully."
+    );
 
+    window.location.href = "login.html";
 }
-
 
 function showTerms(event) {
 
     event.preventDefault();
 
     alert(
-        "Terms of Service: This interface demonstrates account registration functionality."
+        "Terms of Use: This is a demonstration platform for educational and presentation purposes."
     );
-
 }
-
 
 function showPrivacy(event) {
 
     event.preventDefault();
 
     alert(
-        "Privacy Policy: This website interface does not collect or store real financial credentials."
+        "Privacy Notice: This demo does not connect to a real financial account or payment service."
     );
-
 }
 
 </script>
