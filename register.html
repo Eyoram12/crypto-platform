@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Create Account | CryptoVault</title>
 
     <style>
@@ -18,123 +20,171 @@
             color: white;
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
 
         .container {
             width: 100%;
             max-width: 450px;
-            background: #151e38;
+            background: #151c32;
             padding: 35px;
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
-        h1 {
+        .logo {
             text-align: center;
+            font-size: 30px;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
         .subtitle {
             text-align: center;
-            color: #aeb8d0;
-            margin-bottom: 25px;
+            color: #aab3c5;
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
-            margin-bottom: 7px;
-            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
         input {
             width: 100%;
             padding: 13px;
+            margin-bottom: 18px;
             border: 1px solid #35405f;
-            border-radius: 7px;
-            background: #0b1020;
+            border-radius: 8px;
+            background: #0f1629;
             color: white;
             font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4f8cff;
         }
 
         button {
             width: 100%;
             padding: 14px;
-            margin-top: 25px;
             border: none;
-            border-radius: 7px;
-            background: #4f7cff;
+            border-radius: 8px;
+            background: #4f8cff;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 5px;
         }
 
-        .login {
+        button:hover {
+            background: #3677e8;
+        }
+
+        .links {
             text-align: center;
-            margin-top: 20px;
-            color: #aeb8d0;
+            margin-top: 25px;
+            line-height: 2;
         }
 
-        .login a {
-            color: #6f94ff;
+        .links a {
+            color: #6ea0ff;
             text-decoration: none;
         }
 
-        .home {
-            text-align: center;
-            margin-top: 20px;
+        .links a:hover {
+            text-decoration: underline;
         }
 
-        .home a {
-            color: #aeb8d0;
-            text-decoration: none;
+        .notice {
+            margin-top: 20px;
+            padding: 12px;
+            background: #202a45;
+            border-radius: 8px;
+            color: #aab3c5;
+            font-size: 13px;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Create Account</h1>
+        <div class="logo">CryptoVault</div>
 
-    <p class="subtitle">
-        Join CryptoVault
-    </p>
+        <p class="subtitle">Create your account</p>
 
-    <form>
+        <form action="login.html">
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required>
+            <label for="fullname">Full Name</label>
+            <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                placeholder="Enter your full name"
+                required
+            >
 
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
 
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Choose a username" required>
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Choose a username"
+                required
+            >
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Create a password" required>
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                required
+            >
 
-        <label for="confirm">Confirm Password</label>
-        <input type="password" id="confirm" placeholder="Confirm your password" required>
+            <label for="confirm-password">Confirm Password</label>
+            <input
+                type="password"
+                id="confirm-password"
+                name="confirm-password"
+                placeholder="Confirm your password"
+                required
+            >
 
-        <button type="submit">Create Account</button>
+            <button type="submit">Create Account</button>
 
-    </form>
+        </form>
 
-    <div class="login">
-        Already have an account?
-        <a href="login.html">Login</a>
+        <div class="links">
+            Already have an account?
+            <a href="login.html">Login</a>
+            <br>
+            <a href="index.html">← Back to Home</a>
+        </div>
+
+        <div class="notice">
+            Demo platform only. No real cryptocurrency or money is processed.
+        </div>
+
     </div>
-
-    <div class="home">
-        <a href="index.html">Back to Home</a>
-    </div>
-
-</div>
 
 </body>
+
 </html>
