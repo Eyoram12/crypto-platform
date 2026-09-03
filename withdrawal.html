@@ -17,6 +17,7 @@
             font-family: Arial, sans-serif;
             background: #07111f;
             color: #ffffff;
+            min-height: 100vh;
         }
 
         .header {
@@ -46,15 +47,38 @@
             color: #35d0ba;
         }
 
-        .dashboard {
-            color: #35d0ba;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #a9bacb;
             text-decoration: none;
+            font-size: 14px;
             font-weight: bold;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #35d0ba;
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: 1px solid #2a3e55;
+            color: #ffffff;
+            padding: 8px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
         }
 
         .container {
             width: 92%;
-            max-width: 950px;
+            max-width: 1100px;
             margin: 40px auto;
         }
 
@@ -69,17 +93,22 @@
 
         .title p {
             color: #8fa2b6;
+            line-height: 1.6;
         }
 
         .warning {
-            padding: 16px;
-            border-radius: 10px;
+            padding: 17px;
+            border-radius: 12px;
             background: #2b2111;
             border: 1px solid #65501e;
             color: #f2d37b;
             line-height: 1.6;
             font-size: 13px;
             margin-bottom: 25px;
+        }
+
+        .warning strong {
+            color: #ffffff;
         }
 
         .grid {
@@ -97,14 +126,14 @@
 
         .card h2 {
             font-size: 19px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .balance {
             background: #102437;
             border: 1px solid #25445e;
-            padding: 16px;
-            border-radius: 10px;
+            padding: 17px;
+            border-radius: 11px;
             margin-bottom: 22px;
         }
 
@@ -117,7 +146,7 @@
 
         .balance strong {
             color: #35d0ba;
-            font-size: 22px;
+            font-size: 24px;
         }
 
         .form-group {
@@ -129,6 +158,7 @@
             color: #dce7f2;
             font-size: 14px;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
         select,
@@ -155,6 +185,13 @@
             line-height: 1.5;
         }
 
+        .amount-preview {
+            display: none;
+            margin-top: 8px;
+            color: #35d0ba;
+            font-size: 12px;
+        }
+
         .btn {
             width: 100%;
             padding: 14px;
@@ -171,23 +208,36 @@
             opacity: 0.9;
         }
 
-        .info {
-            margin-bottom: 20px;
+        .success {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 9px;
+            background: #102d2a;
+            border: 1px solid #287d70;
+            color: #7de5d5;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        .info:last-child {
-            margin-bottom: 0;
+        .summary-box {
+            padding: 17px;
+            background: #091522;
+            border: 1px solid #203349;
+            border-radius: 11px;
+            margin-bottom: 18px;
         }
 
-        .info strong {
-            display: block;
+        .summary-label {
+            color: #8fa2b6;
+            font-size: 12px;
             margin-bottom: 7px;
         }
 
-        .info p {
-            color: #8fa2b6;
-            font-size: 13px;
-            line-height: 1.6;
+        .summary-value {
+            color: #35d0ba;
+            font-size: 21px;
+            font-weight: bold;
         }
 
         .steps {
@@ -198,11 +248,15 @@
         .steps li {
             counter-increment: steps;
             position: relative;
-            padding-left: 38px;
-            margin-bottom: 18px;
+            padding-left: 40px;
+            margin-bottom: 20px;
             color: #9caec1;
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 13px;
+        }
+
+        .steps li:last-child {
+            margin-bottom: 0;
         }
 
         .steps li::before {
@@ -210,8 +264,8 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 25px;
-            height: 25px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: #13283a;
             color: #35d0ba;
@@ -222,9 +276,9 @@
         }
 
         .security {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 25px;
+            padding: 17px;
+            border-radius: 11px;
             background: #0b2020;
             border: 1px solid #204943;
         }
@@ -232,13 +286,33 @@
         .security strong {
             display: block;
             color: #35d0ba;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
         }
 
         .security p {
             color: #91a4b8;
             font-size: 12px;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .info {
+            margin-top: 18px;
+            padding: 17px;
+            background: #102437;
+            border: 1px solid #25445e;
+            border-radius: 11px;
+        }
+
+        .info strong {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .info p {
+            color: #8fa2b6;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .notice {
@@ -256,17 +330,40 @@
             padding: 30px 15px;
         }
 
-        @media (max-width: 800px) {
-            .grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #091522;
+                border-bottom: 1px solid #203349;
+                padding: 18px;
+                flex-direction: column;
+                gap: 18px;
             }
 
-            .title h1 {
-                font-size: 28px;
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 500px) {
+
+            .title h1 {
+                font-size: 28px;
+            }
+
             .card {
                 padding: 20px;
             }
@@ -284,9 +381,27 @@
             Crypto<span>Vault</span>
         </div>
 
-        <a href="dashboard.html" class="dashboard">
-            Dashboard
-        </a>
+        <button class="menu-btn" onclick="toggleMenu()">
+            ☰
+        </button>
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html">Home</a>
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="deposit.html">Deposit</a>
+
+            <a href="withdrawal.html" class="active">Withdrawal</a>
+
+            <a href="transactions.html">Transactions</a>
+
+            <a href="settings.html">Settings</a>
+
+            <a href="login.html">Logout</a>
+
+        </div>
 
     </nav>
 
@@ -300,7 +415,8 @@
         <h1>Withdraw Crypto</h1>
 
         <p>
-            Submit a withdrawal request from your CryptoVault demo portfolio.
+            Submit a withdrawal request from your CryptoVault
+            demonstration portfolio.
         </p>
 
     </section>
@@ -309,8 +425,8 @@
     <div class="warning">
 
         <strong>Demo Safety Notice:</strong>
+        This website does not perform real cryptocurrency withdrawals.
         Do not enter a real wallet address or send real cryptocurrency.
-        This page is a demonstration only and does not perform real withdrawals.
 
     </div>
 
@@ -334,11 +450,7 @@
             </div>
 
 
-            <form
-                action="dashboard.html"
-                method="get"
-                onsubmit="return validateWithdrawal()"
-            >
+            <form id="withdrawalForm">
 
                 <div class="form-group">
 
@@ -346,7 +458,7 @@
                         Select Asset
                     </label>
 
-                    <select id="asset" name="asset">
+                    <select id="asset">
 
                         <option value="BTC">
                             Bitcoin (BTC)
@@ -360,6 +472,14 @@
                             Tether (USDT)
                         </option>
 
+                        <option value="BNB">
+                            BNB (BNB)
+                        </option>
+
+                        <option value="SOL">
+                            Solana (SOL)
+                        </option>
+
                     </select>
 
                 </div>
@@ -368,19 +488,18 @@
                 <div class="form-group">
 
                     <label for="address">
-                        Destination Wallet Address
+                        Destination Demo Address
                     </label>
 
                     <input
                         type="text"
                         id="address"
-                        name="address"
-                        placeholder="Enter demo wallet address"
+                        placeholder="Enter demonstration address"
                         required
                     >
 
                     <div class="network-note">
-                        Demo only. Real wallet validation is not connected.
+                        Demonstration only. Real wallet validation is not connected.
                     </div>
 
                 </div>
@@ -392,7 +511,7 @@
                         Network
                     </label>
 
-                    <select id="network" name="network">
+                    <select id="network">
 
                         <option value="bitcoin">
                             Bitcoin Network
@@ -402,11 +521,19 @@
                             Ethereum Network
                         </option>
 
-                        <option value="tron">
-                            TRON Network
+                        <option value="bnb">
+                            BNB Smart Chain
+                        </option>
+
+                        <option value="solana">
+                            Solana Network
                         </option>
 
                     </select>
+
+                    <div class="network-note">
+                        Network selection is for demonstration purposes only.
+                    </div>
 
                 </div>
 
@@ -420,12 +547,13 @@
                     <input
                         type="number"
                         id="amount"
-                        name="amount"
                         placeholder="Enter demo amount"
                         min="0"
                         step="any"
                         required
                     >
+
+                    <div class="amount-preview" id="amountPreview"></div>
 
                 </div>
 
@@ -437,6 +565,14 @@
                     Submit Demo Withdrawal
                 </button>
 
+
+                <div class="success" id="successMessage">
+
+                    Demo withdrawal request submitted successfully.
+                    No real cryptocurrency was transferred.
+
+                </div>
+
             </form>
 
         </div>
@@ -444,27 +580,45 @@
 
         <div class="card">
 
-            <h2>Withdrawal Process</h2>
+            <h2>Withdrawal Summary</h2>
 
-            <ol class="steps">
+            <div class="summary-box">
 
-                <li>
-                    Select the cryptocurrency you want to withdraw.
-                </li>
+                <div class="summary-label">
+                    Selected Asset
+                </div>
 
-                <li>
-                    Enter a demonstration destination address.
-                </li>
+                <div class="summary-value" id="selectedAsset">
+                    BTC
+                </div>
 
-                <li>
-                    Select the appropriate demonstration network.
-                </li>
+            </div>
 
-                <li>
-                    Enter the withdrawal amount and submit the request.
-                </li>
 
-            </ol>
+            <div class="summary-box">
+
+                <div class="summary-label">
+                    Selected Network
+                </div>
+
+                <div class="summary-value" id="selectedNetwork">
+                    Bitcoin Network
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div class="summary-label">
+                    Demo Balance
+                </div>
+
+                <div class="summary-value">
+                    $10,000.00
+                </div>
+
+            </div>
 
 
             <div class="security">
@@ -474,12 +628,58 @@
                 </strong>
 
                 <p>
-                    In a production platform, withdrawals should require
-                    authentication, address validation, network verification,
-                    transaction monitoring, and secure backend processing.
+                    A production platform should use authentication,
+                    address validation, network verification, transaction
+                    monitoring, and secure backend processing.
                 </p>
 
             </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card" style="margin-top:22px;">
+
+        <h2>How It Works</h2>
+
+        <ol class="steps">
+
+            <li>
+                Select the cryptocurrency you want to withdraw.
+            </li>
+
+            <li>
+                Enter a demonstration destination address.
+            </li>
+
+            <li>
+                Select the demonstration network.
+            </li>
+
+            <li>
+                Enter the withdrawal amount.
+            </li>
+
+            <li>
+                Submit the demonstration withdrawal request.
+            </li>
+
+        </ol>
+
+
+        <div class="info">
+
+            <strong>
+                Important
+            </strong>
+
+            <p>
+                This demonstration does not connect to a blockchain,
+                wallet, bank account, or payment system. No real funds
+                are moved when you submit the form.
+            </p>
 
         </div>
 
@@ -509,35 +709,120 @@
 
 <script>
 
-    function validateWithdrawal() {
+    function toggleMenu() {
 
-        const address =
-            document.getElementById("address").value.trim();
+        const navLinks =
+            document.getElementById("navLinks");
 
-        const amount =
-            Number(document.getElementById("amount").value);
+        navLinks.classList.toggle("show");
 
-        if (address.length < 5) {
-
-            alert("Please enter a demo wallet address.");
-
-            return false;
-        }
-
-        if (amount <= 0) {
-
-            alert("Please enter a valid demo withdrawal amount.");
-
-            return false;
-        }
-
-        alert(
-            "Demo withdrawal request submitted. " +
-            "No real cryptocurrency will be transferred."
-        );
-
-        return true;
     }
+
+
+    const asset =
+        document.getElementById("asset");
+
+    const network =
+        document.getElementById("network");
+
+    const selectedAsset =
+        document.getElementById("selectedAsset");
+
+    const selectedNetwork =
+        document.getElementById("selectedNetwork");
+
+
+    asset.addEventListener("change", function() {
+
+        selectedAsset.textContent =
+            asset.value;
+
+    });
+
+
+    network.addEventListener("change", function() {
+
+        selectedNetwork.textContent =
+            network.options[network.selectedIndex].text;
+
+    });
+
+
+    const amount =
+        document.getElementById("amount");
+
+    const amountPreview =
+        document.getElementById("amountPreview");
+
+
+    amount.addEventListener("input", function() {
+
+        const value =
+            Number(amount.value);
+
+        if (value > 0) {
+
+            amountPreview.style.display = "block";
+
+            amountPreview.textContent =
+                "Demo withdrawal amount: " +
+                value.toLocaleString();
+
+        } else {
+
+            amountPreview.style.display = "none";
+
+        }
+
+    });
+
+
+    document
+        .getElementById("withdrawalForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const address =
+                document.getElementById("address").value.trim();
+
+            const value =
+                Number(amount.value);
+
+
+            if (address.length < 5) {
+
+                alert(
+                    "Please enter a demonstration wallet address."
+                );
+
+                return;
+
+            }
+
+
+            if (value <= 0) {
+
+                alert(
+                    "Please enter a valid demonstration amount."
+                );
+
+                return;
+
+            }
+
+
+            document
+                .getElementById("successMessage")
+                .style.display = "block";
+
+
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth"
+            });
+
+        });
 
 </script>
 
