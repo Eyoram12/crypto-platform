@@ -75,6 +75,8 @@ nav a.active {
     margin: 35px auto;
 }
 
+/* HERO */
+
 .hero {
     background: #0b1220;
     color: white;
@@ -100,16 +102,65 @@ nav a.active {
 
 .hero p {
     color: #b8c2d2;
-    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
-.rate-box {
+.market-rate {
     display: inline-block;
     background: white;
     color: #0b1220;
-    padding: 14px 20px;
+    padding: 15px 20px;
     border-radius: 10px;
+    margin-top: 10px;
     font-weight: bold;
+}
+
+.market-rate span {
+    margin-left: 15px;
+}
+
+/* MARKET SUMMARY */
+
+.market-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.market-card {
+    background: white;
+    border: 1px solid #e5e9f0;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+}
+
+.market-card .label {
+    color: #737d8f;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.market-card .value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.market-card .sub {
+    color: #737d8f;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* NOTICE */
+
+.notice {
+    background: #eef3ff;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 25px;
+    line-height: 1.6;
 }
 
 /* TABS */
@@ -184,6 +235,10 @@ nav a.active {
     color: #70798b;
 }
 
+.price {
+    font-size: 20px;
+}
+
 .trade-btn {
     width: 100%;
     border: none;
@@ -245,6 +300,14 @@ select {
     font-size: 21px;
 }
 
+.selected-rate {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f5f7fb;
+    border-radius: 8px;
+    color: #5f697b;
+}
+
 .calculate-btn {
     margin-top: 15px;
     background: #0b1220;
@@ -281,14 +344,6 @@ select {
     line-height: 1.6;
 }
 
-.notice {
-    background: #eef3ff;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-
 footer {
     background: #0b1220;
     color: #aeb9ca;
@@ -298,14 +353,56 @@ footer {
     font-size: 13px;
 }
 
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.modal-box h2 {
+    margin-top: 0;
+}
+
+.close-btn {
+    width: 100%;
+    border: none;
+    background: #e9edf3;
+    color: #172033;
+    padding: 13px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* MOBILE */
+
 @media (max-width: 800px) {
+
     .offers,
-    .info {
+    .info,
+    .market-summary {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 600px) {
+
     header {
         padding: 15px;
     }
@@ -329,6 +426,11 @@ footer {
 
     .hero h1 {
         font-size: 28px;
+    }
+
+    .market-rate span {
+        display: block;
+        margin: 8px 0 0;
     }
 }
 </style>
@@ -364,20 +466,81 @@ footer {
     <section class="hero">
 
         <span class="badge">
-            SECURE PLATFORM
+            P2P MARKETPLACE
         </span>
 
         <h1>
-            🇪🇹 USDT / ETB P2P Marketplace
+            🇪🇹 USDT / ETB P2P Trading
         </h1>
 
         <p>
-            Trade USDT using the CryptoVault P2P marketplace
-            with a simple and transparent exchange rate.
+            Compare available USDT offers and select the rate
+            that best matches your trading needs.
         </p>
 
-        <div class="rate-box">
-            Exchange Rate: 1 USDT = 190 ETB
+        <div class="market-rate">
+
+            Market Range:
+
+            <span>188 - 192 ETB / USDT</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- MARKET SUMMARY -->
+
+    <section class="market-summary">
+
+        <div class="market-card">
+
+            <div class="label">
+                Lowest Buy Rate
+            </div>
+
+            <div class="value">
+                188 ETB
+            </div>
+
+            <div class="sub">
+                Per 1 USDT
+            </div>
+
+        </div>
+
+
+        <div class="market-card">
+
+            <div class="label">
+                Average Market Rate
+            </div>
+
+            <div class="value">
+                190 ETB
+            </div>
+
+            <div class="sub">
+                Per 1 USDT
+            </div>
+
+        </div>
+
+
+        <div class="market-card">
+
+            <div class="label">
+                Highest Buy Rate
+            </div>
+
+            <div class="value">
+                192 ETB
+            </div>
+
+            <div class="sub">
+                Per 1 USDT
+            </div>
+
         </div>
 
     </section>
@@ -387,24 +550,28 @@ footer {
 
     <div class="notice">
 
-        <strong>P2P Trading Information</strong><br>
+        <strong>Market Rate Information</strong><br>
 
-        Review the seller information, enter your USDT amount,
-        and calculate the corresponding ETB value before placing
-        an order.
+        P2P offers can have different prices depending on the
+        seller. The rates displayed on this page are sample
+        marketplace rates for the CryptoVault platform.
 
     </div>
 
 
-    <!-- BUY / SELL -->
+    <!-- TABS -->
 
     <div class="tabs">
 
-        <button class="tab active" onclick="showTab('buy', this)">
+        <button
+            class="tab active"
+            onclick="showTab('buy', this)">
             Buy USDT
         </button>
 
-        <button class="tab" onclick="showTab('sell', this)">
+        <button
+            class="tab"
+            onclick="showTab('sell', this)">
             Sell USDT
         </button>
 
@@ -417,16 +584,26 @@ footer {
 
         <div class="offers">
 
+
+            <!-- ALEX -->
+
             <div class="offer">
 
                 <div class="seller">
-                    <span class="seller-name">Alex</span>
-                    <span class="status">● Online</span>
+
+                    <span class="seller-name">
+                        Alex
+                    </span>
+
+                    <span class="status">
+                        ● Online
+                    </span>
+
                 </div>
 
                 <div class="offer-row">
                     <span>Price</span>
-                    <strong>190 ETB</strong>
+                    <strong class="price">188 ETB</strong>
                 </div>
 
                 <div class="offer-row">
@@ -439,24 +616,34 @@ footer {
                     <strong>Bank Transfer</strong>
                 </div>
 
-                <button class="trade-btn"
-                        onclick="openTrade('Alex')">
+                <button
+                    class="trade-btn"
+                    onclick="openTrade('Alex', 188)">
                     Buy USDT
                 </button>
 
             </div>
 
 
+            <!-- DANIEL -->
+
             <div class="offer">
 
                 <div class="seller">
-                    <span class="seller-name">Daniel</span>
-                    <span class="status">● Online</span>
+
+                    <span class="seller-name">
+                        Daniel
+                    </span>
+
+                    <span class="status">
+                        ● Online
+                    </span>
+
                 </div>
 
                 <div class="offer-row">
                     <span>Price</span>
-                    <strong>190 ETB</strong>
+                    <strong class="price">189 ETB</strong>
                 </div>
 
                 <div class="offer-row">
@@ -469,24 +656,34 @@ footer {
                     <strong>Bank Transfer</strong>
                 </div>
 
-                <button class="trade-btn"
-                        onclick="openTrade('Daniel')">
+                <button
+                    class="trade-btn"
+                    onclick="openTrade('Daniel', 189)">
                     Buy USDT
                 </button>
 
             </div>
 
 
+            <!-- SARA -->
+
             <div class="offer">
 
                 <div class="seller">
-                    <span class="seller-name">Sara</span>
-                    <span class="status">● Online</span>
+
+                    <span class="seller-name">
+                        Sara
+                    </span>
+
+                    <span class="status">
+                        ● Online
+                    </span>
+
                 </div>
 
                 <div class="offer-row">
                     <span>Price</span>
-                    <strong>190 ETB</strong>
+                    <strong class="price">190 ETB</strong>
                 </div>
 
                 <div class="offer-row">
@@ -499,24 +696,34 @@ footer {
                     <strong>Bank Transfer</strong>
                 </div>
 
-                <button class="trade-btn"
-                        onclick="openTrade('Sara')">
+                <button
+                    class="trade-btn"
+                    onclick="openTrade('Sara', 190)">
                     Buy USDT
                 </button>
 
             </div>
 
 
+            <!-- MICHAEL -->
+
             <div class="offer">
 
                 <div class="seller">
-                    <span class="seller-name">Michael</span>
-                    <span class="status">● Online</span>
+
+                    <span class="seller-name">
+                        Michael
+                    </span>
+
+                    <span class="status">
+                        ● Online
+                    </span>
+
                 </div>
 
                 <div class="offer-row">
                     <span>Price</span>
-                    <strong>190 ETB</strong>
+                    <strong class="price">191 ETB</strong>
                 </div>
 
                 <div class="offer-row">
@@ -529,8 +736,49 @@ footer {
                     <strong>Bank Transfer</strong>
                 </div>
 
-                <button class="trade-btn"
-                        onclick="openTrade('Michael')">
+                <button
+                    class="trade-btn"
+                    onclick="openTrade('Michael', 191)">
+                    Buy USDT
+                </button>
+
+            </div>
+
+
+            <!-- HANA -->
+
+            <div class="offer">
+
+                <div class="seller">
+
+                    <span class="seller-name">
+                        Hana
+                    </span>
+
+                    <span class="status">
+                        ● Online
+                    </span>
+
+                </div>
+
+                <div class="offer-row">
+                    <span>Price</span>
+                    <strong class="price">192 ETB</strong>
+                </div>
+
+                <div class="offer-row">
+                    <span>Available</span>
+                    <strong>2,100 USDT</strong>
+                </div>
+
+                <div class="offer-row">
+                    <span>Payment</span>
+                    <strong>Bank Transfer</strong>
+                </div>
+
+                <button
+                    class="trade-btn"
+                    onclick="openTrade('Hana', 192)">
                     Buy USDT
                 </button>
 
@@ -541,17 +789,52 @@ footer {
     </section>
 
 
-    <!-- SELL -->
+    <!-- SELL SECTION -->
 
     <section id="sellSection" style="display:none;">
 
         <div class="calculator">
 
-            <h2>Sell USDT</h2>
+            <h2>
+                Sell USDT
+            </h2>
 
             <p>
                 Enter the amount of USDT you want to sell.
             </p>
+
+            <div class="form-group">
+
+                <label for="sellRate">
+                    Select Market Rate
+                </label>
+
+                <select id="sellRate"
+                        onchange="calculateSell()">
+
+                    <option value="188">
+                        188 ETB / USDT
+                    </option>
+
+                    <option value="189">
+                        189 ETB / USDT
+                    </option>
+
+                    <option value="190" selected>
+                        190 ETB / USDT
+                    </option>
+
+                    <option value="191">
+                        191 ETB / USDT
+                    </option>
+
+                    <option value="192">
+                        192 ETB / USDT
+                    </option>
+
+                </select>
+
+            </div>
 
             <div class="form-group">
 
@@ -565,6 +848,7 @@ footer {
                     placeholder="Enter USDT amount"
                     min="0"
                     step="0.01"
+                    oninput="calculateSell()"
                 >
 
             </div>
@@ -574,16 +858,11 @@ footer {
                 You receive:
 
                 <strong>
-                    <span id="sellTotal">0.00</span> ETB
+                    <span id="sellTotal">0.00</span>
+                    ETB
                 </strong>
 
             </div>
-
-            <button class="calculate-btn"
-                    onclick="calculateSell()">
-                Calculate
-
-            </button>
 
         </div>
 
@@ -594,12 +873,47 @@ footer {
 
     <section class="calculator">
 
-        <h2>USDT / ETB Calculator</h2>
+        <h2>
+            P2P Calculator
+        </h2>
 
         <p>
-            Calculate the ETB value of your USDT using the fixed
-            platform exchange rate.
+            Select an available market rate and enter your USDT
+            amount to calculate the ETB value.
         </p>
+
+        <div class="form-group">
+
+            <label for="selectedRate">
+                Market Rate
+            </label>
+
+            <select id="selectedRate"
+                    onchange="calculateTotal()">
+
+                <option value="188">
+                    Alex - 188 ETB / USDT
+                </option>
+
+                <option value="189">
+                    Daniel - 189 ETB / USDT
+                </option>
+
+                <option value="190" selected>
+                    Sara - 190 ETB / USDT
+                </option>
+
+                <option value="191">
+                    Michael - 191 ETB / USDT
+                </option>
+
+                <option value="192">
+                    Hana - 192 ETB / USDT
+                </option>
+
+            </select>
+
+        </div>
 
         <div class="form-group">
 
@@ -618,12 +932,24 @@ footer {
 
         </div>
 
+        <div class="selected-rate">
+
+            Selected Rate:
+
+            <strong>
+                <span id="displayRate">190</span>
+                ETB / USDT
+            </strong>
+
+        </div>
+
         <div class="total">
 
             Total:
 
             <strong>
-                <span id="etbTotal">0.00</span> ETB
+                <span id="etbTotal">0.00</span>
+                ETB
             </strong>
 
         </div>
@@ -637,11 +963,13 @@ footer {
 
         <div class="info-card">
 
-            <h3>🔒 Secure Trading</h3>
+            <h3>
+                📊 Compare Rates
+            </h3>
 
             <p>
-                Review the available offer and trading information
-                before placing an order.
+                Compare different seller offers before selecting
+                a market rate.
             </p>
 
         </div>
@@ -649,11 +977,13 @@ footer {
 
         <div class="info-card">
 
-            <h3>🇪🇹 ETB Support</h3>
+            <h3>
+                🇪🇹 ETB Support
+            </h3>
 
             <p>
-                The marketplace supports USDT and Ethiopian Birr
-                calculations using the displayed exchange rate.
+                Calculate USDT values in Ethiopian Birr using
+                the selected P2P rate.
             </p>
 
         </div>
@@ -661,11 +991,13 @@ footer {
 
         <div class="info-card">
 
-            <h3>📊 Transparent Rate</h3>
+            <h3>
+                🔒 Trading Information
+            </h3>
 
             <p>
-                The displayed platform rate is
-                <strong>1 USDT = 190 ETB</strong>.
+                Always review the seller, price, available amount
+                and payment information before an order.
             </p>
 
         </div>
@@ -676,93 +1008,95 @@ footer {
 
 
 <footer>
+
     © 2026 CryptoVault. Digital Asset Platform.
+
 </footer>
 
 
 <!-- TRADE MODAL -->
 
-<div id="tradeModal"
-style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.6);
-align-items:center;
-justify-content:center;
-padding:20px;
-">
+<div id="tradeModal" class="modal">
 
-<div style="
-background:white;
-width:100%;
-max-width:450px;
-border-radius:15px;
-padding:25px;
-">
+    <div class="modal-box">
 
-<h2 id="tradeTitle">
-Buy USDT
-</h2>
+        <h2 id="tradeTitle">
+            Buy USDT
+        </h2>
 
-<div class="form-group">
+        <p id="selectedSellerRate">
+            Selected rate: 190 ETB / USDT
+        </p>
 
-<label>
-USDT Amount
-</label>
+        <div class="form-group">
 
-<input
-type="number"
-id="tradeAmount"
-placeholder="Enter amount"
-min="0"
-step="0.01"
-oninput="calculateTrade()"
->
+            <label for="tradeAmount">
+                USDT Amount
+            </label>
 
-</div>
+            <input
+                type="number"
+                id="tradeAmount"
+                placeholder="Enter USDT amount"
+                min="0"
+                step="0.01"
+                oninput="calculateTrade()"
+            >
 
-<div class="total">
+        </div>
 
-Total:
+        <div class="total">
 
-<strong>
-<span id="tradeTotal">0.00</span> ETB
-</strong>
+            Total:
 
-</div>
+            <strong>
+                <span id="tradeTotal">0.00</span>
+                ETB
+            </strong>
 
-<button
-class="trade-btn"
-onclick="confirmTrade()">
-Confirm Order
-</button>
+        </div>
 
-<button
-class="trade-btn"
-style="background:#e9edf3;color:#172033;"
-onclick="closeTrade()">
-Cancel
-</button>
+        <button
+            class="trade-btn"
+            onclick="confirmTrade()">
 
-</div>
+            Confirm Order
+
+        </button>
+
+        <button
+            class="close-btn"
+            onclick="closeTrade()">
+
+            Cancel
+
+        </button>
+
+    </div>
 
 </div>
 
 
 <script>
 
-const RATE = 190;
+/* Current selected seller rate */
+
+let selectedSeller = "";
+let selectedRate = 190;
 
 
 /* BUY / SELL TABS */
 
 function showTab(tab, button) {
 
-    const buySection = document.getElementById("buySection");
-    const sellSection = document.getElementById("sellSection");
+    const buySection =
+        document.getElementById("buySection");
 
-    const tabs = document.querySelectorAll(".tab");
+    const sellSection =
+        document.getElementById("sellSection");
+
+    const tabs =
+        document.querySelectorAll(".tab");
 
     tabs.forEach(function(item) {
         item.classList.remove("active");
@@ -789,9 +1123,19 @@ function showTab(tab, button) {
 function calculateTotal() {
 
     const amount =
-        parseFloat(document.getElementById("usdtAmount").value) || 0;
+        parseFloat(
+            document.getElementById("usdtAmount").value
+        ) || 0;
 
-    const total = amount * RATE;
+    selectedRate =
+        parseFloat(
+            document.getElementById("selectedRate").value
+        );
+
+    const total = amount * selectedRate;
+
+    document.getElementById("displayRate").textContent =
+        selectedRate;
 
     document.getElementById("etbTotal").textContent =
         total.toLocaleString(undefined, {
@@ -806,9 +1150,16 @@ function calculateTotal() {
 function calculateSell() {
 
     const amount =
-        parseFloat(document.getElementById("sellAmount").value) || 0;
+        parseFloat(
+            document.getElementById("sellAmount").value
+        ) || 0;
 
-    const total = amount * RATE;
+    const rate =
+        parseFloat(
+            document.getElementById("sellRate").value
+        );
+
+    const total = amount * rate;
 
     document.getElementById("sellTotal").textContent =
         total.toLocaleString(undefined, {
@@ -820,16 +1171,24 @@ function calculateSell() {
 
 /* OPEN TRADE */
 
-function openTrade(seller) {
+function openTrade(seller, rate) {
+
+    selectedSeller = seller;
+    selectedRate = rate;
 
     document.getElementById("tradeTitle").textContent =
         "Buy USDT from " + seller;
 
+    document.getElementById("selectedSellerRate").textContent =
+        "Selected rate: " + rate + " ETB / USDT";
+
     document.getElementById("tradeAmount").value = "";
 
-    document.getElementById("tradeTotal").textContent = "0.00";
+    document.getElementById("tradeTotal").textContent =
+        "0.00";
 
-    document.getElementById("tradeModal").style.display = "flex";
+    document.getElementById("tradeModal").style.display =
+        "flex";
 }
 
 
@@ -837,7 +1196,8 @@ function openTrade(seller) {
 
 function closeTrade() {
 
-    document.getElementById("tradeModal").style.display = "none";
+    document.getElementById("tradeModal").style.display =
+        "none";
 }
 
 
@@ -846,9 +1206,11 @@ function closeTrade() {
 function calculateTrade() {
 
     const amount =
-        parseFloat(document.getElementById("tradeAmount").value) || 0;
+        parseFloat(
+            document.getElementById("tradeAmount").value
+        ) || 0;
 
-    const total = amount * RATE;
+    const total = amount * selectedRate;
 
     document.getElementById("tradeTotal").textContent =
         total.toLocaleString(undefined, {
@@ -858,30 +1220,50 @@ function calculateTrade() {
 }
 
 
-/* CONFIRM */
+/* CONFIRM ORDER */
 
 function confirmTrade() {
 
     const amount =
-        parseFloat(document.getElementById("tradeAmount").value) || 0;
+        parseFloat(
+            document.getElementById("tradeAmount").value
+        ) || 0;
 
     if (amount <= 0) {
 
-        alert("Please enter a valid USDT amount.");
+        alert(
+            "Please enter a valid USDT amount."
+        );
 
         return;
     }
 
-    const total = amount * RATE;
+    const total = amount * selectedRate;
 
     alert(
         "Order confirmed.\n\n" +
+        "Seller: " + selectedSeller + "\n" +
         "USDT Amount: " + amount + " USDT\n" +
-        "Total: " + total.toLocaleString() + " ETB"
+        "Rate: " + selectedRate + " ETB / USDT\n" +
+        "Total: " +
+        total.toLocaleString() +
+        " ETB"
     );
 
     closeTrade();
 }
+
+
+/* CLOSE MODAL WHEN CLICKING OUTSIDE */
+
+document.getElementById("tradeModal")
+.addEventListener("click", function(event) {
+
+    if (event.target === this) {
+        closeTrade();
+    }
+
+});
 
 </script>
 
