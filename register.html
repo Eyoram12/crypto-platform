@@ -4,93 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Create Demo Account | CryptoVault</title>
-
-    <meta name="description"
-        content="Create a demonstration account for the CryptoVault digital asset platform.">
+    <title>Create Account | CryptoVault</title>
 
     <style>
+        :root {
+            --bg: #07111f;
+            --card: #101d30;
+            --text: #f5f7fb;
+            --muted: #9aa8ba;
+            --border: #20324a;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 35%),
-                #07111f;
-            color: #ffffff;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: auto;
+            min-height: 70px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 25px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
+            justify-content: space-between;
         }
 
         .logo {
-            text-align: center;
-            font-size: 30px;
+            font-size: 25px;
             font-weight: 800;
-            margin-bottom: 10px;
         }
 
         .logo span {
-            color: #3b82f6;
+            color: var(--primary);
         }
 
-        .tagline {
-            text-align: center;
-            color: #91a5ba;
-            font-size: 13px;
-            margin-bottom: 25px;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .card {
-            background: rgba(13, 28, 46, 0.96);
-            border: 1px solid #203952;
+        .home-link {
+            color: var(--muted);
+            padding: 8px 12px;
+        }
+
+        .home-link:hover {
+            color: var(--text);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.08);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 20px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
         .demo-badge {
             display: inline-block;
-            padding: 6px 11px;
+            padding: 6px 10px;
             border-radius: 20px;
-            background: rgba(251, 191, 36, 0.12);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: rgba(245, 158, 11, 0.12);
             color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
             font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 31px;
             margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #91a5ba;
-            margin-bottom: 28px;
+            color: var(--muted);
             font-size: 14px;
-            line-height: 1.6;
+            margin-bottom: 27px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 17px;
         }
 
         label {
@@ -103,22 +150,16 @@
         input {
             width: 100%;
             padding: 13px 14px;
+            border: 1px solid var(--border);
             border-radius: 9px;
-            border: 1px solid #29445f;
-            background: #081525;
-            color: white;
+            background: var(--bg);
+            color: var(--text);
             outline: none;
             font-size: 15px;
-            transition: 0.2s;
-        }
-
-        input::placeholder {
-            color: #60758a;
         }
 
         input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: var(--primary);
         }
 
         .password-box {
@@ -126,29 +167,25 @@
         }
 
         .password-box input {
-            padding-right: 75px;
+            padding-right: 70px;
         }
 
-        .show-btn {
+        .show-password {
             position: absolute;
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
-            border: none;
-            background: none;
-            color: #60a5fa;
+            border: 0;
+            background: transparent;
+            color: var(--primary);
             cursor: pointer;
             font-size: 13px;
             font-weight: 700;
         }
 
-        .show-btn:hover {
-            color: #93c5fd;
-        }
-
         .strength {
             height: 5px;
-            background: #203952;
+            background: var(--bg);
             border-radius: 5px;
             margin-top: 8px;
             overflow: hidden;
@@ -156,147 +193,146 @@
 
         .strength-bar {
             height: 100%;
-            width: 0;
-            transition: 0.3s;
+            width: 0%;
             border-radius: 5px;
+            transition: 0.3s;
         }
 
         .strength-text {
-            margin-top: 6px;
-            font-size: 11px;
-            color: #91a5ba;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 5px;
         }
 
         .terms {
             display: flex;
-            gap: 9px;
             align-items: flex-start;
-            margin: 20px 0;
-            color: #91a5ba;
+            gap: 8px;
+            color: var(--muted);
             font-size: 13px;
+            margin: 18px 0 22px;
             line-height: 1.5;
-            font-weight: normal;
         }
 
         .terms input {
             width: auto;
             margin-top: 3px;
-            accent-color: #2563eb;
         }
 
-        .terms a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        .terms a:hover {
-            text-decoration: underline;
-        }
-
-        button.submit {
+        .create-button {
             width: 100%;
             padding: 14px;
-            border: none;
+            border: 0;
             border-radius: 9px;
-            background: #2563eb;
+            background: var(--primary);
             color: white;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
 
-        button.submit:hover {
-            background: #1d4ed8;
+        .create-button:hover {
+            background: var(--primary-dark);
             transform: translateY(-1px);
         }
 
-        button.submit:active {
-            transform: translateY(0);
-        }
-
-        .success-message {
+        .message {
             display: none;
-            margin-top: 18px;
-            padding: 13px;
-            border-radius: 9px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #86efac;
-            font-size: 13px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
-            line-height: 1.5;
-        }
-
-        .login {
-            text-align: center;
-            margin-top: 22px;
-            color: #91a5ba;
             font-size: 14px;
         }
 
-        .login a {
+        .message.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .login-text {
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 22px;
+        }
+
+        .login-text a {
             color: #60a5fa;
             font-weight: 700;
-            text-decoration: none;
         }
 
-        .login a:hover {
-            text-decoration: underline;
-        }
-
-        .demo {
-            margin-top: 22px;
-            padding: 14px;
-            border: 1px solid #5a4718;
-            background: #211b0b;
-            border-radius: 9px;
-            color: #fbbf24;
+        .demo-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--muted);
             font-size: 12px;
             line-height: 1.6;
-            text-align: center;
         }
 
-        .security {
-            margin-top: 14px;
-            padding: 12px;
-            border: 1px solid #203952;
-            background: #081525;
-            border-radius: 9px;
-            color: #91a5ba;
+        .demo-box strong {
+            color: var(--text);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
             font-size: 12px;
-            line-height: 1.5;
-            text-align: center;
         }
 
-        .home {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #91a5ba;
-            font-size: 13px;
-            text-decoration: none;
+        /* LIGHT MODE */
+
+        body.light-mode {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d7dee8;
         }
 
-        .home:hover {
-            color: white;
+        body.light-mode input {
+            background: #f8fafc;
         }
 
-        @media (max-width: 500px) {
-            body {
-                padding: 15px;
+        body.light-mode .theme-btn {
+            background: #ffffff;
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 15px;
             }
 
-            .card {
-                padding: 25px 20px;
+            .home-link {
+                display: none;
+            }
+
+            main {
+                padding: 30px 15px;
+            }
+
+            .register-card {
+                padding: 28px 22px;
             }
 
             h1 {
-                font-size: 26px;
-            }
-
-            .logo {
-                font-size: 27px;
+                font-size: 28px;
             }
         }
     </style>
@@ -304,69 +340,87 @@
 
 <body>
 
-<div class="container">
+<header>
 
-    <div class="logo">
-        Crypto<span>Vault</span>
-    </div>
+    <nav class="navbar">
 
-    <div class="tagline">
-        Secure Digital Asset Platform Demonstration
-    </div>
+        <a href="index.html" class="logo">
+            Crypto<span>Vault</span>
+        </a>
 
-    <div class="card">
+        <div class="nav-right">
+
+            <a href="index.html" class="home-link">
+                Home
+            </a>
+
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                onclick="toggleTheme()"
+                aria-label="Toggle light and dark mode">
+                ☀️
+            </button>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<main>
+
+    <div class="register-card">
 
         <div class="demo-badge">
             DEMO ACCOUNT
         </div>
 
-        <h1>Create your account</h1>
+        <h1>Create Your Account</h1>
 
         <p class="subtitle">
-            Create a demonstration account and explore the CryptoVault
-            platform, portfolio dashboard, market data, and transaction
-            features.
+            Create a demonstration account and explore CryptoVault.
         </p>
 
-        <form id="registerForm" onsubmit="return validateForm()">
+        <form id="registerForm">
 
             <div class="form-group">
-                <label for="fullname">Full Name</label>
+
+                <label for="fullName">
+                    Full Name
+                </label>
 
                 <input
                     type="text"
-                    id="fullname"
-                    name="fullname"
-                    placeholder="Enter your full name"
-                    autocomplete="name"
-                    required
-                >
+                    id="fullName"
+                    placeholder="Enter your full name">
+
             </div>
 
             <div class="form-group">
-                <label for="email">Email Address</label>
+
+                <label for="email">
+                    Email Address
+                </label>
 
                 <input
                     type="email"
                     id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                    required
-                >
+                    placeholder="Enter your email">
+
             </div>
 
             <div class="form-group">
-                <label for="username">Username</label>
+
+                <label for="username">
+                    Username
+                </label>
 
                 <input
                     type="text"
                     id="username"
-                    name="username"
-                    placeholder="Choose a username"
-                    autocomplete="username"
-                    required
-                >
+                    placeholder="Choose a username">
+
             </div>
 
             <div class="form-group">
@@ -380,18 +434,14 @@
                     <input
                         type="password"
                         id="password"
-                        name="password"
                         placeholder="Create a password"
-                        autocomplete="new-password"
-                        required
-                        oninput="checkPassword()"
-                    >
+                        oninput="checkPassword()">
 
                     <button
                         type="button"
-                        class="show-btn"
-                        onclick="togglePassword('password', this)"
-                    >
+                        class="show-password"
+                        id="showPasswordBtn"
+                        onclick="togglePassword('password','showPasswordBtn')">
                         Show
                     </button>
 
@@ -423,17 +473,13 @@
                     <input
                         type="password"
                         id="confirmPassword"
-                        name="confirmPassword"
-                        placeholder="Confirm your password"
-                        autocomplete="new-password"
-                        required
-                    >
+                        placeholder="Confirm your password">
 
                     <button
                         type="button"
-                        class="show-btn"
-                        onclick="togglePassword('confirmPassword', this)"
-                    >
+                        class="show-password"
+                        id="confirmShowBtn"
+                        onclick="togglePassword('confirmPassword','confirmShowBtn')">
                         Show
                     </button>
 
@@ -445,64 +491,72 @@
 
                 <input
                     type="checkbox"
-                    id="terms"
-                    required
-                >
+                    id="terms">
 
                 <span>
-                    I understand that this is a demonstration website
-                    and does not process real cryptocurrency, financial
-                    transactions, payments, deposits, or withdrawals.
+                    I understand that CryptoVault is a demonstration
+                    platform and does not process real financial
+                    transactions.
                 </span>
 
             </label>
 
             <button
                 type="submit"
-                class="submit">
+                class="create-button">
                 Create Demo Account
             </button>
 
+            <div
+                id="message"
+                class="message">
+            </div>
+
         </form>
 
-        <div
-            class="success-message"
-            id="successMessage">
-            Demo account created successfully.
-            Redirecting to the login page...
-        </div>
+        <div class="login-text">
 
-        <div class="login">
             Already have an account?
-            <a href="login.html">Log In</a>
+
+            <a href="login.html">
+                Log In
+            </a>
+
         </div>
 
-        <div class="demo">
-            <strong>DEMO ONLY:</strong>
-            No real account, cryptocurrency, wallet, payment,
-            investment, or withdrawal is created or processed.
-        </div>
+        <div class="demo-box">
 
-        <div class="security">
-            🔒 Your information is used only for this website demonstration.
-            This page does not connect to a real authentication system.
-        </div>
+            <strong>Demo Only</strong><br>
 
-        <a
-            href="index.html"
-            class="home">
-            ← Back to Home
-        </a>
+            This account is for demonstration purposes.
+            No real cryptocurrency, payment information,
+            banking information or financial transactions
+            are required.
+
+        </div>
 
     </div>
 
-</div>
+</main>
+
+<footer>
+
+    CryptoVault is a demonstration platform.
+    No real cryptocurrency transactions are processed.
+
+</footer>
 
 <script>
 
-    function togglePassword(id, button) {
+    /* PASSWORD VISIBILITY */
 
-        const input = document.getElementById(id);
+    function togglePassword(inputId, buttonId) {
+
+        const input =
+            document.getElementById(inputId);
+
+        const button =
+            document.getElementById(buttonId);
 
         if (input.type === "password") {
 
@@ -513,9 +567,13 @@
 
             input.type = "password";
             button.textContent = "Show";
+
         }
+
     }
 
+
+    /* PASSWORD STRENGTH */
 
     function checkPassword() {
 
@@ -534,6 +592,10 @@
             strength++;
         }
 
+        if (password.length >= 10) {
+            strength++;
+        }
+
         if (/[A-Z]/.test(password)) {
             strength++;
         }
@@ -546,97 +608,182 @@
             strength++;
         }
 
+        const widths = [
+            "0%",
+            "20%",
+            "40%",
+            "60%",
+            "80%",
+            "100%"
+        ];
+
+        bar.style.width = widths[strength];
+
         if (strength === 0) {
-
-            bar.style.width = "0%";
             text.textContent = "Password strength";
-
-        } else if (strength === 1) {
-
-            bar.style.width = "25%";
+        } else if (strength <= 2) {
             text.textContent = "Weak password";
-
-        } else if (strength === 2) {
-
-            bar.style.width = "50%";
-            text.textContent = "Fair password";
-
-        } else if (strength === 3) {
-
-            bar.style.width = "75%";
+        } else if (strength <= 4) {
             text.textContent = "Good password";
-
         } else {
-
-            bar.style.width = "100%";
             text.textContent = "Strong password";
         }
+
     }
 
 
-    function validateForm() {
+    /* CREATE ACCOUNT */
 
-        const fullname =
-            document.getElementById("fullname").value.trim();
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", function(event) {
 
-        const email =
-            document.getElementById("email").value.trim();
+            event.preventDefault();
 
-        const username =
-            document.getElementById("username").value.trim();
+            const fullName =
+                document.getElementById("fullName").value.trim();
 
-        const password =
-            document.getElementById("password").value;
+            const email =
+                document.getElementById("email").value.trim();
 
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
+            const username =
+                document.getElementById("username").value.trim();
 
-        const terms =
-            document.getElementById("terms").checked;
+            const password =
+                document.getElementById("password").value;
 
-        if (fullname === "" ||
-            email === "" ||
-            username === "") {
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
 
-            alert("Please complete all required fields.");
+            const terms =
+                document.getElementById("terms").checked;
 
-            return false;
-        }
+            const message =
+                document.getElementById("message");
 
-        if (password.length < 6) {
 
-            alert("Password must contain at least 6 characters.");
+            if (!fullName || !email || !username ||
+                !password || !confirmPassword) {
 
-            return false;
-        }
+                message.className = "message error";
 
-        if (password !== confirmPassword) {
+                message.textContent =
+                    "Please complete all fields.";
 
-            alert("Passwords do not match.");
+                return;
 
-            return false;
-        }
+            }
 
-        if (!terms) {
 
-            alert("Please confirm that you understand this is a demonstration website.");
+            if (password.length < 6) {
 
-            return false;
-        }
+                message.className = "message error";
 
-        const success =
-            document.getElementById("successMessage");
+                message.textContent =
+                    "Password must contain at least 6 characters.";
 
-        success.style.display = "block";
+                return;
 
-        setTimeout(function () {
+            }
 
-            window.location.href = "login.html";
 
-        }, 1200);
+            if (password !== confirmPassword) {
 
-        return false;
+                message.className = "message error";
+
+                message.textContent =
+                    "Passwords do not match.";
+
+                return;
+
+            }
+
+
+            if (!terms) {
+
+                message.className = "message error";
+
+                message.textContent =
+                    "Please confirm that you understand this is a demonstration account.";
+
+                return;
+
+            }
+
+
+            message.className = "message success";
+
+            message.textContent =
+                "Demo account created successfully. Opening dashboard...";
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 900);
+
+        });
+
+
+    /* LIGHT / DARK MODE */
+
+    function toggleTheme() {
+
+        document.body.classList.toggle("light-mode");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        localStorage.setItem(
+            "cryptoVaultTheme",
+            isLight ? "light" : "dark"
+        );
+
+        updateThemeButton();
+
     }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.getElementById("themeBtn");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        button.textContent =
+            isLight ? "🌙" : "☀️";
+
+        button.setAttribute(
+            "aria-label",
+            isLight
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    function loadTheme() {
+
+        const savedTheme =
+            localStorage.getItem("cryptoVaultTheme");
+
+        if (savedTheme === "light") {
+
+            document.body.classList.add("light-mode");
+
+        }
+
+        updateThemeButton();
+
+    }
+
+
+    loadTheme();
 
 </script>
 
