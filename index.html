@@ -10,6 +10,7 @@
 content="CryptoVault digital asset platform for portfolio management, P2P trading and account security.">
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -20,99 +21,141 @@ html {
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: #f5f7fb;
     color: #172033;
 }
 
+/* HEADER */
+
 header {
-    background: #0b1220;
+    background: #101828;
     color: white;
-    padding: 16px 5%;
+    padding: 14px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #1d2939;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
+    text-decoration: none;
+    color: white;
     font-size: 21px;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
     background: white;
-    color: #0b1220;
+    color: #101828;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo-text small {
+    display: block;
+    font-size: 9px;
+    color: #98a2b3;
+    letter-spacing: 1px;
+    margin-top: 2px;
 }
 
 nav {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
 nav a {
-    color: #dce3f0;
+    color: #d0d5dd;
     text-decoration: none;
     padding: 9px 12px;
     border-radius: 7px;
-    font-size: 14px;
+    font-size: 13px;
+    transition: 0.2s;
 }
 
-nav a:hover,
+nav a:hover {
+    background: #1d2939;
+    color: white;
+}
+
 nav a.active {
     background: white;
-    color: #0b1220;
+    color: #101828;
+    font-weight: bold;
+}
+
+.nav-signin {
+    border: 1px solid #475467;
+    margin-left: 5px;
 }
 
 /* HERO */
 
 .hero {
-    background: #0b1220;
+    background:
+        radial-gradient(circle at 80% 20%, rgba(37,99,235,0.25), transparent 30%),
+        #101828;
     color: white;
-    padding: 80px 5%;
+    padding: 85px 5%;
 }
 
 .hero-container {
     max-width: 1200px;
     margin: auto;
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 50px;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 55px;
     align-items: center;
 }
 
 .badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     padding: 8px 13px;
-    border: 1px solid #39465b;
+    border: 1px solid #344054;
+    background: rgba(255,255,255,0.04);
     border-radius: 30px;
-    color: #cbd5e1;
-    font-size: 13px;
-    margin-bottom: 18px;
+    color: #d0d5dd;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #12b76a;
 }
 
 .hero h1 {
-    font-size: 52px;
-    line-height: 1.1;
-    margin: 0 0 20px;
+    font-size: 54px;
+    line-height: 1.08;
+    margin: 0 0 22px;
+    letter-spacing: -1.5px;
 }
 
 .hero p {
     color: #b8c2d2;
-    font-size: 18px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 1.75;
     max-width: 650px;
 }
 
@@ -126,19 +169,29 @@ nav a.active {
 .btn {
     display: inline-block;
     text-decoration: none;
-    padding: 13px 20px;
+    padding: 13px 21px;
     border-radius: 9px;
     font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
 .btn-primary {
     background: white;
-    color: #0b1220;
+    color: #101828;
+}
+
+.btn-primary:hover {
+    background: #e4e7ec;
 }
 
 .btn-secondary {
-    border: 1px solid #526077;
+    border: 1px solid #475467;
     color: white;
+}
+
+.btn-secondary:hover {
+    background: #1d2939;
 }
 
 /* BALANCE CARD */
@@ -148,7 +201,24 @@ nav a.active {
     color: #172033;
     border-radius: 18px;
     padding: 28px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+    box-shadow: 0 25px 55px rgba(0,0,0,0.28);
+    border: 1px solid #eaecf0;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.account-status {
+    background: #ecfdf3;
+    color: #027a48;
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .balance-label {
@@ -158,7 +228,7 @@ nav a.active {
 }
 
 .balance-value {
-    font-size: 34px;
+    font-size: 35px;
     font-weight: bold;
     margin-bottom: 8px;
 }
@@ -172,15 +242,16 @@ nav a.active {
 .balance-items {
     margin-top: 25px;
     display: grid;
-    gap: 12px;
+    gap: 10px;
 }
 
 .balance-item {
     display: flex;
     justify-content: space-between;
-    padding: 14px;
+    padding: 13px;
     background: #f5f7fb;
-    border-radius: 10px;
+    border-radius: 9px;
+    font-size: 14px;
 }
 
 .balance-item span:first-child {
@@ -196,11 +267,11 @@ nav a.active {
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 55px auto;
 }
 
 .section {
-    margin-bottom: 55px;
+    margin-bottom: 65px;
 }
 
 .section-title {
@@ -210,11 +281,13 @@ nav a.active {
 
 .section-title h2 {
     font-size: 30px;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+    letter-spacing: -0.5px;
 }
 
 .section-title p {
     color: #6b7280;
+    line-height: 1.6;
 }
 
 /* FEATURES */
@@ -227,15 +300,28 @@ nav a.active {
 
 .feature {
     background: white;
-    border: 1px solid #e7ebf1;
+    border: 1px solid #e4e7ec;
     border-radius: 14px;
-    padding: 25px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+    padding: 27px;
+    box-shadow: 0 5px 18px rgba(16,24,40,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(16,24,40,0.08);
 }
 
 .feature-icon {
-    font-size: 28px;
-    margin-bottom: 15px;
+    width: 48px;
+    height: 48px;
+    border-radius: 11px;
+    background: #eef4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 18px;
 }
 
 .feature h3 {
@@ -244,7 +330,8 @@ nav a.active {
 
 .feature p {
     color: #687386;
-    line-height: 1.6;
+    line-height: 1.65;
+    font-size: 14px;
 }
 
 /* ASSETS */
@@ -257,45 +344,75 @@ nav a.active {
 
 .asset {
     background: white;
-    border: 1px solid #e7ebf1;
+    border: 1px solid #e4e7ec;
     border-radius: 14px;
     padding: 25px;
+    box-shadow: 0 5px 18px rgba(16,24,40,0.04);
+}
+
+.asset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.asset-symbol {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f2f4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 .asset h3 {
-    margin: 0 0 12px;
+    margin: 0;
 }
 
 .asset p {
     color: #687386;
+    margin: 8px 0 12px;
+    font-size: 13px;
+}
+
+.asset strong {
+    font-size: 17px;
 }
 
 /* P2P */
 
 .p2p {
-    background: #0b1220;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(37,99,235,0.2), transparent 30%),
+        #101828;
     color: white;
     border-radius: 18px;
-    padding: 40px;
+    padding: 45px;
     text-align: center;
 }
 
 .p2p h2 {
     font-size: 30px;
+    margin-top: 0;
 }
 
 .p2p p {
     color: #b8c2d2;
+    line-height: 1.6;
 }
 
 .rate {
     display: inline-block;
     background: white;
-    color: #0b1220;
-    padding: 15px 22px;
+    color: #101828;
+    padding: 15px 23px;
     border-radius: 10px;
     font-weight: bold;
     margin: 20px 0;
+    font-size: 16px;
 }
 
 /* SECURITY */
@@ -309,12 +426,13 @@ nav a.active {
 
 .security-box {
     background: white;
-    border: 1px solid #e7ebf1;
+    border: 1px solid #e4e7ec;
     border-radius: 14px;
     padding: 28px;
+    box-shadow: 0 5px 18px rgba(16,24,40,0.04);
 }
 
-.security-box h2 {
+.security-box h3 {
     margin-top: 0;
 }
 
@@ -324,52 +442,76 @@ nav a.active {
 }
 
 .check {
-    padding: 12px 0;
+    padding: 13px 0;
     border-bottom: 1px solid #edf0f4;
+    font-size: 14px;
 }
 
 .check:last-child {
     border-bottom: none;
 }
 
+.check span {
+    color: #12b76a;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
 /* CTA */
 
 .cta {
     background: #eef3ff;
+    border: 1px solid #d9e4ff;
     border-radius: 18px;
-    padding: 45px;
+    padding: 50px 30px;
     text-align: center;
 }
 
 .cta h2 {
     font-size: 30px;
-    margin-top: 0;
+    margin: 0 0 12px;
 }
 
 .cta p {
     color: #687386;
+    line-height: 1.6;
 }
 
 /* FOOTER */
 
 footer {
-    background: #0b1220;
-    color: #aeb9ca;
+    background: #101828;
+    color: #98a2b3;
     text-align: center;
-    padding: 30px 5%;
+    padding: 35px 5%;
     font-size: 13px;
 }
 
 .footer-logo {
     color: white;
     font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.footer-note {
+    margin-top: 10px;
+    color: #667085;
+    font-size: 11px;
 }
 
 /* MOBILE */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
+
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    nav {
+        width: 100%;
+    }
 
     .hero-container {
         grid-template-columns: 1fr;
@@ -385,23 +527,27 @@ footer {
     }
 
     .hero h1 {
-        font-size: 42px;
+        font-size: 44px;
     }
 }
 
 @media (max-width: 600px) {
 
     header {
-        padding: 15px;
+        padding: 13px 15px;
     }
 
     nav {
-        width: 100%;
+        gap: 3px;
     }
 
     nav a {
-        font-size: 12px;
-        padding: 7px;
+        font-size: 11px;
+        padding: 7px 8px;
+    }
+
+    .nav-signin {
+        margin-left: 0;
     }
 
     .hero {
@@ -409,11 +555,12 @@ footer {
     }
 
     .hero h1 {
-        font-size: 34px;
+        font-size: 35px;
+        letter-spacing: -0.8px;
     }
 
     .hero p {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .balance-value {
@@ -422,28 +569,63 @@ footer {
 
     .p2p,
     .cta {
-        padding: 28px 20px;
+        padding: 30px 20px;
     }
+
+    .section-title h2 {
+        font-size: 26px;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <header>
 
-    <div class="logo">
-        <div class="logo-icon">CV</div>
-        <span>CryptoVault</span>
-    </div>
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            CV
+        </div>
+
+        <div class="logo-text">
+            CryptoVault
+            <small>DIGITAL ASSET PLATFORM</small>
+        </div>
+
+    </a>
 
     <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="p2p.html">P2P Trading</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="settings.html">Settings</a>
-        <a href="login.html">Sign In</a>
+
+        <a href="index.html" class="active">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="p2p.html">
+            P2P Trading
+        </a>
+
+        <a href="transactions.html">
+            Transactions
+        </a>
+
+        <a href="settings.html">
+            Settings
+        </a>
+
+        <a href="login.html" class="nav-signin">
+            Sign In
+        </a>
+
     </nav>
 
 </header>
@@ -458,6 +640,7 @@ footer {
         <div>
 
             <span class="badge">
+                <span class="badge-dot"></span>
                 Digital Asset Platform
             </span>
 
@@ -466,7 +649,7 @@ footer {
             </h1>
 
             <p>
-                CryptoVault provides a professional platform for
+                CryptoVault provides a professional interface for
                 portfolio management, P2P trading and secure
                 account management.
             </p>
@@ -486,9 +669,21 @@ footer {
         </div>
 
 
-        <!-- BALANCE VIEW -->
+        <!-- PORTFOLIO CARD -->
 
         <div class="balance-card">
+
+            <div class="card-top">
+
+                <div class="balance-label">
+                    Portfolio Overview
+                </div>
+
+                <div class="account-status">
+                    ● Active
+                </div>
+
+            </div>
 
             <div class="balance-label">
                 Total Portfolio Balance
@@ -520,7 +715,7 @@ footer {
                 </div>
 
                 <div class="balance-item">
-                    <span>Available</span>
+                    <span>Available Balance</span>
                     <strong>$8,500.00</strong>
                 </div>
 
@@ -541,20 +736,30 @@ footer {
     <section class="section">
 
         <div class="section-title">
-            <h2>Everything in One Platform</h2>
+
+            <h2>
+                Everything in One Platform
+            </h2>
+
             <p>
                 Manage your portfolio and digital asset activities
                 from one convenient dashboard.
             </p>
+
         </div>
+
 
         <div class="features">
 
             <div class="feature">
 
-                <div class="feature-icon">📊</div>
+                <div class="feature-icon">
+                    📊
+                </div>
 
-                <h3>Portfolio Management</h3>
+                <h3>
+                    Portfolio Management
+                </h3>
 
                 <p>
                     View balances, assets and portfolio performance
@@ -566,13 +771,17 @@ footer {
 
             <div class="feature">
 
-                <div class="feature-icon">🇪🇹</div>
+                <div class="feature-icon">
+                    🇪🇹
+                </div>
 
-                <h3>P2P Marketplace</h3>
+                <h3>
+                    P2P Marketplace
+                </h3>
 
                 <p>
-                    Access the USDT and ETB P2P marketplace with
-                    a clear exchange rate.
+                    Explore USDT and ETB marketplace offers with
+                    clear prices, limits and payment methods.
                 </p>
 
             </div>
@@ -580,9 +789,13 @@ footer {
 
             <div class="feature">
 
-                <div class="feature-icon">🔐</div>
+                <div class="feature-icon">
+                    🔐
+                </div>
 
-                <h3>Account Security</h3>
+                <h3>
+                    Account Security
+                </h3>
 
                 <p>
                     Manage account protection and security settings
@@ -602,7 +815,9 @@ footer {
 
         <div class="section-title">
 
-            <h2>Supported Assets</h2>
+            <h2>
+                Supported Assets
+            </h2>
 
             <p>
                 Manage popular digital assets through your account.
@@ -615,7 +830,17 @@ footer {
 
             <div class="asset">
 
-                <h3>₮ Tether USDT</h3>
+                <div class="asset-header">
+
+                    <h3>
+                        Tether USDT
+                    </h3>
+
+                    <div class="asset-symbol">
+                        ₮
+                    </div>
+
+                </div>
 
                 <p>
                     Symbol: USDT
@@ -630,7 +855,17 @@ footer {
 
             <div class="asset">
 
-                <h3>₿ Bitcoin</h3>
+                <div class="asset-header">
+
+                    <h3>
+                        Bitcoin
+                    </h3>
+
+                    <div class="asset-symbol">
+                        ₿
+                    </div>
+
+                </div>
 
                 <p>
                     Symbol: BTC
@@ -645,7 +880,17 @@ footer {
 
             <div class="asset">
 
-                <h3>Ξ Ethereum</h3>
+                <div class="asset-header">
+
+                    <h3>
+                        Ethereum
+                    </h3>
+
+                    <div class="asset-symbol">
+                        Ξ
+                    </div>
+
+                </div>
 
                 <p>
                     Symbol: ETH
@@ -668,15 +913,17 @@ footer {
 
         <div class="p2p">
 
-            <h2>🇪🇹 USDT / ETB P2P Marketplace</h2>
+            <h2>
+                🇪🇹 USDT / ETB P2P Marketplace
+            </h2>
 
             <p>
-                Access the CryptoVault P2P marketplace
-                for USDT and ETB trading.
+                Compare sample marketplace offers for USDT
+                and ETB through the CryptoVault P2P interface.
             </p>
 
             <div class="rate">
-                1 USDT = 190 ETB
+                Sample Rate: 188 - 192 ETB / USDT
             </div>
 
             <br>
@@ -700,11 +947,13 @@ footer {
 
                 <div class="section-title" style="text-align:left">
 
-                    <h2>Security First</h2>
+                    <h2>
+                        Security First
+                    </h2>
 
                     <p>
-                        Your account settings are designed around
-                        strong platform security practices.
+                        Your account interface is designed around
+                        clear security and account-management features.
                     </p>
 
                 </div>
@@ -715,19 +964,23 @@ footer {
             <div class="security-box">
 
                 <div class="check">
-                    ✓ Account protection
+                    <span>✓</span>
+                    Account protection
                 </div>
 
                 <div class="check">
-                    ✓ Two-factor authentication
+                    <span>✓</span>
+                    Two-factor authentication
                 </div>
 
                 <div class="check">
-                    ✓ Security verification
+                    <span>✓</span>
+                    Security verification
                 </div>
 
                 <div class="check">
-                    ✓ Transaction history
+                    <span>✓</span>
+                    Transaction history
                 </div>
 
             </div>
@@ -754,13 +1007,17 @@ footer {
 
             <div class="buttons" style="justify-content:center">
 
-                <a href="login.html" class="btn"
-                   style="background:#0b1220;color:white;">
+                <a
+                    href="login.html"
+                    class="btn"
+                    style="background:#101828;color:white;">
                     Sign In
                 </a>
 
-                <a href="register.html" class="btn"
-                   style="border:1px solid #0b1220;color:#0b1220;">
+                <a
+                    href="register.html"
+                    class="btn"
+                    style="border:1px solid #101828;color:#101828;">
                     Create Account
                 </a>
 
@@ -773,13 +1030,22 @@ footer {
 </main>
 
 
+<!-- FOOTER -->
+
 <footer>
 
     <div class="footer-logo">
         CryptoVault
     </div>
 
-    Digital Asset Platform © 2026 CryptoVault
+    <div>
+        Digital Asset Platform © 2026 CryptoVault
+    </div>
+
+    <div class="footer-note">
+        Demo interface for educational and presentation purposes.
+        No real cryptocurrency or financial transactions are processed.
+    </div>
 
 </footer>
 
