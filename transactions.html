@@ -17,6 +17,7 @@
             font-family: Arial, sans-serif;
             background: #07111f;
             color: #ffffff;
+            min-height: 100vh;
         }
 
         .header {
@@ -46,10 +47,33 @@
             color: #35d0ba;
         }
 
-        .dashboard {
-            color: #35d0ba;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #a9bacb;
             text-decoration: none;
+            font-size: 14px;
             font-weight: bold;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #35d0ba;
+        }
+
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: 1px solid #2a3e55;
+            color: #ffffff;
+            padding: 8px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
         }
 
         .container {
@@ -69,6 +93,7 @@
 
         .title p {
             color: #8fa2b6;
+            line-height: 1.6;
         }
 
         .demo-badge {
@@ -80,6 +105,7 @@
             border: 1px solid #28536a;
             color: #66dcca;
             font-size: 12px;
+            font-weight: bold;
         }
 
         .summary {
@@ -169,7 +195,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 720px;
+            min-width: 760px;
         }
 
         th,
@@ -196,15 +222,15 @@
         }
 
         .coin {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: #13283a;
             color: #35d0ba;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
         }
 
@@ -215,6 +241,16 @@
         .asset small {
             color: #718398;
             font-size: 10px;
+        }
+
+        .deposit {
+            color: #35d0ba;
+            font-weight: bold;
+        }
+
+        .withdrawal {
+            color: #ff8f8f;
+            font-weight: bold;
         }
 
         .status {
@@ -237,18 +273,11 @@
             border: 1px solid #665323;
         }
 
-        .deposit {
-            color: #35d0ba;
-        }
-
-        .withdrawal {
-            color: #ff8f8f;
-        }
-
         .empty {
             text-align: center;
             color: #718398;
-            padding: 30px;
+            padding: 35px 15px;
+            line-height: 1.6;
         }
 
         .bottom-actions {
@@ -279,6 +308,26 @@
             opacity: 0.9;
         }
 
+        .info-box {
+            margin-top: 22px;
+            padding: 17px;
+            border-radius: 11px;
+            background: #102437;
+            border: 1px solid #25445e;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .info-box p {
+            color: #8fa2b6;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
         .notice {
             margin-top: 25px;
             text-align: center;
@@ -294,7 +343,28 @@
             padding: 30px 15px;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #091522;
+                border-bottom: 1px solid #203349;
+                padding: 18px;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
 
             .summary {
                 grid-template-columns: 1fr;
@@ -303,13 +373,13 @@
             .filters {
                 grid-template-columns: 1fr;
             }
+        }
+
+        @media (max-width: 500px) {
 
             .title h1 {
                 font-size: 28px;
             }
-        }
-
-        @media (max-width: 500px) {
 
             .panel {
                 padding: 18px;
@@ -336,9 +406,41 @@
             Crypto<span>Vault</span>
         </div>
 
-        <a href="dashboard.html" class="dashboard">
-            Dashboard
-        </a>
+        <button class="menu-btn" onclick="toggleMenu()">
+            ☰
+        </button>
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="deposit.html">
+                Deposit
+            </a>
+
+            <a href="withdrawal.html">
+                Withdrawal
+            </a>
+
+            <a href="transactions.html" class="active">
+                Transactions
+            </a>
+
+            <a href="settings.html">
+                Settings
+            </a>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+        </div>
 
     </nav>
 
@@ -352,7 +454,7 @@
         <h1>Transaction History</h1>
 
         <p>
-            Review your recent CryptoVault demo activity.
+            Review your recent CryptoVault demonstration activity.
         </p>
 
         <div class="demo-badge">
@@ -409,10 +511,12 @@
 
         <div class="panel-header">
 
-            <h2>All Transactions</h2>
+            <h2>
+                All Transactions
+            </h2>
 
-            <span>
-                Demo activity
+            <span id="resultCount">
+                5 records
             </span>
 
         </div>
@@ -425,6 +529,7 @@
                 id="searchInput"
                 placeholder="Search transactions..."
             >
+
 
             <select id="typeFilter">
 
@@ -478,7 +583,9 @@
 
                 </thead>
 
+
                 <tbody id="transactionBody">
+
 
                     <tr
                         data-type="deposit"
@@ -515,9 +622,11 @@
                         </td>
 
                         <td>
+
                             <span class="status completed">
                                 Completed
                             </span>
+
                         </td>
 
                     </tr>
@@ -558,9 +667,11 @@
                         </td>
 
                         <td>
+
                             <span class="status completed">
                                 Completed
                             </span>
+
                         </td>
 
                     </tr>
@@ -601,9 +712,11 @@
                         </td>
 
                         <td>
+
                             <span class="status completed">
                                 Completed
                             </span>
+
                         </td>
 
                     </tr>
@@ -644,9 +757,11 @@
                         </td>
 
                         <td>
+
                             <span class="status completed">
                                 Completed
                             </span>
+
                         </td>
 
                     </tr>
@@ -687,16 +802,20 @@
                         </td>
 
                         <td>
+
                             <span class="status pending">
                                 Pending
                             </span>
+
                         </td>
 
                     </tr>
 
+
                 </tbody>
 
             </table>
+
 
             <div
                 class="empty"
@@ -727,14 +846,29 @@
 
         </div>
 
+
+        <div class="info-box">
+
+            <strong>
+                Transaction Information
+            </strong>
+
+            <p>
+                These records are demonstration data created for the
+                CryptoVault website. They are not connected to a
+                blockchain, cryptocurrency wallet, bank account,
+                or payment processor.
+            </p>
+
+        </div>
+
     </section>
 
 
     <div class="notice">
 
-        This transaction history contains demonstration data only.
-        It is not connected to a real blockchain, wallet, bank,
-        payment processor, or cryptocurrency account.
+        This transaction history is for demonstration purposes only.
+        No real cryptocurrency transactions are processed.
 
     </div>
 
@@ -747,12 +881,22 @@
 
     <br><br>
 
-    No real cryptocurrency transactions are processed.
+    No real cryptocurrency is accepted, stored, or transferred.
 
 </footer>
 
 
 <script>
+
+    function toggleMenu() {
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+        navLinks.classList.toggle("show");
+
+    }
+
 
     const searchInput =
         document.getElementById("searchInput");
@@ -769,23 +913,27 @@
     const emptyMessage =
         document.getElementById("emptyMessage");
 
+    const resultCount =
+        document.getElementById("resultCount");
+
 
     function filterTransactions() {
 
         const search =
-            searchInput.value.toLowerCase();
+            searchInput.value.toLowerCase().trim();
 
-        const type =
+        const selectedType =
             typeFilter.value;
 
-        const status =
+        const selectedStatus =
             statusFilter.value;
 
-        let visible = 0;
+        let visibleCount = 0;
+
 
         rows.forEach(function(row) {
 
-            const text =
+            const rowText =
                 row.textContent.toLowerCase();
 
             const rowType =
@@ -794,16 +942,18 @@
             const rowStatus =
                 row.dataset.status;
 
+
             const matchesSearch =
-                text.includes(search);
+                rowText.includes(search);
 
             const matchesType =
-                type === "all" ||
-                rowType === type;
+                selectedType === "all" ||
+                rowType === selectedType;
 
             const matchesStatus =
-                status === "all" ||
-                rowStatus === status;
+                selectedStatus === "all" ||
+                rowStatus === selectedStatus;
+
 
             if (
                 matchesSearch &&
@@ -812,17 +962,26 @@
             ) {
 
                 row.style.display = "";
-                visible++;
+
+                visibleCount++;
 
             } else {
 
                 row.style.display = "none";
+
             }
 
         });
 
+
         emptyMessage.style.display =
-            visible === 0 ? "block" : "none";
+            visibleCount === 0 ? "block" : "none";
+
+
+        resultCount.textContent =
+            visibleCount +
+            (visibleCount === 1 ? " record" : " records");
+
     }
 
 
@@ -831,15 +990,20 @@
         filterTransactions
     );
 
+
     typeFilter.addEventListener(
         "change",
         filterTransactions
     );
 
+
     statusFilter.addEventListener(
         "change",
         filterTransactions
     );
+
+
+    filterTransactions();
 
 </script>
 
