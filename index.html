@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <title>CryptoVault | Digital Asset Platform</title>
 
     <meta name="description"
-        content="CryptoVault is a professional digital asset portfolio demonstration platform with live cryptocurrency market data.">
+        content="CryptoVault is a professional cryptocurrency portfolio demonstration platform.">
 
     <style>
         * {
@@ -23,22 +24,15 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #07111f;
-            color: #f8fafc;
+            color: #e5e7eb;
             line-height: 1.6;
         }
 
         a {
             text-decoration: none;
-            color: inherit;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        /* HEADER */
+        /* NAVIGATION */
 
         header {
             position: sticky;
@@ -49,8 +43,10 @@
             backdrop-filter: blur(12px);
         }
 
-        .header-inner {
-            min-height: 72px;
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 17px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -58,92 +54,95 @@
 
         .logo {
             font-size: 25px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-weight: bold;
+            color: white;
         }
 
         .logo span {
             color: #38bdf8;
         }
 
-        nav {
+        .nav-menu {
             display: flex;
-            gap: 28px;
             align-items: center;
+            gap: 28px;
         }
 
-        nav a {
+        .nav-menu a {
             color: #cbd5e1;
-            font-size: 15px;
+            font-size: 14px;
             transition: 0.2s;
         }
 
-        nav a:hover {
+        .nav-menu a:hover {
             color: #38bdf8;
         }
 
-        .nav-button {
-            background: #38bdf8;
-            color: #03111f !important;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
         }
 
-        .menu-button {
-            display: none;
-            background: transparent;
-            border: 1px solid #334155;
-            color: white;
-            font-size: 25px;
-            padding: 5px 10px;
+        .login-btn,
+        .register-btn {
+            padding: 9px 15px;
             border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            border: 1px solid #334155;
+            color: #cbd5e1 !important;
+        }
+
+        .register-btn {
+            background: #38bdf8;
+            color: #082f49 !important;
+        }
+
+        .register-btn:hover {
+            background: #7dd3fc;
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 1px solid #334155;
+            background: #111827;
+            color: white;
+            padding: 8px 11px;
+            border-radius: 7px;
+            font-size: 20px;
             cursor: pointer;
         }
 
         /* HERO */
 
         .hero {
-            padding: 100px 0 90px;
-            background:
-                radial-gradient(circle at top right, rgba(56,189,248,0.16), transparent 35%),
-                radial-gradient(circle at bottom left, rgba(59,130,246,0.10), transparent 35%);
-        }
-
-        .hero-grid {
+            max-width: 1200px;
+            margin: auto;
+            padding: 90px 20px 80px;
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 60px;
             align-items: center;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 7px 13px;
-            border: 1px solid #164e63;
-            background: #082f49;
-            color: #7dd3fc;
-            border-radius: 20px;
-            font-size: 13px;
-            margin-bottom: 20px;
+        .hero-content h1 {
+            font-size: clamp(42px, 6vw, 68px);
+            line-height: 1.08;
+            color: white;
+            margin-bottom: 22px;
         }
 
-        .hero h1 {
-            font-size: clamp(42px, 6vw, 70px);
-            line-height: 1.05;
-            margin-bottom: 24px;
-            letter-spacing: -2px;
-        }
-
-        .hero h1 span {
+        .hero-content h1 span {
             color: #38bdf8;
         }
 
-        .hero p {
+        .hero-content p {
             color: #94a3b8;
             font-size: 18px;
-            max-width: 650px;
-            margin-bottom: 32px;
+            max-width: 600px;
+            margin-bottom: 30px;
         }
 
         .hero-buttons {
@@ -152,76 +151,93 @@
             flex-wrap: wrap;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 13px 22px;
-            border-radius: 9px;
-            font-weight: 700;
-            transition: 0.2s;
+        .primary-btn,
+        .secondary-btn {
+            padding: 14px 22px;
+            border-radius: 8px;
+            font-weight: bold;
         }
 
-        .btn-primary {
+        .primary-btn {
             background: #38bdf8;
-            color: #03111f;
+            color: #082f49;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
+        .primary-btn:hover {
+            background: #7dd3fc;
         }
 
-        .btn-secondary {
+        .secondary-btn {
             border: 1px solid #334155;
-            color: #e2e8f0;
+            color: #cbd5e1;
         }
 
-        .btn-secondary:hover {
+        .secondary-btn:hover {
             border-color: #38bdf8;
+            color: #38bdf8;
         }
 
-        .hero-card {
-            background: #0d1b2d;
-            border: 1px solid #1e3a52;
-            border-radius: 18px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        /* PORTFOLIO CARD */
+
+        .portfolio-card {
+            background: linear-gradient(145deg, #111827, #0f172a);
+            border: 1px solid #263244;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
         }
 
-        .hero-card-title {
+        .portfolio-top {
+            display: flex;
+            justify-content: space-between;
             color: #94a3b8;
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
         }
 
-        .hero-balance {
+        .portfolio-balance {
             font-size: 38px;
-            font-weight: 800;
-            margin-bottom: 12px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
         }
 
-        .positive {
+        .portfolio-change {
             color: #4ade80;
+            margin-bottom: 25px;
         }
 
-        .mini-chart {
+        .mini-assets {
+            display: grid;
+            gap: 12px;
+        }
+
+        .mini-asset {
+            background: #0b1220;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 13px;
             display: flex;
-            height: 130px;
-            align-items: end;
-            gap: 8px;
-            margin-top: 25px;
+            justify-content: space-between;
         }
 
-        .mini-chart div {
-            flex: 1;
-            background: #38bdf8;
-            opacity: 0.8;
-            border-radius: 5px 5px 0 0;
+        .mini-asset span {
+            color: #94a3b8;
         }
 
-        /* MARKET */
+        .mini-asset strong {
+            color: white;
+        }
 
-        .market {
-            padding: 85px 0;
-            background: #091524;
+        /* GENERAL */
+
+        section {
+            padding: 80px 20px;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: auto;
         }
 
         .section-heading {
@@ -230,6 +246,7 @@
         }
 
         .section-heading h2 {
+            color: white;
             font-size: 36px;
             margin-bottom: 10px;
         }
@@ -238,22 +255,12 @@
             color: #94a3b8;
         }
 
-        .market-status {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 25px;
-            color: #94a3b8;
-            font-size: 13px;
-        }
+        /* MARKET */
 
-        .status-dot {
-            width: 9px;
-            height: 9px;
-            background: #4ade80;
-            border-radius: 50%;
-            display: inline-block;
+        .market-section {
+            background: #0b1423;
+            border-top: 1px solid #162235;
+            border-bottom: 1px solid #162235;
         }
 
         .market-grid {
@@ -263,11 +270,11 @@
         }
 
         .coin-card {
-            background: #0d1b2d;
-            border: 1px solid #1e293b;
+            background: #111827;
+            border: 1px solid #263244;
             border-radius: 14px;
             padding: 20px;
-            transition: 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
         .coin-card:hover {
@@ -275,254 +282,293 @@
             border-color: #38bdf8;
         }
 
-        .coin-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-
         .coin-name {
-            font-weight: 700;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
 
         .coin-symbol {
             color: #64748b;
-            font-size: 12px;
-            margin-top: 2px;
+            font-size: 13px;
         }
 
         .coin-price {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 8px;
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+            margin: 18px 0 5px;
         }
 
         .coin-change {
             font-size: 13px;
-            font-weight: 700;
         }
 
-        .change-up {
+        .positive {
             color: #4ade80;
         }
 
-        .change-down {
-            color: #fb7185;
+        .negative {
+            color: #f87171;
         }
 
-        .market-note {
+        .market-status {
             text-align: center;
             color: #64748b;
-            font-size: 12px;
-            margin-top: 25px;
+            font-size: 13px;
+            margin-top: 20px;
         }
 
         /* FEATURES */
 
-        .features {
-            padding: 90px 0;
-        }
-
-        .feature-grid {
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
+            gap: 20px;
         }
 
         .feature-card {
-            background: #0d1b2d;
-            border: 1px solid #1e293b;
+            background: #111827;
+            border: 1px solid #263244;
             border-radius: 15px;
             padding: 28px;
         }
 
         .feature-icon {
-            font-size: 28px;
-            margin-bottom: 15px;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: #0f2a3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #38bdf8;
+            font-size: 23px;
+            margin-bottom: 18px;
         }
 
         .feature-card h3 {
+            color: white;
             margin-bottom: 10px;
         }
 
         .feature-card p {
             color: #94a3b8;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         /* SECURITY */
 
-        .security {
-            padding: 80px 0;
-            background: #091524;
+        .security-section {
+            background: #0b1423;
+            border-top: 1px solid #162235;
+            border-bottom: 1px solid #162235;
         }
 
-        .security-box {
+        .security-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 45px;
-            align-items: center;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        .security h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
+        .security-card {
+            text-align: center;
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 15px;
+            padding: 30px;
         }
 
-        .security p {
+        .security-card h3 {
+            color: white;
+            margin: 15px 0 8px;
+        }
+
+        .security-card p {
             color: #94a3b8;
-        }
-
-        .security-list {
-            display: grid;
-            gap: 14px;
-        }
-
-        .security-item {
-            background: #0d1b2d;
-            border: 1px solid #1e293b;
-            padding: 17px;
-            border-radius: 10px;
+            font-size: 14px;
         }
 
         /* FAQ */
 
         .faq {
-            padding: 90px 0;
-        }
-
-        .faq-list {
             max-width: 850px;
             margin: auto;
         }
 
         details {
-            background: #0d1b2d;
-            border: 1px solid #1e293b;
+            background: #111827;
+            border: 1px solid #263244;
             border-radius: 10px;
             margin-bottom: 12px;
             padding: 18px 20px;
         }
 
         summary {
+            color: white;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: 700;
         }
 
         details p {
             color: #94a3b8;
-            margin-top: 12px;
+            margin-top: 14px;
+            font-size: 14px;
         }
 
         /* CTA */
 
         .cta {
-            padding: 80px 0;
+            max-width: 1000px;
+            margin: 30px auto 80px;
+            padding: 55px 30px;
             text-align: center;
-            background: linear-gradient(135deg, #0c4a6e, #075985);
+            background: linear-gradient(145deg, #102338, #111827);
+            border: 1px solid #263244;
+            border-radius: 20px;
         }
 
         .cta h2 {
-            font-size: 38px;
-            margin-bottom: 15px;
+            color: white;
+            font-size: 35px;
+            margin-bottom: 12px;
         }
 
         .cta p {
-            color: #dbeafe;
+            color: #94a3b8;
             margin-bottom: 25px;
         }
 
         /* FOOTER */
 
         footer {
-            padding: 35px 0;
             border-top: 1px solid #1e293b;
+            background: #050b14;
+            padding: 40px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .footer-brand p {
             color: #64748b;
+            font-size: 13px;
+            margin-top: 10px;
+            max-width: 350px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
             font-size: 13px;
         }
 
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
+        .footer-links a:hover {
+            color: #38bdf8;
         }
 
-        /* RESPONSIVE */
+        .copyright {
+            text-align: center;
+            color: #475569;
+            font-size: 12px;
+            margin-top: 30px;
+        }
 
-        @media (max-width: 900px) {
-            .hero-grid,
-            .security-box {
+        /* MOBILE */
+
+        @media (max-width: 950px) {
+            .hero {
                 grid-template-columns: 1fr;
+                padding-top: 60px;
             }
 
             .market-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .feature-grid {
+            .features-grid,
+            .security-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 700px) {
-            .header-inner {
-                min-height: 65px;
-            }
 
-            .menu-button {
+            .menu-toggle {
                 display: block;
             }
 
-            nav {
+            .nav-menu {
                 display: none;
                 position: absolute;
-                top: 65px;
-                left: 0;
-                width: 100%;
-                background: #07111f;
-                border-bottom: 1px solid #1e293b;
+                top: 70px;
+                left: 15px;
+                right: 15px;
+                background: #111827;
+                border: 1px solid #263244;
+                border-radius: 12px;
+                padding: 18px;
                 flex-direction: column;
                 align-items: stretch;
-                padding: 15px 5%;
-                gap: 0;
+                gap: 15px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
             }
 
-            nav.show {
+            .nav-menu.active {
                 display: flex;
             }
 
-            nav a {
-                padding: 13px 0;
-                border-bottom: 1px solid #172033;
+            .nav-buttons {
+                flex-direction: column;
             }
 
-            .nav-button {
+            .nav-buttons a {
                 text-align: center;
-                margin-top: 8px;
             }
 
             .hero {
-                padding: 70px 0;
+                padding: 55px 20px;
             }
 
-            .hero h1 {
-                letter-spacing: -1px;
+            .hero-content h1 {
+                font-size: 43px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .portfolio-balance {
+                font-size: 31px;
             }
 
             .market-grid {
                 grid-template-columns: 1fr;
             }
 
-            .section-heading h2,
-            .security h2,
-            .cta h2 {
+            .section-heading h2 {
                 font-size: 30px;
             }
 
-            .footer-inner {
+            .cta h2 {
+                font-size: 28px;
+            }
+
+            .footer-container {
                 flex-direction: column;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -530,35 +576,47 @@
 
 <body>
 
-<header>
-    <div class="container header-inner">
+    <!-- NAVIGATION -->
 
-        <a href="index.html" class="logo">
-            Crypto<span>Vault</span>
-        </a>
+    <header>
+        <div class="nav-container">
 
-        <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <a href="index.html" class="logo">
+                Crypto<span>Vault</span>
+            </a>
 
-        <nav id="mainNav">
-            <a href="#market" onclick="closeMenu()">Market</a>
-            <a href="#features" onclick="closeMenu()">Features</a>
-            <a href="#security" onclick="closeMenu()">Security</a>
-            <a href="#faq" onclick="closeMenu()">FAQ</a>
-            <a href="login.html">Login</a>
-            <a href="register.html" class="nav-button">Create Account</a>
-        </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                ☰
+            </button>
 
-    </div>
-</header>
+            <nav class="nav-menu" id="navMenu">
+
+                <a href="#market">Market</a>
+                <a href="#features">Features</a>
+                <a href="#security">Security</a>
+                <a href="#faq">FAQ</a>
+
+                <div class="nav-buttons">
+                    <a href="login.html" class="login-btn">
+                        Login
+                    </a>
+
+                    <a href="register.html" class="register-btn">
+                        Get Started
+                    </a>
+                </div>
+
+            </nav>
+
+        </div>
+    </header>
 
 
-<!-- HERO -->
+    <!-- HERO -->
 
-<section class="hero">
-    <div class="container hero-grid">
+    <section class="hero">
 
-        <div>
-            <span class="badge">DIGITAL ASSET PLATFORM</span>
+        <div class="hero-content">
 
             <h1>
                 Manage Your
@@ -568,340 +626,471 @@
 
             <p>
                 CryptoVault is a professional cryptocurrency portfolio
-                demonstration platform designed to help users monitor
-                digital assets, review transactions and explore market data.
+                demonstration platform designed to help you explore
+                digital asset management in a simple and modern interface.
             </p>
 
             <div class="hero-buttons">
-                <a href="register.html" class="btn btn-primary">
-                    Get Started
+
+                <a href="register.html" class="primary-btn">
+                    Create Demo Account
                 </a>
 
-                <a href="#market" class="btn btn-secondary">
-                    View Live Market
+                <a href="#market" class="secondary-btn">
+                    Explore Market
                 </a>
+
             </div>
+
         </div>
 
 
-        <div class="hero-card">
+        <div class="portfolio-card">
 
-            <div class="hero-card-title">
-                DEMO PORTFOLIO
+            <div class="portfolio-top">
+                <span>Demo Portfolio</span>
+                <span>● Active</span>
             </div>
 
-            <div class="hero-balance">
+            <div class="portfolio-balance">
                 $10,000.00
             </div>
 
-            <div class="positive">
-                ▲ +4.82% this month
+            <div class="portfolio-change">
+                +$184.20 today
             </div>
 
-            <div class="mini-chart">
-                <div style="height:35%"></div>
-                <div style="height:48%"></div>
-                <div style="height:42%"></div>
-                <div style="height:65%"></div>
-                <div style="height:58%"></div>
-                <div style="height:80%"></div>
-                <div style="height:72%"></div>
-                <div style="height:95%"></div>
+            <div class="mini-assets">
+
+                <div class="mini-asset">
+                    <span>Bitcoin</span>
+                    <strong>$3,887.40</strong>
+                </div>
+
+                <div class="mini-asset">
+                    <span>Ethereum</span>
+                    <strong>$3,005.00</strong>
+                </div>
+
+                <div class="mini-asset">
+                    <span>USDT</span>
+                    <strong>$3,107.60</strong>
+                </div>
+
             </div>
 
         </div>
 
-    </div>
-</section>
+    </section>
 
 
-<!-- LIVE MARKET -->
+    <!-- MARKET -->
 
-<section class="market" id="market">
+    <section class="market-section" id="market">
 
-    <div class="container">
+        <div class="section-container">
 
-        <div class="section-heading">
-            <h2>Live Crypto Market</h2>
-            <p>Monitor selected cryptocurrency prices and 24-hour market movement.</p>
-        </div>
+            <div class="section-heading">
 
-        <div class="market-status">
-            <span class="status-dot"></span>
-            <span id="marketStatus">Loading live market data...</span>
-        </div>
+                <h2>Live Crypto Market</h2>
 
-        <div class="market-grid">
-
-            <div class="coin-card">
-                <div class="coin-top">
-                    <div>
-                        <div class="coin-name">Bitcoin</div>
-                        <div class="coin-symbol">BTC / USDT</div>
-                    </div>
-                    ₿
-                </div>
-                <div class="coin-price" id="BTC-price">Loading...</div>
-                <div class="coin-change" id="BTC-change">--</div>
-            </div>
-
-
-            <div class="coin-card">
-                <div class="coin-top">
-                    <div>
-                        <div class="coin-name">Ethereum</div>
-                        <div class="coin-symbol">ETH / USDT</div>
-                    </div>
-                    Ξ
-                </div>
-                <div class="coin-price" id="ETH-price">Loading...</div>
-                <div class="coin-change" id="ETH-change">--</div>
-            </div>
-
-
-            <div class="coin-card">
-                <div class="coin-top">
-                    <div>
-                        <div class="coin-name">BNB</div>
-                        <div class="coin-symbol">BNB / USDT</div>
-                    </div>
-                    B
-                </div>
-                <div class="coin-price" id="BNB-price">Loading...</div>
-                <div class="coin-change" id="BNB-change">--</div>
-            </div>
-
-
-            <div class="coin-card">
-                <div class="coin-top">
-                    <div>
-                        <div class="coin-name">XRP</div>
-                        <div class="coin-symbol">XRP / USDT</div>
-                    </div>
-                    X
-                </div>
-                <div class="coin-price" id="XRP-price">Loading...</div>
-                <div class="coin-change" id="XRP-change">--</div>
-            </div>
-
-
-            <div class="coin-card">
-                <div class="coin-top">
-                    <div>
-                        <div class="coin-name">Solana</div>
-                        <div class="coin-symbol">SOL / USDT</div>
-                    </div>
-                    S
-                </div>
-                <div class="coin-price" id="SOL-price">Loading...</div>
-                <div class="coin-change" id="SOL-change">--</div>
-            </div>
-
-        </div>
-
-        <p class="market-note">
-            Market prices are provided for informational and demonstration purposes only.
-            CryptoVault does not execute real trades.
-        </p>
-
-    </div>
-</section>
-
-
-<!-- FEATURES -->
-
-<section class="features" id="features">
-
-    <div class="container">
-
-        <div class="section-heading">
-            <h2>Powerful Platform Features</h2>
-            <p>Everything you need to explore a modern digital asset dashboard.</p>
-        </div>
-
-        <div class="feature-grid">
-
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Portfolio Tracking</h3>
                 <p>
-                    Monitor your digital asset portfolio and review
-                    balances from one simple dashboard.
+                    Current public market information for selected assets.
                 </p>
+
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">💳</div>
-                <h3>Deposit & Withdrawal</h3>
-                <p>
-                    Explore professional deposit and withdrawal
-                    interfaces using a safe demonstration environment.
-                </p>
+
+            <div class="market-grid">
+
+                <div class="coin-card">
+                    <div class="coin-name">
+                        Bitcoin
+                        <span class="coin-symbol">BTC</span>
+                    </div>
+
+                    <div class="coin-price" id="BTC-price">
+                        Loading...
+                    </div>
+
+                    <div class="coin-change" id="BTC-change">
+                        --
+                    </div>
+                </div>
+
+
+                <div class="coin-card">
+                    <div class="coin-name">
+                        Ethereum
+                        <span class="coin-symbol">ETH</span>
+                    </div>
+
+                    <div class="coin-price" id="ETH-price">
+                        Loading...
+                    </div>
+
+                    <div class="coin-change" id="ETH-change">
+                        --
+                    </div>
+                </div>
+
+
+                <div class="coin-card">
+                    <div class="coin-name">
+                        BNB
+                        <span class="coin-symbol">BNB</span>
+                    </div>
+
+                    <div class="coin-price" id="BNB-price">
+                        Loading...
+                    </div>
+
+                    <div class="coin-change" id="BNB-change">
+                        --
+                    </div>
+                </div>
+
+
+                <div class="coin-card">
+                    <div class="coin-name">
+                        XRP
+                        <span class="coin-symbol">XRP</span>
+                    </div>
+
+                    <div class="coin-price" id="XRP-price">
+                        Loading...
+                    </div>
+
+                    <div class="coin-change" id="XRP-change">
+                        --
+                    </div>
+                </div>
+
+
+                <div class="coin-card">
+                    <div class="coin-name">
+                        Solana
+                        <span class="coin-symbol">SOL</span>
+                    </div>
+
+                    <div class="coin-price" id="SOL-price">
+                        Loading...
+                    </div>
+
+                    <div class="coin-change" id="SOL-change">
+                        --
+                    </div>
+                </div>
+
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <h3>Transaction History</h3>
-                <p>
-                    Review deposits and withdrawals with clear
-                    transaction status and date information.
-                </p>
+            <div class="market-status" id="marketStatus">
+                Updating market data...
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- SECURITY -->
+    <!-- FEATURES -->
 
-<section class="security" id="security">
+    <section id="features">
 
-    <div class="container security-box">
+        <div class="section-container">
 
-        <div>
-            <h2>Security First</h2>
+            <div class="section-heading">
+
+                <h2>Everything You Need</h2>
+
+                <p>
+                    A clean interface for exploring digital asset management.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">▣</div>
+
+                    <h3>Portfolio Dashboard</h3>
+
+                    <p>
+                        View your demo portfolio, assets, performance
+                        information and recent activity from one dashboard.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">↗</div>
+
+                    <h3>Asset Management</h3>
+
+                    <p>
+                        Explore deposit, withdrawal and transaction
+                        interfaces through a simple user experience.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">◉</div>
+
+                    <h3>Market Information</h3>
+
+                    <p>
+                        Follow selected cryptocurrency prices and
+                        24-hour market movements.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECURITY -->
+
+    <section class="security-section" id="security">
+
+        <div class="section-container">
+
+            <div class="section-heading">
+
+                <h2>Security First</h2>
+
+                <p>
+                    Designed with security-conscious interface principles.
+                </p>
+
+            </div>
+
+
+            <div class="security-grid">
+
+                <div class="security-card">
+
+                    <div class="feature-icon" style="margin: auto;">
+                        ✓
+                    </div>
+
+                    <h3>Protected Interface</h3>
+
+                    <p>
+                        Account pages are organized around clear
+                        security and account-management concepts.
+                    </p>
+
+                </div>
+
+
+                <div class="security-card">
+
+                    <div class="feature-icon" style="margin: auto;">
+                        +
+                    </div>
+
+                    <h3>Account Controls</h3>
+
+                    <p>
+                        Explore account settings, password forms and
+                        security preferences.
+                    </p>
+
+                </div>
+
+
+                <div class="security-card">
+
+                    <div class="feature-icon" style="margin: auto;">
+                        #
+                    </div>
+
+                    <h3>Transparent Demo</h3>
+
+                    <p>
+                        This website clearly separates demonstration
+                        features from real financial services.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FAQ -->
+
+    <section id="faq">
+
+        <div class="section-container">
+
+            <div class="section-heading">
+
+                <h2>Frequently Asked Questions</h2>
+
+                <p>
+                    Learn more about the CryptoVault demonstration platform.
+                </p>
+
+            </div>
+
+
+            <div class="faq">
+
+                <details>
+                    <summary>Is CryptoVault a real cryptocurrency exchange?</summary>
+
+                    <p>
+                        No. This website is a front-end demonstration.
+                        It does not process real cryptocurrency deposits,
+                        withdrawals or blockchain transactions.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Are the balances real?</summary>
+
+                    <p>
+                        No. Portfolio balances and transaction records
+                        shown on the website are demonstration data.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Are the market prices real?</summary>
+
+                    <p>
+                        The market section displays public market information
+                        retrieved from a public market-data API. Market
+                        information can change at any time.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Can I use a real wallet address?</summary>
+
+                    <p>
+                        No. Do not enter real wallet credentials or send
+                        real cryptocurrency through this demonstration site.
+                    </p>
+                </details>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section>
+
+        <div class="cta">
+
+            <h2>Explore Your Digital Asset Dashboard</h2>
 
             <p>
-                CryptoVault is designed with a security-focused interface.
-                This GitHub Pages version is a front-end demonstration and
-                does not store real cryptocurrency or sensitive financial data.
+                Create a demonstration account and explore the CryptoVault
+                interface.
             </p>
+
+            <a href="register.html" class="primary-btn">
+                Get Started
+            </a>
+
         </div>
 
-        <div class="security-list">
+    </section>
 
-            <div class="security-item">
-                🔐 Secure-looking account interface
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="logo">
+                    Crypto<span>Vault</span>
+                </a>
+
+                <p>
+                    A professional cryptocurrency platform demonstration
+                    created for interface and educational purposes.
+                </p>
+
             </div>
 
-            <div class="security-item">
-                🛡️ Demonstration-only financial operations
+
+            <div class="footer-links">
+
+                <a href="#market">Market</a>
+                <a href="#features">Features</a>
+                <a href="#security">Security</a>
+                <a href="#faq">FAQ</a>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+
             </div>
 
-            <div class="security-item">
-                📈 Public market-data display
-            </div>
-
-            <div class="security-item">
-                🚫 No real cryptocurrency custody
-            </div>
-
         </div>
 
-    </div>
 
-</section>
-
-
-<!-- FAQ -->
-
-<section class="faq" id="faq">
-
-    <div class="container">
-
-        <div class="section-heading">
-            <h2>Frequently Asked Questions</h2>
-            <p>Important information about the CryptoVault demonstration.</p>
+        <div class="copyright">
+            © 2026 CryptoVault. Demonstration website only.
         </div>
 
-        <div class="faq-list">
-
-            <details>
-                <summary>Is CryptoVault a real cryptocurrency exchange?</summary>
-                <p>
-                    No. This version is a front-end demonstration website
-                    hosted with GitHub Pages.
-                </p>
-            </details>
-
-            <details>
-                <summary>Are the portfolio balances real?</summary>
-                <p>
-                    No. Portfolio balances and transactions shown in the
-                    dashboard are demonstration data.
-                </p>
-            </details>
-
-            <details>
-                <summary>Are the market prices live?</summary>
-                <p>
-                    The market section retrieves public cryptocurrency
-                    market data from Binance's public market-data service.
-                </p>
-            </details>
-
-            <details>
-                <summary>Can I send real cryptocurrency to the website?</summary>
-                <p>
-                    No. Do not send cryptocurrency to any address displayed
-                    by this demonstration website.
-                </p>
-            </details>
-
-        </div>
-
-    </div>
-
-</section>
+    </footer>
 
 
-<!-- CTA -->
+    <!-- JAVASCRIPT -->
 
-<section class="cta">
+    <script>
 
-    <div class="container">
+        /* MOBILE MENU */
 
-        <h2>Explore CryptoVault</h2>
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
 
-        <p>
-            Create a demonstration account and explore the platform.
-        </p>
+        menuToggle.addEventListener("click", function () {
 
-        <a href="register.html" class="btn btn-primary">
-            Create Demo Account
-        </a>
+            navMenu.classList.toggle("active");
 
-    </div>
-
-</section>
+        });
 
 
-<!-- FOOTER -->
+        document.querySelectorAll(".nav-menu a").forEach(function (link) {
 
-<footer>
+            link.addEventListener("click", function () {
 
-    <div class="container footer-inner">
+                navMenu.classList.remove("active");
 
-        <div>
-            © 2026 CryptoVault. All rights reserved.
-        </div>
+            });
 
-        <div>
-            Demonstration platform. Not a financial service.
-        </div>
-
-    </div>
-
-</footer>
+        });
 
 
-<script>
-
-    function toggleMenu() {
-        const nav = document.getElementById("mainNav");
-        nav.classList.toggle("show");
-    }
-
-    function closeMenu() {
-        const nav = document.getElementById("mainNav");
-        nav.classList.remove("show");
-    }
-
-
-    async function loadMarketData() {
+        /* LIVE CRYPTO MARKET */
 
         const symbols = [
             "BTCUSDT",
@@ -911,70 +1100,84 @@
             "SOLUSDT"
         ];
 
-        try {
 
-            const response = await fetch(
-                "https://data-api.binance.vision/api/v3/ticker/24hr"
-            );
+        async function updateMarket() {
 
-            if (!response.ok) {
-                throw new Error("Market request failed");
-            }
+            const status = document.getElementById("marketStatus");
 
-            const data = await response.json();
+            try {
 
-            symbols.forEach(symbol => {
-
-                const item = data.find(
-                    coin => coin.symbol === symbol
+                const response = await fetch(
+                    "https://data-api.binance.vision/api/v3/ticker/24hr"
                 );
 
-                if (!item) return;
+                if (!response.ok) {
+                    throw new Error("Market request failed");
+                }
 
-                const asset = symbol.replace("USDT", "");
+                const data = await response.json();
 
-                const price = Number(item.lastPrice);
-                const change = Number(item.priceChangePercent);
+                symbols.forEach(function (symbol) {
 
-                document.getElementById(asset + "-price").textContent =
-                    "$" + price.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                    const item = data.find(function (coin) {
+                        return coin.symbol === symbol;
                     });
 
-                const changeElement =
-                    document.getElementById(asset + "-change");
+                    if (!item) return;
 
-                const sign = change >= 0 ? "+" : "";
+                    const name = symbol.replace("USDT", "");
 
-                changeElement.textContent =
-                    sign + change.toFixed(2) + "% (24h)";
+                    const priceElement =
+                        document.getElementById(name + "-price");
 
-                changeElement.className =
-                    "coin-change " +
-                    (change >= 0 ? "change-up" : "change-down");
+                    const changeElement =
+                        document.getElementById(name + "-change");
 
-            });
+                    const price =
+                        Number(item.lastPrice).toLocaleString(
+                            "en-US",
+                            {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 4
+                            }
+                        );
 
-            document.getElementById("marketStatus").textContent =
-                "Live market data • Updated just now";
+                    const change =
+                        Number(item.priceChangePercent);
 
-        } catch (error) {
+                    priceElement.textContent = price;
 
-            document.getElementById("marketStatus").textContent =
-                "Market data temporarily unavailable";
+                    changeElement.textContent =
+                        (change >= 0 ? "+" : "") +
+                        change.toFixed(2) +
+                        "%";
 
-            console.log("Market data error:", error);
+                    changeElement.className =
+                        "coin-change " +
+                        (change >= 0 ? "positive" : "negative");
+
+                });
+
+                status.textContent =
+                    "Market data updated successfully.";
+
+            } catch (error) {
+
+                status.textContent =
+                    "Market data is temporarily unavailable.";
+
+            }
 
         }
 
-    }
 
-    loadMarketData();
+        updateMarket();
 
-    setInterval(loadMarketData, 60000);
+        setInterval(updateMarket, 60000);
 
-</script>
+    </script>
 
 </body>
+
 </html>
