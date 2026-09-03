@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction History | CryptoVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #151c32;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            background: #4f8cff;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aab3c5;
+            margin-bottom: 30px;
+        }
+
+        .table-card {
+            background: #151c32;
+            padding: 25px;
+            border-radius: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #303a55;
+        }
+
+        th {
+            color: #aab3c5;
+            font-size: 14px;
+        }
+
+        .deposit {
+            color: #52d273;
+            font-weight: bold;
+        }
+
+        .withdrawal {
+            color: #ff7070;
+            font-weight: bold;
+        }
+
+        .completed {
+            color: #52d273;
+        }
+
+        .pending {
+            color: #ffcc66;
+        }
+
+        .back {
+            display: block;
+            width: 220px;
+            text-align: center;
+            margin: 30px auto 0;
+            padding: 13px;
+            background: #4f8cff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .demo {
+            text-align: center;
+            margin-top: 25px;
+            color: #8f9ab0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CryptoVault</div>
+        <a href="dashboard.html">Dashboard</a>
+    </header>
+
+    <div class="container">
+
+        <h1>Transaction History</h1>
+
+        <p class="subtitle">
+            View your recent deposits and withdrawals.
+        </p>
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Asset</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>03 Sep 2026</td>
+                        <td class="deposit">Deposit</td>
+                        <td>Bitcoin (BTC)</td>
+                        <td>+$500</td>
+                        <td class="completed">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>02 Sep 2026</td>
+                        <td class="deposit">Deposit</td>
+                        <td>USDT</td>
+                        <td>+$300</td>
+                        <td class="completed">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>01 Sep 2026</td>
+                        <td class="withdrawal">Withdrawal</td>
+                        <td>Bitcoin (BTC)</td>
+                        <td>-$100</td>
+                        <td class="completed">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>31 Aug 2026</td>
+                        <td class="deposit">Deposit</td>
+                        <td>Ethereum (ETH)</td>
+                        <td>+$250</td>
+                        <td class="completed">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>30 Aug 2026</td>
+                        <td class="withdrawal">Withdrawal</td>
+                        <td>USDT</td>
+                        <td>-$150</td>
+                        <td class="pending">Pending</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <a class="back" href="dashboard.html">
+            ← Back to Dashboard
+        </a>
+
+        <p class="demo">
+            Demo transaction history. No real cryptocurrency transactions are processed.
+        </p>
+
+    </div>
+
+</body>
+
+</html>
