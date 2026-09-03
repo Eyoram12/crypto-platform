@@ -14,135 +14,173 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #f4f7fb;
             color: #172033;
         }
 
         header {
-            background: #0b1220;
+            background: #111827;
             color: white;
-            padding: 16px 6%;
+            padding: 16px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: white;
-            color: #0b1220;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
+            background: white;
+            color: #111827;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 800;
         }
 
         nav {
             display: flex;
+            gap: 7px;
             flex-wrap: wrap;
-            gap: 18px;
         }
 
         nav a {
-            color: #dbe4f0;
+            color: #d1d5db;
             text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 7px;
             font-size: 14px;
         }
 
         nav a:hover,
         nav a.active {
-            color: white;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 40px auto;
+            background: white;
+            color: #111827;
         }
 
         .hero {
-            background: linear-gradient(135deg, #101b32, #1c3155);
+            background: #111827;
             color: white;
-            padding: 38px;
-            border-radius: 20px;
-            margin-bottom: 25px;
+            padding: 55px 5% 75px;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: auto;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #e5e7eb;
             padding: 8px 14px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 13px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .hero h1 {
-            font-size: 34px;
-            margin-bottom: 10px;
+            font-size: 42px;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            color: #d7e2f2;
-            line-height: 1.6;
+            color: #cbd5e1;
+            max-width: 650px;
+            line-height: 1.7;
+            font-size: 16px;
         }
 
-        .grid {
+        .container {
+            max-width: 1100px;
+            margin: -35px auto 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .balance-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .balance-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .balance-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .balance {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .status {
+            background: #ecfdf5;
+            color: #047857;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .main-grid {
             display: grid;
-            grid-template-columns: 1.4fr 0.8fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 25px;
         }
 
         .card {
             background: white;
-            border-radius: 18px;
+            border-radius: 16px;
             padding: 28px;
-            box-shadow: 0 8px 25px rgba(20, 30, 50, 0.07);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
 
         .card h2 {
-            margin-bottom: 22px;
             font-size: 22px;
+            margin-bottom: 8px;
         }
 
-        .balance {
-            background: #f1f5f9;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 22px;
-        }
-
-        .balance p {
+        .card-description {
             color: #64748b;
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.6;
         }
 
-        .balance strong {
-            font-size: 24px;
+        .form-group {
+            margin-bottom: 19px;
         }
 
         label {
             display: block;
-            font-size: 14px;
             font-weight: bold;
+            font-size: 14px;
             margin-bottom: 8px;
         }
 
@@ -150,11 +188,10 @@
         select,
         textarea {
             width: 100%;
-            padding: 13px 14px;
-            border: 1px solid #d5dce7;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-bottom: 18px;
+            border: 1px solid #d7dee8;
+            border-radius: 9px;
+            padding: 13px;
+            font-size: 15px;
             outline: none;
             background: white;
         }
@@ -162,68 +199,128 @@
         input:focus,
         select:focus,
         textarea:focus {
-            border-color: #315b9b;
+            border-color: #111827;
         }
 
         textarea {
-            min-height: 90px;
             resize: vertical;
+            min-height: 90px;
         }
 
-        .btn {
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            padding: 14px;
+        .input-note {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .amount-row {
+            display: grid;
+            grid-template-columns: 1fr 130px;
+            gap: 10px;
+        }
+
+        .quick-amounts {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 9px;
+        }
+
+        .quick-amounts button {
+            border: 1px solid #d7dee8;
+            background: #f8fafc;
+            padding: 7px 11px;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
+            font-size: 12px;
         }
 
-        .btn-primary {
-            background: #111827;
-            color: white;
+        .quick-amounts button:hover {
+            background: #e2e8f0;
         }
 
-        .btn-primary:hover {
-            background: #1f2937;
+        .summary {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 22px 0;
         }
 
-        .security {
-            background: #eef7f1;
-            border-left: 4px solid #15803d;
-            padding: 16px;
-            border-radius: 10px;
-            margin-top: 20px;
-            color: #31513d;
-            line-height: 1.6;
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #e5e7eb;
             font-size: 14px;
         }
 
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row strong {
+            color: #111827;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: #111827;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .send-btn:hover {
+            background: #000;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid #111827;
+            padding: 17px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
         .steps {
-            display: grid;
-            gap: 15px;
+            margin-top: 20px;
         }
 
         .step {
             display: flex;
             gap: 13px;
-            align-items: flex-start;
+            margin-bottom: 20px;
         }
 
-        .number {
-            min-width: 30px;
-            height: 30px;
+        .step-number {
+            min-width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: #e8edf4;
+            background: #111827;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 13px;
         }
 
-        .step h3 {
-            font-size: 15px;
+        .step h4 {
             margin-bottom: 4px;
         }
 
@@ -233,83 +330,196 @@
             line-height: 1.5;
         }
 
-        .confirmation {
-            display: none;
-            margin-top: 22px;
-            background: #ecfdf3;
-            border: 1px solid #a7e3bd;
-            padding: 20px;
-            border-radius: 12px;
+        .security-list {
+            list-style: none;
+            margin-top: 15px;
         }
 
-        .confirmation h3 {
-            color: #15803d;
-            margin-bottom: 12px;
+        .security-list li {
+            padding: 9px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #edf0f4;
         }
 
-        .confirmation p {
-            line-height: 1.8;
+        .security-list li:last-child {
+            border-bottom: none;
+        }
+
+        .recent {
+            margin-top: 25px;
+        }
+
+        .recent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-name {
+            font-weight: bold;
             font-size: 14px;
         }
 
-        .status {
-            display: inline-block;
-            background: #dcfce7;
-            color: #15803d;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
+        .recent-id {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .recent-amount {
             font-weight: bold;
+            text-align: right;
         }
 
-        .links {
+        .completed {
+            color: #047857;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .confirmation {
+            display: none;
+            margin-top: 25px;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            border-top: 4px solid #047857;
+        }
+
+        .confirmation h2 {
+            margin-bottom: 10px;
+        }
+
+        .confirmation-message {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .success-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #ecfdf5;
+            color: #047857;
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 18px;
         }
 
-        .link-btn {
+        .confirmation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .confirmation-item {
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 9px;
+        }
+
+        .confirmation-item span {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .confirmation-item strong {
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .confirmation-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .confirmation-actions a {
             flex: 1;
             text-align: center;
             text-decoration: none;
-            background: #e8edf4;
-            color: #172033;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 14px;
         }
 
-        footer {
-            margin-top: 50px;
-            background: #0b1220;
-            color: #9ca9bb;
-            text-align: center;
-            padding: 25px;
+        .primary-link {
+            background: #111827;
+            color: white;
+        }
+
+        .secondary-link {
+            background: #eef2f7;
+            color: #111827;
+        }
+
+        .error {
+            display: none;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 11px;
+            border-radius: 8px;
+            margin-bottom: 15px;
             font-size: 13px;
         }
 
-        @media (max-width: 800px) {
+        footer {
+            background: #111827;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 13px;
+        }
 
+        @media (max-width: 850px) {
             header {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
             nav {
-                gap: 12px;
+                width: 100%;
+                overflow-x: auto;
             }
 
-            .grid {
+            .main-grid {
                 grid-template-columns: 1fr;
             }
 
-            .hero {
-                padding: 28px 22px;
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .balance-top {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .hero h1 {
-                font-size: 28px;
+            .amount-row,
+            .confirmation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .confirmation-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -318,9 +528,8 @@
 <body>
 
 <header>
-
     <div class="logo">
-        <div class="logo-icon">CV</div>
+        <span class="logo-icon">CV</span>
         <span>CryptoVault</span>
     </div>
 
@@ -336,312 +545,507 @@
         <a href="settings.html">Settings</a>
         <a href="login.html">Logout</a>
     </nav>
-
 </header>
 
-
-<main class="container">
-
-    <section class="hero">
-
-        <span class="badge">SECURE PLATFORM</span>
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge">SECURE PLATFORM</div>
 
         <h1>Send Money</h1>
 
         <p>
-            Send digital assets to another CryptoVault account
-            using the recipient's username or email address.
+            Send digital assets to another CryptoVault account quickly
+            and securely.
         </p>
+    </div>
+</section>
 
+<main class="container">
+
+    <section class="balance-card">
+        <div class="balance-top">
+            <div>
+                <div class="balance-label">Available Balance</div>
+                <div class="balance">$8,500.00</div>
+            </div>
+
+            <div class="status">● Account Active</div>
+        </div>
     </section>
 
-
-    <div class="grid">
+    <div class="main-grid">
 
         <section class="card">
 
-            <h2>Send Assets</h2>
+            <h2>Send a Transfer</h2>
 
-            <div class="balance">
-                <p>Available Balance</p>
-                <strong>$8,500.00</strong>
-            </div>
+            <p class="card-description">
+                Enter the recipient and transfer details below.
+            </p>
 
+            <div id="errorBox" class="error"></div>
 
             <form id="sendForm">
 
-                <label for="recipient">
-                    Recipient Username or Email
-                </label>
+                <div class="form-group">
+                    <label for="recipient">
+                        Recipient Username or Email
+                    </label>
 
-                <input
-                    type="text"
-                    id="recipient"
-                    placeholder="Enter username or email"
-                    required
-                >
+                    <input
+                        type="text"
+                        id="recipient"
+                        placeholder="Enter username or email"
+                        required
+                    >
 
+                    <div class="input-note">
+                        Example: alex@example.com
+                    </div>
+                </div>
 
-                <label for="asset">
-                    Select Asset
-                </label>
+                <div class="form-group">
+                    <label for="asset">Asset</label>
 
-                <select id="asset" required>
+                    <select id="asset">
+                        <option value="USDT">USDT</option>
+                        <option value="BTC">BTC</option>
+                        <option value="ETH">ETH</option>
+                    </select>
+                </div>
 
-                    <option value="USDT">
-                        USDT
-                    </option>
+                <div class="form-group">
 
-                    <option value="BTC">
-                        BTC
-                    </option>
+                    <label for="amount">Amount</label>
 
-                    <option value="ETH">
-                        ETH
-                    </option>
+                    <div class="amount-row">
 
-                </select>
+                        <input
+                            type="number"
+                            id="amount"
+                            min="0"
+                            step="any"
+                            placeholder="Enter amount"
+                            required
+                        >
 
+                        <select id="amountAsset">
+                            <option value="USDT">USDT</option>
+                            <option value="BTC">BTC</option>
+                            <option value="ETH">ETH</option>
+                        </select>
 
-                <label for="amount">
-                    Amount
-                </label>
+                    </div>
 
-                <input
-                    type="number"
-                    id="amount"
-                    placeholder="Enter amount"
-                    min="0.000001"
-                    step="any"
-                    required
-                >
+                    <div class="quick-amounts">
+                        <button type="button" onclick="setAmount(100)">100</button>
+                        <button type="button" onclick="setAmount(250)">250</button>
+                        <button type="button" onclick="setAmount(500)">500</button>
+                        <button type="button" onclick="setAmount(1000)">1000</button>
+                    </div>
 
+                    <div class="input-note">
+                        Maximum available balance: $8,500.00
+                    </div>
+                </div>
 
-                <label for="note">
-                    Transfer Note
-                </label>
+                <div class="form-group">
 
-                <textarea
-                    id="note"
-                    placeholder="Add a note (optional)"
-                ></textarea>
+                    <label for="note">
+                        Transfer Note
+                    </label>
 
+                    <textarea
+                        id="note"
+                        placeholder="Add an optional note"
+                    ></textarea>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
+                </div>
+
+                <div class="summary">
+
+                    <div class="summary-row">
+                        <span>Recipient</span>
+                        <strong id="summaryRecipient">-</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Asset</span>
+                        <strong id="summaryAsset">USDT</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Amount</span>
+                        <strong id="summaryAmount">0 USDT</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Network Fee</span>
+                        <strong>0.00</strong>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="send-btn">
                     Send Money
                 </button>
 
             </form>
 
-
-            <div
-                class="confirmation"
-                id="confirmation"
-            >
-
-                <h3>Transfer Completed</h3>
-
-                <p>
-                    <strong>Transaction ID:</strong>
-                    <span id="transactionId"></span>
-                    <br>
-
-                    <strong>Recipient:</strong>
-                    <span id="confirmRecipient"></span>
-                    <br>
-
-                    <strong>Asset:</strong>
-                    <span id="confirmAsset"></span>
-                    <br>
-
-                    <strong>Amount:</strong>
-                    <span id="confirmAmount"></span>
-                    <br>
-
-                    <strong>Transfer Note:</strong>
-                    <span id="confirmNote"></span>
-                    <br>
-
-                    <strong>Status:</strong>
-                    <span class="status">
-                        Completed
-                    </span>
-                </p>
-
-                <div class="links">
-
-                    <a
-                        href="received.html"
-                        class="link-btn"
-                    >
-                        Received Money
-                    </a>
-
-                    <a
-                        href="transactions.html"
-                        class="link-btn"
-                    >
-                        Transactions
-                    </a>
-
-                </div>
-
-            </div>
-
         </section>
 
+        <aside>
 
-        <aside class="card">
+            <section class="card">
 
-            <h2>How It Works</h2>
+                <div class="info-box">
+                    <h3>Secure Transfer</h3>
 
-            <div class="steps">
+                    <p>
+                        Review the recipient and amount carefully before
+                        confirming your transfer.
+                    </p>
+                </div>
 
-                <div class="step">
+                <h2>How It Works</h2>
 
-                    <div class="number">1</div>
+                <div class="steps">
 
-                    <div>
-                        <h3>Enter Recipient</h3>
+                    <div class="step">
+                        <div class="step-number">1</div>
 
-                        <p>
-                            Enter the recipient's CryptoVault
-                            username or email address.
-                        </p>
+                        <div>
+                            <h4>Enter Recipient</h4>
+
+                            <p>
+                                Enter the CryptoVault username or email
+                                of the person receiving the transfer.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+
+                        <div>
+                            <h4>Choose Asset</h4>
+
+                            <p>
+                                Select USDT, BTC, or ETH and enter
+                                the amount.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+
+                        <div>
+                            <h4>Confirm Transfer</h4>
+
+                            <p>
+                                Review the transfer information and
+                                submit the transaction.
+                            </p>
+                        </div>
                     </div>
 
                 </div>
 
+            </section>
 
-                <div class="step">
+            <section class="card recent">
 
-                    <div class="number">2</div>
+                <h2>Recent Sent Transfers</h2>
+
+                <div class="recent-item">
 
                     <div>
-                        <h3>Select Asset</h3>
+                        <div class="recent-name">Alex</div>
+                        <div class="recent-id">
+                            TX-CV-849201
+                        </div>
+                    </div>
 
-                        <p>
-                            Choose USDT, BTC, or ETH and
-                            enter the amount.
-                        </p>
+                    <div>
+                        <div class="recent-amount">
+                            -250 USDT
+                        </div>
+                        <div class="completed">
+                            Completed
+                        </div>
                     </div>
 
                 </div>
 
-
-                <div class="step">
-
-                    <div class="number">3</div>
+                <div class="recent-item">
 
                     <div>
-                        <h3>Add Note</h3>
+                        <div class="recent-name">Daniel</div>
+                        <div class="recent-id">
+                            TX-CV-741562
+                        </div>
+                    </div>
 
-                        <p>
-                            Add an optional message to
-                            describe the transfer.
-                        </p>
+                    <div>
+                        <div class="recent-amount">
+                            -100 USDT
+                        </div>
+                        <div class="completed">
+                            Completed
+                        </div>
                     </div>
 
                 </div>
 
-
-                <div class="step">
-
-                    <div class="number">4</div>
+                <div class="recent-item">
 
                     <div>
-                        <h3>Confirm Transfer</h3>
+                        <div class="recent-name">Sara</div>
+                        <div class="recent-id">
+                            TX-CV-635814
+                        </div>
+                    </div>
 
-                        <p>
-                            Review the information and
-                            confirm the transfer.
-                        </p>
+                    <div>
+                        <div class="recent-amount">
+                            -500 USDT
+                        </div>
+                        <div class="completed">
+                            Completed
+                        </div>
                     </div>
 
                 </div>
 
-            </div>
-
-
-            <div class="security">
-
-                <strong>Account Security</strong><br>
-
-                Your account status is Active and
-                security protection is enabled.
-
-            </div>
+            </section>
 
         </aside>
 
     </div>
 
+    <section id="confirmation" class="confirmation">
+
+        <div class="success-icon">✓</div>
+
+        <h2>Transfer Completed</h2>
+
+        <p class="confirmation-message">
+            Your transfer has been recorded successfully.
+            Keep the transaction ID for your records.
+        </p>
+
+        <div class="confirmation-grid">
+
+            <div class="confirmation-item">
+                <span>Transaction ID</span>
+                <strong id="confirmId"></strong>
+            </div>
+
+            <div class="confirmation-item">
+                <span>Recipient</span>
+                <strong id="confirmRecipient"></strong>
+            </div>
+
+            <div class="confirmation-item">
+                <span>Asset</span>
+                <strong id="confirmAsset"></strong>
+            </div>
+
+            <div class="confirmation-item">
+                <span>Amount</span>
+                <strong id="confirmAmount"></strong>
+            </div>
+
+            <div class="confirmation-item">
+                <span>Status</span>
+                <strong>Completed</strong>
+            </div>
+
+            <div class="confirmation-item">
+                <span>Transfer Note</span>
+                <strong id="confirmNote">No note</strong>
+            </div>
+
+        </div>
+
+        <div class="confirmation-actions">
+
+            <a href="received.html" class="secondary-link">
+                Received Money
+            </a>
+
+            <a href="transactions.html" class="primary-link">
+                View Transactions
+            </a>
+
+        </div>
+
+    </section>
+
 </main>
 
-
 <footer>
-
-    © 2026 CryptoVault. Secure Digital Asset Platform.
-
+    © 2026 CryptoVault. Secure digital asset platform.
 </footer>
-
 
 <script>
 
-    const sendForm = document.getElementById("sendForm");
+    const recipientInput = document.getElementById("recipient");
+    const assetSelect = document.getElementById("asset");
+    const amountInput = document.getElementById("amount");
+    const amountAsset = document.getElementById("amountAsset");
 
-    sendForm.addEventListener("submit", function(event) {
+    const summaryRecipient =
+        document.getElementById("summaryRecipient");
 
-        event.preventDefault();
+    const summaryAsset =
+        document.getElementById("summaryAsset");
+
+    const summaryAmount =
+        document.getElementById("summaryAmount");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+    recipientInput.addEventListener("input", updateSummary);
+    assetSelect.addEventListener("change", syncAsset);
+    amountInput.addEventListener("input", updateSummary);
+    amountAsset.addEventListener("change", syncAsset);
+
+    function syncAsset() {
+
+        const selectedAsset = assetSelect.value;
+
+        amountAsset.value = selectedAsset;
+
+        updateSummary();
+    }
+
+    function updateSummary() {
 
         const recipient =
-            document.getElementById("recipient").value.trim();
+            recipientInput.value.trim();
 
         const asset =
-            document.getElementById("asset").value;
+            amountAsset.value;
 
         const amount =
-            document.getElementById("amount").value;
+            amountInput.value;
 
-        const note =
-            document.getElementById("note").value.trim();
+        summaryRecipient.textContent =
+            recipient || "-";
 
-        if (!recipient || !amount || Number(amount) <= 0) {
-            alert("Please enter a valid recipient and amount.");
-            return;
-        }
-
-        const transactionId =
-            "CV-SND-" +
-            Math.floor(100000 + Math.random() * 900000);
-
-        document.getElementById("transactionId").textContent =
-            transactionId;
-
-        document.getElementById("confirmRecipient").textContent =
-            recipient;
-
-        document.getElementById("confirmAsset").textContent =
+        summaryAsset.textContent =
             asset;
 
-        document.getElementById("confirmAmount").textContent =
-            amount + " " + asset;
+        summaryAmount.textContent =
+            amount
+                ? amount + " " + asset
+                : "0 " + asset;
+    }
 
-        document.getElementById("confirmNote").textContent =
-            note || "No note";
+    function setAmount(value) {
 
-        document.getElementById("confirmation").style.display =
-            "block";
+        amountInput.value = value;
 
-        document.getElementById("confirmation").scrollIntoView({
-            behavior: "smooth",
-            block: "center"
+        updateSummary();
+    }
+
+    function showError(message) {
+
+        errorBox.textContent = message;
+
+        errorBox.style.display = "block";
+    }
+
+    function hideError() {
+
+        errorBox.style.display = "none";
+    }
+
+    function generateTransactionId() {
+
+        const random =
+            Math.floor(100000 + Math.random() * 900000);
+
+        return "TX-CV-" + random;
+    }
+
+    document
+        .getElementById("sendForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            hideError();
+
+            const recipient =
+                recipientInput.value.trim();
+
+            const asset =
+                amountAsset.value;
+
+            const amount =
+                parseFloat(amountInput.value);
+
+            const note =
+                document.getElementById("note").value.trim();
+
+            if (recipient.length < 3) {
+
+                showError(
+                    "Please enter a valid recipient username or email."
+                );
+
+                return;
+            }
+
+            if (!amount || amount <= 0) {
+
+                showError(
+                    "Please enter a valid amount."
+                );
+
+                return;
+            }
+
+            if (amount > 8500 && asset === "USDT") {
+
+                showError(
+                    "The amount exceeds the available balance."
+                );
+
+                return;
+            }
+
+            const transactionId =
+                generateTransactionId();
+
+            document.getElementById("confirmId")
+                .textContent = transactionId;
+
+            document.getElementById("confirmRecipient")
+                .textContent = recipient;
+
+            document.getElementById("confirmAsset")
+                .textContent = asset;
+
+            document.getElementById("confirmAmount")
+                .textContent = amount + " " + asset;
+
+            document.getElementById("confirmNote")
+                .textContent = note || "No note";
+
+            document.getElementById("confirmation")
+                .style.display = "block";
+
+            document.getElementById("confirmation")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
         });
-
-    });
 
 </script>
 
