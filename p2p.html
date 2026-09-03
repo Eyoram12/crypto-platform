@@ -7,7 +7,6 @@
     <title>P2P Trading | CryptoVault</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,118 +14,133 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #f4f7fb;
             color: #172033;
         }
 
         header {
-            background: #0b1220;
+            background: #111827;
             color: white;
-            padding: 16px 6%;
+            padding: 16px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: white;
-            color: #0b1220;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
+            background: white;
+            color: #111827;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 800;
         }
 
         nav {
             display: flex;
+            gap: 6px;
             flex-wrap: wrap;
-            gap: 17px;
         }
 
         nav a {
-            color: #dbe4f0;
+            color: #d1d5db;
             text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 7px;
             font-size: 14px;
         }
 
         nav a:hover,
         nav a.active {
-            color: white;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 40px auto;
+            background: white;
+            color: #111827;
         }
 
         .hero {
-            background: linear-gradient(135deg, #101b32, #1c3155);
+            background: #111827;
             color: white;
-            padding: 38px;
-            border-radius: 20px;
-            margin-bottom: 25px;
+            padding: 48px 5% 75px;
+        }
+
+        .hero-content {
+            max-width: 1150px;
+            margin: auto;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #e5e7eb;
             padding: 8px 14px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 13px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .hero h1 {
-            font-size: 34px;
+            font-size: 40px;
             margin-bottom: 10px;
         }
 
         .hero p {
-            color: #d7e2f2;
-            line-height: 1.6;
+            color: #cbd5e1;
+            max-width: 720px;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: -38px auto 60px;
+            padding: 0 20px;
+            position: relative;
         }
 
         .market-summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            background: white;
+            border-radius: 17px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
             margin-bottom: 25px;
         }
 
-        .summary-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 7px 22px rgba(20,30,50,0.06);
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
-        .summary-card p {
-            color: #718096;
-            font-size: 13px;
+        .summary-item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 11px;
+        }
+
+        .summary-label {
+            color: #64748b;
+            font-size: 12px;
             margin-bottom: 7px;
         }
 
-        .summary-card h2 {
-            font-size: 22px;
+        .summary-value {
+            font-size: 21px;
+            font-weight: bold;
         }
 
         .tabs {
@@ -136,50 +150,58 @@
         }
 
         .tab {
-            border: none;
-            background: #e5eaf1;
-            padding: 13px 25px;
-            border-radius: 10px;
-            font-weight: bold;
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #d8dee8;
+            background: white;
+            border-radius: 9px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .tab.active {
             background: #111827;
             color: white;
+            border-color: #111827;
         }
 
-        .market-grid {
-            display: grid;
-            grid-template-columns: 1.6fr 0.9fr;
-            gap: 25px;
-        }
-
-        .card {
+        .section {
             background: white;
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(20,30,50,0.07);
+            border-radius: 17px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
         }
 
-        .card h2 {
-            margin-bottom: 20px;
-            font-size: 21px;
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 22px;
         }
 
         .offer {
-            border: 1px solid #e0e5ec;
-            border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            padding: 20px;
+            margin-bottom: 13px;
+        }
+
+        .offer:last-child {
+            margin-bottom: 0;
         }
 
         .offer-top {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             gap: 15px;
-            align-items: center;
-            margin-bottom: 14px;
         }
 
         .seller {
@@ -188,79 +210,95 @@
             gap: 12px;
         }
 
-        .avatar {
-            width: 42px;
-            height: 42px;
-            background: #e9eef5;
+        .seller-avatar {
+            width: 43px;
+            height: 43px;
             border-radius: 50%;
+            background: #eef2f7;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
         }
 
-        .seller h3 {
-            font-size: 15px;
-            margin-bottom: 4px;
+        .seller-name {
+            font-weight: bold;
         }
 
-        .seller p {
-            font-size: 12px;
-            color: #718096;
+        .seller-status {
+            color: #047857;
+            font-size: 11px;
+            margin-top: 4px;
         }
 
         .rate {
             text-align: right;
         }
 
-        .rate strong {
-            font-size: 18px;
+        .rate-value {
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .rate span {
-            display: block;
-            font-size: 12px;
-            color: #718096;
+        .rate-label {
+            color: #64748b;
+            font-size: 11px;
             margin-top: 3px;
         }
 
         .offer-details {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-top: 16px;
         }
 
-        .detail {
-            background: #f5f7fa;
-            padding: 10px;
+        .offer-detail {
+            background: #f8fafc;
+            padding: 12px;
             border-radius: 8px;
         }
 
-        .detail small {
+        .offer-detail span {
             display: block;
-            color: #718096;
+            color: #64748b;
             font-size: 11px;
             margin-bottom: 4px;
         }
 
-        .detail strong {
+        .offer-detail strong {
             font-size: 13px;
         }
 
         .trade-btn {
             width: 100%;
-            padding: 12px;
+            margin-top: 15px;
             border: none;
             background: #111827;
             color: white;
-            border-radius: 9px;
-            font-weight: bold;
+            padding: 13px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         .trade-btn:hover {
-            background: #273244;
+            background: #1f2937;
+        }
+
+        .calculator {
+            background: #f8fafc;
+            border-radius: 13px;
+            padding: 23px;
+            margin-top: 25px;
+        }
+
+        .calculator h3 {
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
         }
 
         label {
@@ -275,9 +313,9 @@
         textarea {
             width: 100%;
             padding: 13px;
-            border: 1px solid #d5dce7;
-            border-radius: 9px;
-            margin-bottom: 17px;
+            border: 1px solid #d6dde7;
+            border-radius: 8px;
+            background: white;
             font-size: 14px;
             outline: none;
         }
@@ -285,74 +323,123 @@
         input:focus,
         select:focus,
         textarea:focus {
-            border-color: #315b9b;
+            border-color: #64748b;
         }
 
-        textarea {
-            resize: none;
-            height: 75px;
+        .quick-amounts {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 9px;
+        }
+
+        .quick-btn {
+            border: 1px solid #d6dde7;
+            background: white;
+            padding: 8px 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .quick-btn:hover {
+            background: #e2e8f0;
         }
 
         .calculation {
-            background: #f2f5f9;
-            border-radius: 12px;
-            padding: 18px;
-            margin-top: 5px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 17px;
+            margin-top: 18px;
         }
 
         .calc-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            gap: 10px;
+            padding: 8px 0;
             font-size: 14px;
         }
 
-        .calc-row:last-child {
-            margin-bottom: 0;
-            padding-top: 12px;
-            border-top: 1px solid #d7dee8;
-            font-size: 17px;
+        .calc-row.total {
+            border-top: 1px solid #e2e8f0;
+            margin-top: 8px;
+            padding-top: 14px;
+            font-size: 18px;
             font-weight: bold;
         }
 
-        .notice {
-            background: #edf4ff;
-            border-left: 4px solid #315b9b;
-            padding: 15px;
-            border-radius: 9px;
-            margin-top: 22px;
-            font-size: 13px;
-            line-height: 1.6;
+        .sell-panel {
+            display: none;
         }
 
-        /* MODAL */
+        .sell-info {
+            background: #f8fafc;
+            border-radius: 11px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .sell-info strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .primary-btn {
+            width: 100%;
+            border: none;
+            background: #111827;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .primary-btn:hover {
+            background: #1f2937;
+        }
+
+        .notice {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 11px;
+            padding: 18px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Modal */
 
         .modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.65);
-            z-index: 500;
+            background: rgba(15, 23, 42, 0.72);
+            z-index: 2000;
             padding: 20px;
             overflow-y: auto;
         }
 
         .modal-content {
-            width: 100%;
-            max-width: 900px;
-            background: white;
+            max-width: 720px;
             margin: 30px auto;
-            border-radius: 18px;
+            background: white;
+            border-radius: 17px;
             overflow: hidden;
         }
 
         .modal-header {
-            background: #0b1220;
+            background: #111827;
             color: white;
-            padding: 20px 25px;
+            padding: 20px 23px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
         }
 
         .modal-header h2 {
@@ -360,201 +447,154 @@
         }
 
         .close {
-            border: none;
             background: transparent;
             color: white;
-            font-size: 28px;
+            border: none;
+            font-size: 25px;
             cursor: pointer;
         }
 
-        .trade-layout {
-            display: grid;
-            grid-template-columns: 0.85fr 1.15fr;
-            gap: 0;
+        .modal-body {
+            padding: 23px;
         }
 
-        .trade-info {
-            padding: 25px;
-            border-right: 1px solid #e1e6ed;
-        }
-
-        .trade-chat {
-            padding: 25px;
-        }
-
-        .trade-info h3,
-        .trade-chat h3 {
-            margin-bottom: 18px;
-            font-size: 18px;
-        }
-
-        .order-box {
-            background: #f5f7fa;
-            border-radius: 12px;
+        .order-details {
+            background: #f8fafc;
+            border-radius: 11px;
             padding: 17px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .order-row {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            padding: 9px 0;
-            border-bottom: 1px solid #e1e6ed;
+            padding: 7px 0;
             font-size: 13px;
         }
 
-        .order-row:last-child {
-            border-bottom: none;
+        .order-row strong {
+            text-align: right;
         }
 
-        .order-row span:first-child {
-            color: #718096;
-        }
-
-        .order-status {
-            display: inline-block;
-            background: #fff7df;
-            color: #9a6700;
-            padding: 7px 11px;
+        .status {
+            background: #fff7ed;
+            color: #c2410c;
             border-radius: 20px;
-            font-size: 12px;
+            padding: 7px 12px;
+            display: inline-block;
+            font-size: 11px;
             font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .chat-box {
-            height: 330px;
-            background: #f4f7fa;
-            border: 1px solid #e0e5ec;
-            border-radius: 12px;
-            padding: 15px;
+        .chat {
+            border: 1px solid #e2e8f0;
+            border-radius: 11px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #f8fafc;
+            padding: 13px 15px;
+            font-weight: bold;
+            font-size: 13px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .messages {
+            height: 260px;
             overflow-y: auto;
-            margin-bottom: 12px;
+            padding: 15px;
+            background: white;
         }
 
         .message {
-            display: flex;
-            margin-bottom: 13px;
-        }
-
-        .message.buyer {
-            justify-content: flex-end;
-        }
-
-        .message-content {
             max-width: 78%;
-            padding: 11px 14px;
-            border-radius: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
             font-size: 13px;
             line-height: 1.5;
         }
 
-        .message.seller .message-content {
-            background: white;
-            border: 1px solid #e0e5ec;
-            border-bottom-left-radius: 3px;
+        .message.seller {
+            background: #f1f5f9;
+            margin-right: auto;
         }
 
-        .message.buyer .message-content {
+        .message.buyer {
             background: #111827;
             color: white;
-            border-bottom-right-radius: 3px;
+            margin-left: auto;
         }
 
-        .message-name {
+        .message small {
+            display: block;
+            opacity: 0.65;
+            margin-top: 4px;
             font-size: 10px;
-            font-weight: bold;
-            margin-bottom: 4px;
-            opacity: 0.7;
         }
 
         .chat-input {
             display: flex;
             gap: 8px;
+            padding: 12px;
+            border-top: 1px solid #e2e8f0;
         }
 
         .chat-input input {
-            margin-bottom: 0;
+            flex: 1;
         }
 
-        .send-message {
+        .send-chat {
             border: none;
             background: #111827;
             color: white;
-            padding: 0 18px;
-            border-radius: 9px;
-            font-weight: bold;
+            padding: 0 17px;
+            border-radius: 8px;
             cursor: pointer;
         }
 
-        .trade-actions {
+        .modal-actions {
             display: grid;
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
             margin-top: 18px;
         }
 
-        .action-btn {
+        .modal-action {
             border: none;
-            padding: 13px;
-            border-radius: 9px;
-            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
         }
 
-        .paid-btn {
-            background: #e8f5ec;
-            color: #166534;
+        .paid {
+            background: #ecfdf5;
+            color: #047857;
         }
 
-        .release-btn {
+        .release {
             background: #111827;
             color: white;
         }
 
-        .cancel-btn {
-            background: #f2f3f5;
-            color: #374151;
-        }
-
-        .success-message {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: #eaf8ef;
-            border: 1px solid #a8dfb9;
-            color: #166534;
-            border-radius: 10px;
-            font-size: 13px;
-            line-height: 1.6;
+        .cancel {
+            background: #fee2e2;
+            color: #b91c1c;
         }
 
         footer {
-            margin-top: 50px;
-            background: #0b1220;
-            color: #9ca9bb;
+            background: #111827;
+            color: #94a3b8;
             text-align: center;
-            padding: 25px;
+            padding: 30px 20px;
             font-size: 13px;
         }
 
-        @media (max-width: 900px) {
-
-            .market-summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .market-grid,
-            .trade-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .trade-info {
-                border-right: none;
-                border-bottom: 1px solid #e1e6ed;
-            }
-        }
-
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
 
             header {
                 flex-direction: column;
@@ -562,42 +602,46 @@
             }
 
             nav {
-                gap: 11px;
+                width: 100%;
+                overflow-x: auto;
             }
 
-            .container {
-                width: 94%;
-            }
-
-            .hero {
-                padding: 28px 20px;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .market-summary {
+            .summary-grid {
                 grid-template-columns: 1fr;
             }
 
             .offer-top {
+                flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .rate {
+                text-align: left;
+            }
+
+            .modal-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .section {
+                padding: 20px;
             }
 
             .offer-details {
                 grid-template-columns: 1fr;
             }
 
-            .chat-input {
+            .tabs {
                 flex-direction: column;
             }
-
-            .send-message {
-                padding: 13px;
-            }
         }
-
     </style>
 </head>
 
@@ -606,7 +650,7 @@
 <header>
 
     <div class="logo">
-        <div class="logo-icon">CV</div>
+        <span class="logo-icon">CV</span>
         <span>CryptoVault</span>
     </div>
 
@@ -625,521 +669,752 @@
 
 </header>
 
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            SECURE P2P MARKETPLACE
+        </div>
+
+        <h1>
+            USDT / ETB P2P Trading
+        </h1>
+
+        <p>
+            Choose an offer, select the amount you want to trade,
+            and communicate with the buyer or seller during the order.
+        </p>
+
+    </div>
+
+</section>
 
 <main class="container">
 
-    <section class="hero">
-
-        <span class="badge">SECURE P2P MARKETPLACE</span>
-
-        <h1>USDT / ETB P2P Trading</h1>
-
-        <p>
-            Buy and sell USDT through marketplace offers.
-            Compare available rates and communicate with the
-            other party during an order.
-        </p>
-
-    </section>
-
-
     <section class="market-summary">
 
-        <div class="summary-card">
-            <p>Market Range</p>
-            <h2>188 - 192 ETB</h2>
-        </div>
+        <div class="summary-grid">
 
-        <div class="summary-card">
-            <p>Lowest Rate</p>
-            <h2>188 ETB</h2>
-        </div>
+            <div class="summary-item">
 
-        <div class="summary-card">
-            <p>Average Rate</p>
-            <h2>190 ETB</h2>
-        </div>
+                <div class="summary-label">
+                    Market Range
+                </div>
 
-        <div class="summary-card">
-            <p>Highest Rate</p>
-            <h2>192 ETB</h2>
+                <div class="summary-value">
+                    188 - 192 ETB
+                </div>
+
+            </div>
+
+            <div class="summary-item">
+
+                <div class="summary-label">
+                    Average Rate
+                </div>
+
+                <div class="summary-value">
+                    190 ETB
+                </div>
+
+            </div>
+
+            <div class="summary-item">
+
+                <div class="summary-label">
+                    Trading Pair
+                </div>
+
+                <div class="summary-value">
+                    USDT / ETB
+                </div>
+
+            </div>
+
         </div>
 
     </section>
-
 
     <div class="tabs">
 
         <button
             class="tab active"
-            onclick="showTab('buy', this)"
+            id="buyTab"
+            onclick="showBuy()"
         >
             Buy USDT
         </button>
 
         <button
             class="tab"
-            onclick="showTab('sell', this)"
+            id="sellTab"
+            onclick="showSell()"
         >
             Sell USDT
         </button>
 
     </div>
 
+    <!-- BUY -->
 
-    <!-- BUY TAB -->
+    <section
+        class="section"
+        id="buyPanel"
+    >
 
-    <section id="buyTab">
+        <h2>
+            Buy USDT
+        </h2>
 
-        <div class="market-grid">
+        <p class="description">
+            Select a seller and enter the amount of USDT you want to buy.
+            The ETB total will be calculated automatically.
+        </p>
 
-            <div class="card">
+        <div class="offer">
 
-                <h2>Available Sellers</h2>
+            <div class="offer-top">
 
+                <div class="seller">
 
-                <div class="offer">
-
-                    <div class="offer-top">
-
-                        <div class="seller">
-
-                            <div class="avatar">A</div>
-
-                            <div>
-                                <h3>Alex</h3>
-                                <p>98.7% completion • 126 trades</p>
-                            </div>
-
-                        </div>
-
-                        <div class="rate">
-                            <strong>188 ETB</strong>
-                            <span>per USDT</span>
-                        </div>
-
+                    <div class="seller-avatar">
+                        A
                     </div>
 
-
-                    <div class="offer-details">
-
-                        <div class="detail">
-                            <small>Available</small>
-                            <strong>2,500 USDT</strong>
+                    <div>
+                        <div class="seller-name">
+                            Alex
                         </div>
 
-                        <div class="detail">
-                            <small>Limit</small>
-                            <strong>500 - 2,500 USDT</strong>
+                        <div class="seller-status">
+                            ● Online
                         </div>
-
                     </div>
-
-                    <button
-                        class="trade-btn"
-                        onclick="openTrade('Alex', 188)"
-                    >
-                        Buy from Alex
-                    </button>
 
                 </div>
 
+                <div class="rate">
 
-                <div class="offer">
-
-                    <div class="offer-top">
-
-                        <div class="seller">
-
-                            <div class="avatar">D</div>
-
-                            <div>
-                                <h3>Daniel</h3>
-                                <p>99.1% completion • 204 trades</p>
-                            </div>
-
-                        </div>
-
-                        <div class="rate">
-                            <strong>189 ETB</strong>
-                            <span>per USDT</span>
-                        </div>
-
+                    <div class="rate-value">
+                        188 ETB
                     </div>
 
-
-                    <div class="offer-details">
-
-                        <div class="detail">
-                            <small>Available</small>
-                            <strong>4,000 USDT</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>Limit</small>
-                            <strong>1,000 - 4,000 USDT</strong>
-                        </div>
-
+                    <div class="rate-label">
+                        per 1 USDT
                     </div>
-
-                    <button
-                        class="trade-btn"
-                        onclick="openTrade('Daniel', 189)"
-                    >
-                        Buy from Daniel
-                    </button>
-
-                </div>
-
-
-                <div class="offer">
-
-                    <div class="offer-top">
-
-                        <div class="seller">
-
-                            <div class="seller">
-
-                                <div class="avatar">S</div>
-
-                                <div>
-                                    <h3>Sara</h3>
-                                    <p>97.9% completion • 87 trades</p>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="rate">
-                            <strong>190 ETB</strong>
-                            <span>per USDT</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="offer-details">
-
-                        <div class="detail">
-                            <small>Available</small>
-                            <strong>1,800 USDT</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>Limit</small>
-                            <strong>300 - 1,800 USDT</strong>
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="trade-btn"
-                        onclick="openTrade('Sara', 190)"
-                    >
-                        Buy from Sara
-                    </button>
-
-                </div>
-
-
-                <div class="offer">
-
-                    <div class="offer-top">
-
-                        <div class="seller">
-
-                            <div class="avatar">M</div>
-
-                            <div>
-                                <h3>Michael</h3>
-                                <p>99.4% completion • 311 trades</p>
-                            </div>
-
-                        </div>
-
-                        <div class="rate">
-                            <strong>191 ETB</strong>
-                            <span>per USDT</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="offer-details">
-
-                        <div class="detail">
-                            <small>Available</small>
-                            <strong>5,000 USDT</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>Limit</small>
-                            <strong>500 - 5,000 USDT</strong>
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="trade-btn"
-                        onclick="openTrade('Michael', 191)"
-                    >
-                        Buy from Michael
-                    </button>
-
-                </div>
-
-
-                <div class="offer">
-
-                    <div class="offer-top">
-
-                        <div class="seller">
-
-                            <div class="avatar">H</div>
-
-                            <div>
-                                <h3>Hana</h3>
-                                <p>98.4% completion • 154 trades</p>
-                            </div>
-
-                        </div>
-
-                        <div class="rate">
-                            <strong>192 ETB</strong>
-                            <span>per USDT</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="offer-details">
-
-                        <div class="detail">
-                            <small>Available</small>
-                            <strong>3,200 USDT</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>Limit</small>
-                            <strong>500 - 3,200 USDT</strong>
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="trade-btn"
-                        onclick="openTrade('Hana', 192)"
-                    >
-                        Buy from Hana
-                    </button>
 
                 </div>
 
             </div>
 
+            <div class="offer-details">
 
-            <!-- CALCULATOR -->
+                <div class="offer-detail">
+                    <span>Available</span>
+                    <strong>5,000 USDT</strong>
+                </div>
 
-            <div class="card">
+                <div class="offer-detail">
+                    <span>Limits</span>
+                    <strong>10 - 5,000 USDT</strong>
+                </div>
 
-                <h2>P2P Calculator</h2>
+            </div>
 
-                <label for="sellerSelect">
+            <button
+                class="trade-btn"
+                onclick="openTrade('Alex', 188)"
+            >
+                Buy from Alex
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <div class="offer-top">
+
+                <div class="seller">
+
+                    <div class="seller-avatar">
+                        D
+                    </div>
+
+                    <div>
+                        <div class="seller-name">
+                            Daniel
+                        </div>
+
+                        <div class="seller-status">
+                            ● Online
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="rate">
+
+                    <div class="rate-value">
+                        189 ETB
+                    </div>
+
+                    <div class="rate-label">
+                        per 1 USDT
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="offer-details">
+
+                <div class="offer-detail">
+                    <span>Available</span>
+                    <strong>3,500 USDT</strong>
+                </div>
+
+                <div class="offer-detail">
+                    <span>Limits</span>
+                    <strong>20 - 3,500 USDT</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="trade-btn"
+                onclick="openTrade('Daniel', 189)"
+            >
+                Buy from Daniel
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <div class="offer-top">
+
+                <div class="seller">
+
+                    <div class="seller-avatar">
+                        S
+                    </div>
+
+                    <div>
+                        <div class="seller-name">
+                            Sara
+                        </div>
+
+                        <div class="seller-status">
+                            ● Online
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="rate">
+
+                    <div class="rate-value">
+                        190 ETB
+                    </div>
+
+                    <div class="rate-label">
+                        per 1 USDT
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="offer-details">
+
+                <div class="offer-detail">
+                    <span>Available</span>
+                    <strong>8,000 USDT</strong>
+                </div>
+
+                <div class="offer-detail">
+                    <span>Limits</span>
+                    <strong>10 - 8,000 USDT</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="trade-btn"
+                onclick="openTrade('Sara', 190)"
+            >
+                Buy from Sara
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <div class="offer-top">
+
+                <div class="seller">
+
+                    <div class="seller-avatar">
+                        M
+                    </div>
+
+                    <div>
+                        <div class="seller-name">
+                            Michael
+                        </div>
+
+                        <div class="seller-status">
+                            ● Online
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="rate">
+
+                    <div class="rate-value">
+                        191 ETB
+                    </div>
+
+                    <div class="rate-label">
+                        per 1 USDT
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="offer-details">
+
+                <div class="offer-detail">
+                    <span>Available</span>
+                    <strong>6,000 USDT</strong>
+                </div>
+
+                <div class="offer-detail">
+                    <span>Limits</span>
+                    <strong>25 - 6,000 USDT</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="trade-btn"
+                onclick="openTrade('Michael', 191)"
+            >
+                Buy from Michael
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <div class="offer-top">
+
+                <div class="seller">
+
+                    <div class="seller-avatar">
+                        H
+                    </div>
+
+                    <div>
+                        <div class="seller-name">
+                            Hana
+                        </div>
+
+                        <div class="seller-status">
+                            ● Online
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="rate">
+
+                    <div class="rate-value">
+                        192 ETB
+                    </div>
+
+                    <div class="rate-label">
+                        per 1 USDT
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="offer-details">
+
+                <div class="offer-detail">
+                    <span>Available</span>
+                    <strong>4,500 USDT</strong>
+                </div>
+
+                <div class="offer-detail">
+                    <span>Limits</span>
+                    <strong>10 - 4,500 USDT</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="trade-btn"
+                onclick="openTrade('Hana', 192)"
+            >
+                Buy from Hana
+            </button>
+
+        </div>
+
+        <!-- BUY CALCULATOR -->
+
+        <div class="calculator">
+
+            <h3>
+                Buy Calculator
+            </h3>
+
+            <div class="form-group">
+
+                <label for="buySeller">
                     Select Seller
                 </label>
 
-                <select id="sellerSelect">
+                <select
+                    id="buySeller"
+                    onchange="calculateBuy()"
+                >
 
                     <option value="188">
-                        Alex - 188 ETB
+                        Alex - 188 ETB / USDT
                     </option>
 
                     <option value="189">
-                        Daniel - 189 ETB
+                        Daniel - 189 ETB / USDT
                     </option>
 
                     <option value="190">
-                        Sara - 190 ETB
+                        Sara - 190 ETB / USDT
                     </option>
 
                     <option value="191">
-                        Michael - 191 ETB
+                        Michael - 191 ETB / USDT
                     </option>
 
                     <option value="192">
-                        Hana - 192 ETB
+                        Hana - 192 ETB / USDT
                     </option>
 
                 </select>
 
+            </div>
 
-                <label for="usdtAmount">
+            <div class="form-group">
+
+                <label for="buyAmount">
                     USDT Amount
                 </label>
 
                 <input
                     type="number"
-                    id="usdtAmount"
-                    placeholder="Enter USDT amount"
+                    id="buyAmount"
                     min="0"
-                    step="any"
+                    step="0.01"
+                    placeholder="Enter USDT amount"
                     oninput="calculateBuy()"
                 >
 
+                <div class="quick-amounts">
 
-                <div class="calculation">
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(10)"
+                    >
+                        10 USDT
+                    </button>
 
-                    <div class="calc-row">
-                        <span>USDT Amount</span>
-                        <strong id="calcUsdt">0 USDT</strong>
-                    </div>
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(50)"
+                    >
+                        50 USDT
+                    </button>
 
-                    <div class="calc-row">
-                        <span>Exchange Rate</span>
-                        <strong id="calcRate">188 ETB</strong>
-                    </div>
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(100)"
+                    >
+                        100 USDT
+                    </button>
 
-                    <div class="calc-row">
-                        <span>Total</span>
-                        <strong id="calcTotal">0 ETB</strong>
-                    </div>
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(250)"
+                    >
+                        250 USDT
+                    </button>
 
-                </div>
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(500)"
+                    >
+                        500 USDT
+                    </button>
 
-
-                <div class="notice">
-
-                    Marketplace rates shown here are sample
-                    market-style values for CryptoVault.
-                    They are not live market prices.
+                    <button
+                        class="quick-btn"
+                        onclick="setBuyAmount(1000)"
+                    >
+                        1,000 USDT
+                    </button>
 
                 </div>
 
             </div>
+
+            <div class="calculation">
+
+                <div class="calc-row">
+
+                    <span>
+                        USDT Amount
+                    </span>
+
+                    <strong id="buyUSDTResult">
+                        0 USDT
+                    </strong>
+
+                </div>
+
+                <div class="calc-row">
+
+                    <span>
+                        Exchange Rate
+                    </span>
+
+                    <strong id="buyRateResult">
+                        188 ETB
+                    </strong>
+
+                </div>
+
+                <div class="calc-row total">
+
+                    <span>
+                        Total ETB
+                    </span>
+
+                    <strong id="buyETBResult">
+                        0 ETB
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="startBuyTrade()"
+            >
+                Continue Buy Order
+            </button>
 
         </div>
 
     </section>
 
+    <!-- SELL -->
 
-    <!-- SELL TAB -->
+    <section
+        class="section sell-panel"
+        id="sellPanel"
+    >
 
-    <section id="sellTab" style="display:none;">
+        <h2>
+            Sell USDT
+        </h2>
 
-        <div class="market-grid">
+        <p class="description">
+            Enter the amount of USDT you want to sell and choose
+            your preferred marketplace rate.
+        </p>
 
-            <div class="card">
+        <div class="sell-info">
 
-                <h2>Sell USDT</h2>
+            <strong>
+                Seller Marketplace
+            </strong>
 
-                <label for="sellRate">
-                    Your Exchange Rate
-                </label>
+            <span>
+                You can choose your preferred ETB rate for the order.
+            </span>
 
-                <input
-                    type="number"
-                    id="sellRate"
-                    value="190"
-                    min="1"
-                    oninput="calculateSell()"
-                >
+        </div>
 
-                <label for="sellAmount">
-                    USDT Amount
-                </label>
+        <div class="form-group">
 
-                <input
-                    type="number"
-                    id="sellAmount"
-                    placeholder="Enter USDT amount"
-                    min="0"
-                    step="any"
-                    oninput="calculateSell()"
-                >
+            <label for="sellRate">
+                Select Exchange Rate
+            </label>
 
-                <div class="calculation">
+            <select
+                id="sellRate"
+                onchange="calculateSell()"
+            >
 
-                    <div class="calc-row">
-                        <span>USDT Amount</span>
-                        <strong id="sellUsdt">0 USDT</strong>
-                    </div>
+                <option value="188">
+                    188 ETB / USDT
+                </option>
 
-                    <div class="calc-row">
-                        <span>Exchange Rate</span>
-                        <strong id="sellRateDisplay">190 ETB</strong>
-                    </div>
+                <option value="189">
+                    189 ETB / USDT
+                </option>
 
-                    <div class="calc-row">
-                        <span>You Receive</span>
-                        <strong id="sellTotal">0 ETB</strong>
-                    </div>
+                <option value="190" selected>
+                    190 ETB / USDT
+                </option>
 
-                </div>
+                <option value="191">
+                    191 ETB / USDT
+                </option>
 
-                <br>
+                <option value="192">
+                    192 ETB / USDT
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="sellAmount">
+                USDT Amount
+            </label>
+
+            <input
+                type="number"
+                id="sellAmount"
+                min="0"
+                step="0.01"
+                placeholder="Enter USDT amount"
+                oninput="calculateSell()"
+            >
+
+            <div class="quick-amounts">
 
                 <button
-                    class="trade-btn"
-                    onclick="createSellOffer()"
+                    class="quick-btn"
+                    onclick="setSellAmount(10)"
                 >
-                    Create Sell Offer
+                    10 USDT
                 </button>
 
-                <div
-                    class="success-message"
-                    id="sellSuccess"
+                <button
+                    class="quick-btn"
+                    onclick="setSellAmount(50)"
                 >
-                    Your sell offer has been created successfully.
-                </div>
+                    50 USDT
+                </button>
 
-            </div>
+                <button
+                    class="quick-btn"
+                    onclick="setSellAmount(100)"
+                >
+                    100 USDT
+                </button>
 
+                <button
+                    class="quick-btn"
+                    onclick="setSellAmount(250)"
+                >
+                    250 USDT
+                </button>
 
-            <div class="card">
+                <button
+                    class="quick-btn"
+                    onclick="setSellAmount(500)"
+                >
+                    500 USDT
+                </button>
 
-                <h2>Your P2P Information</h2>
-
-                <div class="order-box">
-
-                    <div class="order-row">
-                        <span>Available USDT</span>
-                        <strong>5,000 USDT</strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Account Status</span>
-                        <strong>Active</strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Completion Rate</span>
-                        <strong>98.6%</strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Completed Trades</span>
-                        <strong>64</strong>
-                    </div>
-
-                </div>
-
-                <div class="notice">
-
-                    Always verify the order details and
-                    communicate with the other party before
-                    completing a P2P order.
-
-                </div>
+                <button
+                    class="quick-btn"
+                    onclick="setSellAmount(1000)"
+                >
+                    1,000 USDT
+                </button>
 
             </div>
 
         </div>
+
+        <div class="calculation">
+
+            <div class="calc-row">
+
+                <span>
+                    USDT Amount
+                </span>
+
+                <strong id="sellUSDTResult">
+                    0 USDT
+                </strong>
+
+            </div>
+
+            <div class="calc-row">
+
+                <span>
+                    Exchange Rate
+                </span>
+
+                <strong id="sellRateResult">
+                    190 ETB
+                </strong>
+
+            </div>
+
+            <div class="calc-row total">
+
+                <span>
+                    Total ETB
+                </span>
+
+                <strong id="sellETBResult">
+                    0 ETB
+                </strong>
+
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="createSellOffer()"
+        >
+            Create Sell Order
+        </button>
+
+    </section>
+
+    <section class="notice">
+
+        <strong>
+            Marketplace Information
+        </strong>
+
+        <br><br>
+
+        Rates shown on this page are sample marketplace values
+        used for the CryptoVault interface. A real P2P marketplace
+        would have changing offers based on buyers, sellers,
+        liquidity, payment methods, and market conditions.
 
     </section>
 
 </main>
-
 
 <!-- TRADE MODAL -->
 
@@ -1165,175 +1440,82 @@
 
         </div>
 
+        <div class="modal-body">
 
-        <div class="trade-layout">
+            <div class="order-details">
 
-
-            <!-- TRADE INFORMATION -->
-
-            <div class="trade-info">
-
-                <h3>Order Details</h3>
-
-                <div class="order-box">
-
-                    <div class="order-row">
-                        <span>Order ID</span>
-                        <strong id="orderId"></strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Seller</span>
-                        <strong id="tradeSeller"></strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Asset</span>
-                        <strong>USDT</strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Amount</span>
-                        <strong id="tradeAmount">
-                            10 USDT
-                        </strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Exchange Rate</span>
-                        <strong id="tradeRate">
-                            188 ETB
-                        </strong>
-                    </div>
-
-                    <div class="order-row">
-                        <span>Total</span>
-                        <strong id="tradeTotal">
-                            1,880 ETB
-                        </strong>
-                    </div>
-
+                <div class="order-row">
+                    <span>Order ID</span>
+                    <strong id="orderId">CV-P2P-000000</strong>
                 </div>
 
-
-                <span
-                    class="order-status"
-                    id="orderStatus"
-                >
-                    Awaiting Payment
-                </span>
-
-
-                <div class="trade-actions">
-
-                    <button
-                        class="action-btn paid-btn"
-                        onclick="markPaid()"
-                    >
-                        Mark as Paid
-                    </button>
-
-                    <button
-                        class="action-btn release-btn"
-                        onclick="releaseUSDT()"
-                    >
-                        Release USDT
-                    </button>
-
-                    <button
-                        class="action-btn cancel-btn"
-                        onclick="cancelTrade()"
-                    >
-                        Cancel Order
-                    </button>
-
+                <div class="order-row">
+                    <span>Seller</span>
+                    <strong id="tradeSeller">-</strong>
                 </div>
 
+                <div class="order-row">
+                    <span>USDT Amount</span>
+                    <strong id="tradeAmount">0 USDT</strong>
+                </div>
 
-                <div
-                    class="success-message"
-                    id="tradeSuccess"
-                ></div>
+                <div class="order-row">
+                    <span>Exchange Rate</span>
+                    <strong id="tradeRate">0 ETB</strong>
+                </div>
+
+                <div class="order-row">
+                    <span>Total</span>
+                    <strong id="tradeTotal">0 ETB</strong>
+                </div>
 
             </div>
 
+            <div
+                class="status"
+                id="tradeStatus"
+            >
+                Awaiting Payment
+            </div>
 
-            <!-- CHAT -->
+            <div class="chat">
 
-            <div class="trade-chat">
-
-                <h3>
-                    Conversation with
-                    <span id="chatSeller">Seller</span>
-                </h3>
-
+                <div class="chat-header">
+                    Buyer and Seller Conversation
+                </div>
 
                 <div
-                    class="chat-box"
-                    id="chatBox"
+                    class="messages"
+                    id="messages"
                 >
 
                     <div class="message seller">
-
-                        <div class="message-content">
-
-                            <div class="message-name">
-                                Seller
-                            </div>
-
-                            Hello, welcome. I am ready
-                            to process the P2P order.
-
-                        </div>
-
+                        Hello. I am ready for the P2P trade.
+                        <small>Seller</small>
                     </div>
-
 
                     <div class="message buyer">
-
-                        <div class="message-content">
-
-                            <div class="message-name">
-                                You
-                            </div>
-
-                            Hello. I would like to complete
-                            this USDT purchase.
-
-                        </div>
-
+                        Hello. I am ready to complete the order.
+                        <small>Buyer</small>
                     </div>
 
-
                     <div class="message seller">
-
-                        <div class="message-content">
-
-                            <div class="message-name">
-                                Seller
-                            </div>
-
-                            Please check the order details
-                            and payment amount.
-
-                        </div>
-
+                        Please confirm the amount and payment details.
+                        <small>Seller</small>
                     </div>
 
                 </div>
-
 
                 <div class="chat-input">
 
                     <input
                         type="text"
                         id="messageInput"
-                        placeholder="Type your message..."
-                        onkeydown="handleMessageKey(event)"
+                        placeholder="Write a message..."
                     >
 
                     <button
-                        class="send-message"
+                        class="send-chat"
                         onclick="sendMessage()"
                     >
                         Send
@@ -1343,83 +1525,112 @@
 
             </div>
 
+            <div class="modal-actions">
+
+                <button
+                    class="modal-action paid"
+                    onclick="markPaid()"
+                >
+                    Mark as Paid
+                </button>
+
+                <button
+                    class="modal-action release"
+                    onclick="releaseUSDT()"
+                >
+                    Release USDT
+                </button>
+
+                <button
+                    class="modal-action cancel"
+                    onclick="cancelTrade()"
+                >
+                    Cancel Order
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
 
-
 <footer>
 
-    © 2026 CryptoVault. Secure Digital Asset Platform.
+    © 2026 CryptoVault. Secure digital asset platform.
 
 </footer>
-
 
 <script>
 
     let currentSeller = "";
     let currentRate = 0;
+    let currentAmount = 0;
 
+    function showBuy() {
 
-    function showTab(tab, button) {
+        document.getElementById("buyPanel").style.display = "block";
+        document.getElementById("sellPanel").style.display = "none";
 
-        const buyTab = document.getElementById("buyTab");
-        const sellTab = document.getElementById("sellTab");
-
-        const tabs = document.querySelectorAll(".tab");
-
-        tabs.forEach(function(item) {
-            item.classList.remove("active");
-        });
-
-        button.classList.add("active");
-
-        if (tab === "buy") {
-
-            buyTab.style.display = "block";
-            sellTab.style.display = "none";
-
-        } else {
-
-            buyTab.style.display = "none";
-            sellTab.style.display = "block";
-
-        }
+        document.getElementById("buyTab").classList.add("active");
+        document.getElementById("sellTab").classList.remove("active");
 
     }
 
+    function showSell() {
+
+        document.getElementById("buyPanel").style.display = "none";
+        document.getElementById("sellPanel").style.display = "block";
+
+        document.getElementById("buyTab").classList.remove("active");
+        document.getElementById("sellTab").classList.add("active");
+
+    }
 
     function calculateBuy() {
 
         const amount =
             parseFloat(
-                document.getElementById("usdtAmount").value
+                document.getElementById("buyAmount").value
             ) || 0;
 
         const rate =
             parseFloat(
-                document.getElementById("sellerSelect").value
-            ) || 0;
+                document.getElementById("buySeller").value
+            );
 
         const total = amount * rate;
 
-        document.getElementById("calcUsdt").textContent =
-            amount + " USDT";
+        document.getElementById("buyUSDTResult")
+            .textContent =
+            amount.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " USDT";
 
-        document.getElementById("calcRate").textContent =
+        document.getElementById("buyRateResult")
+            .textContent =
             rate + " ETB";
 
-        document.getElementById("calcTotal").textContent =
-            total.toLocaleString() + " ETB";
-
+        document.getElementById("buyETBResult")
+            .textContent =
+            total.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " ETB";
     }
 
+    function setBuyAmount(amount) {
 
-    document.getElementById("sellerSelect")
-        .addEventListener("change", calculateBuy);
+        document.getElementById("buyAmount").value = amount;
 
+        calculateBuy();
+    }
 
     function calculateSell() {
 
@@ -1431,85 +1642,179 @@
         const rate =
             parseFloat(
                 document.getElementById("sellRate").value
-            ) || 0;
+            );
 
         const total = amount * rate;
 
-        document.getElementById("sellUsdt").textContent =
-            amount + " USDT";
+        document.getElementById("sellUSDTResult")
+            .textContent =
+            amount.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " USDT";
 
-        document.getElementById("sellRateDisplay").textContent =
+        document.getElementById("sellRateResult")
+            .textContent =
             rate + " ETB";
 
-        document.getElementById("sellTotal").textContent =
-            total.toLocaleString() + " ETB";
-
+        document.getElementById("sellETBResult")
+            .textContent =
+            total.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " ETB";
     }
 
+    function setSellAmount(amount) {
 
-    function openTrade(seller, rate) {
+        document.getElementById("sellAmount").value = amount;
+
+        calculateSell();
+    }
+
+    function startBuyTrade() {
+
+        const amount =
+            parseFloat(
+                document.getElementById("buyAmount").value
+            ) || 0;
+
+        const rate =
+            parseFloat(
+                document.getElementById("buySeller").value
+            );
+
+        const sellerText =
+            document.getElementById("buySeller")
+                .selectedOptions[0].text;
+
+        if (amount <= 0) {
+
+            alert("Please enter the amount of USDT you want to buy.");
+
+            return;
+        }
+
+        let seller =
+            sellerText.split(" - ")[0];
+
+        openTrade(
+            seller,
+            rate,
+            amount
+        );
+    }
+
+    function openTrade(
+        seller,
+        rate,
+        amount = null
+    ) {
+
+        if (amount === null) {
+
+            amount =
+                parseFloat(
+                    document.getElementById("buyAmount").value
+                ) || 0;
+
+            if (amount <= 0) {
+
+                const quickAmount =
+                    prompt(
+                        "Enter the USDT amount you want to buy:"
+                    );
+
+                amount =
+                    parseFloat(quickAmount);
+
+                if (!amount || amount <= 0) {
+
+                    alert(
+                        "Please enter a valid USDT amount."
+                    );
+
+                    return;
+                }
+            }
+        }
 
         currentSeller = seller;
         currentRate = rate;
+        currentAmount = amount;
 
-        const orderNumber =
+        const total =
+            amount * rate;
+
+        const id =
+            "CV-P2P-" +
             Math.floor(
                 100000 + Math.random() * 900000
             );
 
-        const amountInput =
-            parseFloat(
-                document.getElementById("usdtAmount").value
-            ) || 10;
+        document.getElementById("orderId")
+            .textContent = id;
 
-        const total =
-            amountInput * rate;
+        document.getElementById("tradeSeller")
+            .textContent = seller;
 
+        document.getElementById("tradeAmount")
+            .textContent =
+            amount.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " USDT";
 
-        document.getElementById("orderId").textContent =
-            "CV-P2P-" + orderNumber;
-
-        document.getElementById("tradeSeller").textContent =
-            seller;
-
-        document.getElementById("chatSeller").textContent =
-            seller;
-
-        document.getElementById("tradeAmount").textContent =
-            amountInput + " USDT";
-
-        document.getElementById("tradeRate").textContent =
+        document.getElementById("tradeRate")
+            .textContent =
             rate + " ETB / USDT";
 
-        document.getElementById("tradeTotal").textContent =
-            total.toLocaleString() + " ETB";
+        document.getElementById("tradeTotal")
+            .textContent =
+            total.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            ) + " ETB";
 
-        document.getElementById("orderStatus").textContent =
+        document.getElementById("tradeStatus")
+            .textContent =
             "Awaiting Payment";
 
-        document.getElementById("tradeSuccess").style.display =
-            "none";
+        document.getElementById("tradeModal")
+            .style.display = "block";
 
-        document.getElementById("tradeSuccess").textContent =
-            "";
+        document.getElementById("messages")
+            .innerHTML = `
+                <div class="message seller">
+                    Hello. I am ready for the P2P trade.
+                    <small>${seller}</small>
+                </div>
 
-        document.getElementById("tradeModal").style.display =
-            "block";
+                <div class="message buyer">
+                    Hello. I am ready to complete the order.
+                    <small>Buyer</small>
+                </div>
 
-        document.body.style.overflow = "hidden";
-
+                <div class="message seller">
+                    Please confirm the amount of ${amount} USDT.
+                    <small>${seller}</small>
+                </div>
+            `;
     }
-
 
     function closeTrade() {
 
-        document.getElementById("tradeModal").style.display =
-            "none";
-
-        document.body.style.overflow = "auto";
-
+        document.getElementById("tradeModal")
+            .style.display = "none";
     }
-
 
     function sendMessage() {
 
@@ -1523,53 +1828,27 @@
             return;
         }
 
-        const chatBox =
-            document.getElementById("chatBox");
+        const messages =
+            document.getElementById("messages");
 
-
-        const messageDiv =
+        const buyerMessage =
             document.createElement("div");
 
-        messageDiv.className =
+        buyerMessage.className =
             "message buyer";
 
+        buyerMessage.innerHTML =
+            message +
+            "<small>Buyer</small>";
 
-        const content =
-            document.createElement("div");
-
-        content.className =
-            "message-content";
-
-
-        const name =
-            document.createElement("div");
-
-        name.className =
-            "message-name";
-
-        name.textContent =
-            "You";
-
-
-        content.appendChild(name);
-
-
-        const text =
-            document.createTextNode(message);
-
-        content.appendChild(text);
-
-
-        messageDiv.appendChild(content);
-
-        chatBox.appendChild(messageDiv);
-
+        messages.appendChild(
+            buyerMessage
+        );
 
         input.value = "";
 
-        chatBox.scrollTop =
-            chatBox.scrollHeight;
-
+        messages.scrollTop =
+            messages.scrollHeight;
 
         setTimeout(function() {
 
@@ -1579,132 +1858,92 @@
             sellerMessage.className =
                 "message seller";
 
+            sellerMessage.innerHTML =
+                "Thank you. I have received your message." +
+                "<small>" +
+                currentSeller +
+                "</small>";
 
-            const sellerContent =
-                document.createElement("div");
-
-            sellerContent.className =
-                "message-content";
-
-
-            const sellerName =
-                document.createElement("div");
-
-            sellerName.className =
-                "message-name";
-
-            sellerName.textContent =
-                currentSeller || "Seller";
-
-
-            sellerContent.appendChild(
-                sellerName
-            );
-
-
-            const response =
-                document.createTextNode(
-                    "Thank you. I have received your message and will review the order."
-                );
-
-            sellerContent.appendChild(
-                response
-            );
-
-
-            sellerMessage.appendChild(
-                sellerContent
-            );
-
-            chatBox.appendChild(
+            messages.appendChild(
                 sellerMessage
             );
 
-            chatBox.scrollTop =
-                chatBox.scrollHeight;
+            messages.scrollTop =
+                messages.scrollHeight;
 
-        }, 700);
-
+        }, 900);
     }
-
-
-    function handleMessageKey(event) {
-
-        if (event.key === "Enter") {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-
 
     function markPaid() {
 
-        document.getElementById("orderStatus").textContent =
+        document.getElementById("tradeStatus")
+            .textContent =
             "Payment Marked";
 
-        const success =
-            document.getElementById("tradeSuccess");
-
-        success.style.display =
-            "block";
-
-        success.textContent =
-            "Payment status has been updated. The seller can now review the order.";
-
+        alert(
+            "Payment has been marked for this P2P order."
+        );
     }
-
 
     function releaseUSDT() {
 
-        document.getElementById("orderStatus").textContent =
+        document.getElementById("tradeStatus")
+            .textContent =
             "Completed";
 
-        const success =
-            document.getElementById("tradeSuccess");
-
-        success.style.display =
-            "block";
-
-        success.textContent =
-            "Order completed successfully. The USDT release status has been recorded.";
-
+        alert(
+            "P2P order completed successfully."
+        );
     }
-
 
     function cancelTrade() {
 
-        document.getElementById("orderStatus").textContent =
+        document.getElementById("tradeStatus")
+            .textContent =
             "Cancelled";
 
-        const success =
-            document.getElementById("tradeSuccess");
-
-        success.style.display =
-            "block";
-
-        success.textContent =
-            "The order has been cancelled.";
-
+        alert(
+            "P2P order has been cancelled."
+        );
     }
-
 
     function createSellOffer() {
 
-        const success =
-            document.getElementById("sellSuccess");
+        const amount =
+            parseFloat(
+                document.getElementById("sellAmount").value
+            ) || 0;
 
-        success.style.display =
-            "block";
+        const rate =
+            parseFloat(
+                document.getElementById("sellRate").value
+            );
 
-        success.textContent =
-            "Your sell offer has been created successfully.";
+        if (amount <= 0) {
 
+            alert(
+                "Please enter the amount of USDT you want to sell."
+            );
+
+            return;
+        }
+
+        const total =
+            amount * rate;
+
+        alert(
+            "Sell order created.\n\n" +
+            "USDT: " +
+            amount +
+            "\n" +
+            "Rate: " +
+            rate +
+            " ETB / USDT\n" +
+            "Total: " +
+            total.toLocaleString() +
+            " ETB"
+        );
     }
-
 
     window.onclick = function(event) {
 
@@ -1712,16 +1951,22 @@
             document.getElementById("tradeModal");
 
         if (event.target === modal) {
-
             closeTrade();
-
         }
 
     };
 
+    document.getElementById("messageInput")
+        .addEventListener(
+            "keydown",
+            function(event) {
 
-    calculateBuy();
-    calculateSell();
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+
+            }
+        );
 
 </script>
 
