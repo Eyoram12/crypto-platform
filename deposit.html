@@ -7,127 +7,195 @@
     <title>Deposit | CryptoVault</title>
 
     <style>
+        :root {
+            --bg: #07111f;
+            --card: #101d30;
+            --card-hover: #14243a;
+            --text: #f5f7fb;
+            --muted: #9aa8ba;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --border: #20324a;
+            --input: #0b1728;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #07111f;
-            color: #ffffff;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .header {
-            background: #091522;
-            border-bottom: 1px solid #203349;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        /* HEADER */
+
+        header {
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: rgba(7, 17, 31, 0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
         }
 
-        .nav {
-            width: 92%;
+        .navbar {
             max-width: 1200px;
-            margin: auto;
             min-height: 70px;
+            margin: auto;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 25px;
+            font-weight: 800;
         }
 
         .logo span {
-            color: #35d0ba;
+            color: var(--primary);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 22px;
+            gap: 7px;
         }
 
         .nav-links a {
-            color: #a9bacb;
-            text-decoration: none;
+            color: var(--muted);
+            padding: 8px 11px;
+            border-radius: 8px;
             font-size: 14px;
-            font-weight: bold;
+            transition: 0.3s;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #35d0ba;
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.08);
         }
 
         .menu-btn {
             display: none;
             background: transparent;
-            border: 1px solid #2a3e55;
-            color: #ffffff;
-            padding: 8px 11px;
-            border-radius: 8px;
+            border: 0;
+            color: var(--text);
+            font-size: 28px;
             cursor: pointer;
-            font-size: 20px;
         }
 
-        .container {
-            width: 92%;
-            max-width: 1100px;
-            margin: 40px auto;
+        /* MAIN */
+
+        main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 45px 20px 70px;
         }
 
-        .title {
-            margin-bottom: 25px;
+        .page-header {
+            margin-bottom: 30px;
         }
 
-        .title h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 7px;
         }
 
-        .title p {
-            color: #8fa2b6;
-            line-height: 1.6;
+        .page-header p {
+            color: var(--muted);
         }
 
-        .warning {
-            padding: 17px;
+        .demo-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* NOTICE */
+
+        .notice {
+            padding: 18px;
             border-radius: 12px;
-            background: #2b2111;
-            border: 1px solid #65501e;
-            color: #f2d37b;
-            line-height: 1.6;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--muted);
             font-size: 13px;
             margin-bottom: 25px;
         }
 
-        .warning strong {
-            color: #ffffff;
+        .notice strong {
+            color: var(--text);
         }
 
-        .grid {
+        /* GRID */
+
+        .deposit-grid {
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 22px;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 20px;
         }
 
         .card {
-            background: #0d1b2a;
-            border: 1px solid #203349;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 25px;
         }
 
         .card h2 {
-            font-size: 19px;
+            font-size: 20px;
             margin-bottom: 22px;
         }
+
+        /* FORM */
 
         .form-group {
             margin-bottom: 20px;
@@ -135,33 +203,27 @@
 
         label {
             display: block;
-            color: #dce7f2;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 700;
             margin-bottom: 8px;
-            font-weight: bold;
         }
 
         select,
         input {
             width: 100%;
-            padding: 14px;
-            background: #091522;
-            color: #ffffff;
-            border: 1px solid #2a3e55;
+            padding: 13px 14px;
             border-radius: 9px;
-            font-size: 14px;
+            border: 1px solid var(--border);
+            background: var(--input);
+            color: var(--text);
             outline: none;
+            font-size: 14px;
+            transition: 0.3s;
         }
 
         select:focus,
         input:focus {
-            border-color: #35d0ba;
-        }
-
-        .network-info {
-            margin-top: 8px;
-            color: #718398;
-            font-size: 12px;
+            border-color: var(--primary);
         }
 
         .address-box {
@@ -171,203 +233,215 @@
 
         .address-box input {
             flex: 1;
-            font-size: 12px;
         }
 
         .copy-btn {
-            border: 1px solid #35d0ba;
-            background: transparent;
-            color: #35d0ba;
+            padding: 0 16px;
+            border: 0;
             border-radius: 9px;
-            padding: 0 15px;
+            background: var(--primary);
+            color: white;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .copy-btn:hover {
-            background: #35d0ba;
-            color: #07111f;
+            background: var(--primary-dark);
         }
 
-        .btn {
+        .submit-btn {
             width: 100%;
             padding: 14px;
-            border: none;
+            border: 0;
             border-radius: 9px;
-            background: #35d0ba;
-            color: #06121f;
-            font-weight: bold;
+            background: var(--primary);
+            color: white;
             font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
         }
 
-        .success {
+        .success-message {
             display: none;
             margin-top: 18px;
             padding: 14px;
             border-radius: 9px;
-            background: #102d2a;
-            border: 1px solid #287d70;
-            color: #7de5d5;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: var(--success);
             font-size: 13px;
-            line-height: 1.5;
         }
 
-        .deposit-box {
-            margin-top: 20px;
+        /* SUMMARY */
+
+        .summary {
+            margin-top: 25px;
             padding: 18px;
-            background: #091522;
-            border: 1px solid #203349;
+            background: var(--card-hover);
+            border: 1px solid var(--border);
             border-radius: 12px;
         }
 
-        .deposit-box-title {
-            color: #8fa2b6;
-            font-size: 12px;
-            margin-bottom: 8px;
+        .summary h3 {
+            font-size: 15px;
+            margin-bottom: 14px;
         }
 
-        .deposit-box strong {
-            font-size: 24px;
-            color: #35d0ba;
-        }
-
-        .asset-badge {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 6px 10px;
-            background: #13283a;
-            color: #35d0ba;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .steps {
-            list-style: none;
-            counter-reset: steps;
-        }
-
-        .steps li {
-            counter-increment: steps;
-            position: relative;
-            padding-left: 40px;
-            margin-bottom: 20px;
-            color: #9caec1;
-            line-height: 1.6;
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border);
             font-size: 13px;
         }
 
-        .steps li:last-child {
-            margin-bottom: 0;
+        .summary-row:last-child {
+            border-bottom: 0;
         }
 
-        .steps li::before {
-            content: counter(steps);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 26px;
-            height: 26px;
+        .summary-row span:first-child {
+            color: var(--muted);
+        }
+
+        /* HOW IT WORKS */
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .step {
+            display: flex;
+            gap: 13px;
+        }
+
+        .step-number {
+            min-width: 30px;
+            height: 30px;
             border-radius: 50%;
-            background: #13283a;
-            color: #35d0ba;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 800;
+            font-size: 13px;
         }
 
-        .info {
-            margin-top: 25px;
-            padding: 17px;
-            border-radius: 10px;
-            background: #102437;
-            border: 1px solid #25445e;
-        }
-
-        .info strong {
+        .step-content strong {
             display: block;
-            margin-bottom: 7px;
-            font-size: 14px;
+            margin-bottom: 3px;
         }
 
-        .info p {
-            color: #8fa2b6;
+        .step-content p {
+            color: var(--muted);
             font-size: 12px;
-            line-height: 1.6;
         }
 
-        .demo-balance {
+        /* INFO */
+
+        .info-box {
             margin-top: 20px;
-            padding: 17px;
+            padding: 15px;
             border-radius: 10px;
-            background: #102437;
-            border: 1px solid #25445e;
-        }
-
-        .demo-balance span {
-            display: block;
-            color: #8fa2b6;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: var(--muted);
             font-size: 12px;
-            margin-bottom: 6px;
         }
 
-        .demo-balance strong {
-            font-size: 22px;
-            color: #35d0ba;
-        }
-
-        .notice {
-            margin-top: 25px;
-            text-align: center;
-            color: #718398;
-            font-size: 12px;
-            line-height: 1.6;
-        }
+        /* FOOTER */
 
         footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
             text-align: center;
-            color: #64768a;
+            color: var(--muted);
             font-size: 12px;
-            padding: 30px 15px;
         }
 
-        @media (max-width: 900px) {
+        /* LIGHT MODE */
+
+        body.light-mode {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --card-hover: #f1f5f9;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d7dee8;
+            --input: #ffffff;
+        }
+
+        body.light-mode header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        body.light-mode .theme-btn {
+            background: #ffffff;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .deposit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .menu-btn {
+                display: block;
+            }
+
             .nav-links {
-                display: none;
                 position: absolute;
                 top: 70px;
                 left: 0;
-                width: 100%;
-                background: #091522;
-                border-bottom: 1px solid #203349;
-                padding: 18px;
+                right: 0;
+                display: none;
                 flex-direction: column;
-                gap: 18px;
+                align-items: stretch;
+                background: var(--card);
+                border-bottom: 1px solid var(--border);
+                padding: 15px 20px 20px;
             }
 
             .nav-links.show {
                 display: flex;
             }
 
-            .menu-btn {
-                display: block;
+            .nav-links a,
+            .theme-btn {
+                width: 100%;
+                text-align: center;
+                border-radius: 8px;
             }
 
-            .grid {
-                grid-template-columns: 1fr;
+            .theme-btn {
+                height: 42px;
+                border-radius: 8px;
+                margin: 0;
+            }
+
+            main {
+                padding: 30px 15px 55px;
+            }
+
+            .page-header h1 {
+                font-size: 29px;
             }
         }
 
         @media (max-width: 500px) {
-            .title h1 {
-                font-size: 28px;
-            }
 
             .card {
                 padding: 20px;
@@ -386,33 +460,58 @@
 
 <body>
 
-<header class="header">
+<header>
 
-    <nav class="nav">
+    <nav class="navbar">
 
-        <div class="logo">
+        <a href="index.html" class="logo">
             Crypto<span>Vault</span>
-        </div>
+        </a>
 
-        <button class="menu-btn" onclick="toggleMenu()">
+        <button
+            class="menu-btn"
+            onclick="toggleMenu()"
+            aria-label="Open navigation menu">
             ☰
         </button>
 
         <div class="nav-links" id="navLinks">
 
-            <a href="index.html">Home</a>
+            <a href="index.html">
+                Home
+            </a>
 
-            <a href="dashboard.html">Dashboard</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-            <a href="deposit.html" class="active">Deposit</a>
+            <a href="deposit.html" class="active">
+                Deposit
+            </a>
 
-            <a href="withdrawal.html">Withdrawal</a>
+            <a href="withdrawal.html">
+                Withdrawal
+            </a>
 
-            <a href="transactions.html">Transactions</a>
+            <a href="transactions.html">
+                Transactions
+            </a>
 
-            <a href="settings.html">Settings</a>
+            <a href="settings.html">
+                Settings
+            </a>
 
-            <a href="login.html">Logout</a>
+            <button
+                class="theme-btn"
+                id="themeBtn"
+                onclick="toggleTheme()"
+                aria-label="Toggle light and dark mode">
+                ☀️
+            </button>
+
+            <a href="login.html">
+                Logout
+            </a>
 
         </div>
 
@@ -420,34 +519,43 @@
 
 </header>
 
+<main>
 
-<main class="container">
+    <div class="page-header">
 
-    <section class="title">
+        <div class="demo-badge">
+            DEMO ACCOUNT
+        </div>
 
-        <h1>Deposit Crypto</h1>
+        <h1>
+            Deposit Assets
+        </h1>
 
         <p>
-            Add funds to your CryptoVault demonstration portfolio.
+            Explore the simulated cryptocurrency deposit process.
         </p>
-
-    </section>
-
-
-    <div class="warning">
-
-        <strong>Demo Safety Notice:</strong>
-        This website does not process real cryptocurrency deposits.
-        Do not send real cryptocurrency to any address displayed here.
 
     </div>
 
+    <div class="notice">
 
-    <section class="grid">
+        <strong>Demo Safety Notice:</strong>
+
+        This page is for demonstration purposes only.
+        The address and deposit process shown below are not
+        connected to a real blockchain wallet.
+
+    </div>
+
+    <div class="deposit-grid">
+
+        <!-- DEPOSIT FORM -->
 
         <div class="card">
 
-            <h2>Deposit Request</h2>
+            <h2>
+                Deposit Details
+            </h2>
 
             <form id="depositForm">
 
@@ -457,7 +565,7 @@
                         Select Asset
                     </label>
 
-                    <select id="asset" name="asset">
+                    <select id="asset">
 
                         <option value="BTC">
                             Bitcoin (BTC)
@@ -472,7 +580,7 @@
                         </option>
 
                         <option value="BNB">
-                            BNB (BNB)
+                            BNB
                         </option>
 
                         <option value="SOL">
@@ -483,21 +591,20 @@
 
                 </div>
 
-
                 <div class="form-group">
 
                     <label for="network">
-                        Network
+                        Select Network
                     </label>
 
-                    <select id="network" name="network">
+                    <select id="network">
 
                         <option>
-                            Bitcoin Network
+                            Bitcoin
                         </option>
 
                         <option>
-                            Ethereum Network
+                            Ethereum
                         </option>
 
                         <option>
@@ -505,17 +612,12 @@
                         </option>
 
                         <option>
-                            Solana Network
+                            Solana
                         </option>
 
                     </select>
 
-                    <div class="network-info">
-                        Network selection is for demonstration purposes only.
-                    </div>
-
                 </div>
-
 
                 <div class="form-group">
 
@@ -526,17 +628,15 @@
                     <div class="address-box">
 
                         <input
-                            type="text"
                             id="address"
+                            type="text"
                             value="DEMO-ADDRESS-NOT-FOR-REAL-CRYPTO"
-                            readonly
-                        >
+                            readonly>
 
                         <button
                             type="button"
                             class="copy-btn"
-                            onclick="copyAddress()"
-                        >
+                            onclick="copyAddress()">
                             Copy
                         </button>
 
@@ -544,209 +644,335 @@
 
                 </div>
 
-
                 <div class="form-group">
 
                     <label for="amount">
-                        Deposit Amount
+                        Demo Amount
                     </label>
 
                     <input
-                        type="number"
                         id="amount"
-                        name="amount"
-                        placeholder="Enter demo amount"
+                        type="number"
                         min="0"
-                        step="any"
-                        required
-                    >
+                        step="0.01"
+                        placeholder="Enter demo amount">
 
                 </div>
 
-
                 <button
                     type="submit"
-                    class="btn"
-                >
-                    Submit Demo Deposit
+                    class="submit-btn">
+                    Simulate Deposit
                 </button>
 
-                <div class="success" id="successMessage">
+                <div
+                    class="success-message"
+                    id="successMessage">
 
-                    Demo deposit submitted successfully.
+                    ✓ Demo deposit submitted successfully.
                     No real cryptocurrency was transferred.
 
                 </div>
 
             </form>
 
+            <div class="summary">
+
+                <h3>
+                    Deposit Summary
+                </h3>
+
+                <div class="summary-row">
+
+                    <span>
+                        Asset
+                    </span>
+
+                    <strong id="summaryAsset">
+                        BTC
+                    </strong>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Network
+                    </span>
+
+                    <strong id="summaryNetwork">
+                        Bitcoin
+                    </strong>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Amount
+                    </span>
+
+                    <strong id="summaryAmount">
+                        0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
         </div>
 
+        <!-- HOW IT WORKS -->
 
         <div class="card">
 
-            <h2>Deposit Summary</h2>
+            <h2>
+                How It Works
+            </h2>
 
-            <div class="deposit-box">
+            <div class="steps">
 
-                <div class="deposit-box-title">
-                    Selected Asset
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Select an asset
+                        </strong>
+
+                        <p>
+                            Choose the cryptocurrency you want
+                            to simulate depositing.
+                        </p>
+
+                    </div>
+
                 </div>
 
-                <strong id="selectedAsset">
-                    BTC
-                </strong>
+                <div class="step">
 
-                <div class="asset-badge">
-                    DEMO ASSET
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Select a network
+                        </strong>
+
+                        <p>
+                            Select the demonstration network
+                            associated with the asset.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Use the demo address
+                        </strong>
+
+                        <p>
+                            The displayed address is only a
+                            placeholder for this demonstration.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Submit the demo deposit
+                        </strong>
+
+                        <p>
+                            The website displays a simulated
+                            confirmation without transferring funds.
+                        </p>
+
+                    </div>
+
                 </div>
 
             </div>
 
+            <div class="info-box">
 
-            <div class="demo-balance">
+                <strong>Important:</strong>
 
-                <span>
-                    Current Demo Portfolio
-                </span>
-
-                <strong>
-                    $10,000.00
-                </strong>
-
-            </div>
-
-
-            <div class="info">
-
-                <strong>
-                    Important
-                </strong>
-
-                <p>
-                    The amount entered on this page does not change your
-                    real bank account, cryptocurrency wallet, or financial
-                    balance. This page is a front-end demonstration.
-                </p>
+                Never send real cryptocurrency to the address
+                displayed on this demonstration website.
 
             </div>
 
         </div>
-
-    </section>
-
-
-    <section class="card" style="margin-top:22px;">
-
-        <h2>How It Works</h2>
-
-        <ol class="steps">
-
-            <li>
-                Select the cryptocurrency you want to use.
-            </li>
-
-            <li>
-                Select a demonstration network.
-            </li>
-
-            <li>
-                Review the demonstration address.
-            </li>
-
-            <li>
-                Enter an amount for the demo request.
-            </li>
-
-            <li>
-                Submit the demonstration deposit.
-            </li>
-
-        </ol>
-
-    </section>
-
-
-    <div class="notice">
-
-        This page is for UI demonstration only.
-        A production deposit system requires secure backend processing,
-        wallet infrastructure, transaction verification, and network validation.
 
     </div>
 
 </main>
 
-
 <footer>
 
-    © 2026 CryptoVault. Demo platform for educational purposes.
-
-    <br><br>
-
-    No real cryptocurrency is accepted or transferred through this website.
+    © 2026 CryptoVault. Demonstration website only.
 
 </footer>
 
-
 <script>
+
+    /* MOBILE MENU */
 
     function toggleMenu() {
 
-        const navLinks =
-            document.getElementById("navLinks");
-
-        navLinks.classList.toggle("show");
+        document
+            .getElementById("navLinks")
+            .classList.toggle("show");
 
     }
 
+
+    /* LIGHT / DARK MODE */
+
+    function toggleTheme() {
+
+        document.body.classList.toggle("light-mode");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        localStorage.setItem(
+            "cryptoVaultTheme",
+            isLight ? "light" : "dark"
+        );
+
+        updateThemeButton();
+
+    }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.getElementById("themeBtn");
+
+        const isLight =
+            document.body.classList.contains("light-mode");
+
+        button.textContent =
+            isLight ? "🌙" : "☀️";
+
+        button.setAttribute(
+            "aria-label",
+            isLight
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    function loadTheme() {
+
+        const savedTheme =
+            localStorage.getItem("cryptoVaultTheme");
+
+        if (savedTheme === "light") {
+
+            document.body.classList.add("light-mode");
+
+        }
+
+        updateThemeButton();
+
+    }
+
+
+    /* COPY ADDRESS */
 
     function copyAddress() {
 
         const address =
             document.getElementById("address");
 
+        navigator.clipboard.writeText(
+            address.value
+        );
+
         const button =
             document.querySelector(".copy-btn");
 
-        navigator.clipboard.writeText(address.value)
-            .then(function() {
+        button.textContent = "Copied!";
 
-                const original =
-                    button.textContent;
+        setTimeout(function() {
 
-                button.textContent = "Copied!";
+            button.textContent = "Copy";
 
-                setTimeout(function() {
-
-                    button.textContent = original;
-
-                }, 1500);
-
-            })
-            .catch(function() {
-
-                alert("Copy is not available in this browser.");
-
-            });
+        }, 1500);
 
     }
 
 
+    /* SUMMARY */
+
     const asset =
         document.getElementById("asset");
 
-    const selectedAsset =
-        document.getElementById("selectedAsset");
+    const network =
+        document.getElementById("network");
+
+    const amount =
+        document.getElementById("amount");
 
 
-    asset.addEventListener("change", function() {
+    asset.addEventListener("change", updateSummary);
 
-        selectedAsset.textContent =
+    network.addEventListener("change", updateSummary);
+
+    amount.addEventListener("input", updateSummary);
+
+
+    function updateSummary() {
+
+        document.getElementById(
+            "summaryAsset"
+        ).textContent =
             asset.value;
 
-    });
+        document.getElementById(
+            "summaryNetwork"
+        ).textContent =
+            network.value;
 
+        document.getElementById(
+            "summaryAmount"
+        ).textContent =
+            amount.value || "0.00";
+
+    }
+
+
+    /* DEMO SUBMISSION */
 
     document
         .getElementById("depositForm")
@@ -754,31 +980,40 @@
 
             event.preventDefault();
 
-            const amount =
-                document.getElementById("amount").value;
+            const success =
+                document.getElementById(
+                    "successMessage"
+                );
 
-            if (amount <= 0) {
+            success.style.display = "block";
 
-                alert("Please enter a valid demonstration amount.");
+            updateSummary();
 
-                return;
+        });
 
-            }
 
-            document
-                .getElementById("successMessage")
-                .style.display = "block";
+    /* CLOSE MOBILE MENU */
 
-            this.reset();
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(function(link) {
 
-            selectedAsset.textContent = "BTC";
+            link.addEventListener("click", function() {
 
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: "smooth"
+                document
+                    .getElementById("navLinks")
+                    .classList.remove("show");
+
             });
 
         });
+
+
+    /* START */
+
+    loadTheme();
+
+    updateSummary();
 
 </script>
 
