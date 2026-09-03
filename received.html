@@ -14,274 +14,392 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #f4f7fb;
             color: #172033;
         }
 
         header {
-            background: #0b1220;
+            background: #111827;
             color: white;
-            padding: 16px 6%;
+            padding: 16px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: #ffffff;
-            color: #0b1220;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
+            background: white;
+            color: #111827;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 800;
         }
 
         nav {
             display: flex;
+            gap: 7px;
             flex-wrap: wrap;
-            gap: 18px;
         }
 
         nav a {
-            color: #dbe4f0;
+            color: #d1d5db;
             text-decoration: none;
+            padding: 9px 11px;
+            border-radius: 7px;
             font-size: 14px;
         }
 
         nav a:hover,
         nav a.active {
-            color: white;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1150px;
-            margin: 40px auto;
+            background: white;
+            color: #111827;
         }
 
         .hero {
-            background: linear-gradient(135deg, #101b32, #1c3155);
+            background: #111827;
             color: white;
-            padding: 38px;
-            border-radius: 20px;
-            margin-bottom: 25px;
+            padding: 55px 5% 75px;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: auto;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: #e5e7eb;
             padding: 8px 14px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 13px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .hero h1 {
-            font-size: 34px;
-            margin-bottom: 10px;
+            font-size: 42px;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            color: #d7e2f2;
-            line-height: 1.6;
+            color: #cbd5e1;
+            max-width: 650px;
+            line-height: 1.7;
+            font-size: 16px;
         }
 
-        .summary {
+        .container {
+            max-width: 1100px;
+            margin: -35px auto 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 18px;
             margin-bottom: 25px;
         }
 
-        .card {
+        .summary-card {
             background: white;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 25px rgba(20, 30, 50, 0.07);
+            padding: 23px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
 
-        .summary .card p {
-            color: #718096;
-            font-size: 14px;
+        .summary-label {
+            color: #64748b;
+            font-size: 13px;
             margin-bottom: 8px;
         }
 
-        .summary .card h2 {
-            font-size: 26px;
+        .summary-value {
+            font-size: 27px;
+            font-weight: bold;
         }
 
-        .section-title {
-            margin-bottom: 18px;
-            font-size: 22px;
+        .summary-small {
+            color: #047857;
+            font-size: 12px;
+            margin-top: 6px;
         }
 
-        .received-list {
+        .grid {
             display: grid;
-            gap: 14px;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr 160px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d7dee8;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #111827;
+        }
+
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
         }
 
         .transaction {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            box-shadow: 0 6px 20px rgba(20, 30, 50, 0.06);
-        }
-
-        .transaction-left {
-            display: flex;
             align-items: center;
             gap: 15px;
+            padding: 17px 0;
+            border-bottom: 1px solid #edf0f4;
         }
 
-        .coin {
-            width: 48px;
-            height: 48px;
+        .transaction:last-child {
+            border-bottom: none;
+        }
+
+        .person {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: #eef3f9;
+            background: #eef2f7;
+            color: #111827;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #16243c;
         }
 
-        .transaction h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
+        .name {
+            font-weight: bold;
+            font-size: 14px;
         }
 
-        .transaction p {
-            color: #718096;
-            font-size: 13px;
-            line-height: 1.5;
+        .tx-id {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 4px;
         }
 
         .amount {
             text-align: right;
+            font-weight: bold;
+            font-size: 15px;
         }
 
-        .amount strong {
-            display: block;
-            color: #15803d;
-            font-size: 18px;
-            margin-bottom: 5px;
+        .received {
+            color: #047857;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid #111827;
+            padding: 17px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .details {
+            margin-top: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 14px;
+        }
+
+        .detail-row span {
+            color: #64748b;
+        }
+
+        .detail-row strong {
+            text-align: right;
+            word-break: break-word;
         }
 
         .status {
             display: inline-block;
-            background: #e9f8ef;
-            color: #15803d;
-            padding: 5px 10px;
+            background: #ecfdf5;
+            color: #047857;
+            padding: 7px 11px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
         }
 
-        .info {
-            margin-top: 25px;
-            background: #edf4ff;
-            border-left: 4px solid #315b9b;
-            padding: 18px;
-            border-radius: 10px;
-            line-height: 1.6;
-            color: #334155;
-        }
-
-        .actions {
+        .buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 25px;
+            gap: 10px;
+            margin-top: 22px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 13px 20px;
-            border-radius: 10px;
+        .buttons a {
+            flex: 1;
+            text-align: center;
             text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 14px;
-            border: none;
-            cursor: pointer;
         }
 
-        .btn-primary {
+        .primary {
             background: #111827;
             color: white;
         }
 
-        .btn-secondary {
-            background: #e8edf4;
-            color: #172033;
+        .secondary {
+            background: #eef2f7;
+            color: #111827;
+        }
+
+        .security-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .security-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 14px;
+        }
+
+        .security-list li:last-child {
+            border-bottom: none;
+        }
+
+        .empty {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            font-size: 14px;
         }
 
         footer {
-            margin-top: 50px;
-            background: #0b1220;
-            color: #9ca9bb;
+            background: #111827;
+            color: #94a3b8;
             text-align: center;
-            padding: 25px;
+            padding: 30px 20px;
             font-size: 13px;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 850px) {
+
             header {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
             nav {
-                gap: 12px;
+                width: 100%;
+                overflow-x: auto;
             }
 
-            .summary {
+            .grid {
                 grid-template-columns: 1fr;
             }
 
-            .hero {
-                padding: 28px 22px;
+            .summary-grid {
+                grid-template-columns: 1fr;
             }
 
             .hero h1 {
-                font-size: 28px;
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .filters {
+                grid-template-columns: 1fr;
             }
 
             .transaction {
-                flex-direction: column;
                 align-items: flex-start;
             }
 
             .amount {
-                text-align: left;
+                font-size: 14px;
             }
 
-            .actions {
+            .buttons {
                 flex-direction: column;
-            }
-
-            .btn {
-                text-align: center;
             }
         }
     </style>
@@ -290,8 +408,9 @@
 <body>
 
 <header>
+
     <div class="logo">
-        <div class="logo-icon">CV</div>
+        <span class="logo-icon">CV</span>
         <span>CryptoVault</span>
     </div>
 
@@ -307,141 +426,513 @@
         <a href="settings.html">Settings</a>
         <a href="login.html">Logout</a>
     </nav>
+
 </header>
 
-<main class="container">
+<section class="hero">
 
-    <section class="hero">
-        <span class="badge">SECURE PLATFORM</span>
+    <div class="hero-content">
+
+        <div class="badge">SECURE PLATFORM</div>
 
         <h1>Received Money</h1>
 
         <p>
-            View incoming digital asset transfers and review your received
-            transaction history in one place.
+            View incoming transfers, received assets, transaction
+            details, and your recent received activity.
         </p>
-    </section>
 
-    <section class="summary">
-
-        <div class="card">
-            <p>Total Received</p>
-            <h2>$4,850.00</h2>
-        </div>
-
-        <div class="card">
-            <p>Received Transfers</p>
-            <h2>8</h2>
-        </div>
-
-        <div class="card">
-            <p>Latest Received</p>
-            <h2>250 USDT</h2>
-        </div>
-
-    </section>
-
-    <section>
-        <h2 class="section-title">Recent Received Money</h2>
-
-        <div class="received-list">
-
-            <div class="transaction">
-                <div class="transaction-left">
-                    <div class="coin">USDT</div>
-
-                    <div>
-                        <h3>Received from Alex</h3>
-                        <p>
-                            Transaction ID: CV-RCV-001245<br>
-                            September 3, 2026 • 18:20
-                        </p>
-                    </div>
-                </div>
-
-                <div class="amount">
-                    <strong>+250 USDT</strong>
-                    <span class="status">Received</span>
-                </div>
-            </div>
-
-            <div class="transaction">
-                <div class="transaction-left">
-                    <div class="coin">BTC</div>
-
-                    <div>
-                        <h3>Received from Daniel</h3>
-                        <p>
-                            Transaction ID: CV-RCV-001244<br>
-                            September 2, 2026 • 14:35
-                        </p>
-                    </div>
-                </div>
-
-                <div class="amount">
-                    <strong>+0.015 BTC</strong>
-                    <span class="status">Received</span>
-                </div>
-            </div>
-
-            <div class="transaction">
-                <div class="transaction-left">
-                    <div class="coin">USDT</div>
-
-                    <div>
-                        <h3>Received from Sara</h3>
-                        <p>
-                            Transaction ID: CV-RCV-001243<br>
-                            September 1, 2026 • 11:10
-                        </p>
-                    </div>
-                </div>
-
-                <div class="amount">
-                    <strong>+500 USDT</strong>
-                    <span class="status">Received</span>
-                </div>
-            </div>
-
-            <div class="transaction">
-                <div class="transaction-left">
-                    <div class="coin">ETH</div>
-
-                    <div>
-                        <h3>Received from Michael</h3>
-                        <p>
-                            Transaction ID: CV-RCV-001242<br>
-                            August 30, 2026 • 09:45
-                        </p>
-                    </div>
-                </div>
-
-                <div class="amount">
-                    <strong>+0.40 ETH</strong>
-                    <span class="status">Received</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="info">
-        <strong>Transfer Information</strong><br>
-        Received transfers shown on this platform are recorded in your
-        account activity. Transaction details include the sender, asset,
-        amount, date, time, and transaction reference.
     </div>
 
-    <div class="actions">
-        <a href="send.html" class="btn btn-primary">Send Money</a>
-        <a href="transactions.html" class="btn btn-secondary">View All Transactions</a>
+</section>
+
+<main class="container">
+
+    <section class="summary-grid">
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Received
+            </div>
+
+            <div class="summary-value">
+                $4,850.00
+            </div>
+
+            <div class="summary-small">
+                Incoming transfers
+            </div>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Received Transfers
+            </div>
+
+            <div class="summary-value">
+                8
+            </div>
+
+            <div class="summary-small">
+                Successfully received
+            </div>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Latest Received
+            </div>
+
+            <div class="summary-value">
+                250 USDT
+            </div>
+
+            <div class="summary-small">
+                From Alex
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="grid">
+
+        <section class="card">
+
+            <h2>Recent Received Transfers</h2>
+
+            <p class="description">
+                Review your latest incoming transfers and search
+                for a specific sender or transaction.
+            </p>
+
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search sender or transaction ID"
+                    oninput="filterTransactions()"
+                >
+
+                <select
+                    id="assetFilter"
+                    onchange="filterTransactions()"
+                >
+                    <option value="all">All Assets</option>
+                    <option value="USDT">USDT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
+                </select>
+
+            </div>
+
+            <div class="transaction-list" id="transactionList">
+
+                <div
+                    class="transaction"
+                    data-name="Alex"
+                    data-id="TX-CV-849201"
+                    data-asset="USDT"
+                >
+
+                    <div class="person">
+
+                        <div class="avatar">
+                            A
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Alex
+                            </div>
+
+                            <div class="tx-id">
+                                TX-CV-849201
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="amount">
+                            +250 USDT
+                        </div>
+
+                        <div class="received">
+                            Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="transaction"
+                    data-name="Daniel"
+                    data-id="TX-CV-741562"
+                    data-asset="USDT"
+                >
+
+                    <div class="person">
+
+                        <div class="avatar">
+                            D
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Daniel
+                            </div>
+
+                            <div class="tx-id">
+                                TX-CV-741562
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="amount">
+                            +100 USDT
+                        </div>
+
+                        <div class="received">
+                            Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="transaction"
+                    data-name="Sara"
+                    data-id="TX-CV-635814"
+                    data-asset="ETH"
+                >
+
+                    <div class="person">
+
+                        <div class="avatar">
+                            S
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Sara
+                            </div>
+
+                            <div class="tx-id">
+                                TX-CV-635814
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="amount">
+                            +1.25 ETH
+                        </div>
+
+                        <div class="received">
+                            Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="transaction"
+                    data-name="Michael"
+                    data-id="TX-CV-520318"
+                    data-asset="BTC"
+                >
+
+                    <div class="person">
+
+                        <div class="avatar">
+                            M
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Michael
+                            </div>
+
+                            <div class="tx-id">
+                                TX-CV-520318
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="amount">
+                            +0.05 BTC
+                        </div>
+
+                        <div class="received">
+                            Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="transaction"
+                    data-name="Hana"
+                    data-id="TX-CV-418726"
+                    data-asset="USDT"
+                >
+
+                    <div class="person">
+
+                        <div class="avatar">
+                            H
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Hana
+                            </div>
+
+                            <div class="tx-id">
+                                TX-CV-418726
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="amount">
+                            +500 USDT
+                        </div>
+
+                        <div class="received">
+                            Received
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="emptyMessage" class="empty">
+                No received transfers match your search.
+            </div>
+
+        </section>
+
+        <aside>
+
+            <section class="card">
+
+                <div class="info-box">
+
+                    <h3>Latest Received Transfer</h3>
+
+                    <p>
+                        Your latest incoming transfer has been
+                        successfully recorded.
+                    </p>
+
+                </div>
+
+                <h2>Transaction Details</h2>
+
+                <div class="details">
+
+                    <div class="detail-row">
+                        <span>Sender</span>
+                        <strong>Alex</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Transaction ID</span>
+                        <strong>TX-CV-849201</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Asset</span>
+                        <strong>USDT</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Amount</span>
+                        <strong>250 USDT</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Date</span>
+                        <strong>03 Sep 2026</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Status</span>
+                        <strong>
+                            <span class="status">
+                                Completed
+                            </span>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <a
+                        href="send.html"
+                        class="primary"
+                    >
+                        Send Money
+                    </a>
+
+                    <a
+                        href="transactions.html"
+                        class="secondary"
+                    >
+                        Transactions
+                    </a>
+
+                </div>
+
+            </section>
+
+            <section class="card" style="margin-top:25px;">
+
+                <h2>Account Security</h2>
+
+                <ul class="security-list">
+
+                    <li>
+                        ✓ Account status: Active
+                    </li>
+
+                    <li>
+                        ✓ Two-factor authentication enabled
+                    </li>
+
+                    <li>
+                        ✓ Transfer monitoring active
+                    </li>
+
+                    <li>
+                        ✓ Transaction records protected
+                    </li>
+
+                </ul>
+
+            </section>
+
+        </aside>
+
     </div>
 
 </main>
 
 <footer>
-    © 2026 CryptoVault. Secure Digital Asset Platform.
+    © 2026 CryptoVault. Secure digital asset platform.
 </footer>
+
+<script>
+
+    function filterTransactions() {
+
+        const search =
+            document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const asset =
+            document
+                .getElementById("assetFilter")
+                .value;
+
+        const transactions =
+            document.querySelectorAll(".transaction");
+
+        let visibleCount = 0;
+
+        transactions.forEach(function(transaction) {
+
+            const name =
+                transaction
+                    .getAttribute("data-name")
+                    .toLowerCase();
+
+            const id =
+                transaction
+                    .getAttribute("data-id")
+                    .toLowerCase();
+
+            const transactionAsset =
+                transaction
+                    .getAttribute("data-asset");
+
+            const searchMatch =
+                name.includes(search) ||
+                id.includes(search);
+
+            const assetMatch =
+                asset === "all" ||
+                transactionAsset === asset;
+
+            if (searchMatch && assetMatch) {
+
+                transaction.style.display = "flex";
+
+                visibleCount++;
+
+            } else {
+
+                transaction.style.display = "none";
+
+            }
+
+        });
+
+        const emptyMessage =
+            document.getElementById("emptyMessage");
+
+        if (visibleCount === 0) {
+
+            emptyMessage.style.display = "block";
+
+        } else {
+
+            emptyMessage.style.display = "none";
+
+        }
+
+    }
+
+</script>
 
 </body>
 </html>
