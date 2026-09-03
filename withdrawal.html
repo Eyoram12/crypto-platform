@@ -7,231 +7,264 @@
 <title>CryptoVault | Withdrawal</title>
 
 <style>
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f4f7fb;
-    color:#172033;
+html {
+    scroll-behavior: smooth;
 }
 
-header{
-    background:#111827;
-    color:white;
-    padding:16px 5%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:10;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
 }
 
-.logo{
-    font-size:22px;
-    font-weight:bold;
+header {
+    background: #111827;
+    color: white;
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-nav{
-    display:flex;
-    gap:18px;
-    flex-wrap:wrap;
+.logo {
+    font-size: 22px;
+    font-weight: bold;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    font-size:14px;
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 
-nav a:hover{
-    text-decoration:underline;
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
 }
 
-.container{
-    width:90%;
-    max-width:1000px;
-    margin:30px auto;
+nav a:hover {
+    color: #93c5fd;
 }
 
-.hero{
-    background:#111827;
-    color:white;
-    padding:35px;
-    border-radius:16px;
-    margin-bottom:25px;
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 35px auto;
 }
 
-.hero h1{
-    margin:0 0 10px;
-    font-size:32px;
+.hero {
+    background: #111827;
+    color: white;
+    padding: 38px;
+    border-radius: 18px;
+    margin-bottom: 25px;
 }
 
-.hero p{
-    margin:0;
-    color:#d1d5db;
+.hero h1 {
+    margin: 0 0 12px;
+    font-size: 34px;
 }
 
-.SECURE PLATFORM{
-    display:inline-block;
-    margin-top:18px;
-    background:#fff3cd;
-    color:#856404;
-    padding:10px 15px;
-    border-radius:8px;
-    font-size:13px;
-    font-weight:bold;
+.hero p {
+    margin: 0;
+    color: #d1d5db;
+    line-height: 1.6;
 }
 
-.notice{
-    background:#eef6ff;
-    border-left:5px solid #2563eb;
-    padding:16px;
-    border-radius:8px;
-    margin-bottom:20px;
+.platform-badge {
+    display: inline-block;
+    margin-top: 20px;
+    background: #1d4ed8;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:14px;
-    box-shadow:0 4px 15px rgba(0,0,0,.06);
-    margin-bottom:22px;
+.notice {
+    background: #eef6ff;
+    border-left: 5px solid #2563eb;
+    padding: 17px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    line-height: 1.6;
 }
 
-.card h2{
-    margin-top:0;
+.card {
+    background: white;
+    padding: 27px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
 }
 
-.form-group{
-    margin-bottom:18px;
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
-label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:7px;
+.balance {
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.balance-label {
+    color: #667085;
+    margin-bottom: 8px;
+}
+
+.balance strong {
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
 select,
-input{
-    width:100%;
-    padding:13px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    font-size:15px;
-    background:white;
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 15px;
+    background: white;
+    outline: none;
 }
 
-.balance{
-    background:#f7f9fc;
-    padding:18px;
-    border-radius:10px;
-    margin-bottom:20px;
+select:focus,
+input:focus {
+    border-color: #2563eb;
 }
 
-.balance strong{
-    font-size:24px;
+.security {
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 22px 0;
 }
 
-.security{
-    background:#f7f9fc;
-    padding:18px;
-    border-radius:10px;
-    margin-bottom:18px;
+.security-title {
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.security-row{
-    display:flex;
-    justify-content:space-between;
-    padding:10px 0;
-    border-bottom:1px solid #e5e7eb;
+.security-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.security-row:last-child{
-    border-bottom:none;
+.security-row:last-child {
+    border-bottom: none;
 }
 
-.status{
-    color:#15803d;
-    font-weight:bold;
+.status {
+    color: #15803d;
+    font-weight: bold;
 }
 
-.button{
-    width:100%;
-    border:none;
-    background:#2563eb;
-    color:white;
-    padding:14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
+.button {
+    width: 100%;
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 15px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.button:hover{
-    opacity:.9;
+.button:hover {
+    background: #1d4ed8;
 }
 
-.success{
-    display:none;
-    background:#ecfdf3;
-    border:1px solid #86efac;
-    color:#166534;
-    padding:18px;
-    border-radius:10px;
-    margin-top:18px;
+.success {
+    display: none;
+    background: #ecfdf3;
+    border: 1px solid #86efac;
+    color: #166534;
+    padding: 19px;
+    border-radius: 10px;
+    margin-top: 18px;
+    line-height: 1.7;
 }
 
-.steps{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 
-.step{
-    background:#f7f9fc;
-    padding:18px;
-    border-radius:10px;
+.step {
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 1.5;
 }
 
-.step strong{
-    display:block;
-    margin-bottom:8px;
+.step strong {
+    display: block;
+    margin-bottom: 8px;
 }
 
-footer{
-    text-align:center;
-    padding:30px;
-    color:#667085;
-    font-size:13px;
+.security-info {
+    line-height: 1.7;
+    color: #475467;
 }
 
-@media(max-width:700px){
+footer {
+    text-align: center;
+    padding: 35px;
+    color: #667085;
+    font-size: 13px;
+}
 
-    header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:15px;
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
 
-    nav{
-        gap:10px;
+    nav {
+        gap: 10px;
     }
 
-    nav a{
-        font-size:12px;
+    nav a {
+        font-size: 12px;
     }
 
-    .hero h1{
-        font-size:25px;
+    .hero {
+        padding: 28px;
     }
 
-    .steps{
-        grid-template-columns:1fr;
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -256,6 +289,7 @@ footer{
 
 </header>
 
+
 <main class="container">
 
     <section class="hero">
@@ -263,11 +297,11 @@ footer{
         <h1>💸 Withdrawal</h1>
 
         <p>
-            Withdraw assets from your CryptoVault SECURE PLATFORMnstration account.
+            Manage your digital asset withdrawal requests through CryptoVault.
         </p>
 
-        <div class="SECURE PLATFORM">
-            SECURE PLATFORM • No real funds are transferred
+        <div class="platform-badge">
+            Secure Platform
         </div>
 
     </section>
@@ -275,12 +309,11 @@ footer{
 
     <div class="notice">
 
-        <strong>SECURE PLATFORMWithdrawal Notice</strong>
+        <strong>Withdrawal Information</strong>
 
         <p>
-            This page is only a simulation. It is not connected to
-            a blockchain, cryptocurrency wallet, bank account,
-            Telebirr, mobile money service, or payment processor.
+            Withdrawal requests on this website are simulated interface actions.
+            No cryptocurrency, bank funds, or mobile money are transferred.
         </p>
 
     </div>
@@ -288,11 +321,13 @@ footer{
 
     <section class="card">
 
-        <h2>Available SECURE PLATFORMBalance</h2>
+        <h2>Available Balance</h2>
 
         <div class="balance">
 
-            <div>SECURE PLATFORMPortfolio Balance</div>
+            <div class="balance-label">
+                Portfolio Balance
+            </div>
 
             <strong>$10,000.00</strong>
 
@@ -304,6 +339,7 @@ footer{
     <section class="card">
 
         <h2>Withdrawal Details</h2>
+
 
         <div class="form-group">
 
@@ -358,13 +394,13 @@ footer{
         <div class="form-group">
 
             <label for="destination">
-                SECURE PLATFORMDestination
+                Destination
             </label>
 
             <input
                 id="destination"
                 type="text"
-                placeholder="Enter SECURE PLATFORMdestination"
+                placeholder="Enter destination"
             >
 
         </div>
@@ -389,7 +425,9 @@ footer{
 
         <div class="security">
 
-            <strong>Security Check</strong>
+            <div class="security-title">
+                Security Check
+            </div>
 
             <div class="security-row">
 
@@ -413,7 +451,7 @@ footer{
 
             <div class="security-row">
 
-                <span>SECURE PLATFORMVerification</span>
+                <span>Verification</span>
 
                 <span class="status">
                     Ready
@@ -428,7 +466,7 @@ footer{
             class="button"
             onclick="createWithdrawal()"
         >
-            Create SECURE PLATFORMWithdrawal
+            Create Withdrawal
         </button>
 
 
@@ -450,23 +488,25 @@ footer{
 
                 <strong>1. Select Asset</strong>
 
-                Choose the cryptocurrency for the SECURE PLATFORMnstration.
+                Choose the digital asset you want to withdraw.
 
             </div>
+
 
             <div class="step">
 
                 <strong>2. Enter Details</strong>
 
-                Enter a SECURE PLATFORMdestination and withdrawal amount.
+                Enter the destination and withdrawal amount.
 
             </div>
+
 
             <div class="step">
 
                 <strong>3. Confirm</strong>
 
-                Create the simulated withdrawal request.
+                Create the withdrawal request and view the confirmation.
 
             </div>
 
@@ -479,16 +519,19 @@ footer{
 
         <h2>🛡️ Security</h2>
 
-        <p>
-            CryptoVault does not connect this SECURE PLATFORMnstration page
-            to real wallets, blockchain networks, banks, or payment
-            services.
-        </p>
+        <div class="security-info">
 
-        <p>
-            Never enter real private keys, seed phrases,
-            passwords, or financial credentials into a SECURE PLATFORMwebsite.
-        </p>
+            <p>
+                CryptoVault uses a secure interface design for managing
+                digital asset information.
+            </p>
+
+            <p>
+                Never enter real private keys, seed phrases, passwords,
+                or financial credentials into an unverified website.
+            </p>
+
+        </div>
 
     </section>
 
@@ -497,14 +540,14 @@ footer{
 
 <footer>
 
-    © 2026 CryptoVault | SECURE PLATFORMnstration website only
+    © 2026 CryptoVault | Digital Asset Platform
 
 </footer>
 
 
 <script>
 
-function createWithdrawal(){
+function createWithdrawal() {
 
     const asset =
         document.getElementById("asset").value;
@@ -522,15 +565,15 @@ function createWithdrawal(){
         document.getElementById("success");
 
 
-    if(!destination){
+    if (!destination) {
 
-        alert("Please enter a SECURE PLATFORMdestination.");
+        alert("Please enter a destination.");
 
         return;
     }
 
 
-    if(!amount || amount <= 0){
+    if (!amount || amount <= 0) {
 
         alert("Please enter a valid withdrawal amount.");
 
@@ -541,14 +584,18 @@ function createWithdrawal(){
     success.style.display = "block";
 
     success.innerHTML =
-        "<strong>SECURE PLATFORMWithdrawal Created Successfully</strong><br><br>" +
+        "<strong>Withdrawal Request Created</strong><br><br>" +
         "Asset: " + asset + "<br>" +
         "Network: " + network + "<br>" +
-        "Amount: " + amount.toLocaleString() + " " + asset +
-        "<br>" +
-        "Destination: " + destination +
-        "<br><br>" +
+        "Amount: " + amount.toLocaleString() + " " + asset + "<br>" +
+        "Destination: " + destination + "<br><br>" +
+        "Your request has been recorded in this interface. " +
         "No real cryptocurrency or money was transferred.";
+
+    success.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
 }
 
