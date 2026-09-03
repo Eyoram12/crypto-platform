@@ -16,7 +16,9 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             min-height: 100vh;
-            background: #07111f;
+            background:
+                radial-gradient(circle at top right, #12345a 0%, transparent 35%),
+                #07111f;
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -26,26 +28,49 @@
 
         .container {
             width: 100%;
-            max-width: 450px;
+            max-width: 460px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .logo {
-            text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 25px;
+            letter-spacing: -1px;
         }
 
         .logo span {
             color: #3b82f6;
         }
 
+        .brand-text {
+            color: #91a5ba;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
         .card {
-            background: #0d1c2e;
+            background: rgba(13, 28, 46, 0.97);
             border: 1px solid #203952;
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .demo-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #211b0b;
+            border: 1px solid #5a4718;
+            color: #fbbf24;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
         }
 
         h1 {
@@ -57,6 +82,7 @@
             color: #91a5ba;
             margin-bottom: 28px;
             font-size: 14px;
+            line-height: 1.5;
         }
 
         .form-group {
@@ -70,19 +96,27 @@
             font-weight: 700;
         }
 
-        input {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
-            padding: 13px;
-            border-radius: 9px;
+            padding: 14px;
+            border-radius: 10px;
             border: 1px solid #29445f;
             background: #081525;
             color: white;
             outline: none;
             font-size: 15px;
+            transition: 0.2s;
         }
 
-        input:focus {
+        input[type="text"]:focus,
+        input[type="password"]:focus {
             border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
+
+        input::placeholder {
+            color: #61758a;
         }
 
         .password-box {
@@ -103,6 +137,11 @@
             color: #60a5fa;
             cursor: pointer;
             font-size: 13px;
+            font-weight: 700;
+        }
+
+        .show-btn:hover {
+            color: white;
         }
 
         .login-options {
@@ -118,31 +157,66 @@
             align-items: center;
             gap: 7px;
             color: #91a5ba;
+            cursor: pointer;
         }
 
         .remember input {
-            width: auto;
+            width: 15px;
+            height: 15px;
+            accent-color: #2563eb;
         }
 
         .forgot {
             color: #60a5fa;
             cursor: pointer;
+            font-weight: 600;
+        }
+
+        .forgot:hover {
+            color: white;
         }
 
         button.submit {
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             background: #2563eb;
             color: white;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         button.submit:hover {
             background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        button.submit:active {
+            transform: translateY(0);
+        }
+
+        .demo-login {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #0a1a2d;
+            border: 1px solid #29486b;
+        }
+
+        .demo-login-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: #dbeafe;
+        }
+
+        .demo-login-text {
+            color: #91a5ba;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .register {
@@ -155,14 +229,19 @@
         .register a {
             color: #60a5fa;
             font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            color: white;
         }
 
         .security {
-            margin-top: 22px;
+            margin-top: 18px;
             padding: 14px;
             border: 1px solid #29486b;
             background: #0a1a2d;
-            border-radius: 9px;
+            border-radius: 10px;
             color: #9fb2c6;
             font-size: 12px;
             line-height: 1.5;
@@ -174,7 +253,7 @@
             padding: 13px;
             border: 1px solid #5a4718;
             background: #211b0b;
-            border-radius: 9px;
+            border-radius: 10px;
             color: #fbbf24;
             font-size: 12px;
             line-height: 1.5;
@@ -187,19 +266,48 @@
             margin-top: 20px;
             color: #91a5ba;
             font-size: 13px;
+            text-decoration: none;
         }
 
         .home:hover {
             color: white;
         }
 
+        .message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.success {
+            display: block;
+            background: #0b2a1c;
+            border: 1px solid #166534;
+            color: #86efac;
+        }
+
+        .message.error {
+            display: block;
+            background: #2a1111;
+            border: 1px solid #7f1d1d;
+            color: #fca5a5;
+        }
+
         @media (max-width: 500px) {
+
             body {
                 padding: 15px;
             }
 
             .card {
                 padding: 25px 20px;
+            }
+
+            .logo {
+                font-size: 28px;
             }
 
             h1 {
@@ -218,19 +326,37 @@
 
 <div class="container">
 
-    <div class="logo">
-        Crypto<span>Vault</span>
+    <div class="brand">
+
+        <div class="logo">
+            Crypto<span>Vault</span>
+        </div>
+
+        <div class="brand-text">
+            Secure Crypto Portfolio Demonstration
+        </div>
+
     </div>
 
+
     <div class="card">
+
+        <div class="demo-badge">
+            DEMO ACCOUNT
+        </div>
 
         <h1>Welcome back</h1>
 
         <p class="subtitle">
-            Log in to explore your CryptoVault demo dashboard.
+            Log in to explore your CryptoVault dashboard and
+            demonstration portfolio.
         </p>
 
-        <form action="dashboard.html" method="get">
+
+        <div id="message" class="message"></div>
+
+
+        <form id="loginForm">
 
             <div class="form-group">
 
@@ -243,10 +369,12 @@
                     id="username"
                     name="username"
                     placeholder="Enter username or email"
+                    autocomplete="username"
                     required
                 >
 
             </div>
+
 
             <div class="form-group">
 
@@ -261,6 +389,7 @@
                         id="password"
                         name="password"
                         placeholder="Enter your password"
+                        autocomplete="current-password"
                         required
                     >
 
@@ -276,40 +405,87 @@
 
             </div>
 
+
             <div class="login-options">
 
                 <label class="remember">
-                    <input type="checkbox" name="remember">
+
+                    <input
+                        type="checkbox"
+                        name="remember"
+                    >
+
                     Remember me
+
                 </label>
 
-                <span class="forgot" onclick="forgotPassword()">
+
+                <span
+                    class="forgot"
+                    onclick="forgotPassword()"
+                >
                     Forgot password?
                 </span>
 
             </div>
 
-            <button type="submit" class="submit">
+
+            <button
+                type="submit"
+                class="submit"
+            >
                 Log In
             </button>
 
         </form>
 
-        <div class="register">
-            Don't have an account?
-            <a href="register.html">Create Account</a>
+
+        <div class="demo-login">
+
+            <div class="demo-login-title">
+                Demo Access
+            </div>
+
+            <div class="demo-login-text">
+                Enter any username and password to explore
+                the demonstration dashboard. No real account
+                authentication is performed.
+            </div>
+
         </div>
+
+
+        <div class="register">
+
+            Don't have an account?
+
+            <a href="register.html">
+                Create Account
+            </a>
+
+        </div>
+
 
         <div class="security">
-            🔐 Security Notice<br>
-            This demonstration does not store passwords or
-            authenticate real users.
+
+            🔐 <strong>Security Notice</strong><br>
+
+            This demonstration does not store passwords
+            or authenticate real users.
+
         </div>
 
+
         <div class="demo">
-            DEMO ONLY: No real financial account or cryptocurrency
-            transaction is processed.
+
+            <strong>DEMO ONLY</strong><br>
+
+            No real financial account, cryptocurrency,
+            bank account, wallet, or payment transaction
+            is connected to this website.
+
         </div>
+
 
         <a href="index.html" class="home">
             ← Back to Home
@@ -318,6 +494,7 @@
     </div>
 
 </div>
+
 
 <script>
 
@@ -338,16 +515,70 @@
 
             password.type = "password";
             button.textContent = "Show";
+
         }
     }
 
 
     function forgotPassword() {
 
-        alert(
-            "Password recovery is not connected in this demo website."
-        );
+        const message =
+            document.getElementById("message");
+
+        message.className = "message error";
+
+        message.textContent =
+            "Password recovery is not connected in this demonstration website.";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     }
+
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value.trim();
+
+            const message =
+                document.getElementById("message");
+
+
+            if (!username || !password) {
+
+                message.className = "message error";
+
+                message.textContent =
+                    "Please enter your username and password.";
+
+                return;
+            }
+
+
+            message.className = "message success";
+
+            message.textContent =
+                "Demo login successful. Opening your dashboard...";
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 700);
+
+        });
 
 </script>
 
