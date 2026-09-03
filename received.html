@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Received Money | CryptoVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        header {
+            background: #0b1220;
+            color: white;
+            padding: 16px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #ffffff;
+            color: #0b1220;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        nav a {
+            color: #dbe4f0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: white;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: 40px auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #101b32, #1c3155);
+            color: white;
+            padding: 38px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #d7e2f2;
+            line-height: 1.6;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(20, 30, 50, 0.07);
+        }
+
+        .summary .card p {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .summary .card h2 {
+            font-size: 26px;
+        }
+
+        .section-title {
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .received-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .transaction {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 6px 20px rgba(20, 30, 50, 0.06);
+        }
+
+        .transaction-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coin {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #eef3f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #16243c;
+        }
+
+        .transaction h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .transaction p {
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .amount {
+            text-align: right;
+        }
+
+        .amount strong {
+            display: block;
+            color: #15803d;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            background: #e9f8ef;
+            color: #15803d;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .info {
+            margin-top: 25px;
+            background: #edf4ff;
+            border-left: 4px solid #315b9b;
+            padding: 18px;
+            border-radius: 10px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #111827;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e8edf4;
+            color: #172033;
+        }
+
+        footer {
+            margin-top: 50px;
+            background: #0b1220;
+            color: #9ca9bb;
+            text-align: center;
+            padding: 25px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 28px 22px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .transaction {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .amount {
+                text-align: left;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">CV</div>
+        <span>CryptoVault</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="deposit.html">Deposit</a>
+        <a href="send.html">Send Money</a>
+        <a href="received.html" class="active">Received</a>
+        <a href="withdrawal.html">Withdrawal</a>
+        <a href="p2p.html">P2P Trading</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="settings.html">Settings</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <span class="badge">SECURE PLATFORM</span>
+
+        <h1>Received Money</h1>
+
+        <p>
+            View incoming digital asset transfers and review your received
+            transaction history in one place.
+        </p>
+    </section>
+
+    <section class="summary">
+
+        <div class="card">
+            <p>Total Received</p>
+            <h2>$4,850.00</h2>
+        </div>
+
+        <div class="card">
+            <p>Received Transfers</p>
+            <h2>8</h2>
+        </div>
+
+        <div class="card">
+            <p>Latest Received</p>
+            <h2>250 USDT</h2>
+        </div>
+
+    </section>
+
+    <section>
+        <h2 class="section-title">Recent Received Money</h2>
+
+        <div class="received-list">
+
+            <div class="transaction">
+                <div class="transaction-left">
+                    <div class="coin">USDT</div>
+
+                    <div>
+                        <h3>Received from Alex</h3>
+                        <p>
+                            Transaction ID: CV-RCV-001245<br>
+                            September 3, 2026 • 18:20
+                        </p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <strong>+250 USDT</strong>
+                    <span class="status">Received</span>
+                </div>
+            </div>
+
+            <div class="transaction">
+                <div class="transaction-left">
+                    <div class="coin">BTC</div>
+
+                    <div>
+                        <h3>Received from Daniel</h3>
+                        <p>
+                            Transaction ID: CV-RCV-001244<br>
+                            September 2, 2026 • 14:35
+                        </p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <strong>+0.015 BTC</strong>
+                    <span class="status">Received</span>
+                </div>
+            </div>
+
+            <div class="transaction">
+                <div class="transaction-left">
+                    <div class="coin">USDT</div>
+
+                    <div>
+                        <h3>Received from Sara</h3>
+                        <p>
+                            Transaction ID: CV-RCV-001243<br>
+                            September 1, 2026 • 11:10
+                        </p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <strong>+500 USDT</strong>
+                    <span class="status">Received</span>
+                </div>
+            </div>
+
+            <div class="transaction">
+                <div class="transaction-left">
+                    <div class="coin">ETH</div>
+
+                    <div>
+                        <h3>Received from Michael</h3>
+                        <p>
+                            Transaction ID: CV-RCV-001242<br>
+                            August 30, 2026 • 09:45
+                        </p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <strong>+0.40 ETH</strong>
+                    <span class="status">Received</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="info">
+        <strong>Transfer Information</strong><br>
+        Received transfers shown on this platform are recorded in your
+        account activity. Transaction details include the sender, asset,
+        amount, date, time, and transaction reference.
+    </div>
+
+    <div class="actions">
+        <a href="send.html" class="btn btn-primary">Send Money</a>
+        <a href="transactions.html" class="btn btn-secondary">View All Transactions</a>
+    </div>
+
+</main>
+
+<footer>
+    © 2026 CryptoVault. Secure Digital Asset Platform.
+</footer>
+
+</body>
+</html>
