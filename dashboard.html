@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,318 +15,355 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #080d1c;
-            color: #ffffff;
-            line-height: 1.6;
+            background: #07111f;
+            color: #f8fafc;
+            line-height: 1.5;
         }
 
         a {
             text-decoration: none;
+            color: inherit;
         }
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        /* HEADER */
 
         header {
-            background: #0c1226;
-            border-bottom: 1px solid #273252;
+            background: #0a1626;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .nav {
-            max-width: 1200px;
-            margin: auto;
-            padding: 17px 25px;
+        .header-inner {
+            min-height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            color: #6ea0ff;
             font-size: 25px;
-            font-weight: bold;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #38bdf8;
         }
 
         nav {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 22px;
         }
 
         nav a {
-            color: #dce3f3;
-            padding: 9px 13px;
-            border-radius: 7px;
+            color: #94a3b8;
+            font-size: 14px;
         }
 
         nav a:hover {
-            background: #17223e;
-            color: #ffffff;
+            color: #38bdf8;
         }
 
         .logout {
-            border: 1px solid #39476a;
+            color: #fb7185 !important;
         }
 
+        /* MAIN */
+
         main {
-            max-width: 1200px;
-            margin: auto;
-            padding: 55px 25px;
+            padding: 40px 0 70px;
         }
 
         .welcome {
-            margin-bottom: 35px;
+            margin-bottom: 28px;
         }
 
         .welcome h1 {
-            font-size: 38px;
-            margin-bottom: 8px;
+            font-size: 32px;
+            margin-bottom: 5px;
         }
 
         .welcome p {
-            color: #9da8bb;
+            color: #94a3b8;
         }
 
-        .balance-grid {
+        /* SUMMARY */
+
+        .summary-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 22px;
         }
 
-        .balance-card,
-        .performance-card,
         .card {
-            background: #11182c;
-            border: 1px solid #273252;
-            border-radius: 14px;
-            padding: 27px;
+            background: #0d1b2d;
+            border: 1px solid #1e293b;
+            border-radius: 15px;
+            padding: 24px;
         }
 
-        .label {
-            color: #8f9ab0;
-            font-size: 14px;
-            margin-bottom: 8px;
+        .card-label {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 9px;
         }
 
         .balance {
-            font-size: 38px;
-            font-weight: bold;
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .positive {
+            color: #4ade80;
         }
 
         .performance {
-            color: #61d88b;
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 25px;
+            font-weight: 800;
         }
 
-        .small-text {
-            color: #7e899e;
-            font-size: 13px;
-            margin-top: 4px;
+        /* GRID */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 22px;
         }
 
         .section-title {
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 20px;
         }
 
-        .portfolio-grid {
+        /* ASSETS */
+
+        .asset-list {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 12px;
         }
 
-        .asset-row {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
+        .asset {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            padding: 18px 0;
-            border-bottom: 1px solid #202a46;
+            padding: 16px;
+            background: #091524;
+            border: 1px solid #1e293b;
+            border-radius: 11px;
         }
 
-        .asset-row:last-child {
-            border-bottom: none;
+        .asset-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .coin-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #12324a;
+            border-radius: 50%;
+            font-weight: 800;
+            color: #7dd3fc;
         }
 
         .asset-name {
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .asset-symbol {
-            display: block;
-            color: #7e899e;
+        .asset-amount {
+            color: #64748b;
             font-size: 12px;
         }
 
         .asset-value {
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .asset-percent {
-            color: #8fb2ff;
-            text-align: right;
-        }
+        /* CHART */
 
         .chart {
-            height: 230px;
+            height: 220px;
             display: flex;
-            align-items: flex-end;
+            align-items: end;
             gap: 12px;
-            padding: 25px 10px 10px;
-            border-bottom: 1px solid #39476a;
-            border-left: 1px solid #39476a;
+            padding: 15px 5px 0;
+            border-bottom: 1px solid #334155;
         }
 
         .bar {
             flex: 1;
-            background: #4f8cff;
+            background: #38bdf8;
             border-radius: 5px 5px 0 0;
-            min-width: 18px;
+            min-height: 20px;
             opacity: 0.85;
-        }
-
-        .bar:hover {
-            opacity: 1;
         }
 
         .chart-labels {
             display: flex;
-            gap: 12px;
-            padding: 8px 10px 0;
-        }
-
-        .chart-labels span {
-            flex: 1;
-            text-align: center;
-            color: #7e899e;
+            justify-content: space-between;
+            color: #64748b;
             font-size: 11px;
+            margin-top: 8px;
         }
 
         .chart-note {
-            color: #7e899e;
+            color: #64748b;
             font-size: 12px;
-            margin-top: 15px;
-            text-align: center;
+            margin-top: 16px;
         }
 
-        .actions {
+        /* QUICK ACTIONS */
+
+        .quick-actions {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-top: 22px;
         }
 
         .action {
-            display: block;
-            background: #11182c;
-            border: 1px solid #273252;
-            border-radius: 14px;
-            padding: 24px;
-            color: white;
+            text-align: center;
+            padding: 18px 10px;
+            background: #091524;
+            border: 1px solid #1e293b;
+            border-radius: 11px;
             transition: 0.2s;
         }
 
         .action:hover {
-            border-color: #4f8cff;
-            transform: translateY(-3px);
+            border-color: #38bdf8;
+            transform: translateY(-2px);
         }
 
         .action-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 7px;
         }
 
-        .action h3 {
-            margin-bottom: 5px;
+        .action-title {
+            font-weight: 700;
+            font-size: 13px;
         }
 
-        .action p {
-            color: #8995aa;
-            font-size: 14px;
+        .action-description {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 3px;
         }
 
-        .transactions {
-            margin-bottom: 25px;
+        /* TRANSACTIONS */
+
+        .transaction-list {
+            display: grid;
+            gap: 10px;
         }
 
         .transaction {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            display: flex;
+            justify-content: space-between;
             gap: 15px;
-            align-items: center;
-            padding: 17px 0;
-            border-bottom: 1px solid #202a46;
+            padding: 14px;
+            border-bottom: 1px solid #1e293b;
         }
 
         .transaction:last-child {
             border-bottom: none;
         }
 
-        .transaction-type {
-            font-weight: bold;
+        .transaction-name {
+            font-weight: 700;
+            font-size: 14px;
         }
 
-        .deposit {
-            color: #61d88b;
+        .transaction-date {
+            color: #64748b;
+            font-size: 11px;
         }
 
-        .withdrawal {
-            color: #ff7070;
-        }
-
-        .date {
-            color: #8995aa;
-            font-size: 13px;
+        .transaction-amount {
+            text-align: right;
+            font-weight: 700;
         }
 
         .status {
-            color: #61d88b;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: right;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #064e3b;
+            color: #6ee7b7;
+            font-size: 10px;
+            margin-top: 3px;
         }
 
-        .account-status {
+        .withdrawal {
+            color: #fb7185;
+        }
+
+        /* ACCOUNT STATUS */
+
+        .status-box {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px;
+            background: #091524;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
         }
 
         .active {
-            color: #61d88b;
-            font-weight: bold;
+            color: #4ade80;
+            font-weight: 700;
         }
+
+        /* NOTICE */
 
         .notice {
-            margin-top: 25px;
-            background: #10182d;
-            border: 1px solid #304066;
+            margin-top: 22px;
+            padding: 15px;
+            background: #082f49;
+            border: 1px solid #164e63;
+            color: #bae6fd;
             border-radius: 10px;
-            padding: 17px;
-            color: #9da8bb;
-            text-align: center;
-            font-size: 13px;
+            font-size: 12px;
         }
+
+        /* FOOTER */
 
         footer {
-            background: #050914;
-            border-top: 1px solid #273252;
-            text-align: center;
-            padding: 35px 20px;
-            color: #7e899e;
-            font-size: 13px;
+            border-top: 1px solid #1e293b;
+            padding: 25px 0;
+            color: #64748b;
+            font-size: 12px;
         }
 
-        footer strong {
-            display: block;
-            color: #6ea0ff;
-            font-size: 20px;
-            margin-bottom: 8px;
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+            .summary-grid,
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 700px) {
 
-            .nav {
+            .header-inner {
+                min-height: auto;
+                padding: 17px 0;
                 flex-direction: column;
                 gap: 15px;
             }
@@ -335,54 +371,31 @@
             nav {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 12px 18px;
             }
-
-            .balance-grid,
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .actions {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 600px) {
 
             main {
-                padding: 40px 15px;
+                padding-top: 28px;
             }
 
             .welcome h1 {
-                font-size: 30px;
+                font-size: 27px;
             }
 
             .balance {
-                font-size: 32px;
+                font-size: 29px;
             }
 
-            .asset-row {
-                grid-template-columns: 1fr 1fr;
+            .quick-actions {
+                grid-template-columns: 1fr;
             }
 
-            .asset-percent {
-                text-align: left;
+            .asset {
+                align-items: flex-start;
             }
 
-            .transaction {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .status {
-                text-align: left;
-            }
-
-            .chart {
-                gap: 6px;
-            }
-
-            .chart-labels {
-                gap: 6px;
+            .asset-value {
+                text-align: right;
             }
         }
     </style>
@@ -390,164 +403,262 @@
 
 <body>
 
-    <header>
+<header>
+    <div class="container header-inner">
 
-        <div class="nav">
+        <a href="index.html" class="logo">
+            Crypto<span>Vault</span>
+        </a>
 
-            <div class="logo">
-                CryptoVault
-            </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="deposit.html">Deposit</a>
+            <a href="withdrawal.html">Withdrawal</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="settings.html">Settings</a>
+            <a href="login.html" class="logout">Logout</a>
+        </nav>
 
-            <nav>
-
-                <a href="index.html">Home</a>
-
-                <a href="deposit.html">Deposit</a>
-
-                <a href="withdrawal.html">Withdrawal</a>
-
-                <a href="transactions.html">Transactions</a>
-
-                <a href="settings.html">Settings</a>
-
-                <a href="login.html" class="logout">Logout</a>
-
-            </nav>
-
-        </div>
-
-    </header>
+    </div>
+</header>
 
 
-    <main>
+<main>
+
+    <div class="container">
 
         <div class="welcome">
-
-            <h1>
-                Welcome to Your Dashboard
-            </h1>
-
-            <p>
-                Monitor your portfolio and explore your digital assets.
-            </p>
-
+            <h1>Welcome back, Getahun</h1>
+            <p>Here is an overview of your demonstration portfolio.</p>
         </div>
 
 
-        <!-- Balance -->
+        <!-- SUMMARY CARDS -->
 
-        <div class="balance-grid">
+        <div class="summary-grid">
 
-            <div class="balance-card">
-
-                <div class="label">
-                    Total Portfolio Balance
+            <div class="card">
+                <div class="card-label">
+                    TOTAL PORTFOLIO BALANCE
                 </div>
 
                 <div class="balance">
                     $10,000.00
                 </div>
 
-                <div class="small-text">
-                    Estimated demonstration value
+                <div class="positive">
+                    ▲ +4.82% this month
                 </div>
-
             </div>
 
 
-            <div class="performance-card">
+            <div class="card">
+                <div class="card-label">
+                    TODAY'S CHANGE
+                </div>
 
-                <div class="label">
-                    Monthly Performance
+                <div class="performance positive">
+                    +$184.20
+                </div>
+
+                <div class="card-label">
+                    +1.86%
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-label">
+                    ASSETS
                 </div>
 
                 <div class="performance">
-                    ▲ +4.82%
+                    3
                 </div>
 
-                <div class="small-text">
-                    Compared with previous month
+                <div class="card-label">
+                    Digital assets
                 </div>
-
             </div>
 
         </div>
 
 
-        <!-- Portfolio -->
+        <div class="dashboard-grid">
 
-        <div class="portfolio-grid">
 
-            <div class="card">
+            <!-- LEFT COLUMN -->
 
-                <h2 class="section-title">
-                    Your Assets
-                </h2>
+            <div>
 
-                <div class="asset-row">
+                <!-- ASSETS -->
 
-                    <div>
-                        <span class="asset-name">
-                            Bitcoin
-                        </span>
+                <div class="card">
 
-                        <span class="asset-symbol">
-                            BTC
-                        </span>
-                    </div>
+                    <h2 class="section-title">
+                        Your Assets
+                    </h2>
 
-                    <div class="asset-value">
-                        0.050 BTC
-                    </div>
+                    <div class="asset-list">
 
-                    <div class="asset-percent">
-                        $3,887.40
+                        <div class="asset">
+
+                            <div class="asset-left">
+
+                                <div class="coin-icon">
+                                    ₿
+                                </div>
+
+                                <div>
+                                    <div class="asset-name">
+                                        Bitcoin
+                                    </div>
+
+                                    <div class="asset-amount">
+                                        0.050 BTC
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="asset-value">
+                                $3,887.40
+                            </div>
+
+                        </div>
+
+
+                        <div class="asset">
+
+                            <div class="asset-left">
+
+                                <div class="coin-icon">
+                                    Ξ
+                                </div>
+
+                                <div>
+                                    <div class="asset-name">
+                                        Ethereum
+                                    </div>
+
+                                    <div class="asset-amount">
+                                        1.250 ETH
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="asset-value">
+                                $3,005.00
+                            </div>
+
+                        </div>
+
+
+                        <div class="asset">
+
+                            <div class="asset-left">
+
+                                <div class="coin-icon">
+                                    ₮
+                                </div>
+
+                                <div>
+                                    <div class="asset-name">
+                                        Tether
+                                    </div>
+
+                                    <div class="asset-amount">
+                                        3,107.60 USDT
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="asset-value">
+                                $3,107.60
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
 
 
-                <div class="asset-row">
+                <!-- PERFORMANCE -->
 
-                    <div>
-                        <span class="asset-name">
-                            Ethereum
-                        </span>
+                <div class="card" style="margin-top:22px;">
 
-                        <span class="asset-symbol">
-                            ETH
-                        </span>
+                    <h2 class="section-title">
+                        Portfolio Performance
+                    </h2>
+
+                    <div class="chart">
+
+                        <div class="bar" style="height:35%;"></div>
+                        <div class="bar" style="height:48%;"></div>
+                        <div class="bar" style="height:42%;"></div>
+                        <div class="bar" style="height:65%;"></div>
+                        <div class="bar" style="height:58%;"></div>
+                        <div class="bar" style="height:80%;"></div>
+                        <div class="bar" style="height:95%;"></div>
+
                     </div>
 
-                    <div class="asset-value">
-                        1.250 ETH
+                    <div class="chart-labels">
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
                     </div>
 
-                    <div class="asset-percent">
-                        $3,005.00
-                    </div>
+                    <p class="chart-note">
+                        Sample 7-day portfolio performance.
+                    </p>
 
                 </div>
 
 
-                <div class="asset-row">
+                <!-- QUICK ACTIONS -->
 
-                    <div>
-                        <span class="asset-name">
-                            Tether
-                        </span>
+                <div class="card" style="margin-top:22px;">
 
-                        <span class="asset-symbol">
-                            USDT
-                        </span>
-                    </div>
+                    <h2 class="section-title">
+                        Quick Actions
+                    </h2>
 
-                    <div class="asset-value">
-                        3,107.60 USDT
-                    </div>
+                    <div class="quick-actions">
 
-                    <div class="asset-percent">
-                        $3,107.60
+                        <a href="deposit.html" class="action">
+                            <div class="action-icon">💰</div>
+                            <div class="action-title">Deposit</div>
+                            <div class="action-description">
+                                Add assets
+                            </div>
+                        </a>
+
+
+                        <a href="withdrawal.html" class="action">
+                            <div class="action-icon">↗</div>
+                            <div class="action-title">Withdrawal</div>
+                            <div class="action-description">
+                                Send assets
+                            </div>
+                        </a>
+
+
+                        <a href="transactions.html" class="action">
+                            <div class="action-icon">📋</div>
+                            <div class="action-title">Transactions</div>
+                            <div class="action-description">
+                                View history
+                            </div>
+                        </a>
+
                     </div>
 
                 </div>
@@ -555,245 +666,136 @@
             </div>
 
 
-            <!-- Portfolio Chart -->
+            <!-- RIGHT COLUMN -->
 
-            <div class="card">
+            <div>
 
-                <h2 class="section-title">
-                    Portfolio Performance
-                </h2>
+                <!-- RECENT TRANSACTIONS -->
 
-                <div class="chart">
+                <div class="card">
 
-                    <div class="bar" style="height: 42%;"></div>
-                    <div class="bar" style="height: 50%;"></div>
-                    <div class="bar" style="height: 46%;"></div>
-                    <div class="bar" style="height: 62%;"></div>
-                    <div class="bar" style="height: 57%;"></div>
-                    <div class="bar" style="height: 74%;"></div>
-                    <div class="bar" style="height: 88%;"></div>
+                    <h2 class="section-title">
+                        Recent Transactions
+                    </h2>
 
-                </div>
+                    <div class="transaction-list">
 
-                <div class="chart-labels">
+                        <div class="transaction">
 
-                    <span>Mon</span>
-                    <span>Tue</span>
-                    <span>Wed</span>
-                    <span>Thu</span>
-                    <span>Fri</span>
-                    <span>Sat</span>
-                    <span>Sun</span>
+                            <div>
+                                <div class="transaction-name">
+                                    Bitcoin Deposit
+                                </div>
 
-                </div>
+                                <div class="transaction-date">
+                                    03 Sep 2026
+                                </div>
+                            </div>
 
-                <p class="chart-note">
-                    Sample 7-day portfolio performance
-                </p>
+                            <div class="transaction-amount positive">
+                                +$500
+                                <br>
+                                <span class="status">
+                                    Completed
+                                </span>
+                            </div>
 
-            </div>
-
-        </div>
+                        </div>
 
 
-        <!-- Quick Actions -->
+                        <div class="transaction">
 
-        <h2 class="section-title">
-            Quick Actions
-        </h2>
+                            <div>
+                                <div class="transaction-name">
+                                    USDT Deposit
+                                </div>
 
-        <div class="actions">
+                                <div class="transaction-date">
+                                    02 Sep 2026
+                                </div>
+                            </div>
 
-            <a href="deposit.html" class="action">
+                            <div class="transaction-amount positive">
+                                +$300
+                                <br>
+                                <span class="status">
+                                    Completed
+                                </span>
+                            </div>
 
-                <div class="action-icon">
-                    💰
-                </div>
-
-                <h3>
-                    Deposit
-                </h3>
-
-                <p>
-                    Add digital assets to your demonstration portfolio.
-                </p>
-
-            </a>
+                        </div>
 
 
-            <a href="withdrawal.html" class="action">
+                        <div class="transaction">
 
-                <div class="action-icon">
-                    💸
-                </div>
+                            <div>
+                                <div class="transaction-name">
+                                    Bitcoin Withdrawal
+                                </div>
 
-                <h3>
-                    Withdrawal
-                </h3>
+                                <div class="transaction-date">
+                                    01 Sep 2026
+                                </div>
+                            </div>
 
-                <p>
-                    Explore the demonstration withdrawal workflow.
-                </p>
+                            <div class="transaction-amount withdrawal">
+                                -$100
+                                <br>
+                                <span class="status">
+                                    Completed
+                                </span>
+                            </div>
 
-            </a>
-
-
-            <a href="transactions.html" class="action">
-
-                <div class="action-icon">
-                    📋
-                </div>
-
-                <h3>
-                    Transactions
-                </h3>
-
-                <p>
-                    Review your recent demonstration transactions.
-                </p>
-
-            </a>
-
-        </div>
+                        </div>
 
 
-        <!-- Recent Transactions -->
+                        <div class="transaction">
 
-        <div class="card transactions">
+                            <div>
+                                <div class="transaction-name">
+                                    Ethereum Deposit
+                                </div>
 
-            <h2 class="section-title">
-                Recent Transactions
-            </h2>
+                                <div class="transaction-date">
+                                    31 Aug 2026
+                                </div>
+                            </div>
 
+                            <div class="transaction-amount positive">
+                                +$250
+                                <br>
+                                <span class="status">
+                                    Completed
+                                </span>
+                            </div>
 
-            <div class="transaction">
+                        </div>
 
-                <div>
-                    <div class="transaction-type deposit">
-                        Bitcoin Deposit
                     </div>
 
-                    <div class="date">
-                        03 Sep 2026
-                    </div>
                 </div>
 
-                <div>
-                    BTC
-                </div>
 
-                <div class="deposit">
-                    +$500.00
-                </div>
+                <!-- ACCOUNT STATUS -->
 
-                <div class="status">
-                    Completed
-                </div>
+                <div class="card" style="margin-top:22px;">
 
-            </div>
-
-
-            <div class="transaction">
-
-                <div>
-                    <div class="transaction-type deposit">
-                        USDT Deposit
-                    </div>
-
-                    <div class="date">
-                        02 Sep 2026
-                    </div>
-                </div>
-
-                <div>
-                    USDT
-                </div>
-
-                <div class="deposit">
-                    +$300.00
-                </div>
-
-                <div class="status">
-                    Completed
-                </div>
-
-            </div>
-
-
-            <div class="transaction">
-
-                <div>
-                    <div class="transaction-type withdrawal">
-                        Bitcoin Withdrawal
-                    </div>
-
-                    <div class="date">
-                        01 Sep 2026
-                    </div>
-                </div>
-
-                <div>
-                    BTC
-                </div>
-
-                <div class="withdrawal">
-                    -$100.00
-                </div>
-
-                <div class="status">
-                    Completed
-                </div>
-
-            </div>
-
-
-            <div class="transaction">
-
-                <div>
-                    <div class="transaction-type deposit">
-                        Ethereum Deposit
-                    </div>
-
-                    <div class="date">
-                        31 Aug 2026
-                    </div>
-                </div>
-
-                <div>
-                    ETH
-                </div>
-
-                <div class="deposit">
-                    +$250.00
-                </div>
-
-                <div class="status">
-                    Completed
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Account -->
-
-        <div class="card">
-
-            <div class="account-status">
-
-                <div>
                     <h2 class="section-title">
                         Account Status
                     </h2>
 
-                    <p class="small-text">
-                        Your demonstration account is currently active.
-                    </p>
-                </div>
+                    <div class="status-box">
 
-                <div class="active">
-                    ● Active
+                        <span>
+                            Account
+                        </span>
+
+                        <span class="active">
+                            ● Active
+                        </span>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -803,34 +805,25 @@
 
         <div class="notice">
 
-            CryptoVault is a demonstration platform.
-            The balances, portfolio performance and transactions
-            shown above are sample data.
-            No real cryptocurrency or money is processed.
+            <strong>Demo platform:</strong>
+            This dashboard displays demonstration portfolio data.
+            It does not represent real cryptocurrency holdings,
+            balances, deposits, withdrawals, or financial transactions.
 
         </div>
 
-    </main>
+    </div>
+
+</main>
 
 
-    <footer>
+<footer>
 
-        <strong>
-            CryptoVault
-        </strong>
+    <div class="container">
+        © 2026 CryptoVault. Demonstration platform only.
+    </div>
 
-        Demo digital asset management platform.
-
-        <br>
-
-        No real cryptocurrency or money is processed.
-
-        <br><br>
-
-        © 2026 CryptoVault
-
-    </footer>
+</footer>
 
 </body>
-
 </html>
