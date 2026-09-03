@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CryptoVault</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+            background: #11182d;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: #b8c1d9;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .buttons a {
+            display: inline-block;
+            padding: 14px 25px;
+            margin: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register {
+            background: #4f7cff;
+            color: white;
+        }
+
+        .login {
+            border: 1px solid #4f7cff;
+            color: white;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 50px 7%;
+        }
+
+        .card {
+            background: #151e38;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card h2 {
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #b8c1d9;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #11182d;
+            color: #9da7c0;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 38px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            nav a {
+                margin-left: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CryptoVault</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+
+        <h1>Manage Your Crypto With Confidence</h1>
+
+        <p>
+            A modern crypto platform for managing digital assets,
+            deposits, withdrawals, balances, and transaction history.
+        </p>
+
+        <div class="buttons">
+            <a href="register.html" class="register">Create Account</a>
+            <a href="login.html" class="login">Login</a>
+        </div>
+
+    </div>
+</section>
+
+<section class="features">
+
+    <div class="card">
+        <h2>Secure Account</h2>
+        <p>
+            Create your account and manage your personal crypto dashboard.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Deposit</h2>
+        <p>
+            View your deposit information and track incoming transactions.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Withdrawal</h2>
+        <p>
+            Manage withdrawal requests and review your transaction history.
+        </p>
+    </div>
+
+</section>
+
+<footer>
+    © 2026 CryptoVault. Demo platform.
+</footer>
+
+</body>
+</html>
