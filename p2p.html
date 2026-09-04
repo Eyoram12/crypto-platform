@@ -2962,6 +2962,81 @@ async function enrichOffers(offers){
 
 async function loadTraderPaymentMethods(offers){
 
+  if(!supabaseClient || !offers.length){
+    return offers;
+  }
+
+  const traderIds = [
+    ...new Set(
+      offers
+        .map(o => o.trader_id)
+        .filter(Boolean)
+    )
+  ];
+
+  if(!traderIds.length){
+    return offers;
+  }
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+        .from("trader_payment_methods")
+        .select(`
+          trader_id,
+          payment_method_id,
+          status,
+          payment_methods (
+            id,
+            name,
+            code,
+            enabled
+          )
+        `)
+        .in("trader_id", traderIds)
+        .eq("status", "active");
+
+    if(error){
+      throw error;
+    }
+
+    const links = data || [];
+
+    return offers.map(offer => {
+
+      const methods =
+        links
+          .filter(row =>
+            row.trader_id === offer.trader_id
+          )
+          .map(row =>
+            row.payment_methods
+          )
+          .filter(Boolean)
+          .filter(method =>
+            method.enabled !== false
+          );
+
+      return {
+        ...offer,
+        methods
+      };
+
+    });
+
+  }catch(error){
+
+    console.error(
+      "Payment method loading error:",
+      error
+    );
+
+    return offers;
+
+  }
+}
+
   if(!supabaseClient || !offers.length)
     return offers;
 
