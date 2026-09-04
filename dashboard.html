@@ -958,7 +958,26 @@
         SUPABASE_ANON_KEY
     );
 
-    let balanceHidden = false;
+   let balanceHidden = false;
+
+async function loadUser() {
+    const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+    const emailElement = document.getElementById("userEmail");
+
+    if (error || !user) {
+        emailElement.textContent = "Not signed in";
+        return;
+    }
+
+    emailElement.textContent = user.email;
+}
+ 
+loadUser();
+
+function toggleBalance() {
+    // your existing toggleBalance code
+}
 
     function toggleBalance() {
         const balance = document.getElementById("totalBalance");
