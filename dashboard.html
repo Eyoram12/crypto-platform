@@ -960,7 +960,28 @@
 
    let balanceHidden = false;
 
-async function loadUser() {
+async function loadWallet() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("wallets")
+        .select("usdt_balance, btc_balance, eth_balance")
+        .eq("user_id", user.id)
+        .single();
+
+    if (error) {
+        console.error("Wallet error:", error);
+        return;
+    }
+
+    console.log("Real wallet:", data);
+}
+
+loadWallet();
     const { data: { user }, error } = await supabaseClient.auth.getUser();
 
     const emailElement = document.getElementById("userEmail");
