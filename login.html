@@ -466,14 +466,13 @@ async function signIn(event) {
     button.disabled = true;
     button.textContent = "Signing In...";
 
+showError("Connecting to Supabase...");
 
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-
-            email: email,
-            password: password
-
-        });
+const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
 
 
     if (error) {
