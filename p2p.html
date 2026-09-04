@@ -5,20 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CryptoVault P2P Marketplace</title>
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
   --bg:#07111f;
-  --panel:#0d1a2b;
-  --panel2:#111f33;
-  --border:#22334a;
-  --text:#f4f7fb;
-  --muted:#91a0b5;
-  --green:#20c997;
-  --green2:#12b886;
-  --yellow:#ffc107;
-  --red:#ff5c6c;
-  --blue:#4dabf7;
-  --shadow:0 15px 40px rgba(0,0,0,.28);
+  --panel:#0d1b2d;
+  --panel2:#102238;
+  --border:#1d3550;
+  --text:#eef6ff;
+  --muted:#8fa5bd;
+  --green:#19c37d;
+  --green2:#0e9f68;
+  --red:#ef5350;
+  --yellow:#f4c95d;
+  --blue:#4da3ff;
+  --shadow:0 15px 45px rgba(0,0,0,.28);
 }
 
 *{
@@ -27,16 +30,15 @@
 
 body{
   margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:
-    radial-gradient(circle at top right,#102c48 0,transparent 35%),
-    var(--bg);
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#06101c,#091522 45%,#06101c);
   color:var(--text);
 }
 
 button,
 input,
-select{
+select,
+textarea{
   font:inherit;
 }
 
@@ -45,44 +47,62 @@ button{
 }
 
 .container{
-  width:min(1400px,94%);
+  width:min(1450px,94%);
   margin:auto;
 }
 
-.header{
+.topbar{
   position:sticky;
   top:0;
   z-index:50;
-  background:rgba(7,17,31,.94);
-  backdrop-filter:blur(15px);
+  background:rgba(6,16,28,.94);
+  backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
 }
 
 .nav{
-  min-height:70px;
+  min-height:72px;
   display:flex;
   align-items:center;
-  gap:18px;
+  justify-content:space-between;
+  gap:15px;
 }
 
 .logo{
-  font-size:21px;
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-weight:800;
-  color:white;
-  margin-right:auto;
+  font-size:21px;
 }
 
-.logo span{
-  color:var(--green);
+.logo-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--green),#1767a8);
+  color:#fff;
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .wallet-mini{
+  border:1px solid var(--border);
+  background:var(--panel);
+  border-radius:12px;
+  padding:10px 14px;
   color:var(--muted);
-  font-size:12px;
+  font-size:13px;
 }
 
 .wallet-mini span{
-  color:var(--green);
+  color:var(--text);
   font-weight:700;
 }
 
@@ -92,420 +112,124 @@ button{
   border-radius:50%;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#20c997,#4dabf7);
-  color:#06111c;
-  font-weight:900;
+  background:#173b5f;
+  font-weight:800;
+}
+
+.notif-button{
+  position:relative;
+}
+
+.notif-dot{
+  position:absolute;
+  width:8px;
+  height:8px;
+  background:var(--red);
+  border-radius:50%;
+  top:7px;
+  right:8px;
 }
 
 .btn{
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:10px 14px;
-  color:white;
-  background:var(--panel2);
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  font-weight:700;
+  transition:.2s;
 }
 
 .btn:hover{
-  filter:brightness(1.15);
+  transform:translateY(-1px);
 }
 
 .btn-primary{
   background:var(--green);
-  color:#06151a;
-  border-color:var(--green);
-  font-weight:800;
+  color:#04150e;
 }
 
-.btn-success{
-  background:#198754;
-  border-color:#198754;
-  color:white;
-}
-
-.btn-danger{
-  background:#842029;
-  border-color:#a33a44;
-  color:white;
+.btn-primary:hover{
+  background:#27d58d;
 }
 
 .btn-secondary{
-  background:#142238;
+  background:#14283e;
+  color:var(--text);
+  border:1px solid var(--border);
 }
 
-.btn-small{
-  padding:7px 10px;
-  font-size:11px;
+.btn-success{
+  background:#20c77f;
+  color:#03150d;
+}
+
+.btn-danger{
+  background:#a52c31;
+  color:#fff;
 }
 
 .full{
   width:100%;
 }
 
-.notif-button{
-  position:relative;
-  width:40px;
-  height:40px;
-  padding:0;
-}
-
-.notif-dot{
-  display:none;
-  position:absolute;
-  right:6px;
-  top:5px;
-  width:7px;
-  height:7px;
-  background:var(--red);
-  border-radius:50%;
-}
-
 .hero{
-  padding:45px 0 25px;
+  padding:42px 0 25px;
 }
 
-.hero h1{
-  margin:0 0 10px;
-  font-size:clamp(28px,5vw,46px);
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:20px;
 }
 
-.hero p{
-  max-width:850px;
+.hero-card,
+.panel,
+.stat-card{
+  background:linear-gradient(145deg,rgba(16,34,56,.96),rgba(9,25,42,.96));
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+
+.hero-card{
+  padding:30px;
+}
+
+.hero-card h1{
+  margin:0 0 12px;
+  font-size:38px;
+}
+
+.hero-card p{
   color:var(--muted);
   line-height:1.7;
-  margin:0 0 20px;
+  max-width:850px;
 }
 
 .hero-actions{
   display:flex;
   flex-wrap:wrap;
   gap:9px;
+  margin-top:22px;
 }
 
-.market-tabs{
-  position:sticky;
-  top:70px;
-  z-index:30;
-  background:rgba(7,17,31,.95);
-  padding:10px 0;
-  display:flex;
-  gap:8px;
+.market-mini{
+  padding:25px;
 }
 
-.market-tab{
-  flex:1;
-  max-width:180px;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  background:var(--panel);
-  color:var(--muted);
-  font-weight:800;
+.market-mini h3{
+  margin-top:0;
 }
 
-.market-tab.active{
-  background:var(--green);
-  color:#06151a;
-  border-color:var(--green);
-}
-
-.filters{
-  margin:15px 0;
-  padding:18px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-}
-
-.filter-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
-}
-
-.control label,
-.quick-field label{
-  display:block;
-  font-size:11px;
-  color:var(--muted);
-  margin-bottom:6px;
-}
-
-input,
-select{
-  width:100%;
-  background:#091526;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:10px;
-  outline:none;
-}
-
-input:focus,
-select:focus{
-  border-color:var(--green);
-}
-
-.advanced{
-  margin-top:15px;
-  padding-top:15px;
-  border-top:1px solid var(--border);
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px;
-  align-items:center;
-}
-
-.check-control{
-  color:var(--muted);
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-
-.check-control input{
-  width:auto;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
-  margin:15px 0;
-}
-
-.stat{
-  background:var(--panel);
-  border:1px solid var(--border);
-  padding:16px;
-  border-radius:13px;
-}
-
-.stat-label{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.stat-value{
-  font-size:20px;
-  font-weight:800;
-  margin:5px 0;
-}
-
-.stat-sub{
-  color:var(--muted);
-  font-size:10px;
-}
-
-.market-info{
-  background:linear-gradient(135deg,#0c2231,#0d1a2b);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:14px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:25px;
-  margin-bottom:18px;
-}
-
-.market-info strong{
-  display:block;
-  margin-bottom:3px;
-}
-
-.market-info span{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.market-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 350px;
-  gap:18px;
-}
-
-.market-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:12px;
-}
-
-.market-heading h2{
-  margin:0;
-  font-size:20px;
-}
-
-.offer-count{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.offers{
-  display:grid;
-  gap:12px;
-}
-
-.offer{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:17px;
-  transition:.2s;
-}
-
-.offer:hover{
-  transform:translateY(-2px);
-  border-color:#34506d;
-}
-
-.offer-top{
+.market-line{
   display:flex;
   justify-content:space-between;
-  gap:12px;
-}
-
-.trader{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.trader-avatar{
-  width:43px;
-  height:43px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#18324c;
-  color:#fff;
-  font-weight:900;
-}
-
-.trader-name{
-  font-weight:800;
-}
-
-.online{
-  color:var(--green);
-  font-size:10px;
-}
-
-.offline{
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
   color:var(--muted);
-  font-size:10px;
 }
 
-.verified{
-  color:var(--green);
-  font-size:10px;
-}
-
-.favorite{
-  border:0;
-  background:transparent;
-  color:var(--yellow);
-  font-size:21px;
-}
-
-.offer-main{
-  display:grid;
-  grid-template-columns:1.2fr 1fr 1fr 1fr;
-  gap:15px;
-  margin-top:16px;
-}
-
-.offer-price{
-  font-size:23px;
-  font-weight:900;
-}
-
-.offer-label{
-  color:var(--muted);
-  font-size:10px;
-  margin-bottom:4px;
-}
-
-.offer-value{
-  font-weight:700;
-}
-
-.methods{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-}
-
-.method{
-  background:#142238;
-  border:1px solid #263c56;
-  border-radius:5px;
-  padding:5px 7px;
-  font-size:9px;
-}
-
-.offer-actions{
-  display:flex;
-  gap:7px;
-  margin-top:15px;
-  padding-top:13px;
-  border-top:1px solid var(--border);
-}
-
-.offer-actions .btn{
-  flex:1;
-}
-
-.quick{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  position:sticky;
-  top:145px;
-  height:max-content;
-}
-
-.quick h2{
-  margin:0;
-  font-size:18px;
-}
-
-.quick-head{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:16px;
-}
-
-.quick-head span{
-  color:var(--muted);
-  font-size:10px;
-}
-
-.selected-trader{
-  background:#091526;
-  border:1px solid var(--border);
-  padding:11px;
-  border-radius:9px;
-  margin-bottom:14px;
-}
-
-.selected-row{
-  display:flex;
-  gap:9px;
-  align-items:center;
-}
-
-.selected-avatar{
-  width:35px;
-  height:35px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#18324c;
-  font-weight:900;
+.market-line:last-child{
+  border-bottom:0;
 }
 
 .green{
@@ -516,12 +240,357 @@ select:focus{
   color:var(--yellow);
 }
 
-.calculation{
-  margin:14px 0;
-  background:#091526;
+.red{
+  color:var(--red);
+}
+
+.blue{
+  color:var(--blue);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+  margin:18px 0;
+}
+
+.stat-card{
+  padding:18px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-value{
+  margin-top:7px;
+  font-size:21px;
+  font-weight:800;
+}
+
+.stat-sub{
+  margin-top:5px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.market-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.market-tab{
+  flex:1;
+  padding:15px;
   border:1px solid var(--border);
-  padding:12px;
+  border-radius:12px;
+  background:#0b1a2c;
+  color:var(--muted);
+  font-size:16px;
+  font-weight:800;
+}
+
+.market-tab.active{
+  background:rgba(25,195,125,.14);
+  border-color:var(--green);
+  color:var(--green);
+}
+
+.filters{
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.control label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.control input,
+.control select,
+.quick-field input,
+.quick-field select,
+textarea{
+  width:100%;
+  padding:11px;
   border-radius:9px;
+  border:1px solid var(--border);
+  background:#081726;
+  color:var(--text);
+  outline:none;
+}
+
+.control input:focus,
+.control select:focus,
+.quick-field input:focus,
+.quick-field select:focus,
+textarea:focus{
+  border-color:var(--green);
+}
+
+.advanced{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.check-control{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-size:12px;
+  padding:8px;
+}
+
+.check-control input{
+  accent-color:var(--green);
+}
+
+.market-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.7fr) 370px;
+  gap:18px;
+  align-items:start;
+}
+
+.market-panel{
+  padding:20px;
+}
+
+.market-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.market-heading h2{
+  margin:0;
+}
+
+.offer-count{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.offer-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.offer{
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:17px;
+  background:#0a192a;
+  transition:.2s;
+}
+
+.offer:hover{
+  border-color:#2e5277;
+  transform:translateY(-1px);
+}
+
+.offer-top{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr auto;
+  gap:14px;
+  align-items:center;
+}
+
+.trader{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.trader-avatar{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  background:#173e61;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  overflow:hidden;
+}
+
+.trader-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.trader-name{
+  font-weight:800;
+}
+
+.trader-meta{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.badges{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  margin-top:5px;
+}
+
+.badge{
+  font-size:9px;
+  padding:3px 6px;
+  border-radius:5px;
+  background:#17314a;
+  color:#a9c9e7;
+}
+
+.badge.green-badge{
+  color:var(--green);
+  background:rgba(25,195,125,.12);
+}
+
+.badge.yellow-badge{
+  color:var(--yellow);
+  background:rgba(244,201,93,.12);
+}
+
+.offer-price{
+  font-size:19px;
+  font-weight:900;
+}
+
+.offer-label{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.offer-stat{
+  font-size:13px;
+  font-weight:700;
+}
+
+.offer-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+  padding-top:13px;
+  border-top:1px solid var(--border);
+}
+
+.method-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.method{
+  border:1px solid #29435d;
+  padding:5px 8px;
+  border-radius:7px;
+  color:#b4cbe1;
+  font-size:10px;
+}
+
+.offer-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  padding:8px 10px;
+  border-radius:8px;
+  font-size:11px;
+}
+
+.favorite-btn{
+  background:transparent;
+  color:var(--yellow);
+  border:1px solid #4b4227;
+}
+
+.favorite-btn.active{
+  background:rgba(244,201,93,.12);
+}
+
+.quick-panel{
+  position:sticky;
+  top:90px;
+  padding:20px;
+}
+
+.quick-panel h2{
+  margin:0;
+}
+
+.quick-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.selected-trader{
+  margin:16px 0;
+  padding:13px;
+  border-radius:12px;
+  background:#081726;
+  border:1px solid var(--border);
+}
+
+.selected-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.selected-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#173e61;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+}
+
+.quick-field{
+  margin-top:12px;
+}
+
+.quick-field label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.calculation{
+  margin:15px 0;
+  padding:13px;
+  border-radius:12px;
+  background:#081726;
+  border:1px solid var(--border);
 }
 
 .calc-row{
@@ -529,15 +598,21 @@ select:focus{
   justify-content:space-between;
   padding:6px 0;
   font-size:12px;
+  color:var(--muted);
+}
+
+.calc-row:last-child{
+  color:var(--text);
+  font-weight:800;
 }
 
 .security-box{
-  margin-top:14px;
-  background:#0b2030;
-  border:1px solid #1f4656;
-  border-radius:9px;
-  padding:12px;
-  font-size:11px;
+  margin-top:15px;
+  padding:14px;
+  border:1px solid rgba(25,195,125,.3);
+  border-radius:12px;
+  background:rgba(25,195,125,.06);
+  font-size:12px;
 }
 
 .security-box p{
@@ -547,268 +622,68 @@ select:focus{
 }
 
 .info-list{
-  margin-top:14px;
+  margin-top:15px;
 }
 
 .info-item{
   padding:9px 0;
   color:var(--muted);
   font-size:11px;
+  border-bottom:1px solid var(--border);
 }
 
 .demo-warning{
-  margin:25px 0;
-  padding:15px;
-  background:#211d0c;
-  border:1px solid #574b16;
+  margin:20px 0;
+  padding:16px;
+  border:1px solid rgba(244,201,93,.3);
   border-radius:12px;
-  color:#e5d88a;
+  background:rgba(244,201,93,.05);
+  color:#c9b778;
   font-size:11px;
   line-height:1.6;
 }
 
-/* PROFILE */
-
-.profile-hero{
-  background:
-    linear-gradient(135deg,#102b3e,#0d1a2b);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:18px;
-}
-
-.profile-header{
-  display:flex;
-  gap:15px;
-  align-items:center;
-}
-
-.profile-avatar{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#20c997,#4dabf7);
-  color:#06111c;
-  font-size:26px;
-  font-weight:900;
-}
-
-.profile-title h3{
-  margin:0 0 5px;
-  font-size:22px;
-}
-
-.profile-title p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin-top:9px;
-}
-
-.badge{
-  border:1px solid #31536c;
-  background:#12273a;
-  color:#b9d8eb;
-  border-radius:20px;
-  padding:5px 8px;
-  font-size:9px;
-}
-
-.reputation{
-  margin-top:17px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.reputation-score{
-  background:#091526;
-  border:1px solid var(--border);
-  padding:15px;
-  border-radius:10px;
-}
-
-.score-number{
-  font-size:34px;
-  font-weight:900;
-  color:var(--green);
-}
-
-.stars{
-  color:var(--yellow);
-  letter-spacing:2px;
-}
-
-.progress{
-  height:7px;
-  background:#1b2a3d;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:8px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  width:99%;
-  background:var(--green);
-}
-
-.profile-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:15px;
-}
-
-.profile-stat{
-  background:#091526;
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:12px;
-}
-
-.profile-stat strong{
-  display:block;
-  font-size:17px;
-}
-
-.profile-stat small{
-  color:var(--muted);
-  font-size:9px;
-}
-
-.profile-section{
-  margin-top:18px;
-}
-
-.profile-section h4{
-  margin:0 0 10px;
-}
-
-.performance{
-  display:grid;
-  gap:8px;
-}
-
-.performance-row{
-  display:grid;
-  grid-template-columns:140px 1fr 55px;
-  gap:10px;
-  align-items:center;
-  font-size:11px;
-}
-
-.performance-bar{
-  height:7px;
-  background:#1b2a3d;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.performance-bar span{
-  display:block;
-  height:100%;
-  background:var(--green);
-}
-
-.review-list{
-  display:grid;
-  gap:9px;
-}
-
-.review{
-  padding:11px;
-  background:#091526;
-  border:1px solid var(--border);
-  border-radius:9px;
-}
-
-.review-top{
-  display:flex;
-  justify-content:space-between;
-  font-size:10px;
-}
-
-.review p{
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:0;
-  line-height:1.5;
-}
-
-.history{
-  width:100%;
-  border-collapse:collapse;
-}
-
-.history th,
-.history td{
-  text-align:left;
-  padding:9px 7px;
-  border-bottom:1px solid var(--border);
-  font-size:10px;
-}
-
-.history th{
+.empty{
+  text-align:center;
+  padding:50px 20px;
   color:var(--muted);
 }
 
-.profile-actions{
-  display:flex;
-  gap:8px;
-  margin-top:16px;
-}
-
-.profile-actions .btn{
-  flex:1;
-}
-
-/* MODALS */
-
-.modal{
-  display:none;
+.modal-overlay{
   position:fixed;
   inset:0;
   z-index:100;
-  background:rgba(0,0,0,.72);
-  padding:20px;
-  overflow:auto;
-}
-
-.modal.show{
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(7px);
 }
 
-.modal-content{
-  width:min(650px,100%);
+.modal-overlay.show{
+  display:flex;
+}
+
+.modal{
+  width:min(850px,100%);
   max-height:92vh;
   overflow:auto;
-  background:var(--panel);
+  background:#0b1a2c;
   border:1px solid var(--border);
-  border-radius:15px;
-  box-shadow:var(--shadow);
+  border-radius:18px;
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
-.modal-wide{
-  width:min(1000px,100%);
+.modal.large{
+  width:min(1050px,100%);
 }
 
 .modal-header{
+  padding:18px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px 18px;
   border-bottom:1px solid var(--border);
 }
 
@@ -817,30 +692,33 @@ select:focus{
 }
 
 .close{
-  background:transparent;
-  border:0;
-  color:white;
-  font-size:26px;
+  width:34px;
+  height:34px;
+  border:1px solid var(--border);
+  background:#13263b;
+  color:#fff;
+  border-radius:8px;
+  font-size:20px;
 }
 
 .modal-body{
-  padding:18px;
+  padding:20px;
 }
 
 .review-card{
-  background:#091526;
+  background:#081726;
   border:1px solid var(--border);
-  border-radius:10px;
-  padding:12px;
+  border-radius:12px;
+  padding:13px;
 }
 
 .review-row{
   display:flex;
   justify-content:space-between;
-  gap:15px;
-  padding:8px 0;
-  border-bottom:1px solid #17283d;
-  font-size:11px;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
 }
 
 .review-row:last-child{
@@ -848,28 +726,146 @@ select:focus{
 }
 
 .warning{
-  margin-top:13px;
-  padding:11px;
-  border:1px solid #55491b;
-  background:#211d0c;
-  color:#e7da8a;
-  font-size:10px;
+  margin-top:14px;
+  padding:13px;
+  border-radius:10px;
+  background:rgba(244,201,93,.07);
+  border:1px solid rgba(244,201,93,.25);
+  color:#cdbd83;
+  font-size:11px;
   line-height:1.5;
+}
+
+.profile-head{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.profile-avatar{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#173e61;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:900;
+  overflow:hidden;
+}
+
+.profile-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-score{
+  margin-left:auto;
+  text-align:right;
+}
+
+.score{
+  font-size:28px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.profile-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:18px 0;
+}
+
+.profile-stat{
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#081726;
+}
+
+.profile-stat span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.profile-stat strong{
+  display:block;
+  margin-top:5px;
+}
+
+.profile-section{
+  margin-top:20px;
+}
+
+.profile-section h4{
+  margin:0 0 10px;
+}
+
+.performance{
+  display:grid;
+  gap:9px;
+}
+
+.performance-row{
+  display:grid;
+  grid-template-columns:140px 1fr 50px;
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.progress{
+  height:7px;
+  background:#15283d;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:var(--green);
+}
+
+.review-item{
+  border-bottom:1px solid var(--border);
+  padding:12px 0;
+}
+
+.review-item:last-child{
+  border-bottom:0;
+}
+
+.trade-history{
+  display:grid;
+  gap:7px;
+}
+
+.history-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px;
   border-radius:8px;
+  background:#081726;
+  font-size:11px;
 }
 
 .otp-intro{
   color:var(--muted);
-  font-size:12px;
+  line-height:1.5;
 }
 
 .otp-demo{
-  background:#091526;
-  border:1px solid var(--border);
-  padding:15px;
   text-align:center;
-  border-radius:10px;
-  margin:12px 0;
+  padding:17px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#081726;
 }
 
 .otp-demo small{
@@ -878,51 +874,59 @@ select:focus{
 }
 
 .otp-demo strong{
+  display:block;
+  margin-top:8px;
   font-size:28px;
-  letter-spacing:6px;
-  color:var(--green);
+  letter-spacing:7px;
 }
 
 .otp-input{
+  width:100%;
+  margin-top:14px;
+  padding:14px;
   text-align:center;
+  letter-spacing:8px;
   font-size:22px;
-  letter-spacing:5px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#071522;
+  color:#fff;
 }
 
 .timer{
   text-align:center;
   color:var(--muted);
-  margin:10px;
-  font-size:11px;
+  font-size:12px;
+  margin:12px 0;
 }
 
 .error{
   color:var(--red);
-  font-size:11px;
   min-height:18px;
-  text-align:center;
+  font-size:11px;
+  margin-bottom:8px;
 }
 
 .trade-layout{
   display:grid;
-  grid-template-columns:1.4fr .8fr;
-}
-
-.trade-left,
-.trade-right{
-  padding:18px;
+  grid-template-columns:1.5fr 1fr;
+  min-height:500px;
 }
 
 .trade-left{
+  padding:20px;
   border-right:1px solid var(--border);
 }
 
+.trade-right{
+  padding:20px;
+}
+
 .escrow-banner{
-  background:#0b2030;
-  border:1px solid #1f4656;
-  padding:12px;
-  border-radius:9px;
-  margin-bottom:15px;
+  padding:13px;
+  border:1px solid rgba(25,195,125,.3);
+  background:rgba(25,195,125,.05);
+  border-radius:10px;
   font-size:11px;
 }
 
@@ -934,15 +938,15 @@ select:focus{
 
 .timeline{
   display:flex;
-  gap:6px;
-  margin-bottom:15px;
+  gap:5px;
+  margin:18px 0;
 }
 
 .step{
+  height:5px;
   flex:1;
-  height:6px;
+  background:#183049;
   border-radius:10px;
-  background:#26364a;
 }
 
 .step.active{
@@ -950,286 +954,255 @@ select:focus{
 }
 
 .chat{
-  min-height:250px;
-  max-height:330px;
+  height:290px;
   overflow:auto;
-  background:#081321;
-  border:1px solid var(--border);
-  border-radius:9px;
   padding:10px;
+  background:#071522;
+  border:1px solid var(--border);
+  border-radius:12px;
 }
 
 .message{
   max-width:80%;
-  padding:9px;
-  margin:7px 0;
-  border-radius:9px;
+  margin:8px 0;
+  padding:10px;
+  border-radius:10px;
   font-size:11px;
-  line-height:1.5;
+  line-height:1.4;
 }
 
 .message.them{
-  background:#142238;
+  background:#12283e;
 }
 
 .message.me{
-  background:#075f4b;
   margin-left:auto;
+  background:rgba(25,195,125,.13);
+  border:1px solid rgba(25,195,125,.2);
 }
 
 .message small{
   display:block;
-  color:#8ca0b3;
-  margin-top:3px;
+  margin-top:4px;
+  color:var(--muted);
 }
 
 .chat-input{
   display:flex;
-  gap:7px;
-  margin-top:8px;
+  gap:8px;
+  margin-top:9px;
 }
 
 .chat-input input{
   flex:1;
-}
-
-.trade-status{
-  text-align:center;
+  border:1px solid var(--border);
+  background:#071522;
+  color:#fff;
+  border-radius:9px;
+  padding:10px;
 }
 
 .status-title{
   color:var(--muted);
-  font-size:10px;
+  font-size:11px;
 }
 
 .status-value{
-  font-size:17px;
   font-weight:800;
-  margin-top:4px;
+  margin-top:5px;
 }
 
 .trade-timer{
   text-align:center;
-  font-size:30px;
+  font-size:32px;
   font-weight:900;
-  margin:15px 0;
+  margin:20px 0;
 }
 
 .proof-box{
-  margin-top:12px;
-  border:1px dashed #39506a;
-  border-radius:9px;
+  margin-top:14px;
   padding:14px;
+  border:1px dashed #38516b;
+  border-radius:10px;
   color:var(--muted);
-  font-size:10px;
+  font-size:11px;
 }
 
 .trade-actions{
   display:grid;
   gap:7px;
-  margin-top:12px;
+  margin-top:14px;
 }
 
-.report-options{
-  display:grid;
-  gap:8px;
-}
-
-.report-option{
-  padding:13px;
-  text-align:left;
-  background:#091526;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:9px;
-}
-
-.activity-list{
-  display:grid;
-  gap:7px;
-}
-
-.activity-item{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px;
-  background:#091526;
-  border:1px solid var(--border);
-  border-radius:8px;
-  font-size:10px;
-}
-
-.activity-item strong{
-  color:var(--muted);
-  white-space:nowrap;
-}
-
-.notifications{
+.notification-panel{
   position:fixed;
-  top:70px;
-  right:3%;
+  top:75px;
+  right:20px;
+  width:min(350px,90vw);
   z-index:90;
-  width:min(350px,92%);
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  box-shadow:var(--shadow);
   display:none;
+  background:#0b1a2c;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
 }
 
-.notifications.show{
+.notification-panel.show{
   display:block;
 }
 
-.notifications-header{
-  padding:13px;
+.notification-header{
+  padding:14px;
+  border-bottom:1px solid var(--border);
   display:flex;
   justify-content:space-between;
-  border-bottom:1px solid var(--border);
 }
 
-.notification{
+.notification-item{
   padding:12px;
   border-bottom:1px solid var(--border);
-}
-
-.notification strong{
-  display:block;
   font-size:11px;
-}
-
-.notification span{
-  display:block;
   color:var(--muted);
-  font-size:10px;
-  margin-top:4px;
 }
 
-/* TOAST */
+.activity-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.activity-card{
+  padding:15px;
+  background:#081726;
+  border:1px solid var(--border);
+  border-radius:10px;
+}
 
 .toast{
   position:fixed;
-  right:20px;
-  bottom:20px;
+  bottom:22px;
+  right:22px;
   z-index:200;
-  background:#102238;
+  max-width:340px;
+  padding:13px 16px;
+  border-radius:10px;
+  background:#12283e;
   border:1px solid var(--border);
-  color:white;
-  padding:12px 15px;
-  border-radius:9px;
+  color:#fff;
   display:none;
   box-shadow:var(--shadow);
-  font-size:11px;
+  font-size:12px;
 }
 
 .toast.show{
   display:block;
 }
 
-/* RESPONSIVE */
+footer{
+  margin-top:40px;
+  padding:30px 0;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+}
 
-@media(max-width:1100px){
-  .filter-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
+@media(max-width:1200px){
   .stats{
     grid-template-columns:repeat(3,1fr);
   }
 
-  .market-layout{
-    grid-template-columns:1fr;
+  .filter-grid{
+    grid-template-columns:repeat(3,1fr);
   }
 
-  .quick{
-    position:relative;
-    top:auto;
+  .advanced{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .offer-top{
+    grid-template-columns:1.5fr 1fr 1fr;
+  }
+
+  .offer-actions{
+    grid-column:1/-1;
   }
 }
 
-@media(max-width:750px){
-  .wallet-mini{
-    display:none;
-  }
-
-  .nav{
-    gap:8px;
-  }
-
-  .hero{
-    padding-top:28px;
-  }
-
-  .filter-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .offer-main{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .reputation{
-    grid-template-columns:1fr;
-  }
-
-  .profile-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
+@media(max-width:900px){
+  .hero-grid,
+  .market-layout,
   .trade-layout{
     grid-template-columns:1fr;
+  }
+
+  .quick-panel{
+    position:static;
   }
 
   .trade-left{
     border-right:0;
     border-bottom:1px solid var(--border);
   }
-}
 
-@media(max-width:500px){
-  .container{
-    width:94%;
+  .profile-grid{
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .filter-grid{
-    grid-template-columns:1fr;
+  .activity-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:650px){
+  .container{
+    width:96%;
+  }
+
+  .hero-card h1{
+    font-size:28px;
+  }
+
+  .wallet-mini{
+    display:none;
   }
 
   .stats{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .offer-main{
+  .filter-grid,
+  .advanced{
     grid-template-columns:1fr;
   }
 
-  .offer-actions{
-    flex-direction:column;
-  }
-
-  .market-tabs{
-    top:62px;
-  }
-
-  .profile-grid{
+  .offer-top{
     grid-template-columns:1fr 1fr;
+  }
+
+  .offer-price{
+    font-size:17px;
+  }
+
+  .profile-head{
+    align-items:flex-start;
+  }
+
+  .profile-score{
+    margin-left:0;
+  }
+
+  .profile-head{
+    flex-wrap:wrap;
+  }
+
+  .activity-grid{
+    grid-template-columns:1fr;
   }
 
   .performance-row{
     grid-template-columns:100px 1fr 40px;
-  }
-
-  .history{
-    min-width:550px;
-  }
-
-  .profile-section{
-    overflow-x:auto;
   }
 }
 </style>
@@ -1237,418 +1210,531 @@ select:focus{
 
 <body>
 
-<header class="header">
+<header class="topbar">
   <div class="container nav">
-    <div class="logo">Crypto<span>Vault</span></div>
 
-    <div class="wallet-mini">
-      Available:
-      <span>5,250.00 USDT</span>
+    <div class="logo">
+      <div class="logo-icon">₿</div>
+      <span>CryptoVault P2P</span>
     </div>
 
-    <button class="btn btn-secondary notif-button"
-            onclick="toggleNotifications()"
-            aria-label="Notifications">
-      🔔
-      <span class="notif-dot" id="notifDot"></span>
-    </button>
+    <div class="nav-right">
 
-    <div class="avatar">G</div>
+      <div class="wallet-mini">
+        Available:
+        <span id="walletBalance">5,250.00 USDT</span>
+      </div>
+
+      <button
+        class="btn btn-secondary notif-button"
+        onclick="toggleNotifications()"
+        aria-label="Notifications"
+      >
+        🔔
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
+
+      <div class="avatar" id="headerAvatar">G</div>
+
+    </div>
   </div>
 </header>
 
 <main class="container">
 
-  <section class="hero">
-    <h1>Professional P2P Marketplace</h1>
+<section class="hero">
 
-    <p>
-      Compare verified traders, payment methods, prices, limits,
-      availability and trading performance before selecting an offer.
-      CryptoVault's current marketplace remains in demo mode.
-    </p>
+  <div class="hero-grid">
 
-    <div class="hero-actions">
-      <button class="btn btn-secondary" onclick="openSecurityCenter()">
-        🔐 Security Center
-      </button>
+    <div class="hero-card">
 
-      <button class="btn btn-secondary" onclick="refreshMarket()">
-        ↻ Refresh
-      </button>
+      <h1>Professional P2P Marketplace</h1>
 
-      <button class="btn btn-secondary" onclick="openActivity()">
-        📊 Market Activity
-      </button>
+      <p>
+        Compare verified traders, payment methods, prices, limits,
+        availability and trading performance before selecting an offer.
+        CryptoVault now supports a Supabase-ready marketplace data layer.
+        Real trading remains disabled until authentication, payment,
+        escrow and server-side authorization are fully implemented.
+      </p>
 
-      <button class="btn btn-primary"
-              onclick="showNotification('Create Offer is planned for a later development step.')">
-        ＋ Create Offer
-      </button>
+      <div class="hero-actions">
+
+        <button class="btn btn-secondary" onclick="openSecurityCenter()">
+          🔐 Security Center
+        </button>
+
+        <button class="btn btn-secondary" onclick="refreshMarket()">
+          ↻ Refresh
+        </button>
+
+        <button class="btn btn-secondary" onclick="openActivity()">
+          📊 Market Activity
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onclick="showNotification('Create Offer will be enabled after trader authentication is connected.')"
+        >
+          ＋ Create Offer
+        </button>
+
+      </div>
+
     </div>
-  </section>
 
-  <div class="market-tabs">
-    <button class="market-tab active"
-            id="buyTab"
-            onclick="setMarket('buy')">
-      Buy
+    <div class="hero-card market-mini">
+
+      <h3>Live Market</h3>
+
+      <div class="market-line">
+        <span>🟢 Traders online</span>
+        <strong id="onlineTraders">0</strong>
+      </div>
+
+      <div class="market-line">
+        <span>📈 24h volume</span>
+        <strong>8.42M USDT</strong>
+      </div>
+
+      <div class="market-line">
+        <span>⚡ Avg response</span>
+        <strong>2.4 min</strong>
+      </div>
+
+      <div class="market-line">
+        <span>🔐 Marketplace</span>
+        <strong class="green">Protected</strong>
+      </div>
+
+      <div style="margin-top:12px">
+        <span class="badge green-badge" id="connectionStatus">
+          Supabase connecting...
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="stats">
+
+  <div class="stat-card">
+    <div class="stat-label">Active traders</div>
+    <div class="stat-value" id="activeTradersStat">0</div>
+    <div class="stat-sub" id="onlineTradersSub">Loading...</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Active offers</div>
+    <div class="stat-value" id="activeOffersStat">0</div>
+    <div class="stat-sub">Supabase marketplace</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">24h P2P volume</div>
+    <div class="stat-value">8.42M USDT</div>
+    <div class="stat-sub">Marketplace indicator</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Lowest price</div>
+    <div class="stat-value" id="lowestPrice">--</div>
+    <div class="stat-sub">Current results</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Average price</div>
+    <div class="stat-value" id="averagePrice">--</div>
+    <div class="stat-sub">Current results</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Price spread</div>
+    <div class="stat-value" id="priceSpread">--</div>
+    <div class="stat-sub">Lowest to highest</div>
+  </div>
+
+</section>
+
+<section class="market-tabs">
+
+  <button
+    class="market-tab active"
+    id="buyTab"
+    onclick="setMarket('buy')"
+  >
+    Buy
+  </button>
+
+  <button
+    class="market-tab"
+    id="sellTab"
+    onclick="setMarket('sell')"
+  >
+    Sell
+  </button>
+
+</section>
+
+<section class="panel filters">
+
+  <div class="filter-grid">
+
+    <div class="control">
+      <label>Asset</label>
+
+      <select id="assetSelect" onchange="refreshMarket()">
+        <option>USDT</option>
+        <option>BTC</option>
+        <option>ETH</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label>Fiat</label>
+
+      <select id="fiatSelect" onchange="refreshMarket()">
+        <option>ETB</option>
+        <option>USD</option>
+        <option>EUR</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label>Search trader or payment method</label>
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search..."
+        oninput="filterOffers()"
+      >
+    </div>
+
+    <div class="control">
+      <label>Your amount</label>
+
+      <input
+        id="amountFilter"
+        type="number"
+        min="0"
+        placeholder="Amount"
+        oninput="filterOffers()"
+      >
+    </div>
+
+    <div class="control">
+      <label>Payment method</label>
+
+      <select id="paymentFilter" onchange="filterOffers()">
+        <option value="all">All methods</option>
+        <option>Bank Transfer</option>
+        <option>Telebirr</option>
+        <option>CBE Birr</option>
+        <option>Mobile Money</option>
+        <option>Cash</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="advanced">
+
+    <div class="control">
+      <label>Minimum amount</label>
+      <input
+        id="minAmount"
+        type="number"
+        min="0"
+        placeholder="Minimum"
+        oninput="filterOffers()"
+      >
+    </div>
+
+    <div class="control">
+      <label>Maximum amount</label>
+      <input
+        id="maxAmount"
+        type="number"
+        min="0"
+        placeholder="Maximum"
+        oninput="filterOffers()"
+      >
+    </div>
+
+    <div class="control">
+      <label>Sort by</label>
+
+      <select id="sortSelect" onchange="filterOffers()">
+        <option value="price">Best price</option>
+        <option value="rating">Best reputation</option>
+        <option value="volume">Highest volume</option>
+        <option value="speed">Fastest response</option>
+        <option value="available">Most available</option>
+        <option value="release">Fastest release</option>
+      </select>
+    </div>
+
+    <label class="check-control">
+      <input type="checkbox" id="onlineOnly" onchange="filterOffers()">
+      Online only
+    </label>
+
+    <label class="check-control">
+      <input type="checkbox" id="verifiedOnly" onchange="filterOffers()">
+      Verified only
+    </label>
+
+    <label class="check-control">
+      <input type="checkbox" id="fastOnly" onchange="filterOffers()">
+      Fast response
+    </label>
+
+    <label class="check-control">
+      <input type="checkbox" id="highCompletionOnly" onchange="filterOffers()">
+      95%+ completion
+    </label>
+
+    <label class="check-control">
+      <input type="checkbox" id="favoritesOnly" onchange="filterOffers()">
+      Favorites only
+    </label>
+
+    <label class="check-control">
+      <input type="checkbox" id="cashOnly" onchange="filterOffers()">
+      Cash available
+    </label>
+
+  </div>
+
+</section>
+
+<section class="market-layout">
+
+  <div class="panel market-panel">
+
+    <div class="market-heading">
+
+      <h2 id="marketTitle">
+        Buy USDT with ETB
+      </h2>
+
+      <span class="offer-count" id="offerCount">
+        Loading offers...
+      </span>
+
+    </div>
+
+    <div class="offer-list" id="offerList"></div>
+
+  </div>
+
+  <aside class="panel quick-panel">
+
+    <div class="quick-title">
+      <h2>Quick Trade</h2>
+      <span class="badge green-badge">Fast order</span>
+    </div>
+
+    <div class="selected-trader">
+
+      <div class="selected-row">
+
+        <div class="selected-avatar" id="selectedAvatar">
+          ?
+        </div>
+
+        <div>
+          <strong id="selectedTrader">
+            Select an offer
+          </strong>
+
+          <div
+            class="green"
+            style="font-size:11px"
+            id="selectedRating"
+          >
+            Choose a trader below
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="quick-field">
+
+      <label>You pay / receive</label>
+
+      <input
+        type="number"
+        id="quickAmount"
+        value="100"
+        min="1"
+        oninput="calculateTrade()"
+      >
+
+    </div>
+
+    <div class="quick-field">
+
+      <label>Payment method</label>
+
+      <select id="quickPayment">
+        <option>Bank Transfer</option>
+        <option>Telebirr</option>
+        <option>CBE Birr</option>
+        <option>Mobile Money</option>
+        <option>Cash</option>
+      </select>
+
+    </div>
+
+    <div class="calculation">
+
+      <div class="calc-row">
+        <span>Rate</span>
+        <span id="calcRate">--</span>
+      </div>
+
+      <div class="calc-row">
+        <span>Trading fee</span>
+        <span id="calcFee">0.00 ETB</span>
+      </div>
+
+      <div class="calc-row">
+        <span>Estimated receive</span>
+        <span id="calcReceive">-- USDT</span>
+      </div>
+
+    </div>
+
+    <button
+      class="btn btn-primary full"
+      onclick="startQuickTrade()"
+    >
+      Continue to Review
     </button>
 
-    <button class="market-tab"
-            id="sellTab"
-            onclick="setMarket('sell')">
-      Sell
+    <button
+      class="btn btn-secondary full"
+      style="margin-top:8px"
+      onclick="openActivity()"
+    >
+      📊 View Market Activity
     </button>
-  </div>
 
-  <section class="filters">
+    <div class="security-box">
 
-    <div class="filter-grid">
+      <strong>🛡️ Protected P2P workflow</strong>
 
-      <div class="control">
-        <label>Asset</label>
+      <p>
+        Review the offer before starting. Security verification is
+        required before the demo trade room opens. Real escrow will
+        require server-side authorization.
+      </p>
 
-        <select id="assetSelect" onchange="refreshMarket()">
-          <option>USDT</option>
-          <option>BTC</option>
-          <option>ETH</option>
-        </select>
+    </div>
+
+    <div class="info-list">
+
+      <div class="info-item">
+        ✓ <strong>Compare</strong>
+        prices, limits and trader reputation
       </div>
 
-      <div class="control">
-        <label>Fiat</label>
-
-        <select id="fiatSelect" onchange="refreshMarket()">
-          <option>ETB</option>
-          <option>USD</option>
-          <option>EUR</option>
-        </select>
+      <div class="info-item">
+        ✓ <strong>Choose</strong>
+        Telebirr, CBE Birr, bank transfer, mobile money or cash
       </div>
 
-      <div class="control">
-        <label>Search trader or payment method</label>
-
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search..."
-          oninput="filterOffers()"
-        >
+      <div class="info-item">
+        ✓ <strong>Favorite</strong>
+        trusted traders for faster future selection
       </div>
 
-      <div class="control">
-        <label>Your amount</label>
-
-        <input
-          id="amountFilter"
-          type="number"
-          min="0"
-          placeholder="Amount"
-          oninput="filterOffers()"
-        >
-      </div>
-
-      <div class="control">
-        <label>Payment method</label>
-
-        <select id="paymentFilter" onchange="filterOffers()">
-          <option value="all">All methods</option>
-          <option>Bank Transfer</option>
-          <option>Telebirr</option>
-          <option>CBE Birr</option>
-          <option>Mobile Money</option>
-          <option>Cash</option>
-        </select>
-      </div>
-
-      <div class="control">
-        <label>Sort by</label>
-
-        <select id="sortSelect" onchange="filterOffers()">
-          <option value="price">Best price</option>
-          <option value="rating">Best reputation</option>
-          <option value="volume">Highest volume</option>
-          <option value="speed">Fastest response</option>
-          <option value="available">Most available</option>
-          <option value="release">Fastest release</option>
-        </select>
+      <div class="info-item">
+        ✓ <strong>Report</strong>
+        suspicious offers or payment instructions
       </div>
 
     </div>
 
-    <div class="advanced">
+  </aside>
 
-      <div class="control">
-        <label>Minimum amount</label>
-        <input id="minAmount"
-               type="number"
-               min="0"
-               placeholder="Minimum"
-               oninput="filterOffers()">
-      </div>
+</section>
 
-      <div class="control">
-        <label>Maximum amount</label>
-        <input id="maxAmount"
-               type="number"
-               min="0"
-               placeholder="Maximum"
-               oninput="filterOffers()">
-      </div>
+<div class="demo-warning">
 
-      <label class="check-control">
-        <input type="checkbox" id="onlineOnly" onchange="filterOffers()">
-        Online only
-      </label>
+  <strong>Security and development notice:</strong><br>
 
-      <label class="check-control">
-        <input type="checkbox" id="verifiedOnly" onchange="filterOffers()">
-        Verified only
-      </label>
+  This page is connected to the CryptoVault Supabase data layer,
+  but it does not perform real cryptocurrency transfers.
+  Real P2P trading requires authenticated users, server-side
+  authorization, secure escrow state transitions, payment
+  verification, fraud controls, transaction validation,
+  protected secrets, audit logging and applicable legal and
+  compliance controls.
 
-      <label class="check-control">
-        <input type="checkbox" id="fastOnly" onchange="filterOffers()">
-        Fast response
-      </label>
-
-      <label class="check-control">
-        <input type="checkbox" id="highCompletionOnly" onchange="filterOffers()">
-        95%+ completion
-      </label>
-
-      <label class="check-control">
-        <input type="checkbox" id="favoritesOnly" onchange="filterOffers()">
-        Favorites only
-      </label>
-
-      <label class="check-control">
-        <input type="checkbox" id="cashOnly" onchange="filterOffers()">
-        Cash available
-      </label>
-
-    </div>
-
-  </section>
-
-  <section class="stats">
-
-    <div class="stat">
-      <div class="stat-label">Active traders</div>
-      <div class="stat-value">1,284</div>
-      <div class="stat-sub">312 online now</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Active offers</div>
-      <div class="stat-value" id="activeOffersStat">7</div>
-      <div class="stat-sub">Demo marketplace</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">24h P2P volume</div>
-      <div class="stat-value">8.42M USDT</div>
-      <div class="stat-sub">Simulated data</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Lowest price</div>
-      <div class="stat-value" id="lowestPrice">188.00 ETB</div>
-      <div class="stat-sub">Current results</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Average price</div>
-      <div class="stat-value" id="averagePrice">190.00 ETB</div>
-      <div class="stat-sub">Current results</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Price spread</div>
-      <div class="stat-value" id="priceSpread">4.00 ETB</div>
-      <div class="stat-sub">Lowest to highest</div>
-    </div>
-
-  </section>
-
-  <div class="market-info">
-    <div>
-      <strong>🟢 312 traders online</strong>
-      <span>Active now</span>
-    </div>
-
-    <div>
-      <strong>📈 8.42M USDT</strong>
-      <span>24h volume</span>
-    </div>
-
-    <div>
-      <strong>⚡ 2.4 min</strong>
-      <span>Average response</span>
-    </div>
-
-    <div>
-      <strong>🔐 Protected marketplace</strong>
-      <span>Demo workflow</span>
-    </div>
-  </div>
-
-  <section class="market-layout">
-
-    <div>
-
-      <div class="market-heading">
-        <h2 id="marketTitle">Buy USDT with ETB</h2>
-        <span class="offer-count" id="offerCount">7 offers</span>
-      </div>
-
-      <div class="offers" id="offers"></div>
-
-    </div>
-
-    <aside class="quick">
-
-      <div class="quick-head">
-        <h2>Quick Trade</h2>
-        <span>Fast order</span>
-      </div>
-
-      <div class="selected-trader">
-        <div class="selected-row">
-
-          <div class="selected-avatar" id="selectedAvatar">
-            ?
-          </div>
-
-          <div>
-            <strong id="selectedTrader">
-              Select an offer
-            </strong>
-
-            <div class="green"
-                 style="font-size:11px"
-                 id="selectedRating">
-              Choose a trader below
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="quick-field">
-        <label>You pay / receive</label>
-
-        <input
-          type="number"
-          id="quickAmount"
-          value="100"
-          min="1"
-          oninput="calculateTrade()"
-        >
-      </div>
-
-      <div class="quick-field">
-        <label>Payment method</label>
-
-        <select id="quickPayment">
-          <option>Bank Transfer</option>
-        </select>
-      </div>
-
-      <div class="calculation">
-
-        <div class="calc-row">
-          <span>Rate</span>
-          <span id="calcRate">--</span>
-        </div>
-
-        <div class="calc-row">
-          <span>Trading fee</span>
-          <span id="calcFee">0.00 ETB</span>
-        </div>
-
-        <div class="calc-row">
-          <span>Estimated receive</span>
-          <span id="calcReceive">-- USDT</span>
-        </div>
-
-      </div>
-
-      <button class="btn btn-primary full"
-              onclick="startQuickTrade()">
-        Continue to Review
-      </button>
-
-      <button class="btn btn-secondary full"
-              style="margin-top:8px"
-              onclick="openActivity()">
-        📊 View Market Activity
-      </button>
-
-      <div class="security-box">
-        <strong>🛡️ Protected P2P workflow</strong>
-
-        <p>
-          Review the offer before starting. Security verification is
-          required before the demo trade room opens. Real escrow will
-          require server-side authorization.
-        </p>
-      </div>
-
-      <div class="info-list">
-
-        <div class="info-item">
-          ✓ <strong>Compare</strong>
-          prices, limits and trader reputation
-        </div>
-
-        <div class="info-item">
-          ✓ <strong>Choose</strong>
-          Telebirr, CBE Birr, bank transfer, mobile money or cash
-        </div>
-
-        <div class="info-item">
-          ✓ <strong>Favorite</strong>
-          trusted traders for faster future selection
-        </div>
-
-        <div class="info-item">
-          ✓ <strong>Report</strong>
-          suspicious offers or payment instructions
-        </div>
-
-      </div>
-
-    </aside>
-
-  </section>
-
-  <div class="demo-warning">
-    <strong>Demo mode:</strong><br>
-    This Step #2 page is a frontend marketplace prototype.
-    Trader data, balances, offers, market activity, notifications,
-    verification codes, escrow states and transactions are simulated.
-    No real cryptocurrency, ETB, bank transfer or blockchain transaction
-    occurs here. Real P2P trading requires authenticated backend/database
-    authorization, secure escrow logic, payment integration, transaction
-    validation, fraud controls and applicable legal and compliance controls.
-  </div>
+</div>
 
 </main>
 
+<footer>
+  CryptoVault P2P Marketplace • Supabase-connected development version
+</footer>
 
-<!-- REVIEW MODAL -->
 
-<div class="modal" id="reviewModal">
+<!-- Notifications -->
 
-  <div class="modal-content">
+<div class="notification-panel" id="notificationPanel">
+
+  <div class="notification-header">
+    <strong>Notifications</strong>
+
+    <button
+      class="btn btn-secondary small-btn"
+      onclick="markNotificationsRead()"
+    >
+      Mark read
+    </button>
+  </div>
+
+  <div id="notificationList">
+
+    <div class="notification-item">
+      New P2P marketplace connection initialized.
+    </div>
+
+    <div class="notification-item">
+      Trader offers are loaded from Supabase when available.
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Review Modal -->
+
+<div class="modal-overlay" id="reviewModal">
+
+  <div class="modal">
 
     <div class="modal-header">
+
       <h3>Review P2P Order</h3>
-      <button class="close"
-              onclick="closeModal('reviewModal')">
+
+      <button
+        class="close"
+        onclick="closeModal('reviewModal')"
+      >
         ×
       </button>
+
     </div>
 
     <div class="modal-body">
@@ -1682,28 +1768,39 @@ select:focus{
 
         <div class="review-row">
           <span>Estimated receive</span>
-          <strong class="green" id="reviewReceive">--</strong>
+          <strong
+            class="green"
+            id="reviewReceive"
+          >
+            --
+          </strong>
         </div>
 
       </div>
 
       <div class="warning">
+
         Check the trader, amount, payment method and exchange rate
         before continuing. This demo uses a simulated security
         verification step.
+
       </div>
 
       <div style="display:flex;gap:8px;margin-top:16px">
 
-        <button class="btn btn-secondary"
-                style="flex:1"
-                onclick="closeModal('reviewModal')">
+        <button
+          class="btn btn-secondary"
+          style="flex:1"
+          onclick="closeModal('reviewModal')"
+        >
           Back
         </button>
 
-        <button class="btn btn-primary"
-                style="flex:1"
-                onclick="startVerification()">
+        <button
+          class="btn btn-primary"
+          style="flex:1"
+          onclick="startVerification()"
+        >
           Continue
         </button>
 
@@ -1716,19 +1813,23 @@ select:focus{
 </div>
 
 
-<!-- SECURITY VERIFICATION -->
+<!-- OTP Modal -->
 
-<div class="modal" id="securityModal">
+<div class="modal-overlay" id="securityModal">
 
-  <div class="modal-content">
+  <div class="modal">
 
     <div class="modal-header">
+
       <h3>Security Verification</h3>
 
-      <button class="close"
-              onclick="closeModal('securityModal')">
+      <button
+        class="close"
+        onclick="closeModal('securityModal')"
+      >
         ×
       </button>
+
     </div>
 
     <div class="modal-body">
@@ -1739,8 +1840,13 @@ select:focus{
       </p>
 
       <div class="otp-demo">
+
         <small>Demo verification code</small>
-        <strong id="demoCode">------</strong>
+
+        <strong id="demoCode">
+          ------
+        </strong>
+
       </div>
 
       <input
@@ -1759,14 +1865,18 @@ select:focus{
 
       <div class="error" id="otpError"></div>
 
-      <button class="btn btn-primary full"
-              onclick="verifyCode()">
+      <button
+        class="btn btn-primary full"
+        onclick="verifyCode()"
+      >
         Verify & Open Trade
       </button>
 
-      <button class="btn btn-secondary full"
-              style="margin-top:8px"
-              onclick="generateCode()">
+      <button
+        class="btn btn-secondary full"
+        style="margin-top:8px"
+        onclick="generateCode()"
+      >
         Resend Code
       </button>
 
@@ -1777,23 +1887,408 @@ select:focus{
 </div>
 
 
-<!-- TRADE ROOM -->
+<!-- Trader Profile -->
 
-<div class="modal" id="tradeModal">
+<div class="modal-overlay" id="profileModal">
 
-  <div class="modal-content modal-wide">
+  <div class="modal large">
+
+    <div class="modal-header">
+
+      <h3>Trader Profile</h3>
+
+      <button
+        class="close"
+        onclick="closeModal('profileModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="profile-head">
+
+        <div class="profile-avatar" id="profileAvatar">
+          ?
+        </div>
+
+        <div>
+
+          <h2 id="profileName" style="margin:0">
+            Trader
+          </h2>
+
+          <div
+            class="green"
+            id="profileStatus"
+            style="font-size:11px;margin-top:5px"
+          >
+            Offline
+          </div>
+
+          <div class="badges" id="profileBadges"></div>
+
+        </div>
+
+        <div class="profile-score">
+
+          <div class="score" id="profileScore">
+            --
+          </div>
+
+          <div style="color:var(--muted);font-size:10px">
+            Reputation
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="profile-grid">
+
+        <div class="profile-stat">
+          <span>Completion</span>
+          <strong id="profileCompletion">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Successful trades</span>
+          <strong id="profileSuccess">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Total trades</span>
+          <strong id="profileTrades">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Trading volume</span>
+          <strong id="profileVolume">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Response time</span>
+          <strong id="profileResponse">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Release time</span>
+          <strong id="profileRelease">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Account age</span>
+          <strong id="profileAge">--</strong>
+        </div>
+
+        <div class="profile-stat">
+          <span>Trust level</span>
+          <strong id="profileTrust">--</strong>
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <h4>Performance</h4>
+
+        <div class="performance">
+
+          <div class="performance-row">
+            <span>Completion</span>
+            <div class="progress">
+              <span id="completionBar" style="width:0%"></span>
+            </div>
+            <strong id="completionScore">0%</strong>
+          </div>
+
+          <div class="performance-row">
+            <span>Successful</span>
+            <div class="progress">
+              <span id="successBar" style="width:0%"></span>
+            </div>
+            <strong id="successScore">0%</strong>
+          </div>
+
+          <div class="performance-row">
+            <span>Response</span>
+            <div class="progress">
+              <span id="responseBar" style="width:0%"></span>
+            </div>
+            <strong id="responseScore">0%</strong>
+          </div>
+
+          <div class="performance-row">
+            <span>Release</span>
+            <div class="progress">
+              <span id="releaseBar" style="width:0%"></span>
+            </div>
+            <strong id="releaseScore">0%</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <h4>Payment methods</h4>
+
+        <div
+          class="method-list"
+          id="profilePayments"
+        ></div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <h4>Recent reviews</h4>
+
+        <div id="profileReviews">
+          <div class="empty">
+            No reviews available.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <h4>Recent trade history</h4>
+
+        <div
+          class="trade-history"
+          id="profileHistory"
+        ></div>
+
+      </div>
+
+      <div
+        style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px"
+      >
+
+        <button
+          class="btn btn-secondary"
+          id="profileFavoriteBtn"
+          onclick="toggleSelectedFavorite()"
+        >
+          ☆ Favorite
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onclick="selectProfileOffer()"
+        >
+          Trade with trader
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="openReportFromProfile()"
+        >
+          Report trader
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Activity Modal -->
+
+<div class="modal-overlay" id="activityModal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h3>Market Activity</h3>
+
+      <button
+        class="close"
+        onclick="closeModal('activityModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="activity-grid">
+
+        <div class="activity-card">
+          <div class="stat-label">Active offers</div>
+          <div class="stat-value" id="activityOffers">0</div>
+        </div>
+
+        <div class="activity-card">
+          <div class="stat-label">Active traders</div>
+          <div class="stat-value" id="activityTraders">0</div>
+        </div>
+
+        <div class="activity-card">
+          <div class="stat-label">Lowest price</div>
+          <div class="stat-value" id="activityLow">--</div>
+        </div>
+
+        <div class="activity-card">
+          <div class="stat-label">Highest price</div>
+          <div class="stat-value" id="activityHigh">--</div>
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <h4>Latest marketplace activity</h4>
+
+        <div id="activityList">
+
+          <div class="empty">
+            Loading marketplace activity...
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Report Modal -->
+
+<div class="modal-overlay" id="reportModal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h3>Report</h3>
+
+      <button
+        class="close"
+        onclick="closeModal('reportModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="quick-field">
+
+        <label>Reason</label>
+
+        <select id="reportReason">
+
+          <option value="suspicious_offer">
+            Suspicious offer
+          </option>
+
+          <option value="payment_instruction">
+            Payment instruction
+          </option>
+
+          <option value="fraud">
+            Fraud
+          </option>
+
+          <option value="scam">
+            Scam
+          </option>
+
+          <option value="impersonation">
+            Impersonation
+          </option>
+
+          <option value="harassment">
+            Harassment
+          </option>
+
+          <option value="other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="quick-field">
+
+        <label>Details</label>
+
+        <textarea
+          id="reportDetails"
+          rows="5"
+          placeholder="Describe the issue..."
+        ></textarea>
+
+      </div>
+
+      <div
+        style="display:flex;gap:8px;margin-top:15px"
+      >
+
+        <button
+          class="btn btn-secondary"
+          style="flex:1"
+          onclick="closeModal('reportModal')"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="btn btn-danger"
+          style="flex:1"
+          onclick="submitReport()"
+        >
+          Submit Report
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Trade Room -->
+
+<div class="modal-overlay" id="tradeModal">
+
+  <div class="modal large">
 
     <div class="modal-header">
 
       <h3>
         Trade Room
-        <span class="green" style="font-size:11px">
+        <span
+          class="green"
+          style="font-size:11px"
+        >
           ● DEMO SECURE
         </span>
       </h3>
 
-      <button class="close"
-              onclick="closeModal('tradeModal')">
+      <button
+        class="close"
+        onclick="closeModal('tradeModal')"
+      >
         ×
       </button>
 
@@ -1804,12 +2299,16 @@ select:focus{
       <div class="trade-left">
 
         <div class="escrow-banner">
-          <strong>🛡️ CryptoVault Escrow Workflow</strong>
+
+          <strong>
+            🛡️ CryptoVault Escrow Workflow
+          </strong>
 
           <span>
             Demo interface only. Real escrow authorization
             will require server-side controls.
           </span>
+
         </div>
 
         <div class="timeline">
@@ -1824,13 +2323,23 @@ select:focus{
         <div class="chat" id="chat">
 
           <div class="message them">
+
             Hello! Welcome to the demo trade.
-            <small>Trader • now</small>
+
+            <small>
+              Trader • now
+            </small>
+
           </div>
 
           <div class="message them">
+
             Please use the selected payment method.
-            <small>Trader • now</small>
+
+            <small>
+              Trader • now
+            </small>
+
           </div>
 
         </div>
@@ -1843,8 +2352,10 @@ select:focus{
             onkeydown="if(event.key==='Enter')sendMessage()"
           >
 
-          <button class="btn btn-primary"
-                  onclick="sendMessage()">
+          <button
+            class="btn btn-primary"
+            onclick="sendMessage()"
+          >
             Send
           </button>
 
@@ -1855,16 +2366,24 @@ select:focus{
       <div class="trade-right">
 
         <div class="trade-status">
-          <div class="status-title">Trade status</div>
 
-          <div class="status-value green"
-               id="tradeStatus">
+          <div class="status-title">
+            Trade status
+          </div>
+
+          <div
+            class="status-value green"
+            id="tradeStatus"
+          >
             Awaiting payment
           </div>
+
         </div>
 
-        <div class="trade-timer"
-             id="tradeTimer">
+        <div
+          class="trade-timer"
+          id="tradeTimer"
+        >
           30:00
         </div>
 
@@ -1882,8 +2401,10 @@ select:focus{
 
           <div class="review-row">
             <span>You receive</span>
-            <strong class="green"
-                    id="tradeReceive">
+            <strong
+              class="green"
+              id="tradeReceive"
+            >
               --
             </strong>
           </div>
@@ -1896,32 +2417,46 @@ select:focus{
         </div>
 
         <div class="proof-box">
+
           📎 Payment proof upload
+
           <br><br>
+
           Demo interface only.
+
           <br>
+
           Real secure storage will be connected later.
+
         </div>
 
         <div class="trade-actions">
 
-          <button class="btn btn-success"
-                  onclick="markPaid()">
+          <button
+            class="btn btn-success"
+            onclick="markPaid()"
+          >
             I Have Paid
           </button>
 
-          <button class="btn btn-primary"
-                  onclick="releaseCrypto()">
+          <button
+            class="btn btn-primary"
+            onclick="releaseCrypto()"
+          >
             Release
           </button>
 
-          <button class="btn btn-secondary"
-                  onclick="openDispute()">
+          <button
+            class="btn btn-secondary"
+            onclick="openDispute()"
+          >
             Dispute
           </button>
 
-          <button class="btn btn-danger"
-                  onclick="cancelTrade()">
+          <button
+            class="btn btn-danger"
+            onclick="cancelTrade()"
+          >
             Cancel
           </button>
 
@@ -1936,1456 +2471,1478 @@ select:focus{
 </div>
 
 
-<!-- ADVANCED PROFILE MODAL -->
-
-<div class="modal" id="profileModal">
-
-  <div class="modal-content modal-wide">
-
-    <div class="modal-header">
-
-      <h3>Advanced Trader Profile</h3>
-
-      <button class="close"
-              onclick="closeModal('profileModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <div class="profile-hero">
-
-        <div class="profile-header">
-
-          <div class="profile-avatar"
-               id="profileAvatar">
-            A
-          </div>
-
-          <div class="profile-title">
-
-            <h3 id="profileName">
-              Trader
-            </h3>
-
-            <p id="profileOnline">
-              ● Online
-            </p>
-
-            <div class="badges">
-
-              <span class="badge">
-                ✓ Verified
-              </span>
-
-              <span class="badge">
-                🛡️ Trusted Trader
-              </span>
-
-              <span class="badge">
-                ⚡ Fast Trader
-              </span>
-
-              <span class="badge">
-                🏆 Top Trader
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="reputation">
-
-          <div class="reputation-score">
-
-            <div class="offer-label">
-              Reputation score
-            </div>
-
-            <div class="score-number"
-                 id="profileScore">
-              99
-            </div>
-
-            <div class="stars">
-              ★★★★★
-            </div>
-
-            <div class="progress">
-              <span id="profileProgress"></span>
-            </div>
-
-          </div>
-
-          <div class="reputation-score">
-
-            <div class="offer-label">
-              Trust level
-            </div>
-
-            <div class="score-number"
-                 style="font-size:24px"
-                 id="profileTrust">
-              Excellent
-            </div>
-
-            <div style="color:var(--muted);font-size:10px;margin-top:8px">
-              Based on recent trading performance
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="profile-grid">
-
-          <div class="profile-stat">
-            <strong id="profileRating">99%</strong>
-            <small>Completion rate</small>
-          </div>
-
-          <div class="profile-stat">
-            <strong id="profileTrades">1,248</strong>
-            <small>Completed trades</small>
-          </div>
-
-          <div class="profile-stat">
-            <strong id="profileVolume">2.8M</strong>
-            <small>Trading volume</small>
-          </div>
-
-          <div class="profile-stat">
-            <strong id="profileResponse">&lt; 2 min</strong>
-            <small>Avg response</small>
-          </div>
-
-          <div class="profile-stat">
-            <strong id="profileRelease">&lt; 5 min</strong>
-            <small>Avg release</small>
-          </div>
-
-          <div class="profile-stat">
-            <strong id="profileAge">2 years</strong>
-            <small>Account age</small>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-section">
-
-        <h4>📊 30-Day Performance</h4>
-
-        <div class="performance">
-
-          <div class="performance-row">
-            <span>Completion</span>
-
-            <div class="performance-bar">
-              <span id="completionBar"></span>
-            </div>
-
-            <strong id="completionValue">99%</strong>
-          </div>
-
-          <div class="performance-row">
-            <span>Successful trades</span>
-
-            <div class="performance-bar">
-              <span id="successBar"></span>
-            </div>
-
-            <strong id="successValue">98%</strong>
-          </div>
-
-          <div class="performance-row">
-            <span>Fast response</span>
-
-            <div class="performance-bar">
-              <span id="responseBar"></span>
-            </div>
-
-            <strong id="responseValue">96%</strong>
-          </div>
-
-          <div class="performance-row">
-            <span>Fast release</span>
-
-            <div class="performance-bar">
-              <span id="releaseBar"></span>
-            </div>
-
-            <strong id="releaseValue">97%</strong>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-section">
-
-        <h4>💳 Payment Methods</h4>
-
-        <div class="methods"
-             id="profilePayments">
-        </div>
-
-      </div>
-
-
-      <div class="profile-section">
-
-        <h4>⭐ Recent Reviews</h4>
-
-        <div class="review-list">
-
-          <div class="review">
-
-            <div class="review-top">
-              <strong>★★★★★ Verified buyer</strong>
-              <span>1 day ago</span>
-            </div>
-
-            <p>
-              Very fast response and smooth payment confirmation.
-            </p>
-
-          </div>
-
-          <div class="review">
-
-            <div class="review-top">
-              <strong>★★★★★ Verified seller</strong>
-              <span>3 days ago</span>
-            </div>
-
-            <p>
-              Trade completed quickly. Good communication.
-            </p>
-
-          </div>
-
-          <div class="review">
-
-            <div class="review-top">
-              <strong>★★★★★ Verified buyer</strong>
-              <span>6 days ago</span>
-            </div>
-
-            <p>
-              Payment method was clear and the trader responded quickly.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-section">
-
-        <h4>📜 Recent Trade History</h4>
-
-        <table class="history">
-
-          <thead>
-
-            <tr>
-              <th>Date</th>
-              <th>Asset</th>
-              <th>Amount</th>
-              <th>Payment</th>
-              <th>Status</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="tradeHistory">
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-
-      <div class="profile-section">
-
-        <div class="profile-actions">
-
-          <button class="btn btn-secondary"
-                  id="profileFavoriteButton"
-                  onclick="toggleSelectedFavorite()">
-            ⭐ Favorite
-          </button>
-
-          <button class="btn btn-primary"
-                  onclick="selectProfileOffer()">
-            Trade With Trader
-          </button>
-
-          <button class="btn btn-danger"
-                  onclick="openReportFromProfile()">
-            🚩 Report
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- REPORT MODAL -->
-
-<div class="modal" id="reportModal">
-
-  <div class="modal-content">
-
-    <div class="modal-header">
-
-      <h3>Report Offer or Trader</h3>
-
-      <button class="close"
-              onclick="closeModal('reportModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <p style="color:var(--muted);font-size:12px;line-height:1.5">
-        Select the reason for this demo report.
-      </p>
-
-      <div class="report-options">
-
-        <button class="report-option"
-                onclick="submitReport('Suspicious offer')">
-          🚩 Suspicious offer
-        </button>
-
-        <button class="report-option"
-                onclick="submitReport('Inappropriate payment instructions')">
-          🚩 Inappropriate payment instructions
-        </button>
-
-        <button class="report-option"
-                onclick="submitReport('Trader behavior')">
-          🚩 Trader behavior
-        </button>
-
-        <button class="report-option"
-                onclick="submitReport('Possible fraud')">
-          🚩 Possible fraud
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- SECURITY CENTER -->
-
-<div class="modal" id="securityCenterModal">
-
-  <div class="modal-content">
-
-    <div class="modal-header">
-
-      <h3>Security Center</h3>
-
-      <button class="close"
-              onclick="closeModal('securityCenterModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <div class="review-card">
-
-        <div class="review-row">
-          <span>Email verification</span>
-          <strong class="green">✓ Enabled</strong>
-        </div>
-
-        <div class="review-row">
-          <span>2FA authenticator</span>
-          <strong class="yellow">Recommended</strong>
-        </div>
-
-        <div class="review-row">
-          <span>Transaction PIN</span>
-          <strong class="yellow">Demo</strong>
-        </div>
-
-        <div class="review-row">
-          <span>New device protection</span>
-          <strong class="green">✓ Planned</strong>
-        </div>
-
-        <div class="review-row">
-          <span>Withdrawal verification</span>
-          <strong class="green">✓ Required</strong>
-        </div>
-
-      </div>
-
-      <div class="security-box">
-
-        <strong>🔐 Security architecture</strong>
-
-        <p>
-          In the real CryptoVault system, authentication,
-          authorization, OTP generation, transaction permissions
-          and escrow state must be controlled server-side.
-          Never place private keys, service-role keys or payment
-          secrets inside this HTML file.
-        </p>
-
-      </div>
-
-      <button class="btn btn-primary full"
-              style="margin-top:15px"
-              onclick="closeModal('securityCenterModal')">
-        Done
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- MARKET ACTIVITY -->
-
-<div class="modal" id="activityModal">
-
-  <div class="modal-content">
-
-    <div class="modal-header">
-
-      <h3>Market Activity</h3>
-
-      <button class="close"
-              onclick="closeModal('activityModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <div class="review-card">
-
-        <div class="review-row">
-          <span>Active traders</span>
-          <strong>1,284</strong>
-        </div>
-
-        <div class="review-row">
-          <span>Online traders</span>
-          <strong class="green">312</strong>
-        </div>
-
-        <div class="review-row">
-          <span>Active offers</span>
-          <strong id="activityOfferCount">7</strong>
-        </div>
-
-        <div class="review-row">
-          <span>24h volume</span>
-          <strong>8.42M USDT</strong>
-        </div>
-
-        <div class="review-row">
-          <span>Average response</span>
-          <strong>2.4 min</strong>
-        </div>
-
-      </div>
-
-      <h4 style="margin-bottom:10px">
-        Recent demo activity
-      </h4>
-
-      <div class="activity-list">
-
-        <div class="activity-item">
-          <span>Trader Alex updated an offer</span>
-          <strong>1 min ago</strong>
-        </div>
-
-        <div class="activity-item">
-          <span>Telebirr offer received a new view</span>
-          <strong>2 min ago</strong>
-        </div>
-
-        <div class="activity-item">
-          <span>Trader Yonas came online</span>
-          <strong>3 min ago</strong>
-        </div>
-
-        <div class="activity-item">
-          <span>Bank Transfer offer volume increased</span>
-          <strong>5 min ago</strong>
-        </div>
-
-        <div class="activity-item">
-          <span>CBE Birr offer updated</span>
-          <strong>7 min ago</strong>
-        </div>
-
-        <div class="activity-item">
-          <span>New demo trader became verified</span>
-          <strong>9 min ago</strong>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- NOTIFICATIONS -->
-
-<div class="notifications" id="notifications">
-
-  <div class="notifications-header">
-
-    <strong>Notifications</strong>
-
-    <button class="btn btn-secondary btn-small"
-            onclick="markNotificationsRead()">
-      Mark read
-    </button>
-
-  </div>
-
-  <div class="notification">
-
-    <strong>🔔 New offer available</strong>
-
-    <span>
-      A new demo USDT/ETB offer is available.
-    </span>
-
-  </div>
-
-  <div class="notification">
-
-    <strong>⭐ Favorite trader online</strong>
-
-    <span>
-      One of your saved traders is currently online.
-    </span>
-
-  </div>
-
-  <div class="notification">
-
-    <strong>💰 Price update</strong>
-
-    <span>
-      A demo offer changed its price.
-    </span>
-
-  </div>
-
-  <div class="notification">
-
-    <strong>⏱ Offer activity</strong>
-
-    <span>
-      One demo offer is receiving high activity.
-    </span>
-
-  </div>
-
-</div>
-
-
 <div class="toast" id="toast"></div>
 
 
 <script>
 
-/* =========================
-   DEMO TRADER DATABASE
-========================= */
+/* =========================================================
+   CRYPTOVAULT SUPABASE CONFIGURATION
+   =========================================================
 
-const traders = {
+   Replace ONLY these two values.
 
-  alex:{
-    id:"alex",
-    name:"Alex",
-    avatar:"A",
-    online:true,
-    verified:true,
-    rating:99,
-    score:99,
-    trades:1248,
-    volume:"2.8M USDT",
-    response:"< 2 min",
-    release:"< 5 min",
-    age:"2 years",
-    trust:"Excellent",
-    completion:99,
-    success:98,
-    responseScore:96,
-    releaseScore:97,
-    payments:["Bank Transfer","Telebirr","CBE Birr"],
-    price:188,
-    min:100,
-    max:500000,
-    available:250000,
-    methods:["Bank Transfer","Telebirr","CBE Birr"],
-    cash:false,
-    volumeNumber:2800000
-  },
+   Never put a Supabase service-role key here.
+   Never put private keys here.
+   Never put payment-provider secrets here.
+*/
 
-  yonas:{
-    id:"yonas",
-    name:"Yonas",
-    avatar:"Y",
-    online:true,
-    verified:true,
-    rating:98,
-    score:98,
-    trades:956,
-    volume:"1.9M USDT",
-    response:"< 3 min",
-    release:"< 7 min",
-    age:"18 months",
-    trust:"Excellent",
-    completion:98,
-    success:97,
-    responseScore:92,
-    releaseScore:94,
-    payments:["Telebirr","Bank Transfer","Mobile Money"],
-    price:189,
-    min:200,
-    max:300000,
-    available:180000,
-    methods:["Telebirr","Bank Transfer","Mobile Money"],
-    cash:false,
-    volumeNumber:1900000
-  },
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-  mimi:{
-    id:"mimi",
-    name:"Mimi",
-    avatar:"M",
-    online:true,
-    verified:true,
-    rating:97,
-    score:97,
-    trades:731,
-    volume:"1.3M USDT",
-    response:"< 4 min",
-    release:"< 8 min",
-    age:"14 months",
-    trust:"Very good",
-    completion:97,
-    success:96,
-    responseScore:88,
-    releaseScore:90,
-    payments:["CBE Birr","Telebirr"],
-    price:189.5,
-    min:100,
-    max:150000,
-    available:92000,
-    methods:["CBE Birr","Telebirr"],
-    cash:false,
-    volumeNumber:1300000
-  },
+let supabaseClient = null;
 
-  daniel:{
-    id:"daniel",
-    name:"Daniel",
-    avatar:"D",
-    online:false,
-    verified:true,
-    rating:96,
-    score:96,
-    trades:642,
-    volume:"980K USDT",
-    response:"< 6 min",
-    release:"< 10 min",
-    age:"11 months",
-    trust:"Very good",
-    completion:96,
-    success:95,
-    responseScore:80,
-    releaseScore:84,
-    payments:["Bank Transfer","Cash"],
-    price:190,
-    min:500,
-    max:200000,
-    available:76000,
-    methods:["Bank Transfer","Cash"],
-    cash:true,
-    volumeNumber:980000
-  },
+if(
+  SUPABASE_URL !== "YOUR_SUPABASE_PROJECT_URL" &&
+  SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
+){
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+}
 
-  sara:{
-    id:"sara",
-    name:"Sara",
-    avatar:"S",
-    online:true,
-    verified:true,
-    rating:95,
-    score:95,
-    trades:510,
-    volume:"750K USDT",
-    response:"< 5 min",
-    release:"< 9 min",
-    age:"9 months",
-    trust:"Very good",
-    completion:95,
-    success:94,
-    responseScore:84,
-    releaseScore:88,
-    payments:["Mobile Money","Telebirr"],
-    price:190.5,
-    min:100,
-    max:100000,
-    available:53000,
-    methods:["Mobile Money","Telebirr"],
-    cash:false,
-    volumeNumber:750000
-  },
 
-  hana:{
-    id:"hana",
-    name:"Hana",
-    avatar:"H",
-    online:true,
-    verified:false,
-    rating:93,
-    score:93,
-    trades:388,
-    volume:"520K USDT",
-    response:"< 8 min",
-    release:"< 12 min",
-    age:"7 months",
-    trust:"Good",
-    completion:93,
-    success:92,
-    responseScore:72,
-    releaseScore:76,
-    payments:["Cash","Telebirr"],
-    price:191,
-    min:300,
-    max:80000,
-    available:42000,
-    methods:["Cash","Telebirr"],
-    cash:true,
-    volumeNumber:520000
-  },
+/* =========================================================
+   APPLICATION STATE
+   ========================================================= */
 
-  samuel:{
-    id:"samuel",
-    name:"Samuel",
-    avatar:"S",
-    online:false,
-    verified:true,
-    rating:91,
-    score:91,
-    trades:302,
-    volume:"410K USDT",
-    response:"< 10 min",
-    release:"< 15 min",
-    age:"6 months",
-    trust:"Good",
-    completion:91,
-    success:90,
-    responseScore:65,
-    releaseScore:70,
-    payments:["Bank Transfer","CBE Birr"],
-    price:192,
-    min:100,
-    max:50000,
-    available:27000,
-    methods:["Bank Transfer","CBE Birr"],
-    cash:false,
-    volumeNumber:410000
-  }
+let marketSide = "buy";
 
+let allOffers = [];
+let filteredOffers = [];
+
+let selectedOffer = null;
+let selectedTraderData = null;
+
+let currentUser = null;
+
+let otpCode = "";
+let otpExpires = null;
+let otpInterval = null;
+
+let tradeInterval = null;
+let tradeSeconds = 1800;
+
+let reportTarget = {
+  traderId:null,
+  offerId:null,
+  tradeId:null
 };
 
 
-/* =========================
-   STATE
-========================= */
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
-let market="buy";
-let selectedTraderId=null;
-let verificationCode="";
-let otpSeconds=120;
-let otpInterval=null;
-let tradeSeconds=1800;
-let tradeInterval=null;
+function formatNumber(value, decimals = 2){
+
+  const number = Number(value || 0);
+
+  return number.toLocaleString(
+    undefined,
+    {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }
+  );
+}
 
 
-/* =========================
+function formatTime(seconds){
+
+  seconds = Number(seconds || 0);
+
+  const minutes = Math.floor(seconds / 60);
+
+  const secs = seconds % 60;
+
+  return `${minutes}m ${secs}s`;
+}
+
+
+function showNotification(message){
+
+  const list = document.getElementById("notificationList");
+
+  const item = document.createElement("div");
+
+  item.className = "notification-item";
+
+  item.textContent = message;
+
+  list.prepend(item);
+
+  document.getElementById("notifDot").style.display = "block";
+
+  showToast(message);
+}
+
+
+function showToast(message){
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3500);
+}
+
+
+function openModal(id){
+
+  document.getElementById(id).classList.add("show");
+}
+
+
+function closeModal(id){
+
+  document.getElementById(id).classList.remove("show");
+}
+
+
+function getInitials(name){
+
+  if(!name) return "?";
+
+  return name
+    .split(" ")
+    .map(x => x[0])
+    .join("")
+    .slice(0,2)
+    .toUpperCase();
+}
+
+
+/* =========================================================
    FAVORITES
-========================= */
+   ========================================================= */
 
-function getFavorites(){
+function getLocalFavorites(){
 
   try{
     return JSON.parse(
-      localStorage.getItem("cryptovault_p2p_favorites") || "[]"
+      localStorage.getItem("cryptovault_favorites") || "[]"
     );
-  }catch(e){
+  }catch{
     return [];
   }
-
 }
 
-function saveFavorites(list){
+
+function saveLocalFavorites(list){
 
   localStorage.setItem(
-    "cryptovault_p2p_favorites",
+    "cryptovault_favorites",
     JSON.stringify(list)
   );
-
 }
 
-function isFavorite(id){
 
-  return getFavorites().includes(id);
+function isFavorite(traderId){
 
+  return getLocalFavorites().includes(traderId);
 }
 
-function toggleFavorite(id){
 
-  let favorites=getFavorites();
+async function toggleFavorite(traderId){
 
-  if(favorites.includes(id)){
-    favorites=favorites.filter(x=>x!==id);
-    showNotification("Trader removed from favorites.");
+  if(!traderId) return;
+
+  const favorites = getLocalFavorites();
+
+  const exists = favorites.includes(traderId);
+
+  if(exists){
+
+    saveLocalFavorites(
+      favorites.filter(id => id !== traderId)
+    );
+
   }else{
-    favorites.push(id);
-    showNotification("Trader added to favorites.");
+
+    saveLocalFavorites([
+      ...favorites,
+      traderId
+    ]);
+
   }
 
-  saveFavorites(favorites);
+  if(currentUser && supabaseClient){
+
+    try{
+
+      if(exists){
+
+        await supabaseClient
+          .from("favorites")
+          .delete()
+          .eq("user_id",currentUser.id)
+          .eq("trader_id",traderId);
+
+      }else{
+
+        await supabaseClient
+          .from("favorites")
+          .insert({
+            user_id:currentUser.id,
+            trader_id:traderId
+          });
+
+      }
+
+    }catch(error){
+
+      console.warn(
+        "Supabase favorite sync:",
+        error.message
+      );
+
+    }
+
+  }
 
   renderOffers();
 
-  if(selectedTraderId===id){
+  if(
+    selectedTraderData &&
+    selectedTraderData.id === traderId
+  ){
     updateProfileFavoriteButton();
   }
 
 }
 
-function toggleSelectedFavorite(){
 
-  if(!selectedTraderId){
-    showNotification("Select a trader first.");
-    return;
+async function loadFavorites(){
+
+  if(!currentUser || !supabaseClient) return;
+
+  try{
+
+    const {data,error} =
+      await supabaseClient
+        .from("favorites")
+        .select("trader_id")
+        .eq("user_id",currentUser.id);
+
+    if(error) throw error;
+
+    const ids = (data || [])
+      .map(row => row.trader_id);
+
+    saveLocalFavorites(ids);
+
+  }catch(error){
+
+    console.warn(
+      "Could not load favorites:",
+      error.message
+    );
+
   }
-
-  toggleFavorite(selectedTraderId);
 
 }
 
 
-/* =========================
+function toggleSelectedFavorite(){
+
+  if(!selectedTraderData) return;
+
+  toggleFavorite(
+    selectedTraderData.id
+  );
+
+}
+
+
+/* =========================================================
    MARKET
-========================= */
+   ========================================================= */
 
-function setMarket(type){
+function setMarket(side){
 
-  market=type;
+  marketSide = side;
 
   document
     .getElementById("buyTab")
-    .classList.toggle("active",type==="buy");
+    .classList.toggle(
+      "active",
+      side === "buy"
+    );
 
   document
     .getElementById("sellTab")
-    .classList.toggle("active",type==="sell");
+    .classList.toggle(
+      "active",
+      side === "sell"
+    );
 
   updateMarketTitle();
-  renderOffers();
+
+  refreshMarket();
 
 }
 
+
 function updateMarketTitle(){
 
-  const asset=document.getElementById("assetSelect").value;
-  const fiat=document.getElementById("fiatSelect").value;
+  const asset =
+    document.getElementById("assetSelect").value;
+
+  const fiat =
+    document.getElementById("fiatSelect").value;
 
   document.getElementById("marketTitle").textContent =
-    market==="buy"
+    marketSide === "buy"
       ? `Buy ${asset} with ${fiat}`
       : `Sell ${asset} for ${fiat}`;
 
 }
 
 
-/* =========================
-   RENDER OFFERS
-========================= */
+/* =========================================================
+   LOAD OFFERS FROM SUPABASE
+   ========================================================= */
 
-function renderOffers(){
+async function loadOffersFromSupabase(){
 
-  const box=document.getElementById("offers");
+  if(!supabaseClient){
 
-  box.innerHTML="";
+    document.getElementById("connectionStatus").textContent =
+      "Supabase credentials required";
 
-  const list=Object.values(traders);
+    return [];
 
-  list.forEach(t=>{
+  }
 
-    const favorite=isFavorite(t.id);
+  const asset =
+    document.getElementById("assetSelect").value;
 
-    const card=document.createElement("div");
+  const fiat =
+    document.getElementById("fiatSelect").value;
 
-    card.className="offer";
+  try{
 
-    card.dataset.id=t.id;
+    /*
+      We load active offers first.
 
-    card.innerHTML=`
+      Trader profile and statistics are loaded separately.
+      This keeps the database structure compatible with the
+      tables created in Step 3.1.
+    */
 
-      <div class="offer-top">
+    const {data:offers,error} =
+      await supabaseClient
+        .from("p2p_offers")
+        .select("*")
+        .eq("status","active")
+        .eq("side",marketSide)
+        .eq("asset",asset)
+        .eq("fiat",fiat)
+        .order("price",{ascending:true});
 
-        <div class="trader">
+    if(error) throw error;
 
-          <div class="trader-avatar">
-            ${t.avatar}
-          </div>
+    document.getElementById("connectionStatus").textContent =
+      "Supabase connected";
 
-          <div>
+    document.getElementById("connectionStatus").className =
+      "badge green-badge";
 
-            <div class="trader-name">
-              ${t.name}
+    return offers || [];
 
-              ${t.verified
-                ? `<span class="verified">✓ Verified</span>`
-                : ""}
-            </div>
+  }catch(error){
 
-            <div class="${t.online ? "online":"offline"}">
-              ${t.online ? "● Online":"● Offline"}
-              · ${t.response} response
-            </div>
+    console.error(error);
 
-          </div>
+    document.getElementById("connectionStatus").textContent =
+      "Supabase error";
 
-        </div>
+    document.getElementById("connectionStatus").className =
+      "badge yellow-badge";
 
-        <button
-          class="favorite"
-          title="Favorite trader"
-          onclick="toggleFavorite('${t.id}')">
-          ${favorite ? "★":"☆"}
-        </button>
+    showToast(
+      "Could not load P2P offers from Supabase."
+    );
 
-      </div>
+    return [];
 
-      <div class="offer-main">
-
-        <div>
-          <div class="offer-label">Price</div>
-          <div class="offer-price">
-            ${t.price.toFixed(2)} ETB
-          </div>
-        </div>
-
-        <div>
-          <div class="offer-label">Available</div>
-          <div class="offer-value">
-            ${formatNumber(t.available)} USDT
-          </div>
-        </div>
-
-        <div>
-          <div class="offer-label">Limit</div>
-          <div class="offer-value">
-            ${formatNumber(t.min)}
-            -
-            ${formatNumber(t.max)} ETB
-          </div>
-        </div>
-
-        <div>
-          <div class="offer-label">Performance</div>
-          <div class="offer-value green">
-            ${t.rating}% completion
-          </div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:13px">
-
-        <div class="offer-label">
-          Payment methods
-        </div>
-
-        <div class="methods">
-
-          ${t.methods.map(m=>
-            `<span class="method">${m}</span>`
-          ).join("")}
-
-        </div>
-
-      </div>
-
-      <div class="offer-actions">
-
-        <button
-          class="btn btn-secondary"
-          onclick="openProfile('${t.id}')">
-          👤 View Profile
-        </button>
-
-        <button
-          class="btn btn-primary"
-          onclick="selectOffer('${t.id}')">
-          Trade
-        </button>
-
-        <button
-          class="btn btn-danger"
-          onclick="openReport('${t.id}')">
-          🚩
-        </button>
-
-      </div>
-    `;
-
-    box.appendChild(card);
-
-  });
-
-  filterOffers();
+  }
 
 }
 
 
-/* =========================
-   FILTERS
-========================= */
+/* =========================================================
+   BUILD COMPLETE OFFER OBJECT
+   ========================================================= */
 
-function filterOffers(){
+async function enrichOffers(offers){
 
-  const search=
-    document
-      .getElementById("searchInput")
-      .value
-      .toLowerCase()
-      .trim();
+  if(!supabaseClient || !offers.length){
 
-  const payment=
-    document.getElementById("paymentFilter").value;
+    return offers.map(offer => ({
+      ...offer,
+      trader:null,
+      stats:null,
+      methods:[]
+    }));
 
-  const amount=
-    Number(document.getElementById("amountFilter").value) || 0;
+  }
 
-  const minAmount=
-    Number(document.getElementById("minAmount").value) || 0;
+  const traderIds = [
+    ...new Set(
+      offers.map(o => o.trader_id)
+    )
+  ];
 
-  const maxAmount=
-    Number(document.getElementById("maxAmount").value) || Infinity;
+  let profiles = [];
+  let stats = [];
 
-  const onlineOnly=
-    document.getElementById("onlineOnly").checked;
+  try{
 
-  const verifiedOnly=
-    document.getElementById("verifiedOnly").checked;
+    const profileResult =
+      await supabaseClient
+        .from("profiles")
+        .select("*")
+        .in("id",traderIds);
 
-  const fastOnly=
-    document.getElementById("fastOnly").checked;
+    profiles =
+      profileResult.data || [];
 
-  const highCompletionOnly=
-    document.getElementById("highCompletionOnly").checked;
+    const statsResult =
+      await supabaseClient
+        .from("trader_stats")
+        .select("*")
+        .in("user_id",traderIds);
 
-  const favoritesOnly=
-    document.getElementById("favoritesOnly").checked;
+    stats =
+      statsResult.data || [];
 
-  const cashOnly=
-    document.getElementById("cashOnly").checked;
+  }catch(error){
 
-  const sort=
-    document.getElementById("sortSelect").value;
+    console.warn(
+      "Trader enrichment error:",
+      error.message
+    );
 
-  let list=Object.values(traders).filter(t=>{
+  }
 
-    const searchable=
-      `${t.name} ${t.methods.join(" ")}`.toLowerCase();
+  return offers.map(offer => {
 
-    if(search && !searchable.includes(search))
-      return false;
+    const trader =
+      profiles.find(
+        p => p.id === offer.trader_id
+      ) || null;
 
-    if(payment!=="all" && !t.methods.includes(payment))
-      return false;
+    const traderStats =
+      stats.find(
+        s => s.user_id === offer.trader_id
+      ) || null;
 
-    if(amount && (amount<t.min || amount>t.max))
-      return false;
-
-    if(minAmount && t.max<minAmount)
-      return false;
-
-    if(maxAmount && t.min>maxAmount)
-      return false;
-
-    if(onlineOnly && !t.online)
-      return false;
-
-    if(verifiedOnly && !t.verified)
-      return false;
-
-    if(fastOnly && t.responseScore<90)
-      return false;
-
-    if(highCompletionOnly && t.completion<95)
-      return false;
-
-    if(favoritesOnly && !isFavorite(t.id))
-      return false;
-
-    if(cashOnly && !t.cash)
-      return false;
-
-    return true;
+    return {
+      ...offer,
+      trader,
+      stats:traderStats,
+      methods:[]
+    };
 
   });
 
-  list.sort((a,b)=>{
+}
 
-    if(sort==="price")
-      return a.price-b.price;
 
-    if(sort==="rating")
-      return b.rating-a.rating;
+/* =========================================================
+   PAYMENT METHODS
+   ========================================================= */
 
-    if(sort==="volume")
-      return b.volumeNumber-a.volumeNumber;
+async function loadTraderPaymentMethods(offers){
 
-    if(sort==="speed")
-      return b.responseScore-a.responseScore;
+  if(!supabaseClient || !offers.length)
+    return offers;
 
-    if(sort==="available")
-      return b.available-a.available;
+  const traderIds = [
+    ...new Set(
+      offers.map(o => o.trader_id)
+    )
+  ];
 
-    if(sort==="release")
-      return b.releaseScore-a.releaseScore;
+  try{
+
+    const {data:links,error} =
+      await supabaseClient
+        .from("trader_payment_methods")
+        .select(`
+          trader_id,
+          payment_method_id,
+          payment_methods (
+            id,
+            name,
+            enabled
+          )
+        `)
+        .in("trader_id",traderIds)
+        .eq("enabled",true);
+
+    if(error) throw error;
+
+    return offers.map(offer => {
+
+      const methods =
+        (links || [])
+          .filter(
+            x => x.trader_id === offer.trader_id
+          )
+          .map(
+            x => x.payment_methods
+          )
+          .filter(Boolean)
+          .filter(
+            x => x.enabled !== false
+          );
+
+      return {
+        ...offer,
+        methods
+      };
+
+    });
+
+  }catch(error){
+
+    console.warn(
+      "Payment method loading error:",
+      error.message
+    );
+
+    return offers;
+
+  }
+
+}
+
+
+/* =========================================================
+   REFRESH MARKET
+   ========================================================= */
+
+async function refreshMarket(){
+
+  updateMarketTitle();
+
+  document.getElementById("offerList").innerHTML = `
+    <div class="empty">
+      Loading marketplace offers...
+    </div>
+  `;
+
+  const offers =
+    await loadOffersFromSupabase();
+
+  let enriched =
+    await enrichOffers(offers);
+
+  enriched =
+    await loadTraderPaymentMethods(enriched);
+
+  allOffers = enriched;
+
+  filterOffers();
+
+  updateStats();
+
+}
+
+
+function filterOffers(){
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const payment =
+    document.getElementById("paymentFilter").value;
+
+  const amount =
+    Number(
+      document.getElementById("amountFilter").value || 0
+    );
+
+  const minAmount =
+    Number(
+      document.getElementById("minAmount").value || 0
+    );
+
+  const maxAmount =
+    Number(
+      document.getElementById("maxAmount").value || 0
+    );
+
+  const onlineOnly =
+    document.getElementById("onlineOnly").checked;
+
+  const verifiedOnly =
+    document.getElementById("verifiedOnly").checked;
+
+  const fastOnly =
+    document.getElementById("fastOnly").checked;
+
+  const highCompletionOnly =
+    document.getElementById("highCompletionOnly").checked;
+
+  const favoritesOnly =
+    document.getElementById("favoritesOnly").checked;
+
+  const cashOnly =
+    document.getElementById("cashOnly").checked;
+
+  const sort =
+    document.getElementById("sortSelect").value;
+
+
+  filteredOffers =
+    allOffers.filter(offer => {
+
+      const trader =
+        offer.trader || {};
+
+      const stats =
+        offer.stats || {};
+
+      const methodNames =
+        (offer.methods || [])
+          .map(x => x.name);
+
+      const traderName =
+        trader.username ||
+        trader.full_name ||
+        "Trader";
+
+      const searchable =
+        `${traderName} ${methodNames.join(" ")}`
+          .toLowerCase();
+
+      if(
+        search &&
+        !searchable.includes(search)
+      ){
+        return false;
+      }
+
+      if(
+        payment !== "all" &&
+        !methodNames.includes(payment)
+      ){
+        return false;
+      }
+
+      if(
+        amount > 0 &&
+        (
+          amount < Number(offer.min_amount) ||
+          amount > Number(offer.max_amount) ||
+          amount > Number(offer.available_amount)
+        )
+      ){
+        return false;
+      }
+
+      if(
+        minAmount > 0 &&
+        Number(offer.max_amount) < minAmount
+      ){
+        return false;
+      }
+
+      if(
+        maxAmount > 0 &&
+        Number(offer.min_amount) > maxAmount
+      ){
+        return false;
+      }
+
+      if(
+        onlineOnly &&
+        !trader.online_status
+      ){
+        return false;
+      }
+
+      if(
+        verifiedOnly &&
+        trader.verification_status !== "verified"
+      ){
+        return false;
+      }
+
+      if(
+        fastOnly &&
+        Number(offer.response_time_seconds || 999999) > 300
+      ){
+        return false;
+      }
+
+      if(
+        highCompletionOnly &&
+        Number(stats.completion_rate || 0) < 95
+      ){
+        return false;
+      }
+
+      if(
+        favoritesOnly &&
+        !isFavorite(offer.trader_id)
+      ){
+        return false;
+      }
+
+      if(
+        cashOnly &&
+        !offer.cash_available
+      ){
+        return false;
+      }
+
+      return true;
+
+    });
+
+
+  filteredOffers.sort((a,b) => {
+
+    const sa = a.stats || {};
+    const sb = b.stats || {};
+
+    if(sort === "price")
+      return Number(a.price) - Number(b.price);
+
+    if(sort === "rating")
+      return Number(sb.reputation_score || 0) -
+             Number(sa.reputation_score || 0);
+
+    if(sort === "volume")
+      return Number(sb.total_volume || 0) -
+             Number(sa.total_volume || 0);
+
+    if(sort === "speed")
+      return Number(a.response_time_seconds || 999999) -
+             Number(b.response_time_seconds || 999999);
+
+    if(sort === "available")
+      return Number(b.available_amount || 0) -
+             Number(a.available_amount || 0);
+
+    if(sort === "release")
+      return Number(a.release_time_seconds || 999999) -
+             Number(b.release_time_seconds || 999999);
 
     return 0;
 
   });
 
-  const cards=
-    [...document.querySelectorAll(".offer")];
 
-  cards.forEach(card=>{
+  renderOffers();
 
-    const exists=
-      list.some(t=>t.id===card.dataset.id);
-
-    card.style.display=
-      exists ? "block":"none";
-
-  });
-
-  document.getElementById("offerCount").textContent=
-    `${list.length} offer${list.length===1?"":"s"}`;
-
-  updateStats(list);
+  updateStats();
 
 }
 
 
-/* =========================
-   STATISTICS
-========================= */
+function renderOffers(){
 
-function updateStats(list){
+  const list =
+    document.getElementById("offerList");
 
-  document.getElementById("activeOffersStat")
-    .textContent=list.length;
+  if(!filteredOffers.length){
 
-  document.getElementById("activityOfferCount")
-    .textContent=list.length;
+    list.innerHTML = `
+      <div class="empty">
+        <strong>No offers found</strong>
+        <br><br>
+        Try changing the asset, fiat currency or filters.
+      </div>
+    `;
 
-  if(!list.length){
-
-    document.getElementById("lowestPrice")
-      .textContent="--";
-
-    document.getElementById("averagePrice")
-      .textContent="--";
-
-    document.getElementById("priceSpread")
-      .textContent="--";
+    document.getElementById("offerCount").textContent =
+      "0 offers";
 
     return;
 
   }
 
-  const prices=list.map(x=>x.price);
 
-  const low=Math.min(...prices);
-  const high=Math.max(...prices);
+  list.innerHTML =
+    filteredOffers.map(
+      offer => renderOffer(offer)
+    ).join("");
 
-  const avg=
-    prices.reduce((a,b)=>a+b,0)/prices.length;
-
-  document.getElementById("lowestPrice")
-    .textContent=`${low.toFixed(2)} ETB`;
-
-  document.getElementById("averagePrice")
-    .textContent=`${avg.toFixed(2)} ETB`;
-
-  document.getElementById("priceSpread")
-    .textContent=`${(high-low).toFixed(2)} ETB`;
-
-}
-
-function formatNumber(n){
-
-  return Number(n).toLocaleString();
-
-}
-
-function refreshMarket(){
-
-  updateMarketTitle();
-  renderOffers();
-
-  showNotification("Marketplace refreshed.");
+  document.getElementById("offerCount").textContent =
+    `${filteredOffers.length} offer${filteredOffers.length === 1 ? "" : "s"}`;
 
 }
 
 
-/* =========================
+function renderOffer(offer){
+
+  const trader =
+    offer.trader || {};
+
+  const stats =
+    offer.stats || {};
+
+  const name =
+    trader.username ||
+    trader.full_name ||
+    "Trader";
+
+  const avatar =
+    trader.avatar_url || "";
+
+  const rating =
+    Number(stats.reputation_score || 0);
+
+  const completion =
+    Number(stats.completion_rate || 0);
+
+  const trades =
+    Number(stats.completed_trades || 0);
+
+  const response =
+    Number(
+      offer.response_time_seconds ||
+      stats.avg_response_seconds ||
+      0
+    );
+
+  const release =
+    Number(
+      offer.release_time_seconds ||
+      stats.avg_release_seconds ||
+      0
+    );
+
+  const favorite =
+    isFavorite(offer.trader_id);
+
+  const verified =
+    trader.verification_status === "verified";
+
+  const trusted =
+    trader.trust_level === "trusted" ||
+    trader.trust_level === "top";
+
+  const methods =
+    (offer.methods || [])
+      .map(
+        method =>
+          `<span class="method">${escapeHtml(method.name)}</span>`
+      )
+      .join("");
+
+  const volume =
+    Number(stats.total_volume || 0);
+
+  return `
+
+    <div class="offer">
+
+      <div class="offer-top">
+
+        <div>
+
+          <div class="trader">
+
+            <div class="trader-avatar">
+
+              ${
+                avatar
+                  ? `<img src="${escapeAttribute(avatar)}" alt="">`
+                  : getInitials(name)
+              }
+
+            </div>
+
+            <div>
+
+              <div class="trader-name">
+                ${escapeHtml(name)}
+              </div>
+
+              <div class="trader-meta">
+
+                ${
+                  trader.online_status
+                    ? `<span class="green">● Online</span>`
+                    : `<span>● Offline</span>`
+                }
+
+                •
+                ${formatTime(response)} response
+
+              </div>
+
+              <div class="badges">
+
+                ${
+                  verified
+                    ? `<span class="badge green-badge">✓ Verified</span>`
+                    : ""
+                }
+
+                ${
+                  trusted
+                    ? `<span class="badge yellow-badge">★ Trusted</span>`
+                    : ""
+                }
+
+                ${
+                  response <= 300
+                    ? `<span class="badge">⚡ Fast</span>`
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="offer-label">
+            Price
+          </div>
+
+          <div class="offer-price">
+            ${formatNumber(offer.price,2)}
+            ${escapeHtml(offer.fiat)}
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="offer-label">
+            Limits
+          </div>
+
+          <div class="offer-stat">
+            ${formatNumber(offer.min_amount)}
+            -
+            ${formatNumber(offer.max_amount)}
+          </div>
+
+          <div class="trader-meta">
+            Available:
+            ${formatNumber(offer.available_amount)}
+            ${escapeHtml(offer.asset)}
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="offer-label">
+            Reputation
+          </div>
+
+          <div class="offer-stat green">
+            ${rating.toFixed(1)}
+          </div>
+
+          <div class="trader-meta">
+            ${completion.toFixed(1)}% completion
+          </div>
+
+        </div>
+
+        <div>
+
+          <button
+            class="btn small-btn favorite-btn ${favorite ? "active" : ""}"
+            onclick="toggleFavorite('${offer.trader_id}')"
+          >
+            ${favorite ? "★" : "☆"}
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="offer-bottom">
+
+        <div>
+
+          <div class="method-list">
+            ${methods || `<span class="method">Payment not listed</span>`}
+          </div>
+
+          <div class="trader-meta" style="margin-top:8px">
+
+            ${trades.toLocaleString()} completed trades
+            •
+            ${formatNumber(volume)} volume
+            •
+            ${formatTime(release)} release
+
+            ${
+              offer.cash_available
+                ? " • Cash available"
+                : ""
+            }
+
+          </div>
+
+        </div>
+
+        <div class="offer-actions">
+
+          <button
+            class="btn btn-secondary small-btn"
+            onclick="openProfile('${offer.trader_id}')"
+          >
+            View Profile
+          </button>
+
+          <button
+            class="btn btn-secondary small-btn"
+            onclick="openReport('${offer.trader_id}','${offer.id}',null)"
+          >
+            Report
+          </button>
+
+          <button
+            class="btn btn-primary small-btn"
+            onclick="selectOffer('${offer.id}')"
+          >
+            ${marketSide === "buy" ? "Buy" : "Sell"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+  return String(value ?? "")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   MARKET STATS
+   ========================================================= */
+
+function updateStats(){
+
+  const offers =
+    filteredOffers;
+
+  document.getElementById("activeOffersStat").textContent =
+    offers.length;
+
+  document.getElementById("activityOffers").textContent =
+    offers.length;
+
+  const traderIds =
+    new Set(
+      offers.map(
+        o => o.trader_id
+      )
+    );
+
+  document.getElementById("activeTradersStat").textContent =
+    traderIds.size;
+
+  document.getElementById("activityTraders").textContent =
+    traderIds.size;
+
+  const online =
+    offers.filter(
+      o =>
+        o.trader &&
+        o.trader.online_status
+    ).length;
+
+  document.getElementById("onlineTraders").textContent =
+    online;
+
+  document.getElementById("onlineTradersSub").textContent =
+    `${online} online in current results`;
+
+  if(!offers.length){
+
+    document.getElementById("lowestPrice").textContent =
+      "--";
+
+    document.getElementById("averagePrice").textContent =
+      "--";
+
+    document.getElementById("priceSpread").textContent =
+      "--";
+
+    document.getElementById("activityLow").textContent =
+      "--";
+
+    document.getElementById("activityHigh").textContent =
+      "--";
+
+    return;
+
+  }
+
+  const prices =
+    offers.map(
+      o => Number(o.price)
+    ).filter(
+      n => Number.isFinite(n)
+    );
+
+  const low =
+    Math.min(...prices);
+
+  const high =
+    Math.max(...prices);
+
+  const avg =
+    prices.reduce(
+      (sum,n) => sum+n,
+      0
+    ) / prices.length;
+
+  document.getElementById("lowestPrice").textContent =
+    `${formatNumber(low,2)} ${document.getElementById("fiatSelect").value}`;
+
+  document.getElementById("averagePrice").textContent =
+    `${formatNumber(avg,2)} ${document.getElementById("fiatSelect").value}`;
+
+  document.getElementById("priceSpread").textContent =
+    `${formatNumber(high-low,2)} ${document.getElementById("fiatSelect").value}`;
+
+  document.getElementById("activityLow").textContent =
+    `${formatNumber(low,2)}`;
+
+  document.getElementById("activityHigh").textContent =
+    `${formatNumber(high,2)}`;
+
+}
+
+
+/* =========================================================
    SELECT OFFER
-========================= */
+   ========================================================= */
 
-function selectOffer(id){
+function selectOffer(offerId){
 
-  selectedTraderId=id;
+  const offer =
+    allOffers.find(
+      o => o.id === offerId
+    );
 
-  const t=traders[id];
+  if(!offer) return;
 
-  document.getElementById("selectedAvatar")
-    .textContent=t.avatar;
+  selectedOffer = offer;
 
-  document.getElementById("selectedTrader")
-    .textContent=t.name;
+  selectedTraderData =
+    offer.trader || {
+      id:offer.trader_id,
+      username:"Trader"
+    };
 
-  document.getElementById("selectedRating")
-    .textContent=
-      `${t.rating}% completion · ${t.response} response`;
+  const trader =
+    selectedTraderData;
 
-  const payment=
+  const name =
+    trader.username ||
+    trader.full_name ||
+    "Trader";
+
+  document.getElementById("selectedTrader").textContent =
+    name;
+
+  document.getElementById("selectedAvatar").textContent =
+    getInitials(name);
+
+  document.getElementById("selectedRating").textContent =
+    `${Number(offer.stats?.reputation_score || 0).toFixed(1)} reputation • ${Number(offer.stats?.completion_rate || 0).toFixed(1)}% completion`;
+
+  const paymentSelect =
     document.getElementById("quickPayment");
 
-  payment.innerHTML="";
+  paymentSelect.innerHTML =
+    (offer.methods || [])
+      .map(
+        m =>
+          `<option>${escapeHtml(m.name)}</option>`
+      )
+      .join("");
 
-  t.methods.forEach(m=>{
+  if(!paymentSelect.options.length){
 
-    const option=document.createElement("option");
+    paymentSelect.innerHTML =
+      `<option>Bank Transfer</option>`;
 
-    option.textContent=m;
-
-    payment.appendChild(option);
-
-  });
+  }
 
   calculateTrade();
 
-  showNotification(`${t.name} selected.`);
+  showToast(
+    `${name} selected`
+  );
 
 }
+
+
+/* =========================================================
+   CALCULATE TRADE
+   ========================================================= */
 
 function calculateTrade(){
 
-  if(!selectedTraderId){
+  if(!selectedOffer){
 
-    document.getElementById("calcRate").textContent="--";
-    document.getElementById("calcReceive").textContent="-- USDT";
+    document.getElementById("calcRate").textContent =
+      "--";
+
+    document.getElementById("calcReceive").textContent =
+      "-- USDT";
 
     return;
 
   }
 
-  const t=traders[selectedTraderId];
+  const amount =
+    Number(
+      document.getElementById("quickAmount").value || 0
+    );
 
-  const amount=
-    Number(document.getElementById("quickAmount").value)||0;
+  const price =
+    Number(selectedOffer.price || 0);
 
-  const fee=amount*0.001;
+  const asset =
+    selectedOffer.asset;
 
-  const receive=
-    amount/t.price;
+  const fiat =
+    selectedOffer.fiat;
 
-  document.getElementById("calcRate")
-    .textContent=`${t.price.toFixed(2)} ETB`;
+  if(!price){
 
-  document.getElementById("calcFee")
-    .textContent=`${fee.toFixed(2)} ETB`;
+    return;
 
-  document.getElementById("calcReceive")
-    .textContent=`${receive.toFixed(6)} USDT`;
+  }
+
+  const receive =
+    amount / price;
+
+  const fee =
+    receive * 0.005;
+
+  const estimated =
+    Math.max(
+      receive - fee,
+      0
+    );
+
+  document.getElementById("calcRate").textContent =
+    `${formatNumber(price,2)} ${fiat}`;
+
+  document.getElementById("calcFee").textContent =
+    `${formatNumber(fee * price,2)} ${fiat}`;
+
+  document.getElementById("calcReceive").textContent =
+    `${formatNumber(estimated,6)} ${asset}`;
 
 }
 
 
-/* =========================
+/* =========================================================
    QUICK TRADE
-========================= */
+   ========================================================= */
 
 function startQuickTrade(){
 
-  if(!selectedTraderId){
+  if(!selectedOffer){
 
-    showNotification("Please select a trader first.");
-
-    return;
-
-  }
-
-  const t=traders[selectedTraderId];
-
-  const amount=
-    Number(document.getElementById("quickAmount").value)||0;
-
-  if(amount<=0){
-
-    showNotification("Enter a valid amount.");
-
-    return;
-
-  }
-
-  if(amount<t.min || amount>t.max){
-
-    showNotification(
-      `Amount must be between ${formatNumber(t.min)} and ${formatNumber(t.max)} ETB.`
+    showToast(
+      "Select a P2P offer first."
     );
 
     return;
 
   }
 
-  const payment=
+  const amount =
+    Number(
+      document.getElementById("quickAmount").value || 0
+    );
+
+  if(amount <= 0){
+
+    showToast(
+      "Enter a valid amount."
+    );
+
+    return;
+
+  }
+
+  if(
+    amount < Number(selectedOffer.min_amount) ||
+    amount > Number(selectedOffer.max_amount)
+  ){
+
+    showToast(
+      `Amount must be between ${formatNumber(selectedOffer.min_amount)} and ${formatNumber(selectedOffer.max_amount)}.`
+    );
+
+    return;
+
+  }
+
+  const receive =
+    amount /
+    Number(selectedOffer.price);
+
+  document.getElementById("reviewTrader").textContent =
+    selectedOffer.trader?.username ||
+    selectedOffer.trader?.full_name ||
+    "Trader";
+
+  document.getElementById("reviewAsset").textContent =
+    selectedOffer.asset;
+
+  document.getElementById("reviewAmount").textContent =
+    `${formatNumber(amount,2)} ${selectedOffer.fiat}`;
+
+  document.getElementById("reviewPrice").textContent =
+    `${formatNumber(selectedOffer.price,2)} ${selectedOffer.fiat}`;
+
+  document.getElementById("reviewPayment").textContent =
     document.getElementById("quickPayment").value;
 
-  const receive=
-    amount/t.price;
-
-  document.getElementById("reviewTrader")
-    .textContent=t.name;
-
-  document.getElementById("reviewAsset")
-    .textContent=document.getElementById("assetSelect").value;
-
-  document.getElementById("reviewAmount")
-    .textContent=`${formatNumber(amount)} ETB`;
-
-  document.getElementById("reviewPrice")
-    .textContent=`${t.price.toFixed(2)} ETB`;
-
-  document.getElementById("reviewPayment")
-    .textContent=payment;
-
-  document.getElementById("reviewReceive")
-    .textContent=`${receive.toFixed(6)} USDT`;
+  document.getElementById("reviewReceive").textContent =
+    `${formatNumber(receive,6)} ${selectedOffer.asset}`;
 
   openModal("reviewModal");
 
 }
 
 
-/* =========================
+/* =========================================================
+   SECURITY CENTER
+   ========================================================= */
+
+function openSecurityCenter(){
+
+  showToast(
+    "Security Center: authentication, RLS and server-side authorization are required before real trading."
+  );
+
+}
+
+
+/* =========================================================
    OTP
-========================= */
+   ========================================================= */
 
 function generateCode(){
 
-  verificationCode=
-    Math.floor(100000+Math.random()*900000).toString();
+  otpCode =
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    ).toString();
 
-  otpSeconds=120;
+  otpExpires =
+    Date.now() + 120000;
 
-  document.getElementById("demoCode")
-    .textContent=verificationCode;
+  document.getElementById("demoCode").textContent =
+    otpCode;
 
-  document.getElementById("otpInput")
-    .value="";
+  document.getElementById("otpInput").value =
+    "";
 
-  document.getElementById("otpError")
-    .textContent="";
+  document.getElementById("otpError").textContent =
+    "";
+
+  if(otpInterval)
+    clearInterval(otpInterval);
+
+  otpInterval =
+    setInterval(
+      updateOtpTimer,
+      1000
+    );
 
   updateOtpTimer();
 
-  clearInterval(otpInterval);
-
-  otpInterval=setInterval(()=>{
-
-    otpSeconds--;
-
-    updateOtpTimer();
-
-    if(otpSeconds<=0){
-
-      clearInterval(otpInterval);
-
-      document.getElementById("otpError")
-        .textContent="Verification code expired.";
-
-    }
-
-  },1000);
-
 }
+
 
 function updateOtpTimer(){
 
-  const min=
-    Math.floor(otpSeconds/60)
-      .toString()
-      .padStart(2,"0");
+  const remaining =
+    Math.max(
+      0,
+      otpExpires - Date.now()
+    );
 
-  const sec=
-    (otpSeconds%60)
-      .toString()
-      .padStart(2,"0");
+  const seconds =
+    Math.ceil(
+      remaining / 1000
+    );
 
-  document.getElementById("otpTimer")
-    .textContent=`${min}:${sec}`;
+  const minutes =
+    Math.floor(
+      seconds / 60
+    );
+
+  const secs =
+    seconds % 60;
+
+  document.getElementById("otpTimer").textContent =
+    `${String(minutes).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+
+  if(seconds <= 0){
+
+    clearInterval(otpInterval);
+
+    document.getElementById("otpError").textContent =
+      "Verification code expired. Generate a new code.";
+
+  }
 
 }
+
 
 function startVerification(){
 
@@ -3397,24 +3954,28 @@ function startVerification(){
 
 }
 
+
 function verifyCode(){
 
-  const entered=
-    document.getElementById("otpInput").value;
+  const input =
+    document.getElementById("otpInput").value.trim();
 
-  if(otpSeconds<=0){
+  if(
+    !otpCode ||
+    Date.now() > otpExpires
+  ){
 
-    document.getElementById("otpError")
-      .textContent="Code expired. Please resend.";
+    document.getElementById("otpError").textContent =
+      "Code expired.";
 
     return;
 
   }
 
-  if(entered!==verificationCode){
+  if(input !== otpCode){
 
-    document.getElementById("otpError")
-      .textContent="Incorrect demo verification code.";
+    document.getElementById("otpError").textContent =
+      "Incorrect verification code.";
 
     return;
 
@@ -3429,48 +3990,51 @@ function verifyCode(){
 }
 
 
-/* =========================
+/* =========================================================
    TRADE ROOM
-========================= */
+   ========================================================= */
 
 function openTradeRoom(){
 
-  if(!selectedTraderId)
-    return;
+  if(!selectedOffer) return;
 
-  const t=traders[selectedTraderId];
+  const amount =
+    Number(
+      document.getElementById("quickAmount").value || 0
+    );
 
-  const amount=
-    Number(document.getElementById("quickAmount").value)||0;
+  const receive =
+    amount /
+    Number(selectedOffer.price);
 
-  const payment=
+  const trader =
+    selectedOffer.trader?.username ||
+    selectedOffer.trader?.full_name ||
+    "Trader";
+
+  document.getElementById("tradeTrader").textContent =
+    trader;
+
+  document.getElementById("tradePay").textContent =
+    `${formatNumber(amount,2)} ${selectedOffer.fiat}`;
+
+  document.getElementById("tradeReceive").textContent =
+    `${formatNumber(receive,6)} ${selectedOffer.asset}`;
+
+  document.getElementById("tradePayment").textContent =
     document.getElementById("quickPayment").value;
 
-  const receive=
-    amount/t.price;
-
-  document.getElementById("tradeTrader")
-    .textContent=t.name;
-
-  document.getElementById("tradePay")
-    .textContent=`${formatNumber(amount)} ETB`;
-
-  document.getElementById("tradeReceive")
-    .textContent=`${receive.toFixed(6)} USDT`;
-
-  document.getElementById("tradePayment")
-    .textContent=payment;
-
-  document.getElementById("tradeStatus")
-    .textContent="Awaiting payment";
+  document.getElementById("tradeStatus").textContent =
+    "Awaiting payment";
 
   resetTimeline();
 
-  openModal("tradeModal");
-
   startTradeTimer();
 
+  openModal("tradeModal");
+
 }
+
 
 function resetTimeline(){
 
@@ -3478,240 +4042,327 @@ function resetTimeline(){
 
     document
       .getElementById(`step${i}`)
-      .classList.toggle("active",i===1);
+      .classList.toggle(
+        "active",
+        i === 1
+      );
 
   }
 
 }
 
+
 function startTradeTimer(){
 
-  tradeSeconds=1800;
+  if(tradeInterval)
+    clearInterval(tradeInterval);
 
-  clearInterval(tradeInterval);
+  tradeSeconds = 1800;
 
   updateTradeTimer();
 
-  tradeInterval=setInterval(()=>{
-
-    tradeSeconds--;
-
-    updateTradeTimer();
-
-    if(tradeSeconds<=0){
-
-      clearInterval(tradeInterval);
-
-      document.getElementById("tradeStatus")
-        .textContent="Trade expired";
-
-    }
-
-  },1000);
+  tradeInterval =
+    setInterval(
+      updateTradeTimer,
+      1000
+    );
 
 }
+
 
 function updateTradeTimer(){
 
-  const min=
-    Math.floor(tradeSeconds/60)
-      .toString()
-      .padStart(2,"0");
+  const minutes =
+    Math.floor(
+      tradeSeconds / 60
+    );
 
-  const sec=
-    (tradeSeconds%60)
-      .toString()
-      .padStart(2,"0");
+  const seconds =
+    tradeSeconds % 60;
 
-  document.getElementById("tradeTimer")
-    .textContent=`${min}:${sec}`;
+  document.getElementById("tradeTimer").textContent =
+    `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+  if(tradeSeconds <= 0){
+
+    clearInterval(tradeInterval);
+
+    document.getElementById("tradeStatus").textContent =
+      "Expired";
+
+    return;
+
+  }
+
+  tradeSeconds--;
 
 }
+
 
 function markPaid(){
 
-  document.getElementById("tradeStatus")
-    .textContent="Payment marked as sent";
+  document.getElementById("tradeStatus").textContent =
+    "Payment marked as sent";
 
-  document.getElementById("step1")
+  document
+    .getElementById("step1")
     .classList.add("active");
 
-  document.getElementById("step2")
+  document
+    .getElementById("step2")
     .classList.add("active");
 
   addMessage(
-    "Payment marked as sent in the demo workflow.",
-    "me"
+    "me",
+    "I have marked the payment as sent."
   );
 
-  showNotification("Payment marked as sent in demo mode.");
+  showToast(
+    "Demo payment status updated."
+  );
 
 }
+
 
 function releaseCrypto(){
 
-  document.getElementById("tradeStatus")
-    .textContent="Demo crypto released";
+  document.getElementById("tradeStatus").textContent =
+    "Demo release requested";
 
-  document.getElementById("step3")
+  document
+    .getElementById("step3")
     .classList.add("active");
 
-  document.getElementById("step4")
+  document
+    .getElementById("step4")
     .classList.add("active");
 
   addMessage(
-    "Demo crypto release completed.",
-    "me"
+    "me",
+    "I requested the demo crypto release."
   );
 
-  showNotification("Demo trade completed.");
+  showToast(
+    "Real crypto release requires server-side authorization."
+  );
 
 }
+
 
 function openDispute(){
 
-  document.getElementById("tradeStatus")
-    .textContent="Demo dispute opened";
+  document.getElementById("tradeStatus").textContent =
+    "Dispute opened";
 
   addMessage(
-    "A demo dispute has been opened for review.",
-    "me"
+    "me",
+    "I opened a dispute."
   );
 
-  showNotification("Demo dispute opened.");
+  showToast(
+    "Demo dispute opened."
+  );
 
 }
+
 
 function cancelTrade(){
 
-  document.getElementById("tradeStatus")
-    .textContent="Trade cancelled";
+  document.getElementById("tradeStatus").textContent =
+    "Cancelled";
 
-  showNotification("Demo trade cancelled.");
+  showToast(
+    "Demo trade cancelled."
+  );
 
 }
 
-function addMessage(text,type){
 
-  const chat=
+function addMessage(type,text){
+
+  const chat =
     document.getElementById("chat");
 
-  const message=
+  const div =
     document.createElement("div");
 
-  message.className=
+  div.className =
     `message ${type}`;
 
-  message.innerHTML=`
-    ${text}
-    <small>You • now</small>
-  `;
+  div.innerHTML =
+    `${escapeHtml(text)}<small>${type === "me" ? "You" : "Trader"} • now</small>`;
 
-  chat.appendChild(message);
+  chat.appendChild(div);
 
-  chat.scrollTop=chat.scrollHeight;
+  chat.scrollTop =
+    chat.scrollHeight;
 
 }
+
 
 function sendMessage(){
 
-  const input=
+  const input =
     document.getElementById("chatInput");
 
-  const text=input.value.trim();
+  const text =
+    input.value.trim();
 
-  if(!text)
-    return;
+  if(!text) return;
 
-  addMessage(text,"me");
+  addMessage(
+    "me",
+    text
+  );
 
-  input.value="";
+  input.value = "";
 
 }
 
 
-/* =========================
-   ADVANCED PROFILE
-========================= */
+/* =========================================================
+   TRADER PROFILE
+   ========================================================= */
 
-function openProfile(id){
+async function openProfile(traderId){
 
-  selectedTraderId=id;
+  let offer =
+    allOffers.find(
+      o => o.trader_id === traderId
+    );
 
-  const t=traders[id];
+  if(!offer){
 
-  document.getElementById("profileAvatar")
-    .textContent=t.avatar;
+    showToast(
+      "Trader information is not available."
+    );
 
-  document.getElementById("profileName")
-    .textContent=t.name;
+    return;
 
-  document.getElementById("profileOnline")
-    .innerHTML=
-      t.online
-        ? `<span class="green">● Online now</span>`
-        : `<span>● Offline</span>`;
+  }
 
-  document.getElementById("profileScore")
-    .textContent=t.score;
+  selectedTraderData =
+    offer.trader || {
+      id:traderId
+    };
 
-  document.getElementById("profileProgress")
-    .style.width=`${t.score}%`;
+  const trader =
+    selectedTraderData;
 
-  document.getElementById("profileRating")
-    .textContent=`${t.rating}%`;
+  const stats =
+    offer.stats || {};
 
-  document.getElementById("profileTrades")
-    .textContent=formatNumber(t.trades);
+  const name =
+    trader.username ||
+    trader.full_name ||
+    "Trader";
 
-  document.getElementById("profileVolume")
-    .textContent=t.volume;
+  const avatar =
+    trader.avatar_url;
 
-  document.getElementById("profileResponse")
-    .textContent=t.response;
+  const profileAvatar =
+    document.getElementById("profileAvatar");
 
-  document.getElementById("profileRelease")
-    .textContent=t.release;
+  if(avatar){
 
-  document.getElementById("profileAge")
-    .textContent=t.age;
+    profileAvatar.innerHTML =
+      `<img src="${escapeAttribute(avatar)}" alt="">`;
 
-  document.getElementById("profileTrust")
-    .textContent=t.trust;
+  }else{
 
-  setPerformance(
-    "completionBar",
-    "completionValue",
-    t.completion
-  );
+    profileAvatar.textContent =
+      getInitials(name);
 
-  setPerformance(
-    "successBar",
-    "successValue",
-    t.success
-  );
+  }
 
-  setPerformance(
-    "responseBar",
-    "responseValue",
-    t.responseScore
-  );
+  document.getElementById("profileName").textContent =
+    name;
 
-  setPerformance(
-    "releaseBar",
-    "releaseValue",
-    t.releaseScore
-  );
+  document.getElementById("profileStatus").textContent =
+    trader.online_status
+      ? "● Online"
+      : "● Offline";
 
-  const payments=
-    document.getElementById("profilePayments");
+  document.getElementById("profileStatus").className =
+    trader.online_status
+      ? "green"
+      : "";
 
-  payments.innerHTML=
-    t.payments.map(p=>
-      `<span class="method">${p}</span>`
-    ).join("");
+  document.getElementById("profileScore").textContent =
+    Number(stats.reputation_score || 0).toFixed(1);
 
-  renderTradeHistory(t);
+  document.getElementById("profileCompletion").textContent =
+    `${Number(stats.completion_rate || 0).toFixed(1)}%`;
+
+  document.getElementById("profileSuccess").textContent =
+    `${Number(stats.successful_trade_rate || 0).toFixed(1)}%`;
+
+  document.getElementById("profileTrades").textContent =
+    Number(stats.total_trades || 0).toLocaleString();
+
+  document.getElementById("profileVolume").textContent =
+    formatNumber(stats.total_volume || 0);
+
+  document.getElementById("profileResponse").textContent =
+    formatTime(stats.avg_response_seconds || 0);
+
+  document.getElementById("profileRelease").textContent =
+    formatTime(stats.avg_release_seconds || 0);
+
+  document.getElementById("profileTrust").textContent =
+    trader.trust_level || "new";
+
+  document.getElementById("profileAge").textContent =
+    calculateAccountAge(
+      trader.account_created_at
+    );
+
+  document.getElementById("profileBadges").innerHTML = `
+
+    ${
+      trader.verification_status === "verified"
+        ? `<span class="badge green-badge">✓ Verified</span>`
+        : ""
+    }
+
+    ${
+      trader.trust_level === "trusted"
+        ? `<span class="badge yellow-badge">★ Trusted Trader</span>`
+        : ""
+    }
+
+    ${
+      trader.trust_level === "top"
+        ? `<span class="badge yellow-badge">🏆 Top Trader</span>`
+        : ""
+    }
+
+    ${
+      Number(stats.avg_response_seconds || 999999) <= 300
+        ? `<span class="badge">⚡ Fast Trader</span>`
+        : ""
+    }
+
+  `;
+
+  setPerformance(stats);
+
+  const payments =
+    await loadProfilePayments(traderId);
+
+  document.getElementById("profilePayments").innerHTML =
+    payments.length
+      ? payments
+          .map(
+            p =>
+              `<span class="method">${escapeHtml(p.name)}</span>`
+          )
+          .join("")
+      : `<span class="method">No payment methods listed</span>`;
+
+  await loadProfileReviews(traderId);
+
+  await loadTradeHistory(traderId);
 
   updateProfileFavoriteButton();
 
@@ -3719,90 +4370,299 @@ function openProfile(id){
 
 }
 
-function setPerformance(bar,value,number){
 
-  document.getElementById(bar)
-    .style.width=`${number}%`;
+function calculateAccountAge(date){
 
-  document.getElementById(value)
-    .textContent=`${number}%`;
+  if(!date) return "Unknown";
+
+  const created =
+    new Date(date);
+
+  const days =
+    Math.max(
+      0,
+      Math.floor(
+        (Date.now() - created.getTime()) /
+        86400000
+      )
+    );
+
+  if(days < 30)
+    return `${days} days`;
+
+  if(days < 365)
+    return `${Math.floor(days/30)} months`;
+
+  return `${Math.floor(days/365)} years`;
+
+}
+
+
+function setPerformance(stats){
+
+  const completion =
+    Number(stats.completion_rate || 0);
+
+  const success =
+    Number(stats.successful_trade_rate || 0);
+
+  const responseScore =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        100 -
+        Number(stats.avg_response_seconds || 0) / 60
+      )
+    );
+
+  const releaseScore =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        100 -
+        Number(stats.avg_release_seconds || 0) / 60
+      )
+    );
+
+  document.getElementById("completionBar").style.width =
+    `${completion}%`;
+
+  document.getElementById("successBar").style.width =
+    `${success}%`;
+
+  document.getElementById("responseBar").style.width =
+    `${responseScore}%`;
+
+  document.getElementById("releaseBar").style.width =
+    `${releaseScore}%`;
+
+  document.getElementById("completionScore").textContent =
+    `${completion.toFixed(0)}%`;
+
+  document.getElementById("successScore").textContent =
+    `${success.toFixed(0)}%`;
+
+  document.getElementById("responseScore").textContent =
+    `${responseScore.toFixed(0)}%`;
+
+  document.getElementById("releaseScore").textContent =
+    `${releaseScore.toFixed(0)}%`;
 
 }
 
-function renderTradeHistory(t){
 
-  const body=
-    document.getElementById("tradeHistory");
+async function loadProfilePayments(traderId){
 
-  const demo=[
-    ["Today","USDT","500","Bank Transfer","Completed"],
-    ["Yesterday","USDT","1,250","Telebirr","Completed"],
-    ["3 days ago","USDT","800","CBE Birr","Completed"],
-    ["5 days ago","USDT","2,000","Bank Transfer","Completed"],
-    ["7 days ago","USDT","350","Telebirr","Completed"]
-  ];
+  if(!supabaseClient)
+    return [];
 
-  body.innerHTML=
-    demo.map(row=>`
+  try{
 
-      <tr>
+    const {data,error} =
+      await supabaseClient
+        .from("trader_payment_methods")
+        .select(`
+          payment_methods (
+            id,
+            name,
+            enabled
+          )
+        `)
+        .eq("trader_id",traderId)
+        .eq("enabled",true);
 
-        <td>${row[0]}</td>
+    if(error) throw error;
 
-        <td>${row[1]}</td>
+    return (data || [])
+      .map(x => x.payment_methods)
+      .filter(Boolean);
 
-        <td>${row[2]} USDT</td>
+  }catch(error){
 
-        <td>${row[3]}</td>
+    console.warn(
+      error.message
+    );
 
-        <td>
-          <span class="green">
-            ✓ ${row[4]}
-          </span>
-        </td>
+    return [];
 
-      </tr>
-
-    `).join("");
+  }
 
 }
+
+
+async function loadProfileReviews(traderId){
+
+  const container =
+    document.getElementById("profileReviews");
+
+  if(!supabaseClient){
+
+    container.innerHTML =
+      `<div class="empty">Reviews require Supabase.</div>`;
+
+    return;
+
+  }
+
+  try{
+
+    const {data,error} =
+      await supabaseClient
+        .from("reviews")
+        .select(`
+          rating,
+          comment,
+          created_at,
+          reviewer_id
+        `)
+        .eq("trader_id",traderId)
+        .order("created_at",{ascending:false})
+        .limit(5);
+
+    if(error) throw error;
+
+    if(!data || !data.length){
+
+      container.innerHTML =
+        `<div class="empty">No reviews available.</div>`;
+
+      return;
+
+    }
+
+    container.innerHTML =
+      data.map(
+        review => `
+
+          <div class="review-item">
+
+            <div>
+              <strong>
+                ${"★".repeat(Number(review.rating || 0))}
+              </strong>
+
+              <span class="yellow">
+                ${Number(review.rating || 0)}/5
+              </span>
+            </div>
+
+            <div
+              style="color:var(--muted);font-size:11px;margin-top:5px"
+            >
+              ${escapeHtml(review.comment || "No written comment.")}
+            </div>
+
+          </div>
+
+        `
+      ).join("");
+
+  }catch(error){
+
+    console.warn(
+      "Reviews:",
+      error.message
+    );
+
+    container.innerHTML =
+      `<div class="empty">Could not load reviews.</div>`;
+
+  }
+
+}
+
+
+async function loadTradeHistory(traderId){
+
+  const container =
+    document.getElementById("profileHistory");
+
+  if(!supabaseClient){
+
+    container.innerHTML =
+      `<div class="empty">Trade history requires Supabase.</div>`;
+
+    return;
+
+  }
+
+  /*
+    We do not expose another user's private trade records
+    through the frontend. This section can later be replaced
+    by a secure public trader-statistics view or server-side
+    summary.
+  */
+
+  container.innerHTML = `
+
+    <div class="history-row">
+
+      <span>
+        Completed trades
+      </span>
+
+      <strong>
+        ${Number(selectedTraderData?.completed_trades || 0)}
+      </strong>
+
+    </div>
+
+    <div class="history-row">
+
+      <span>
+        Public trade performance
+      </span>
+
+      <strong class="green">
+        Available through trader statistics
+      </strong>
+
+    </div>
+
+  `;
+
+}
+
 
 function updateProfileFavoriteButton(){
 
-  if(!selectedTraderId)
-    return;
+  if(!selectedTraderData) return;
 
-  const button=
-    document.getElementById("profileFavoriteButton");
+  const button =
+    document.getElementById("profileFavoriteBtn");
 
-  button.textContent=
-    isFavorite(selectedTraderId)
-      ? "★ Remove Favorite"
+  const favorite =
+    isFavorite(
+      selectedTraderData.id
+    );
+
+  button.textContent =
+    favorite
+      ? "★ Favorited"
       : "☆ Favorite";
 
 }
 
+
 function selectProfileOffer(){
 
-  if(!selectedTraderId)
+  if(!selectedTraderData)
     return;
 
-  closeModal("profileModal");
+  const offer =
+    allOffers.find(
+      o =>
+        o.trader_id ===
+        selectedTraderData.id
+    );
 
-  selectOffer(selectedTraderId);
+  if(!offer){
 
-  window.scrollTo({
-    top:document.querySelector(".quick").offsetTop-100,
-    behavior:"smooth"
-  });
-
-}
-
-function openReportFromProfile(){
-
-  if(!selectedTraderId){
-
-    showNotification("Select a trader first.");
+    showToast(
+      "No active offer from this trader."
+    );
 
     return;
 
@@ -3810,160 +4670,407 @@ function openReportFromProfile(){
 
   closeModal("profileModal");
 
-  openReport(selectedTraderId);
+  selectOffer(offer.id);
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
-/* =========================
-   REPORT
-========================= */
+function openReportFromProfile(){
 
-function openReport(id){
+  if(!selectedTraderData) return;
 
-  selectedTraderId=id;
+  reportTarget = {
+    traderId:selectedTraderData.id,
+    offerId:null,
+    tradeId:null
+  };
 
   openModal("reportModal");
 
 }
 
-function submitReport(reason){
 
-  const name=
-    selectedTraderId
-      ? traders[selectedTraderId].name
-      : "Trader";
+/* =========================================================
+   REPORTS
+   ========================================================= */
 
-  closeModal("reportModal");
+function openReport(
+  traderId,
+  offerId,
+  tradeId
+){
 
-  showNotification(
-    `Demo report submitted for ${name}: ${reason}`
-  );
+  reportTarget = {
+    traderId:traderId || null,
+    offerId:offerId || null,
+    tradeId:tradeId || null
+  };
 
-}
+  document.getElementById("reportDetails").value = "";
 
-
-/* =========================
-   SECURITY CENTER
-========================= */
-
-function openSecurityCenter(){
-
-  openModal("securityCenterModal");
+  openModal("reportModal");
 
 }
 
 
-/* =========================
-   ACTIVITY
-========================= */
+async function submitReport(){
 
-function openActivity(){
+  if(!currentUser){
+
+    showToast(
+      "Please sign in before submitting a report."
+    );
+
+    return;
+
+  }
+
+  if(!supabaseClient){
+
+    showToast(
+      "Supabase is not connected."
+    );
+
+    return;
+
+  }
+
+  const reason =
+    document.getElementById("reportReason").value;
+
+  const details =
+    document.getElementById("reportDetails").value.trim();
+
+  try{
+
+    const {error} =
+      await supabaseClient
+        .from("reports")
+        .insert({
+
+          reporter_id:currentUser.id,
+
+          trader_id:
+            reportTarget.traderId,
+
+          offer_id:
+            reportTarget.offerId,
+
+          trade_id:
+            reportTarget.tradeId,
+
+          reason,
+
+          details
+
+        });
+
+    if(error) throw error;
+
+    closeModal("reportModal");
+
+    showNotification(
+      "Your report was submitted."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not submit the report."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MARKET ACTIVITY
+   ========================================================= */
+
+async function openActivity(){
+
+  updateStats();
+
+  const list =
+    document.getElementById("activityList");
+
+  if(!allOffers.length){
+
+    list.innerHTML =
+      `<div class="empty">No current marketplace activity.</div>`;
+
+  }else{
+
+    list.innerHTML =
+      allOffers
+        .slice(0,8)
+        .map(
+          offer => {
+
+            const name =
+              offer.trader?.username ||
+              offer.trader?.full_name ||
+              "Trader";
+
+            return `
+
+              <div class="history-row">
+
+                <span>
+                  ${escapeHtml(name)}
+                  posted a
+                  ${escapeHtml(offer.asset)}
+                  offer
+                </span>
+
+                <strong>
+                  ${formatNumber(offer.price,2)}
+                  ${escapeHtml(offer.fiat)}
+                </strong>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+  }
 
   openModal("activityModal");
 
 }
 
 
-/* =========================
-   MODALS
-========================= */
-
-function openModal(id){
-
-  document
-    .getElementById(id)
-    .classList.add("show");
-
-}
-
-function closeModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-}
-
-
-/* =========================
+/* =========================================================
    NOTIFICATIONS
-========================= */
+   ========================================================= */
 
 function toggleNotifications(){
 
   document
-    .getElementById("notifications")
+    .getElementById("notificationPanel")
     .classList.toggle("show");
 
 }
 
+
 function markNotificationsRead(){
 
-  document.getElementById("notifDot")
-    .style.display="none";
-
-  document
-    .getElementById("notifications")
-    .classList.remove("show");
-
-  showNotification("Notifications marked as read.");
-
-}
-
-function showNotification(text){
-
-  const toast=
-    document.getElementById("toast");
-
-  toast.textContent=text;
-
-  toast.classList.add("show");
-
-  document.getElementById("notifDot")
-    .style.display="block";
-
-  setTimeout(()=>{
-
-    toast.classList.remove("show");
-
-  },2800);
+  document.getElementById("notifDot").style.display =
+    "none";
 
 }
 
 
-/* =========================
-   CLOSE MODAL WHEN CLICKING
-   OUTSIDE
-========================= */
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
 
-document.querySelectorAll(".modal")
-.forEach(modal=>{
+async function loadCurrentUser(){
 
-  modal.addEventListener("click",function(e){
+  if(!supabaseClient)
+    return;
 
-    if(e.target===modal){
-      modal.classList.remove("show");
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getUser();
+
+    if(error){
+
+      console.warn(
+        "Auth:",
+        error.message
+      );
+
+      return;
+
     }
 
-  });
+    currentUser =
+      data.user || null;
 
-});
+    if(currentUser){
+
+      document.getElementById("headerAvatar").textContent =
+        getInitials(
+          currentUser.email ||
+          "G"
+        );
+
+      await loadFavorites();
+
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Could not load current user:",
+      error.message
+    );
+
+  }
+
+}
 
 
-/* =========================
-   INITIALIZE
-========================= */
+/* =========================================================
+   REALTIME MARKET UPDATES
+   ========================================================= */
 
-function init(){
+function subscribeToOffers(){
+
+  if(!supabaseClient)
+    return;
+
+  try{
+
+    supabaseClient
+      .channel("p2p-offers-live")
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"p2p_offers"
+        },
+        () => {
+
+          refreshMarket();
+
+          showNotification(
+            "P2P offer marketplace updated."
+          );
+
+        }
+      )
+      .subscribe();
+
+  }catch(error){
+
+    console.warn(
+      "Realtime:",
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+async function init(){
 
   updateMarketTitle();
 
-  renderOffers();
+  if(!supabaseClient){
+
+    document.getElementById("connectionStatus").textContent =
+      "Add Supabase credentials";
+
+    document.getElementById("connectionStatus").className =
+      "badge yellow-badge";
+
+    document.getElementById("offerList").innerHTML = `
+
+      <div class="empty">
+
+        <strong>Supabase connection is not configured.</strong>
+
+        <br><br>
+
+        Open the JavaScript section near the bottom of this
+        file and enter your Supabase project URL and public
+        anon/publishable key.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  await loadCurrentUser();
+
+  await refreshMarket();
+
+  subscribeToOffers();
 
 }
 
-init();
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+
+/* =========================================================
+   CLOSE MODALS WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+document
+  .querySelectorAll(".modal-overlay")
+  .forEach(modal => {
+
+    modal.addEventListener(
+      "click",
+      event => {
+
+        if(event.target === modal){
+
+          modal.classList.remove("show");
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   ESCAPE KEY
+   ========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(event.key === "Escape"){
+
+      document
+        .querySelectorAll(".modal-overlay.show")
+        .forEach(
+          modal =>
+            modal.classList.remove("show")
+        );
+
+      document
+        .getElementById("notificationPanel")
+        .classList.remove("show");
+
+    }
+
+  }
+);
 
 </script>
 
