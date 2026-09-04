@@ -4376,7 +4376,7 @@ async function openProfile(traderId){
     `${Number(stats.successful_trade_rate || 0).toFixed(1)}%`;
 
   document.getElementById("profileTrades").textContent =
-    Number(stats.total_trades || 0).toLocaleString();
+    Number(stats.completed_trades || 0).toLocaleString();
 
   document.getElementById("profileVolume").textContent =
     formatNumber(stats.total_volume || 0);
@@ -4392,7 +4392,7 @@ async function openProfile(traderId){
 
   document.getElementById("profileAge").textContent =
     calculateAccountAge(
-      trader.account_created_at
+      trader.created_at
     );
 
   document.getElementById("profileBadges").innerHTML = `
@@ -4482,7 +4482,7 @@ function setPerformance(stats){
     Number(stats.completion_rate || 0);
 
   const success =
-    Number(stats.successful_trade_rate || 0);
+    Number(stats.success_rate || 0);
 
   const responseScore =
     Math.max(
