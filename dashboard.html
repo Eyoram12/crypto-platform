@@ -946,8 +946,23 @@
 
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+    const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+    let balanceHidden = false;
+
+    function toggleBalance() {
+        // your existing code here
+    }
+</script>
 
     let balanceHidden = false;
 
