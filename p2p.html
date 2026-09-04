@@ -2854,7 +2854,10 @@ async function loadOffersFromSupabase(){
     document.getElementById("connectionStatus").className =
       "badge green-badge";
 
-    return offers || [];
+    const enrichedOffers =
+  await loadTraderPaymentMethods(offers || []);
+
+return enrichedOffers;
 
   }catch(error){
 
