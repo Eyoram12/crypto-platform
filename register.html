@@ -1,10 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CryptoVault | Create Account</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+</script>
 
 <style>
 * {
@@ -202,6 +215,11 @@ input:focus {
     background: #1d4ed8;
 }
 
+.primary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .divider {
     display: flex;
     align-items: center;
@@ -260,199 +278,203 @@ input:focus {
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-    <div class="navbar">
+```
+<div class="navbar">
 
-        <div class="brand">
+    <div class="brand">
 
-            <div class="logo">CV</div>
+        <div class="logo">CV</div>
 
-            <div class="brand-text">
-                <strong>CryptoVault</strong>
-                <span>DIGITAL ASSET PLATFORM</span>
-            </div>
-
+        <div class="brand-text">
+            <strong>CryptoVault</strong>
+            <span>DIGITAL ASSET PLATFORM</span>
         </div>
 
     </div>
+
+</div>
+```
 
 </header>
 
 <main>
 
-    <div class="register-card">
+```
+<div class="register-card">
 
-        <span class="badge">CREATE ACCOUNT</span>
+    <span class="badge">CREATE ACCOUNT</span>
 
-        <h1>Join CryptoVault</h1>
+    <h1>Join CryptoVault</h1>
 
-        <p class="subtitle">
-            Create a demonstration account to explore the
-            CryptoVault digital asset interface.
-        </p>
+    <p class="subtitle">
+        Create your CryptoVault account to access your
+        digital asset dashboard.
+    </p>
 
-        <form onsubmit="createAccount(event)">
+    <form onsubmit="createAccount(event)">
 
-            <label for="fullName">
-                Full Name
-            </label>
+        <label for="fullName">
+            Full Name
+        </label>
+
+        <input
+            type="text"
+            id="fullName"
+            placeholder="Enter your full name"
+            required
+        >
+
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            required
+        >
+
+        <label for="password">
+            Password
+        </label>
+
+        <div class="password-box">
 
             <input
-                type="text"
-                id="fullName"
-                placeholder="Enter your full name"
+                type="password"
+                id="password"
+                placeholder="Create a password"
                 required
+                minlength="6"
+                oninput="checkPassword()"
             >
-
-            <label for="email">
-                Email Address
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                placeholder="you@example.com"
-                required
-            >
-
-            <label for="password">
-                Password
-            </label>
-
-            <div class="password-box">
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Create a password"
-                    required
-                    minlength="6"
-                    oninput="checkPassword()"
-                >
-
-                <button
-                    type="button"
-                    class="show-btn"
-                    onclick="togglePassword('password', 'showPassword')"
-                    id="showPassword"
-                >
-                    Show
-                </button>
-
-            </div>
-
-            <div class="password-strength">
-                <div
-                    class="strength-bar"
-                    id="strengthBar"
-                ></div>
-            </div>
-
-            <div
-                class="strength-text"
-                id="strengthText"
-            >
-                Enter at least 6 characters.
-            </div>
-
-            <label for="confirmPassword">
-                Confirm Password
-            </label>
-
-            <div class="password-box">
-
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm your password"
-                    required
-                    minlength="6"
-                >
-
-                <button
-                    type="button"
-                    class="show-btn"
-                    onclick="togglePassword('confirmPassword', 'showConfirm')"
-                    id="showConfirm"
-                >
-                    Show
-                </button>
-
-            </div>
-
-            <label class="terms">
-
-                <input
-                    type="checkbox"
-                    id="terms"
-                    required
-                >
-
-                <span>
-                    I agree to the
-                    <a
-                        href="#"
-                        onclick="showTerms(event)"
-                    >
-                        Terms of Use
-                    </a>
-                    and
-                    <a
-                        href="#"
-                        onclick="showPrivacy(event)"
-                    >
-                        Privacy Notice
-                    </a>.
-                </span>
-
-            </label>
 
             <button
-                type="submit"
-                class="primary-btn"
+                type="button"
+                class="show-btn"
+                onclick="togglePassword('password', 'showPassword')"
+                id="showPassword"
             >
-                Create Demo Account
+                Show
             </button>
 
-        </form>
-
-        <div class="divider">
-            OR
         </div>
 
-        <div class="signin">
+        <div class="password-strength">
+            <div
+                class="strength-bar"
+                id="strengthBar"
+            ></div>
+        </div>
 
-            Already have an account?
+        <div
+            class="strength-text"
+            id="strengthText"
+        >
+            Enter at least 6 characters.
+        </div>
 
-            <a href="login.html">
-                Sign In
-            </a>
+        <label for="confirmPassword">
+            Confirm Password
+        </label>
+
+        <div class="password-box">
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+                required
+                minlength="6"
+            >
+
+            <button
+                type="button"
+                class="show-btn"
+                onclick="togglePassword('confirmPassword', 'showConfirm')"
+                id="showConfirm"
+            >
+                Show
+            </button>
 
         </div>
 
-        <div class="security">
+        <label class="terms">
 
-            <strong>Security Notice</strong><br>
+            <input
+                type="checkbox"
+                id="terms"
+                required
+            >
 
-            This registration form is part of a demonstration
-            website. It does not create a real financial account
-            or connect to a real payment system.
+            <span>
+                I agree to the
+                <a
+                    href="#"
+                    onclick="showTerms(event)"
+                >
+                    Terms of Use
+                </a>
+                and
+                <a
+                    href="#"
+                    onclick="showPrivacy(event)"
+                >
+                    Privacy Notice
+                </a>.
+            </span>
 
-        </div>
+        </label>
 
-        <div class="demo">
+        <button
+            type="submit"
+            class="primary-btn"
+            id="registerButton"
+        >
+            Create Account
+        </button>
 
-            Demo interface for educational and presentation purposes.
-            No real cryptocurrency or financial transactions are processed.
+    </form>
 
-        </div>
+    <div class="divider">
+        OR
+    </div>
+
+    <div class="signin">
+
+        Already have an account?
+
+        <a href="login.html">
+            Sign In
+        </a>
 
     </div>
+
+    <div class="security">
+
+        <strong>Security Notice</strong><br>
+
+        Your password is handled by Supabase Authentication.
+        CryptoVault does not store your password in this page.
+
+    </div>
+
+    <div class="demo">
+
+        CryptoVault account registration.
+
+    </div>
+
+</div>
+```
 
 </main>
 
@@ -477,6 +499,7 @@ function togglePassword(inputId, buttonId) {
         button.textContent = "Show";
     }
 }
+
 
 function checkPassword() {
 
@@ -537,7 +560,8 @@ function checkPassword() {
     }
 }
 
-function createAccount(event) {
+
+async function createAccount(event) {
 
     event.preventDefault();
 
@@ -556,11 +580,16 @@ function createAccount(event) {
     const terms =
         document.getElementById("terms").checked;
 
+    const registerButton =
+        document.getElementById("registerButton");
+
+
     if (!fullName) {
 
         alert("Please enter your full name.");
         return;
     }
+
 
     if (!email) {
 
@@ -568,11 +597,13 @@ function createAccount(event) {
         return;
     }
 
+
     if (password.length < 6) {
 
         alert("Password must contain at least 6 characters.");
         return;
     }
+
 
     if (password !== confirmPassword) {
 
@@ -580,42 +611,108 @@ function createAccount(event) {
         return;
     }
 
+
     if (!terms) {
 
-        alert("Please accept the Terms of Use and Privacy Notice.");
+        alert(
+            "Please accept the Terms of Use and Privacy Notice."
+        );
+
         return;
     }
+
+
+    registerButton.disabled = true;
+    registerButton.textContent = "Creating Account...";
+
+
+    const { data, error } =
+        await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+                data: {
+                    full_name: fullName
+                }
+
+            }
+
+        });
+
+
+    if (error) {
+
+        registerButton.disabled = false;
+        registerButton.textContent = "Create Account";
+
+        alert(error.message);
+
+        return;
+    }
+
+
+    if (!data.user) {
+
+        registerButton.disabled = false;
+        registerButton.textContent = "Create Account";
+
+        alert("Registration could not be completed.");
+
+        return;
+    }
+
 
     localStorage.setItem(
         "cryptoVaultDemoUser",
         JSON.stringify({
+
             name: fullName,
-            email: email
+
+            email: email,
+
+            id: data.user.id
+
         })
     );
 
-    alert(
-        "Demo account created successfully."
-    );
+
+    if (data.session) {
+
+        alert("Account created successfully.");
+
+    } else {
+
+        alert(
+            "Account created successfully. Please check your email to confirm your account."
+        );
+
+    }
+
 
     window.location.href = "login.html";
 }
+
 
 function showTerms(event) {
 
     event.preventDefault();
 
     alert(
-        "Terms of Use: This is a demonstration platform for educational and presentation purposes."
+        "Terms of Use: CryptoVault is a digital asset platform interface."
     );
 }
+
 
 function showPrivacy(event) {
 
     event.preventDefault();
 
     alert(
-        "Privacy Notice: This demo does not connect to a real financial account or payment service."
+        "Privacy Notice: Your authentication account is managed through Supabase."
     );
 }
 
