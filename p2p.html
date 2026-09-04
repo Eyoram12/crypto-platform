@@ -1,2042 +1,2077 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
 <title>CryptoVault P2P Marketplace</title>
-<meta name="description" content="CryptoVault professional peer-to-peer cryptocurrency marketplace.">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --bg:#07111f;
-  --bg2:#0b1728;
-  --panel:#101e31;
-  --panel2:#14243a;
-  --card:#0c192a;
-  --border:#233650;
-  --text:#f4f7fb;
-  --muted:#91a4bd;
-  --primary:#4f8cff;
-  --primary2:#6aa0ff;
-  --green:#25c58a;
-  --red:#ef5b68;
-  --yellow:#f3bd4f;
-  --purple:#8b6cff;
-  --shadow:0 15px 40px rgba(0,0,0,.28)
+  --bg:#07101d;
+  --panel:#0d1726;
+  --panel2:#111e30;
+  --border:#203049;
+  --text:#eef4ff;
+  --muted:#91a1b8;
+  --green:#20c997;
+  --green2:#14b87a;
+  --yellow:#f5c451;
+  --red:#ef6262;
+  --blue:#4f8cff;
+  --shadow:0 18px 50px rgba(0,0,0,.25);
 }
 
-html{scroll-behavior:smooth}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
+  margin:0;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#07101d 0%,#091321 100%);
   color:var(--text);
-  min-height:100vh
 }
 
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+input,
+select{
+  width:100%;
+  background:#091422;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:11px 12px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(79,140,255,.1);
+}
+
+label{
+  display:block;
+  color:#c9d5e6;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.green{
+  color:var(--green);
+}
+
+.yellow{
+  color:var(--yellow);
+}
+
+.red{
+  color:var(--red);
+}
+
+.blue{
+  color:#78a8ff;
+}
+
+/* HEADER */
 
 .header{
-  height:72px;
-  background:#081525;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 28px;
   position:sticky;
   top:0;
-  z-index:100
+  z-index:50;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,16,29,.94);
+  backdrop-filter:blur(16px);
+}
+
+.header-inner{
+  max-width:1450px;
+  margin:auto;
+  min-height:72px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:10px;
-  font-size:21px;
-  font-weight:800
+  margin-right:auto;
 }
 
-.logo-icon{
-  width:38px;
-  height:38px;
+.logo-mark{
+  width:40px;
+  height:40px;
   border-radius:11px;
-  background:linear-gradient(135deg,#4f8cff,#7b5cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#20c997,#2377ff);
+  color:white;
+  font-weight:900;
 }
 
-.nav{
-  display:flex;
-  gap:5px
+.logo-text{
+  font-size:18px;
+  font-weight:800;
 }
 
-.nav a{
-  padding:10px 13px;
+.logo-sub{
   color:var(--muted);
-  border-radius:8px;
-  font-size:14px
-}
-
-.nav a:hover,
-.nav a.active{
-  background:#13243a;
-  color:#fff
-}
-
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:14px
+  font-size:10px;
+  margin-top:2px;
 }
 
 .wallet-mini{
-  background:#102238;
+  background:#0c1929;
   border:1px solid var(--border);
   border-radius:10px;
-  padding:8px 13px;
-  font-size:13px
+  padding:9px 12px;
+  color:var(--muted);
+  font-size:11px;
 }
 
 .wallet-mini span{
-  color:var(--green);
-  font-weight:700
+  color:white;
+  font-weight:700;
+  margin-left:4px;
 }
 
 .avatar{
   width:38px;
   height:38px;
   border-radius:50%;
-  background:linear-gradient(135deg,#4f8cff,#9c5cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800
+  display:grid;
+  place-items:center;
+  background:#1b3150;
+  font-weight:800;
 }
 
-.page{
-  max-width:1500px;
+.notif-button{
+  position:relative;
+}
+
+.notif-dot{
+  position:absolute;
+  top:6px;
+  right:7px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ef6262;
+  border:2px solid #0d1726;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:10px 14px;
+  color:white;
+  background:#122035;
+  transition:.18s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:#365071;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#2377ff,#356eff);
+  border-color:#4786ff;
+}
+
+.btn-success{
+  background:#126c51;
+  border-color:#188665;
+}
+
+.btn-danger{
+  background:#662c38;
+  border-color:#8e3d4c;
+}
+
+.btn-secondary{
+  background:#101c2d;
+}
+
+.btn-small{
+  padding:7px 10px;
+  font-size:11px;
+}
+
+.full{
+  width:100%;
+}
+
+/* NOTIFICATIONS */
+
+.notification-panel{
+  position:fixed;
+  right:22px;
+  top:68px;
+  width:350px;
+  max-width:calc(100vw - 30px);
+  background:#0d1726;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  z-index:100;
+  overflow:hidden;
+}
+
+.notification-head{
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.notification-item{
+  padding:13px 14px;
+  border-bottom:1px solid #18263a;
+}
+
+.notification-item:last-child{
+  border-bottom:0;
+}
+
+.notification-item strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.notification-item span{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* MAIN */
+
+.container{
+  max-width:1450px;
   margin:auto;
-  padding:28px
+  padding:28px 22px 100px;
 }
 
 .hero{
   display:flex;
+  align-items:flex-start;
   justify-content:space-between;
-  align-items:flex-end;
   gap:20px;
-  margin-bottom:22px
+  margin-bottom:24px;
 }
 
 .hero h1{
-  font-size:32px;
-  margin-bottom:8px
+  margin:0 0 9px;
+  font-size:30px;
 }
 
 .hero p{
+  max-width:780px;
   color:var(--muted);
-  max-width:850px;
-  line-height:1.5
+  line-height:1.6;
+  font-size:13px;
+  margin:0;
 }
 
 .hero-actions{
   display:flex;
-  gap:9px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.btn{
-  border:none;
-  border-radius:9px;
-  padding:11px 16px;
-  font-weight:700;
-  transition:.2s
+/* DEMO BANNER */
+
+.demo-banner{
+  background:linear-gradient(90deg,rgba(245,196,81,.09),rgba(79,140,255,.07));
+  border:1px solid rgba(245,196,81,.25);
+  border-radius:12px;
+  padding:13px 15px;
+  margin-bottom:20px;
+  color:#d7dfeb;
+  font-size:11px;
+  line-height:1.6;
 }
 
-.btn:hover{
-  transform:translateY(-1px)
+.demo-banner strong{
+  color:var(--yellow);
 }
 
-.btn-primary{
-  background:var(--primary);
-  color:#fff
+/* MARKET STATS */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  margin-bottom:20px;
 }
 
-.btn-primary:hover{
-  background:var(--primary2)
-}
-
-.btn-secondary{
-  background:#14263d;
-  border:1px solid var(--border);
-  color:#fff
-}
-
-.btn-secondary:hover{
-  background:#1a304c
-}
-
-.btn-success{
-  background:rgba(37,197,138,.13);
-  color:#46d9a2;
-  border:1px solid rgba(37,197,138,.25)
-}
-
-.btn-danger{
-  background:rgba(239,91,104,.12);
-  color:#ff7d88;
-  border:1px solid rgba(239,91,104,.25)
-}
-
-.btn-small{
-  padding:8px 11px;
-  font-size:12px
-}
-
-.full{width:100%}
-
-.market-bar{
+.stat-card{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:15px;
+  border-radius:12px;
   padding:15px;
-  display:flex;
-  align-items:end;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-  box-shadow:var(--shadow)
 }
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:8px;
+}
+
+.stat-value{
+  font-size:19px;
+  font-weight:800;
+}
+
+.stat-sub{
+  color:#71839b;
+  font-size:10px;
+  margin-top:5px;
+}
+
+/* MARKET LIVE */
+
+.live-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.live-item{
+  background:#0d1726;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:9px 12px;
+  color:#b7c5d8;
+  font-size:11px;
+}
+
+/* TABS */
 
 .market-tabs{
   display:flex;
-  background:#091525;
-  border-radius:10px;
-  padding:4px
+  gap:4px;
+  background:#0b1625;
+  border:1px solid var(--border);
+  padding:4px;
+  border-radius:11px;
+  width:max-content;
+  margin-bottom:18px;
 }
 
 .market-tab{
   border:0;
   background:transparent;
   color:var(--muted);
-  padding:10px 20px;
-  border-radius:7px;
-  font-weight:700
+  padding:10px 28px;
+  border-radius:8px;
+  font-weight:700;
 }
 
 .market-tab.active{
-  background:var(--primary);
-  color:#fff
+  background:#1b3150;
+  color:white;
 }
 
-.control{
-  flex:1;
-  min-width:135px
+/* FILTER */
+
+.market-layout{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr) 310px;
+  gap:16px;
+  align-items:start;
 }
 
-.control.search{
-  flex:1.5;
-  min-width:210px
-}
-
-.control label{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:6px
-}
-
-.control input,
-.control select,
-.quick-field input,
-.quick-field select{
-  width:100%;
-  background:#0a1727;
-  color:#fff;
-  border:1px solid var(--border);
-  padding:11px;
-  border-radius:8px;
-  outline:none
-}
-
-.control input:focus,
-.control select:focus,
-.quick-field input:focus,
-.quick-field select:focus{
-  border-color:var(--primary)
-}
-
-.advanced-toggle{
-  margin-bottom:14px
-}
-
-.advanced-panel{
-  display:none;
+.card{
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
-  padding:15px;
-  margin-bottom:15px
 }
 
-.advanced-panel.show{
-  display:block
+.filters{
+  padding:16px;
+  position:sticky;
+  top:90px;
 }
 
-.advanced-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px
+.section-title{
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:14px;
+}
+
+.control{
+  margin-bottom:13px;
 }
 
 .check-control{
-  background:#0b192a;
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:11px;
   display:flex;
   align-items:center;
   gap:8px;
-  color:var(--muted);
-  font-size:12px
+  padding:8px 0;
+  color:#bdc9d9;
+  cursor:pointer;
 }
 
 .check-control input{
-  accent-color:var(--primary)
+  width:auto;
+  accent-color:var(--blue);
 }
 
-.market-tools{
+.filter-actions{
   display:flex;
-  gap:8px;
-  margin-bottom:18px;
-  flex-wrap:wrap
+  gap:7px;
+  margin-top:12px;
 }
 
-.chip{
-  border:1px solid var(--border);
-  background:#0e1d30;
-  color:var(--muted);
-  border-radius:20px;
-  padding:8px 12px;
-  font-size:11px
+/* CENTER */
+
+.market-center{
+  min-width:0;
 }
 
-.chip.active{
-  color:#fff;
-  border-color:var(--primary);
-  background:rgba(79,140,255,.13)
+.market-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
-  margin-bottom:18px
+.market-head h2{
+  margin:0;
+  font-size:18px;
 }
 
-.stat{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:15px
-}
-
-.stat-label{
+.market-head span{
   color:var(--muted);
   font-size:11px;
-  margin-bottom:6px
 }
 
-.stat-value{
-  font-size:19px;
-  font-weight:800
-}
+/* PRICE SUMMARY */
 
-.stat-sub{
-  color:var(--muted);
-  font-size:10px;
-  margin-top:5px
-}
-
-.green{color:var(--green)}
-.yellow{color:var(--yellow)}
-.red{color:var(--red)}
-.blue{color:#8bb4ff}
-
-.activity-strip{
-  background:#0d1b2e;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:11px 14px;
-  margin-bottom:18px;
-  display:flex;
-  gap:20px;
-  align-items:center;
-  overflow-x:auto;
-  white-space:nowrap;
-  color:var(--muted);
-  font-size:11px
-}
-
-.activity-strip strong{
-  color:#fff
-}
-
-.main-grid{
+.price-summary{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 380px;
-  gap:18px
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:12px;
 }
 
-.marketplace,
-.quick-trade{
-  background:var(--panel);
+.price-box{
+  background:#0b1625;
   border:1px solid var(--border);
-  border-radius:15px;
-  overflow:hidden
+  border-radius:10px;
+  padding:11px;
 }
 
-.section-header{
-  padding:17px 18px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px
-}
-
-.section-header h2{
-  font-size:17px
-}
-
-.section-header span{
+.price-box small{
+  display:block;
   color:var(--muted);
-  font-size:12px
+  font-size:9px;
+  margin-bottom:5px;
 }
+
+.price-box strong{
+  font-size:13px;
+}
+
+/* OFFER */
 
 .offers{
-  padding:13px;
   display:flex;
   flex-direction:column;
-  gap:11px
+  gap:10px;
 }
 
-.offer{
+.offer-card{
+  background:var(--panel);
   border:1px solid var(--border);
-  background:var(--card);
   border-radius:13px;
   padding:15px;
-  transition:.2s
+  transition:.18s;
 }
 
-.offer:hover{
-  border-color:#39577e;
-  transform:translateY(-1px)
-}
-
-.offer.featured{
-  border-color:rgba(79,140,255,.55);
-  box-shadow:0 0 0 1px rgba(79,140,255,.08)
+.offer-card:hover{
+  border-color:#365071;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);
 }
 
 .offer-top{
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:15px
+  gap:10px;
 }
 
-.trader{
+.trader-info{
   display:flex;
+  align-items:center;
   gap:10px;
-  align-items:center
 }
 
 .trader-avatar{
   width:43px;
   height:43px;
   border-radius:50%;
-  background:linear-gradient(135deg,#4f8cff,#785cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:#18304f;
+  display:grid;
+  place-items:center;
   font-weight:800;
-  flex-shrink:0
+  color:#dceaff;
 }
 
 .trader-name{
   font-weight:800;
-  font-size:14px
+  font-size:14px;
 }
 
-.verified{
+.trader-status{
+  font-size:10px;
+  margin-top:4px;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-top:5px;
+}
+
+.badge{
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:3px 6px;
+  color:#9fb1c8;
+  font-size:8px;
+}
+
+.badge.green-badge{
   color:var(--green);
-  font-size:11px;
-  margin-left:5px
+  border-color:rgba(32,201,151,.25);
 }
 
-.online{
-  color:var(--green);
-  font-size:11px;
-  margin-top:3px
-}
-
-.offline{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:3px
-}
-
-.price{
-  text-align:right
-}
-
-.price strong{
-  display:block;
-  font-size:21px
-}
-
-.price small{
-  color:var(--muted)
+.badge.yellow-badge{
+  color:var(--yellow);
+  border-color:rgba(245,196,81,.25);
 }
 
 .favorite{
   border:0;
   background:transparent;
-  color:#60728b;
-  font-size:21px;
-  margin-left:7px
+  color:#64758d;
+  font-size:20px;
 }
 
 .favorite.active{
-  color:var(--yellow)
+  color:var(--yellow);
 }
 
-.offer-badges{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-  margin-top:9px
-}
-
-.badge{
-  font-size:9px;
-  border-radius:5px;
-  padding:4px 7px;
-  background:#172b44;
-  color:#b8c9de
-}
-
-.badge.green{
-  color:#46d9a2;
-  background:rgba(37,197,138,.1)
-}
-
-.badge.blue{
-  color:#8bb4ff;
-  background:rgba(79,140,255,.1)
-}
-
-.badge.yellow{
-  color:#e8c56e;
-  background:rgba(243,189,79,.1)
-}
-
-.badge.red{
-  color:#ff7d88;
-  background:rgba(239,91,104,.1)
-}
-
-.offer-details{
+.offer-main{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:9px;
-  margin:14px 0
+  grid-template-columns:1.1fr 1fr 1fr;
+  gap:15px;
+  margin-top:15px;
+  padding-top:13px;
+  border-top:1px solid #18263a;
 }
 
-.detail{
-  background:#101f32;
-  padding:10px;
-  border-radius:8px
+.offer-price{
+  font-size:22px;
+  font-weight:900;
 }
 
-.detail small{
-  display:block;
-  color:var(--muted);
+.offer-price small{
   font-size:10px;
-  margin-bottom:4px
+  color:var(--muted);
+  font-weight:400;
 }
 
-.detail strong{
-  font-size:12px
+.offer-label{
+  color:var(--muted);
+  font-size:9px;
+  margin-bottom:5px;
 }
 
-.payment-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px
+.offer-value{
+  font-size:12px;
+  font-weight:700;
 }
 
 .payment-tags{
   display:flex;
   flex-wrap:wrap;
-  gap:5px
+  gap:5px;
 }
 
-.tag{
-  padding:5px 8px;
+.payment-tag{
+  background:#102035;
+  border:1px solid #233753;
+  padding:5px 7px;
   border-radius:6px;
-  background:#172b44;
-  color:#b8c9de;
-  font-size:10px
+  font-size:9px;
+  color:#c4d1e1;
+}
+
+.offer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:14px;
+}
+
+.performance{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  color:#8fa0b6;
+  font-size:9px;
 }
 
 .offer-actions{
   display:flex;
-  gap:7px;
-  flex-wrap:wrap
-}
-
-.trader-meta{
-  display:flex;
-  gap:12px;
-  margin-top:9px;
-  color:var(--muted);
-  font-size:10px;
-  flex-wrap:wrap
+  gap:6px;
 }
 
 .empty{
-  padding:45px 20px;
   text-align:center;
-  color:var(--muted)
+  padding:45px 20px;
+  color:var(--muted);
+  border:1px dashed var(--border);
+  border-radius:12px;
 }
 
-.empty strong{
-  display:block;
-  color:#fff;
-  font-size:16px;
-  margin-bottom:6px
+/* RIGHT QUICK TRADE */
+
+.quick{
+  padding:16px;
+  position:sticky;
+  top:90px;
 }
 
-.quick-body{
-  padding:18px
+.quick-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.quick-title h2{
+  margin:0;
+  font-size:15px;
+}
+
+.quick-title span{
+  color:var(--green);
+  font-size:9px;
 }
 
 .selected-trader{
-  background:#0b192a;
+  background:#0a1523;
   border:1px solid var(--border);
-  border-radius:11px;
-  padding:12px;
-  margin-bottom:15px
+  border-radius:10px;
+  padding:11px;
+  margin-bottom:13px;
 }
 
 .selected-row{
   display:flex;
   align-items:center;
-  gap:10px
+  gap:9px;
 }
 
 .selected-avatar{
-  width:36px;
-  height:36px;
+  width:35px;
+  height:35px;
   border-radius:50%;
-  background:linear-gradient(135deg,#4f8cff,#7c5cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800
+  background:#1a3150;
+  display:grid;
+  place-items:center;
+  font-weight:800;
 }
 
 .quick-field{
-  margin-bottom:14px
-}
-
-.quick-field label{
-  display:block;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:7px
+  margin-bottom:12px;
 }
 
 .calculation{
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:15px 0;
-  margin:10px 0 15px
+  background:#091422;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px;
+  margin:12px 0;
 }
 
 .calc-row{
   display:flex;
   justify-content:space-between;
-  margin-bottom:9px;
-  font-size:13px
-}
-
-.calc-row:last-child{
-  margin-bottom:0;
-  font-size:16px;
-  font-weight:800
+  gap:10px;
+  padding:6px 0;
+  font-size:11px;
 }
 
 .calc-row span:first-child{
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .security-box{
-  margin-top:15px;
-  background:rgba(37,197,138,.07);
-  border:1px solid rgba(37,197,138,.2);
+  background:rgba(32,201,151,.055);
+  border:1px solid rgba(32,201,151,.18);
   border-radius:10px;
-  padding:12px
-}
-
-.security-box strong{
-  display:block;
-  font-size:12px;
-  margin-bottom:5px
+  padding:11px;
+  margin-top:12px;
+  font-size:10px;
+  line-height:1.6;
 }
 
 .security-box p{
   color:var(--muted);
-  font-size:11px;
-  line-height:1.5
+  margin:7px 0 0;
 }
 
 .info-list{
-  margin-top:15px
+  margin-top:14px;
 }
 
 .info-item{
-  display:flex;
-  gap:9px;
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
-  font-size:11px;
-  color:var(--muted)
+  font-size:10px;
+  color:#9cabc0;
+  padding:7px 0;
+  border-bottom:1px solid #18263a;
 }
 
 .info-item:last-child{
-  border-bottom:0
+  border-bottom:0;
 }
 
-.info-item strong{
-  color:#fff
-}
-
-.demo-warning{
-  margin-top:18px;
-  border:1px solid rgba(243,189,79,.25);
-  background:rgba(243,189,79,.06);
-  border-radius:12px;
-  padding:13px;
-  color:#d9bd76;
-  font-size:11px;
-  line-height:1.6
-}
+/* MODAL */
 
 .modal{
-  display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.76);
-  z-index:500;
+  background:rgba(0,0,0,.72);
+  z-index:200;
+  display:none;
   align-items:center;
   justify-content:center;
-  padding:18px
+  padding:20px;
 }
 
-.modal.show{
-  display:flex
+.modal.open{
+  display:flex;
 }
 
-.modal-box{
+.modal-content{
   width:100%;
-  max-width:580px;
-  max-height:94vh;
-  overflow-y:auto;
-  background:#0e1d30;
+  max-width:600px;
+  max-height:92vh;
+  overflow:auto;
+  background:#0d1726;
   border:1px solid var(--border);
-  border-radius:17px;
-  box-shadow:0 25px 80px rgba(0,0,0,.5)
+  border-radius:15px;
+  box-shadow:var(--shadow);
+}
+
+.modal-wide{
+  max-width:1050px;
 }
 
 .modal-header{
-  padding:18px;
+  padding:16px 18px;
   border-bottom:1px solid var(--border);
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:center
 }
 
 .modal-header h3{
-  font-size:18px
+  margin:0;
+  font-size:16px;
 }
 
 .close{
   border:0;
   background:transparent;
-  color:var(--muted);
-  font-size:24px
+  color:#94a5bc;
+  font-size:25px;
+  line-height:1;
 }
 
 .modal-body{
-  padding:20px
+  padding:18px;
 }
 
 .review-card{
-  background:#0a1727;
+  background:#091422;
   border:1px solid var(--border);
-  border-radius:11px;
-  padding:15px;
-  margin-bottom:14px
+  border-radius:10px;
+  padding:12px;
 }
 
 .review-row{
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:12px;
-  margin-bottom:10px;
-  font-size:13px
+  gap:15px;
+  padding:8px 0;
+  border-bottom:1px solid #17263a;
+  font-size:11px;
 }
 
 .review-row:last-child{
-  margin-bottom:0
+  border-bottom:0;
 }
 
 .review-row span{
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .warning{
-  background:rgba(243,189,79,.08);
-  border:1px solid rgba(243,189,79,.2);
-  color:#e7c87d;
-  padding:12px;
+  margin-top:13px;
+  padding:11px;
   border-radius:9px;
-  font-size:12px;
-  line-height:1.5
+  background:rgba(245,196,81,.07);
+  border:1px solid rgba(245,196,81,.2);
+  color:#c8c6b7;
+  font-size:10px;
+  line-height:1.5;
 }
 
+/* OTP */
+
 .otp-intro{
-  text-align:center;
   color:var(--muted);
-  line-height:1.6;
-  margin-bottom:18px
+  font-size:12px;
 }
 
 .otp-demo{
-  background:#101f34;
-  border:1px dashed #3a5a82;
+  background:#091422;
+  border:1px solid var(--border);
   border-radius:10px;
-  padding:14px;
+  padding:15px;
   text-align:center;
-  margin-bottom:14px
+  margin:15px 0;
 }
 
 .otp-demo small{
   display:block;
   color:var(--muted);
-  margin-bottom:5px
+  margin-bottom:6px;
 }
 
 .otp-demo strong{
-  font-size:25px;
-  letter-spacing:6px
+  font-size:26px;
+  letter-spacing:5px;
+  color:var(--green);
 }
 
 .otp-input{
-  width:100%;
-  padding:14px;
   text-align:center;
-  letter-spacing:8px;
   font-size:22px;
-  border:1px solid var(--border);
-  background:#091626;
-  color:#fff;
-  border-radius:10px;
-  outline:none
+  letter-spacing:6px;
 }
 
 .timer{
   text-align:center;
-  color:var(--yellow);
-  margin:11px 0;
-  font-size:13px
+  color:var(--muted);
+  margin:10px 0;
+  font-size:11px;
 }
 
 .error{
-  color:#ff7984;
+  color:var(--red);
+  font-size:11px;
+  min-height:17px;
   text-align:center;
-  font-size:12px;
-  min-height:18px
 }
 
-.trade-modal .modal-box{
-  max-width:1050px
-}
+/* TRADE ROOM */
 
 .trade-layout{
   display:grid;
-  grid-template-columns:1.4fr .8fr;
-  min-height:570px
+  grid-template-columns:1.6fr 1fr;
+  min-height:600px;
 }
 
 .trade-left{
   border-right:1px solid var(--border);
+  padding:18px;
   display:flex;
-  flex-direction:column
+  flex-direction:column;
 }
 
 .trade-right{
-  padding:18px
+  padding:18px;
 }
 
 .escrow-banner{
-  margin:16px;
-  padding:13px;
+  background:rgba(32,201,151,.06);
+  border:1px solid rgba(32,201,151,.18);
   border-radius:10px;
-  background:rgba(37,197,138,.09);
-  border:1px solid rgba(37,197,138,.25)
+  padding:11px;
+  font-size:10px;
+  margin-bottom:14px;
 }
 
 .escrow-banner strong{
-  color:var(--green);
   display:block;
-  margin-bottom:4px
+  margin-bottom:4px;
 }
 
 .escrow-banner span{
   color:var(--muted);
-  font-size:11px
 }
 
 .timeline{
-  padding:0 18px;
   display:flex;
-  gap:5px;
-  margin-bottom:10px
+  gap:7px;
+  margin-bottom:15px;
 }
 
 .step{
-  flex:1;
   height:4px;
-  background:#21334b;
-  border-radius:10px
+  flex:1;
+  background:#1b2a3e;
+  border-radius:10px;
 }
 
 .step.active{
-  background:var(--green)
+  background:var(--green);
 }
 
 .chat{
   flex:1;
-  padding:18px;
-  overflow-y:auto;
-  min-height:270px
+  min-height:320px;
+  max-height:440px;
+  overflow:auto;
+  background:#091422;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
 }
 
 .message{
   max-width:75%;
-  padding:10px 12px;
+  padding:9px 11px;
   border-radius:10px;
-  margin-bottom:10px;
-  font-size:12px;
-  line-height:1.5
+  margin-bottom:8px;
+  font-size:11px;
+  line-height:1.5;
 }
 
 .message.them{
-  background:#162941
+  background:#15263c;
 }
 
 .message.me{
-  background:#2058aa;
-  margin-left:auto
+  background:#124f40;
+  margin-left:auto;
 }
 
 .message small{
   display:block;
-  opacity:.6;
-  margin-top:5px
+  color:#8293a9;
+  font-size:8px;
+  margin-top:4px;
 }
 
 .chat-input{
-  padding:14px;
-  border-top:1px solid var(--border);
   display:flex;
-  gap:8px
-}
-
-.chat-input input{
-  flex:1;
-  background:#091626;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:10px;
-  color:#fff;
-  outline:none
+  gap:7px;
+  margin-top:9px;
 }
 
 .trade-status{
-  background:#091626;
+  background:#091422;
   border:1px solid var(--border);
   border-radius:10px;
-  padding:13px;
-  margin-bottom:14px
+  padding:11px;
 }
 
 .status-title{
   color:var(--muted);
-  font-size:11px;
-  margin-bottom:5px
+  font-size:10px;
 }
 
 .status-value{
-  font-weight:800
+  font-size:14px;
+  font-weight:800;
+  margin-top:4px;
 }
 
 .trade-timer{
-  font-size:28px;
-  font-weight:800;
   text-align:center;
-  margin:15px 0
+  font-size:28px;
+  font-weight:900;
+  padding:15px 0;
+}
+
+.proof-box{
+  margin-top:12px;
+  padding:13px;
+  border:1px dashed #38506d;
+  border-radius:9px;
+  color:#8ea0b8;
+  font-size:10px;
+  text-align:center;
 }
 
 .trade-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:15px
+  gap:7px;
+  margin-top:12px;
 }
 
-.proof-box{
-  border:1px dashed #365273;
-  border-radius:9px;
-  padding:12px;
-  color:var(--muted);
-  font-size:11px;
-  text-align:center;
-  margin-top:12px
+.trade-actions .btn{
+  width:100%;
 }
+
+/* PROFILE */
 
 .profile{
-  text-align:center
+  text-align:center;
 }
 
 .profile-avatar{
   width:70px;
   height:70px;
   border-radius:50%;
-  margin:auto;
-  background:linear-gradient(135deg,#4f8cff,#865cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:#1b3150;
+  display:grid;
+  place-items:center;
   font-size:25px;
-  font-weight:800
+  font-weight:900;
+  margin:0 auto 10px;
 }
 
 .profile h3{
-  margin:10px 0 4px
+  margin:0;
 }
 
 .profile p{
-  color:var(--muted);
-  font-size:12px
+  color:var(--green);
+  font-size:11px;
 }
 
 .profile-stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin:18px 0
+  gap:7px;
+  margin:16px 0;
 }
 
 .profile-stat{
-  background:#0a1727;
-  padding:12px 6px;
-  border-radius:8px
+  background:#091422;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:11px 5px;
 }
 
 .profile-stat strong{
   display:block;
-  margin-bottom:4px
+  font-size:15px;
 }
 
 .profile-stat small{
   color:var(--muted);
-  font-size:9px
+  font-size:9px;
 }
 
 .profile-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px
-}
-
-.notification{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#14263d;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  padding:14px 17px;
-  border-radius:10px;
-  max-width:360px;
-  display:none;
-  z-index:900;
-  font-size:13px
-}
-
-.notification.show{
-  display:block
-}
-
-.notification-title{
-  font-weight:800;
-  margin-bottom:4px
-}
-
-.notification-text{
-  color:var(--muted);
-  line-height:1.4
-}
-
-.notification-panel{
-  position:fixed;
-  top:78px;
-  right:20px;
-  width:350px;
-  max-width:calc(100vw - 40px);
-  background:#0e1d30;
-  border:1px solid var(--border);
-  border-radius:13px;
-  box-shadow:0 20px 60px rgba(0,0,0,.45);
-  display:none;
-  z-index:450;
-  overflow:hidden
-}
-
-.notification-panel.show{
-  display:block
-}
-
-.notification-panel-header{
-  padding:14px;
-  border-bottom:1px solid var(--border);
   display:flex;
-  justify-content:space-between;
-  align-items:center
+  gap:8px;
+  margin-top:14px;
 }
 
-.notification-item{
-  padding:13px;
-  border-bottom:1px solid var(--border);
-  font-size:12px
+.profile-actions .btn{
+  flex:1;
 }
 
-.notification-item:last-child{
-  border-bottom:0
-}
-
-.notification-item strong{
-  display:block;
-  margin-bottom:4px
-}
-
-.notification-item span{
-  color:var(--muted);
-  line-height:1.4
-}
-
-.notif-button{
-  position:relative
-}
-
-.notif-dot{
-  position:absolute;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--red);
-  top:5px;
-  right:5px;
-  border:2px solid #14263d
-}
+/* REPORT */
 
 .report-options{
   display:grid;
   gap:8px;
-  margin-top:14px
 }
 
 .report-option{
   text-align:left;
-  background:#0a1727;
-  color:#fff;
+  padding:13px;
   border:1px solid var(--border);
+  background:#091422;
+  color:#dce5f2;
   border-radius:9px;
-  padding:12px
 }
 
 .report-option:hover{
-  border-color:var(--red)
+  border-color:#415975;
 }
 
+/* ACTIVITY */
+
 .activity-list{
-  max-height:300px;
-  overflow-y:auto
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
 }
 
 .activity-item{
-  padding:11px 0;
-  border-bottom:1px solid var(--border);
-  font-size:11px;
+  padding:11px;
   display:flex;
   justify-content:space-between;
-  gap:10px
+  gap:10px;
+  border-bottom:1px solid #17263a;
+  font-size:10px;
 }
 
 .activity-item:last-child{
-  border-bottom:0
+  border-bottom:0;
 }
 
 .activity-item span{
-  color:var(--muted)
+  color:#bdc9d9;
 }
+
+.activity-item strong{
+  color:#71849c;
+  white-space:nowrap;
+}
+
+/* FAVORITES */
+
+.favorite-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.favorite-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px;
+  background:#091422;
+  border:1px solid var(--border);
+  border-radius:9px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#111e30;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 15px;
+  color:#dce7f5;
+  font-size:11px;
+  box-shadow:var(--shadow);
+  z-index:500;
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MOBILE BAR */
+
+.mobile-bar{
+  display:none;
+}
+
+/* RESPONSIVE */
 
 @media(max-width:1200px){
-  .stats{
-    grid-template-columns:repeat(3,1fr)
+  .market-layout{
+    grid-template-columns:235px minmax(0,1fr);
   }
 
-  .advanced-grid{
-    grid-template-columns:repeat(3,1fr)
-  }
-}
-
-@media(max-width:1150px){
-  .main-grid{
-    grid-template-columns:1fr
+  .quick{
+    position:relative;
+    top:auto;
+    grid-column:1/-1;
   }
 
-  .quick-trade{
-    order:-1
+  .stats-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .quick{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .quick-title{
+    grid-column:1/-1;
+  }
+
+  .security-box,
+  .info-list{
+    grid-column:1/-1;
   }
 }
 
 @media(max-width:800px){
-  .header{
-    padding:0 14px
-  }
-
-  .nav{
-    display:none
+  .header-inner{
+    padding:0 13px;
   }
 
   .wallet-mini{
-    display:none
+    display:none;
   }
 
-  .page{
-    padding:16px
+  .logo-text{
+    font-size:15px;
+  }
+
+  .container{
+    padding:18px 12px 100px;
   }
 
   .hero{
-    flex-direction:column;
-    align-items:flex-start
+    display:block;
   }
 
   .hero h1{
-    font-size:25px
+    font-size:24px;
   }
 
-  .advanced-grid{
-    grid-template-columns:1fr 1fr
+  .hero-actions{
+    margin-top:15px;
   }
 
-  .offer-details{
-    grid-template-columns:repeat(2,1fr)
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .market-layout{
+    display:block;
+  }
+
+  .filters{
+    position:fixed;
+    inset:0;
+    z-index:150;
+    border-radius:0;
+    overflow:auto;
+    display:none;
+  }
+
+  .filters.open{
+    display:block;
+  }
+
+  .price-summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .offer-main{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .offer-main > div:first-child{
+    grid-column:1/-1;
+  }
+
+  .quick{
+    display:block;
+    margin-top:12px;
+  }
+
+  .mobile-filter-button{
+    display:block!important;
+  }
+
+  .mobile-bar{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:100;
+    background:#0b1625;
+    border-top:1px solid var(--border);
+    padding:9px;
+    gap:7px;
+  }
+
+  .mobile-bar .btn{
+    flex:1;
   }
 
   .trade-layout{
-    grid-template-columns:1fr
+    display:block;
   }
 
   .trade-left{
     border-right:0;
-    border-bottom:1px solid var(--border)
-  }
-}
-
-@media(max-width:600px){
-  .stats{
-    grid-template-columns:1fr 1fr
-  }
-
-  .advanced-grid{
-    grid-template-columns:1fr
-  }
-
-  .market-bar{
-    display:block
-  }
-
-  .market-tabs{
-    margin-bottom:12px
-  }
-
-  .control{
-    margin-bottom:10px
-  }
-
-  .offer-top{
-    flex-direction:column
-  }
-
-  .price{
-    text-align:left
-  }
-
-  .payment-row{
-    flex-direction:column;
-    align-items:flex-start
-  }
-
-  .offer-actions{
-    width:100%
-  }
-
-  .offer-actions button{
-    flex:1
-  }
-
-  .hero-actions{
-    width:100%
-  }
-
-  .hero-actions button{
-    flex:1
-  }
-
-  .trade-actions{
-    grid-template-columns:1fr
+    border-bottom:1px solid var(--border);
   }
 
   .modal{
-    padding:8px
+    padding:8px;
   }
 
-  .notification-panel{
-    right:8px;
-    top:78px
+  .modal-content{
+    max-height:96vh;
   }
 }
 
-@media(max-width:400px){
-  .stats{
-    grid-template-columns:1fr
+@media(max-width:520px){
+  .header-inner{
+    min-height:62px;
   }
 
-  .offer-details{
-    grid-template-columns:1fr 1fr
+  .avatar{
+    width:34px;
+    height:34px;
   }
 
-  .btn{
-    padding:10px 12px
+  .header .btn{
+    padding:8px 10px;
+  }
+
+  .stats-grid{
+    gap:7px;
+  }
+
+  .stat-card{
+    padding:11px;
+  }
+
+  .stat-value{
+    font-size:15px;
+  }
+
+  .offer-card{
+    padding:12px;
+  }
+
+  .offer-main{
+    grid-template-columns:1fr;
+  }
+
+  .offer-main > div:first-child{
+    grid-column:auto;
+  }
+
+  .offer-bottom{
+    display:block;
+  }
+
+  .offer-actions{
+    margin-top:10px;
+  }
+
+  .offer-actions .btn{
+    flex:1;
+  }
+
+  .performance{
+    margin-bottom:5px;
+  }
+
+  .hero-actions .btn{
+    flex:1;
+  }
+
+  .profile-stats{
+    gap:4px;
   }
 }
 </style>
-
 </head>
 
 <body>
 
 <header class="header">
+  <div class="header-inner">
 
-  <a href="index.html" class="logo">
-    <div class="logo-icon">C</div>
-    <span>CryptoVault</span>
-  </a>
+    <div class="logo">
+      <div class="logo-mark">CV</div>
+      <div>
+        <div class="logo-text">CryptoVault</div>
+        <div class="logo-sub">P2P Marketplace</div>
+      </div>
+    </div>
 
-  <nav class="nav">
-    <a href="index.html">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="p2p.html" class="active">P2P</a>
-    <a href="transactions.html">Transactions</a>
-    <a href="settings.html">Settings</a>
-  </nav>
+    <div class="wallet-mini">
+      Available:
+      <span>5,250.00 USDT</span>
+    </div>
 
-  <div class="header-right">
+    <button class="btn btn-secondary notif-button"
+            onclick="toggleNotifications()"
+            aria-label="Notifications">
+      🔔
+      <span class="notif-dot" id="notifDot"></span>
+    </button>
 
-```
-<div class="wallet-mini">
-  Available:
-  <span>5,250.00 USDT</span>
-</div>
+    <button class="btn btn-secondary"
+            onclick="openFavorites()"
+            aria-label="Favorites">
+      ⭐
+    </button>
 
-<button class="btn btn-secondary notif-button" onclick="toggleNotifications()" aria-label="Notifications">
-  🔔
-  <span class="notif-dot" id="notifDot"></span>
-</button>
-
-<div class="avatar">G</div>
-```
+    <div class="avatar">G</div>
 
   </div>
-
 </header>
 
-<main class="page">
+<div class="notification-panel hidden" id="notificationPanel">
 
-<section class="hero">
+  <div class="notification-head">
+    <strong>Notifications</strong>
 
-  <div>
-
-```
-<h1>Professional P2P Marketplace</h1>
-
-<p>
-  Compare verified traders, payment methods, prices, limits,
-  availability and trading performance before selecting an offer.
-  CryptoVault's current marketplace remains in demo mode.
-</p>
-```
-
+    <button class="btn btn-secondary btn-small"
+            onclick="markNotificationsRead()">
+      Mark read
+    </button>
   </div>
 
-  <div class="hero-actions">
+  <div id="notificationList">
 
-```
-<button class="btn btn-secondary" onclick="openSecurityCenter()">
-  🔐 Security Center
-</button>
+    <div class="notification-item">
+      <strong>🔔 New offer available</strong>
+      <span>A new demo USDT/ETB offer is available.</span>
+    </div>
 
-<button class="btn btn-secondary" onclick="refreshMarket()">
-  ↻ Refresh
-</button>
+    <div class="notification-item">
+      <strong>⭐ Favorite trader online</strong>
+      <span>One of your saved traders is currently online.</span>
+    </div>
 
-<button class="btn btn-secondary" onclick="openActivity()">
-  📊 Market Activity
-</button>
+    <div class="notification-item">
+      <strong>💰 Price update</strong>
+      <span>A demo offer changed its price.</span>
+    </div>
 
-<button class="btn btn-primary" onclick="showNotification('Create Offer is planned for a later development step.')">
-  ＋ Create Offer
-</button>
-```
+    <div class="notification-item">
+      <strong>⏱ Offer activity</strong>
+      <span>One demo offer is receiving high activity.</span>
+    </div>
 
   </div>
+</div>
 
-</section>
+<main class="container">
 
-<section class="market-bar">
+  <section class="hero">
+
+    <div>
+      <h1>Professional P2P Marketplace</h1>
+
+      <p>
+        Compare verified traders, payment methods, prices, limits,
+        availability and trading performance before selecting an offer.
+        CryptoVault's current marketplace remains in demo mode.
+      </p>
+    </div>
+
+    <div class="hero-actions">
+
+      <button class="btn btn-secondary"
+              onclick="openSecurityCenter()">
+        🔐 Security Center
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="refreshMarket()">
+        ↻ Refresh
+      </button>
+
+      <button class="btn btn-secondary"
+              onclick="openActivity()">
+        📊 Market Activity
+      </button>
+
+      <button class="btn btn-primary"
+              onclick="showNotification('Create Offer is planned for a later development step.')">
+        ＋ Create Offer
+      </button>
+
+    </div>
+
+  </section>
+
+  <div class="demo-banner">
+    <strong>DEMO MODE</strong><br>
+    This Step #1.1 page is a frontend marketplace prototype.
+    Trader data, balances, offers, market activity, notifications,
+    verification codes, escrow states and transactions are simulated.
+    No real cryptocurrency, ETB, bank transfer or blockchain transaction
+    occurs here. Real P2P trading requires authenticated backend/database
+    authorization, secure escrow logic, payment integration, transaction
+    validation, fraud controls and applicable legal and compliance controls.
+  </div>
+
+  <section class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-label">Active traders</div>
+      <div class="stat-value">1,284</div>
+      <div class="stat-sub">312 online now</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Active offers</div>
+      <div class="stat-value" id="activeOffersStat">7</div>
+      <div class="stat-sub">Demo marketplace</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">24h P2P volume</div>
+      <div class="stat-value">8.42M USDT</div>
+      <div class="stat-sub">Simulated data</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Lowest price</div>
+      <div class="stat-value" id="lowestPrice">188.00 ETB</div>
+      <div class="stat-sub">Current results</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Average price</div>
+      <div class="stat-value" id="averagePrice">190.00 ETB</div>
+      <div class="stat-sub">Current results</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Price spread</div>
+      <div class="stat-value" id="priceSpread">4.00 ETB</div>
+      <div class="stat-sub">Lowest to highest</div>
+    </div>
+
+  </section>
+
+  <div class="live-strip">
+
+    <div class="live-item">🟢 312 traders online</div>
+    <div class="live-item">📈 8.42M USDT 24h volume</div>
+    <div class="live-item">⚡ Average response 2.4 min</div>
+    <div class="live-item">🔐 Protected marketplace</div>
+    <div class="live-item">🧪 Demo simulation</div>
+
+  </div>
 
   <div class="market-tabs">
 
-```
-<button class="market-tab active" id="buyTab" onclick="setMarket('buy')">
-  Buy
-</button>
+    <button class="market-tab active"
+            id="buyTab"
+            onclick="setMarket('buy')">
+      Buy
+    </button>
 
-<button class="market-tab" id="sellTab" onclick="setMarket('sell')">
-  Sell
-</button>
-```
-
-  </div>
-
-  <div class="control">
-
-```
-<label>Asset</label>
-
-<select id="assetSelect" onchange="refreshMarket()">
-  <option>USDT</option>
-  <option>BTC</option>
-  <option>ETH</option>
-</select>
-```
+    <button class="market-tab"
+            id="sellTab"
+            onclick="setMarket('sell')">
+      Sell
+    </button>
 
   </div>
 
-  <div class="control">
+  <div class="market-layout">
 
-```
-<label>Fiat</label>
+    <!-- FILTERS -->
 
-<select id="fiatSelect" onchange="refreshMarket()">
-  <option>ETB</option>
-  <option>USD</option>
-  <option>EUR</option>
-</select>
-```
+    <aside class="card filters" id="filtersPanel">
 
-  </div>
+      <div class="section-title">Market Filters</div>
 
-  <div class="control search">
+      <div class="control">
 
-```
-<label>Search trader or payment method</label>
+        <label>Asset</label>
 
-<input
-  id="searchInput"
-  type="search"
-  placeholder="Search..."
-  oninput="filterOffers()"
->
-```
+        <select id="assetSelect" onchange="refreshMarket()">
+          <option>USDT</option>
+          <option>BTC</option>
+          <option>ETH</option>
+        </select>
 
-  </div>
-
-  <div class="control">
-
-```
-<label>Your amount</label>
-
-<input
-  id="amountFilter"
-  type="number"
-  min="0"
-  placeholder="Amount"
-  oninput="filterOffers()"
->
-```
-
-  </div>
-
-  <div class="control">
-
-```
-<label>Payment method</label>
-
-<select id="paymentFilter" onchange="filterOffers()">
-
-  <option value="all">All methods</option>
-  <option>Bank Transfer</option>
-  <option>Telebirr</option>
-  <option>CBE Birr</option>
-  <option>Mobile Money</option>
-  <option>Cash</option>
-
-</select>
-```
-
-  </div>
-
-  <div class="control">
-
-```
-<label>Sort by</label>
-
-<select id="sortSelect" onchange="filterOffers()">
-
-  <option value="price">Best price</option>
-  <option value="rating">Best reputation</option>
-  <option value="volume">Highest volume</option>
-  <option value="speed">Fastest response</option>
-  <option value="available">Most available</option>
-  <option value="release">Fastest release</option>
-
-</select>
-```
-
-  </div>
-
-</section>
-
-<div class="advanced-toggle">
-
-  <button class="btn btn-secondary btn-small" onclick="toggleAdvancedFilters()">
-    ⚙ Advanced Filters
-  </button>
-
-</div>
-
-<section class="advanced-panel" id="advancedPanel">
-
-  <div class="advanced-grid">
-
-```
-<div class="control">
-
-  <label>Minimum amount</label>
-
-  <input
-    id="minAmount"
-    type="number"
-    min="0"
-    placeholder="Minimum"
-    oninput="filterOffers()"
-  >
-
-</div>
-
-
-<div class="control">
-
-  <label>Maximum amount</label>
-
-  <input
-    id="maxAmount"
-    type="number"
-    min="0"
-    placeholder="Maximum"
-    oninput="filterOffers()"
-  >
-
-</div>
-
-
-<label class="check-control">
-  <input type="checkbox" id="onlineOnly" onchange="filterOffers()">
-  Online only
-</label>
-
-
-<label class="check-control">
-  <input type="checkbox" id="verifiedOnly" onchange="filterOffers()">
-  Verified only
-</label>
-
-
-<label class="check-control">
-  <input type="checkbox" id="fastOnly" onchange="filterOffers()">
-  Fast response
-</label>
-
-
-<label class="check-control">
-  <input type="checkbox" id="highCompletionOnly" onchange="filterOffers()">
-  95%+ completion
-</label>
-
-
-<label class="check-control">
-  <input type="checkbox" id="favoritesOnly" onchange="filterOffers()">
-  Favorites only
-</label>
-
-
-<label class="check-control">
-  <input type="checkbox" id="cashOnly" onchange="filterOffers()">
-  Cash available
-</label>
-```
-
-  </div>
-
-</section>
-
-<div class="market-tools">
-
-  <button class="chip active" id="allChip" onclick="setQuickFilter('all')">
-    All offers
-  </button>
-
-  <button class="chip" id="onlineChip" onclick="setQuickFilter('online')">
-    🟢 Online
-  </button>
-
-  <button class="chip" id="verifiedChip" onclick="setQuickFilter('verified')">
-    ✓ Verified
-  </button>
-
-  <button class="chip" id="fastChip" onclick="setQuickFilter('fast')">
-    ⚡ Fast traders
-  </button>
-
-  <button class="chip" id="favoriteChip" onclick="setQuickFilter('favorites')">
-    ⭐ Favorites
-  </button>
-
-  <button class="chip" onclick="resetFilters()">
-    Reset filters
-  </button>
-
-</div>
-
-<section class="stats">
-
-  <div class="stat">
-
-```
-<div class="stat-label">Active traders</div>
-
-<div class="stat-value">1,284</div>
-
-<div class="stat-sub">312 online now</div>
-```
-
-  </div>
-
-  <div class="stat">
-
-```
-<div class="stat-label">Active offers</div>
-
-<div class="stat-value" id="activeOffersStat">7</div>
-
-<div class="stat-sub">Demo marketplace</div>
-```
-
-  </div>
-
-  <div class="stat">
-
-```
-<div class="stat-label">24h P2P volume</div>
-
-<div class="stat-value">8.42M USDT</div>
-
-<div class="stat-sub">Simulated data</div>
-```
-
-  </div>
-
-  <div class="stat">
-
-```
-<div class="stat-label">Lowest price</div>
-
-<div class="stat-value" id="lowestPrice">188.00 ETB</div>
-
-<div class="stat-sub">Current results</div>
-```
-
-  </div>
-
-  <div class="stat">
-
-```
-<div class="stat-label">Average price</div>
-
-<div class="stat-value" id="averagePrice">190.00 ETB</div>
-
-<div class="stat-sub">Current results</div>
-```
-
-  </div>
-
-  <div class="stat">
-
-```
-<div class="stat-label">Price spread</div>
-
-<div class="stat-value" id="priceSpread">4.00 ETB</div>
-
-<div class="stat-sub">Lowest to highest</div>
-```
-
-  </div>
-
-</section>
-
-<div class="activity-strip">
-
-<span>Live market</span>
-
-<span>🟢 <strong>312</strong> traders online</span>
-
-<span>📈 <strong>8.42M</strong> USDT 24h volume</span>
-
-<span>⚡ Average response <strong>2.4 min</strong></span>
-
-<span>🔐 Protected marketplace</span>
-
-</div>
-
-<section class="main-grid">
-
-<div class="marketplace">
-
-  <div class="section-header">
-
-```
-<h2 id="marketTitle">
-  Buy USDT with ETB
-</h2>
-
-<span id="offerCount">
-  7 offers
-</span>
-```
-
-  </div>
-
-  <div class="offers" id="offersContainer"></div>
-
-</div>
-
-<aside class="quick-trade">
-
-  <div class="section-header">
-
-```
-<h2>Quick Trade</h2>
-
-<span>Fast order</span>
-```
-
-  </div>
-
-  <div class="quick-body">
-
-```
-<div class="selected-trader">
-
-  <div class="selected-row">
-
-    <div class="selected-avatar" id="selectedAvatar">
-      ?
-    </div>
-
-    <div>
-
-      <strong id="selectedTrader">
-        Select an offer
-      </strong>
-
-      <div
-        class="green"
-        style="font-size:11px"
-        id="selectedRating"
-      >
-        Choose a trader below
       </div>
 
-    </div>
+      <div class="control">
+
+        <label>Fiat</label>
+
+        <select id="fiatSelect" onchange="refreshMarket()">
+          <option>ETB</option>
+          <option>USD</option>
+          <option>EUR</option>
+        </select>
+
+      </div>
+
+      <div class="control">
+
+        <label>Search trader or payment method</label>
+
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search..."
+          oninput="filterOffers()"
+        >
+
+      </div>
+
+      <div class="control">
+
+        <label>Your amount</label>
+
+        <input
+          id="amountFilter"
+          type="number"
+          min="0"
+          placeholder="Amount"
+          oninput="filterOffers()"
+        >
+
+      </div>
+
+      <div class="control">
+
+        <label>Payment method</label>
+
+        <select id="paymentFilter" onchange="filterOffers()">
+
+          <option value="all">All methods</option>
+          <option>Bank Transfer</option>
+          <option>Telebirr</option>
+          <option>CBE Birr</option>
+          <option>Mobile Money</option>
+          <option>Cash</option>
+
+        </select>
+
+      </div>
+
+      <div class="control">
+
+        <label>Sort by</label>
+
+        <select id="sortSelect" onchange="filterOffers()">
+
+          <option value="price">Best price</option>
+          <option value="rating">Best reputation</option>
+          <option value="volume">Highest volume</option>
+          <option value="speed">Fastest response</option>
+          <option value="available">Most available</option>
+          <option value="release">Fastest release</option>
+
+        </select>
+
+      </div>
+
+      <div class="control">
+
+        <label>Minimum amount</label>
+
+        <input
+          id="minAmount"
+          type="number"
+          min="0"
+          placeholder="Minimum"
+          oninput="filterOffers()"
+        >
+
+      </div>
+
+      <div class="control">
+
+        <label>Maximum amount</label>
+
+        <input
+          id="maxAmount"
+          type="number"
+          min="0"
+          placeholder="Maximum"
+          oninput="filterOffers()"
+        >
+
+      </div>
+
+      <label class="check-control">
+        <input type="checkbox" id="onlineOnly" onchange="filterOffers()">
+        Online only
+      </label>
+
+      <label class="check-control">
+        <input type="checkbox" id="verifiedOnly" onchange="filterOffers()">
+        Verified only
+      </label>
+
+      <label class="check-control">
+        <input type="checkbox" id="fastOnly" onchange="filterOffers()">
+        Fast response
+      </label>
+
+      <label class="check-control">
+        <input type="checkbox" id="highCompletionOnly" onchange="filterOffers()">
+        95%+ completion
+      </label>
+
+      <label class="check-control">
+        <input type="checkbox" id="favoritesOnly" onchange="filterOffers()">
+        Favorites only
+      </label>
+
+      <label class="check-control">
+        <input type="checkbox" id="cashOnly" onchange="filterOffers()">
+        Cash available
+      </label>
+
+      <div class="filter-actions">
+
+        <button class="btn btn-secondary full"
+                onclick="resetFilters()">
+          Reset
+        </button>
+
+        <button class="btn btn-primary full"
+                onclick="closeMobileFilters()">
+          Apply
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- OFFERS -->
+
+    <section class="market-center">
+
+      <div class="market-head">
+
+        <h2 id="marketTitle">
+          Buy USDT with ETB
+        </h2>
+
+        <span id="offerCount">
+          7 offers
+        </span>
+
+      </div>
+
+      <div class="price-summary">
+
+        <div class="price-box">
+          <small>Lowest</small>
+          <strong id="summaryLowest">--</strong>
+        </div>
+
+        <div class="price-box">
+          <small>Average</small>
+          <strong id="summaryAverage">--</strong>
+        </div>
+
+        <div class="price-box">
+          <small>Highest</small>
+          <strong id="summaryHighest">--</strong>
+        </div>
+
+        <div class="price-box">
+          <small>Estimated receive</small>
+          <strong class="green" id="summaryReceive">--</strong>
+        </div>
+
+      </div>
+
+      <div class="offers" id="offersList"></div>
+
+    </section>
+
+    <!-- QUICK TRADE -->
+
+    <aside class="card quick">
+
+      <div class="quick-title">
+
+        <h2>Quick Trade</h2>
+
+        <span>Fast order</span>
+
+      </div>
+
+      <div class="selected-trader">
+
+        <div class="selected-row">
+
+          <div class="selected-avatar" id="selectedAvatar">
+            ?
+          </div>
+
+          <div>
+
+            <strong id="selectedTrader">
+              Select an offer
+            </strong>
+
+            <div
+              class="green"
+              style="font-size:11px"
+              id="selectedRating">
+              Choose a trader below
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="quick-field">
+
+        <label>You pay / receive</label>
+
+        <input
+          type="number"
+          id="quickAmount"
+          value="100"
+          min="1"
+          oninput="calculateTrade()"
+        >
+
+      </div>
+
+      <div class="quick-field">
+
+        <label>Payment method</label>
+
+        <select id="quickPayment">
+          <option>Bank Transfer</option>
+          <option>Telebirr</option>
+          <option>CBE Birr</option>
+          <option>Mobile Money</option>
+          <option>Cash</option>
+        </select>
+
+      </div>
+
+      <div class="calculation">
+
+        <div class="calc-row">
+          <span>Rate</span>
+          <span id="calcRate">--</span>
+        </div>
+
+        <div class="calc-row">
+          <span>Trading fee</span>
+          <span id="calcFee">0.00 ETB</span>
+        </div>
+
+        <div class="calc-row">
+          <span>Estimated receive</span>
+          <span id="calcReceive">-- USDT</span>
+        </div>
+
+      </div>
+
+      <button
+        class="btn btn-primary full"
+        onclick="startQuickTrade()">
+        Continue to Review
+      </button>
+
+      <button
+        class="btn btn-secondary full"
+        style="margin-top:8px"
+        onclick="openActivity()">
+        📊 View Market Activity
+      </button>
+
+      <div class="security-box">
+
+        <strong>
+          🛡️ Protected P2P workflow
+        </strong>
+
+        <p>
+          Review the offer before starting. Security verification is
+          required before the demo trade room opens. Real escrow will
+          require server-side authorization.
+        </p>
+
+      </div>
+
+      <div class="info-list">
+
+        <div class="info-item">
+          ✓ <strong>Compare</strong>
+          prices, limits and trader reputation
+        </div>
+
+        <div class="info-item">
+          ✓ <strong>Choose</strong>
+          Telebirr, CBE Birr, bank transfer, mobile money or cash
+        </div>
+
+        <div class="info-item">
+          ✓ <strong>Favorite</strong>
+          trusted traders for faster future selection
+        </div>
+
+        <div class="info-item">
+          ✓ <strong>Report</strong>
+          suspicious offers or payment instructions
+        </div>
+
+      </div>
+
+    </aside>
 
   </div>
-
-</div>
-
-
-<div class="quick-field">
-
-  <label>You pay / receive</label>
-
-  <input
-    type="number"
-    id="quickAmount"
-    value="100"
-    min="1"
-    oninput="calculateTrade()"
-  >
-
-</div>
-
-
-<div class="quick-field">
-
-  <label>Payment method</label>
-
-  <select id="quickPayment">
-    <option>Bank Transfer</option>
-  </select>
-
-</div>
-
-
-<div class="calculation">
-
-  <div class="calc-row">
-    <span>Rate</span>
-    <span id="calcRate">--</span>
-  </div>
-
-  <div class="calc-row">
-    <span>Trading fee</span>
-    <span id="calcFee">0.00 ETB</span>
-  </div>
-
-  <div class="calc-row">
-    <span>Estimated receive</span>
-    <span id="calcReceive">-- USDT</span>
-  </div>
-
-</div>
-
-
-<button
-  class="btn btn-primary full"
-  onclick="startQuickTrade()"
->
-  Continue to Review
-</button>
-
-
-<button
-  class="btn btn-secondary full"
-  style="margin-top:8px"
-  onclick="openActivity()"
->
-  📊 View Market Activity
-</button>
-
-
-<div class="security-box">
-
-  <strong>
-    🛡️ Protected P2P workflow
-  </strong>
-
-  <p>
-    Review the offer before starting. Security verification is
-    required before the demo trade room opens. Real escrow will
-    require server-side authorization.
-  </p>
-
-</div>
-
-
-<div class="info-list">
-
-  <div class="info-item">
-    ✓ <strong>Compare</strong>
-    prices, limits and trader reputation
-  </div>
-
-  <div class="info-item">
-    ✓ <strong>Choose</strong>
-    Telebirr, CBE Birr, bank transfer, mobile money or cash
-  </div>
-
-  <div class="info-item">
-    ✓ <strong>Favorite</strong>
-    trusted traders for faster future selection
-  </div>
-
-  <div class="info-item">
-    ✓ <strong>Report</strong>
-    suspicious offers or payment instructions
-  </div>
-
-</div>
-```
-
-  </div>
-
-</aside>
-
-</section>
-
-<div class="demo-warning">
-
-<strong>Demo mode:</strong>
-This Step #1.1 page is a frontend marketplace prototype.
-Trader data, balances, offers, market activity, notifications,
-verification codes, escrow states and transactions are simulated.
-No real cryptocurrency, ETB, bank transfer or blockchain transaction
-occurs here. Real P2P trading requires authenticated backend/database
-authorization, secure escrow logic, payment integration, transaction
-validation, fraud controls and applicable legal and compliance controls.
-
-</div>
 
 </main>
+
+<!-- MOBILE CONTROLS -->
+
+<div class="mobile-bar">
+
+  <button class="btn btn-secondary"
+          onclick="openMobileFilters()">
+    ☰ Filters
+  </button>
+
+  <button class="btn btn-primary"
+          onclick="scrollToQuickTrade()">
+    ⚡ Quick Trade
+  </button>
+
+</div>
 
 <!-- REVIEW MODAL -->
 
 <div class="modal" id="reviewModal">
 
-  <div class="modal-box">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Review P2P Order</h3>
+      <h3>Review P2P Order</h3>
 
-  <button
-    class="close"
-    onclick="closeModal('reviewModal')"
-  >
-    ×
-  </button>
+      <button
+        class="close"
+        onclick="closeModal('reviewModal')">
+        ×
+      </button>
 
-</div>
-
-
-<div class="modal-body">
-
-  <div class="review-card">
-
-    <div class="review-row">
-      <span>Trader</span>
-      <strong id="reviewTrader">--</strong>
     </div>
 
-    <div class="review-row">
-      <span>Asset</span>
-      <strong id="reviewAsset">USDT</strong>
+    <div class="modal-body">
+
+      <div class="review-card">
+
+        <div class="review-row">
+          <span>Trader</span>
+          <strong id="reviewTrader">--</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Asset</span>
+          <strong id="reviewAsset">USDT</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Amount</span>
+          <strong id="reviewAmount">--</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Price</span>
+          <strong id="reviewPrice">--</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Payment</span>
+          <strong id="reviewPayment">--</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Estimated receive</span>
+          <strong
+            class="green"
+            id="reviewReceive">
+            --
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="warning">
+
+        Check the trader, amount, payment method and exchange rate
+        before continuing. This demo uses a simulated security
+        verification step.
+
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:16px">
+
+        <button
+          class="btn btn-secondary"
+          style="flex:1"
+          onclick="closeModal('reviewModal')">
+          Back
+        </button>
+
+        <button
+          class="btn btn-primary"
+          style="flex:1"
+          onclick="startVerification()">
+          Continue
+        </button>
+
+      </div>
+
     </div>
-
-    <div class="review-row">
-      <span>Amount</span>
-      <strong id="reviewAmount">--</strong>
-    </div>
-
-    <div class="review-row">
-      <span>Price</span>
-      <strong id="reviewPrice">--</strong>
-    </div>
-
-    <div class="review-row">
-      <span>Payment</span>
-      <strong id="reviewPayment">--</strong>
-    </div>
-
-    <div class="review-row">
-      <span>Estimated receive</span>
-      <strong
-        class="green"
-        id="reviewReceive"
-      >
-        --
-      </strong>
-    </div>
-
-  </div>
-
-
-  <div class="warning">
-
-    Check the trader, amount, payment method and exchange rate
-    before continuing. This demo uses a simulated security
-    verification step.
-
-  </div>
-
-
-  <div style="display:flex;gap:8px;margin-top:16px">
-
-    <button
-      class="btn btn-secondary"
-      style="flex:1"
-      onclick="closeModal('reviewModal')"
-    >
-      Back
-    </button>
-
-    <button
-      class="btn btn-primary"
-      style="flex:1"
-      onclick="startVerification()"
-    >
-      Continue
-    </button>
-
-  </div>
-
-</div>
-```
 
   </div>
 
@@ -2046,479 +2081,411 @@ validation, fraud controls and applicable legal and compliance controls.
 
 <div class="modal" id="securityModal">
 
-  <div class="modal-box" style="max-width:450px">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Security Verification</h3>
+      <h3>Security Verification</h3>
 
-  <button
-    class="close"
-    onclick="closeModal('securityModal')"
-  >
-    ×
-  </button>
-
-</div>
-
-
-<div class="modal-body">
-
-  <p class="otp-intro">
-    Demo only: a one-time code is required before opening
-    the trade room.
-  </p>
-
-
-  <div class="otp-demo">
-
-    <small>Demo verification code</small>
-
-    <strong id="demoCode">
-      ------
-    </strong>
-
-  </div>
-
-
-  <input
-    class="otp-input"
-    id="otpInput"
-    maxlength="6"
-    inputmode="numeric"
-    placeholder="000000"
-    oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-  >
-
-
-  <div class="timer">
-
-    Code expires in
-    <strong id="otpTimer">02:00</strong>
-
-  </div>
-
-
-  <div class="error" id="otpError"></div>
-
-
-  <button
-    class="btn btn-primary full"
-    onclick="verifyCode()"
-  >
-    Verify & Open Trade
-  </button>
-
-
-  <button
-    class="btn btn-secondary full"
-    style="margin-top:8px"
-    onclick="generateCode()"
-  >
-    Resend Code
-  </button>
-
-</div>
-```
-
-  </div>
-
-</div>
-
-<!-- TRADE ROOM -->
-
-<div class="modal trade-modal" id="tradeModal">
-
-  <div class="modal-box">
-
-```
-<div class="modal-header">
-
-  <h3>
-    Trade Room
-    <span
-      class="green"
-      style="font-size:11px"
-    >
-      ● DEMO SECURE
-    </span>
-  </h3>
-
-  <button
-    class="close"
-    onclick="closeModal('tradeModal')"
-  >
-    ×
-  </button>
-
-</div>
-
-
-<div class="trade-layout">
-
-
-  <div class="trade-left">
-
-    <div class="escrow-banner">
-
-      <strong>
-        🛡️ CryptoVault Escrow Workflow
-      </strong>
-
-      <span>
-        Demo interface only. Real escrow authorization
-        will require server-side controls.
-      </span>
+      <button
+        class="close"
+        onclick="closeModal('securityModal')">
+        ×
+      </button>
 
     </div>
 
+    <div class="modal-body">
 
-    <div class="timeline">
+      <p class="otp-intro">
+        Demo only: a one-time code is required before opening
+        the trade room.
+      </p>
 
-      <div
-        class="step active"
-        id="step1"
-      ></div>
+      <div class="otp-demo">
 
-      <div
-        class="step"
-        id="step2"
-      ></div>
+        <small>Demo verification code</small>
 
-      <div
-        class="step"
-        id="step3"
-      ></div>
-
-      <div
-        class="step"
-        id="step4"
-      ></div>
-
-    </div>
-
-
-    <div class="chat" id="chat">
-
-      <div class="message them">
-
-        Hello! Welcome to the demo trade.
-
-        <small>
-          Trader • now
-        </small>
+        <strong id="demoCode">
+          ------
+        </strong>
 
       </div>
-
-
-      <div class="message them">
-
-        Please use the selected payment method.
-
-        <small>
-          Trader • now
-        </small>
-
-      </div>
-
-    </div>
-
-
-    <div class="chat-input">
 
       <input
-        id="chatInput"
-        placeholder="Write a message..."
-        onkeydown="if(event.key==='Enter')sendMessage()"
+        class="otp-input"
+        id="otpInput"
+        maxlength="6"
+        inputmode="numeric"
+        placeholder="000000"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
       >
 
+      <div class="timer">
+
+        Code expires in
+        <strong id="otpTimer">02:00</strong>
+
+      </div>
+
+      <div class="error" id="otpError"></div>
+
       <button
-        class="btn btn-primary"
-        onclick="sendMessage()"
-      >
-        Send
+        class="btn btn-primary full"
+        onclick="verifyCode()">
+        Verify & Open Trade
+      </button>
+
+      <button
+        class="btn btn-secondary full"
+        style="margin-top:8px"
+        onclick="generateCode()">
+        Resend Code
       </button>
 
     </div>
 
   </div>
 
+</div>
 
-  <div class="trade-right">
+<!-- TRADE MODAL -->
 
-    <div class="trade-status">
+<div class="modal" id="tradeModal">
 
-      <div class="status-title">
-        Trade status
-      </div>
+  <div class="modal-content modal-wide">
 
-      <div
-        class="status-value green"
-        id="tradeStatus"
-      >
-        Awaiting payment
-      </div>
+    <div class="modal-header">
 
-    </div>
-
-
-    <div
-      class="trade-timer"
-      id="tradeTimer"
-    >
-      30:00
-    </div>
-
-
-    <div class="review-card">
-
-      <div class="review-row">
-        <span>Trader</span>
-        <strong id="tradeTrader">--</strong>
-      </div>
-
-      <div class="review-row">
-        <span>You pay</span>
-        <strong id="tradePay">--</strong>
-      </div>
-
-      <div class="review-row">
-        <span>You receive</span>
-        <strong
+      <h3>
+        Trade Room
+        <span
           class="green"
-          id="tradeReceive"
-        >
-          --
-        </strong>
-      </div>
+          style="font-size:11px">
+          ● DEMO SECURE
+        </span>
+      </h3>
 
-      <div class="review-row">
-        <span>Payment</span>
-        <strong id="tradePayment">--</strong>
-      </div>
+      <button
+        class="close"
+        onclick="closeModal('tradeModal')">
+        ×
+      </button>
 
     </div>
 
+    <div class="trade-layout">
 
-    <div class="proof-box">
+      <div class="trade-left">
 
-      📎 Payment proof upload
+        <div class="escrow-banner">
 
-      <br><br>
+          <strong>
+            🛡️ CryptoVault Escrow Workflow
+          </strong>
 
-      Demo interface only.
+          <span>
+            Demo interface only. Real escrow authorization
+            will require server-side controls.
+          </span>
 
-      <br>
+        </div>
 
-      Real secure storage will be connected later.
+        <div class="timeline">
 
-    </div>
+          <div class="step active" id="step1"></div>
+          <div class="step" id="step2"></div>
+          <div class="step" id="step3"></div>
+          <div class="step" id="step4"></div>
 
+        </div>
 
-    <div class="trade-actions">
+        <div class="chat" id="chat">
 
-      <button
-        class="btn btn-success"
-        onclick="markPaid()"
-      >
-        I Have Paid
-      </button>
+          <div class="message them">
 
-      <button
-        class="btn btn-primary"
-        onclick="releaseCrypto()"
-      >
-        Release
-      </button>
+            Hello! Welcome to the demo trade.
 
-      <button
-        class="btn btn-secondary"
-        onclick="openDispute()"
-      >
-        Dispute
-      </button>
+            <small>
+              Trader • now
+            </small>
 
-      <button
-        class="btn btn-danger"
-        onclick="cancelTrade()"
-      >
-        Cancel
-      </button>
+          </div>
+
+          <div class="message them">
+
+            Please use the selected payment method.
+
+            <small>
+              Trader • now
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="chat-input">
+
+          <input
+            id="chatInput"
+            placeholder="Write a message..."
+            onkeydown="if(event.key==='Enter')sendMessage()"
+          >
+
+          <button
+            class="btn btn-primary"
+            onclick="sendMessage()">
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="trade-right">
+
+        <div class="trade-status">
+
+          <div class="status-title">
+            Trade status
+          </div>
+
+          <div
+            class="status-value green"
+            id="tradeStatus">
+            Awaiting payment
+          </div>
+
+        </div>
+
+        <div class="trade-timer" id="tradeTimer">
+          30:00
+        </div>
+
+        <div class="review-card">
+
+          <div class="review-row">
+            <span>Trader</span>
+            <strong id="tradeTrader">--</strong>
+          </div>
+
+          <div class="review-row">
+            <span>You pay</span>
+            <strong id="tradePay">--</strong>
+          </div>
+
+          <div class="review-row">
+            <span>You receive</span>
+            <strong
+              class="green"
+              id="tradeReceive">
+              --
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Payment</span>
+            <strong id="tradePayment">--</strong>
+          </div>
+
+        </div>
+
+        <div class="proof-box">
+
+          📎 Payment proof upload
+
+          <br><br>
+
+          Demo interface only.
+
+          <br>
+
+          Real secure storage will be connected later.
+
+        </div>
+
+        <div class="trade-actions">
+
+          <button
+            class="btn btn-success"
+            onclick="markPaid()">
+            I Have Paid
+          </button>
+
+          <button
+            class="btn btn-primary"
+            onclick="releaseCrypto()">
+            Release
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="openDispute()">
+            Dispute
+          </button>
+
+          <button
+            class="btn btn-danger"
+            onclick="cancelTrade()">
+            Cancel
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
   </div>
 
 </div>
-```
 
-  </div>
-
-</div>
-
-<!-- TRADER PROFILE -->
+<!-- PROFILE MODAL -->
 
 <div class="modal" id="profileModal">
 
-  <div class="modal-box" style="max-width:540px">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Trader Profile</h3>
-
-  <button
-    class="close"
-    onclick="closeModal('profileModal')"
-  >
-    ×
-  </button>
-
-</div>
-
-
-<div class="modal-body">
-
-  <div class="profile">
-
-    <div
-      class="profile-avatar"
-      id="profileAvatar"
-    >
-      A
-    </div>
-
-
-    <h3 id="profileName">
-      Trader
-    </h3>
-
-
-    <p id="profileOnline">
-      ● Online
-    </p>
-
-
-    <div class="profile-stats">
-
-      <div class="profile-stat">
-
-        <strong id="profileRating">
-          99%
-        </strong>
-
-        <small>
-          Completion
-        </small>
-
-      </div>
-
-
-      <div class="profile-stat">
-
-        <strong id="profileTrades">
-          1,248
-        </strong>
-
-        <small>
-          Trades
-        </small>
-
-      </div>
-
-
-      <div class="profile-stat">
-
-        <strong id="profileVolume">
-          2.8M
-        </strong>
-
-        <small>
-          Volume
-        </small>
-
-      </div>
-
-    </div>
-
-
-    <div class="review-card" style="text-align:left">
-
-      <div class="review-row">
-        <span>Verification</span>
-        <strong
-          class="green"
-          id="profileVerification"
-        >
-          ✓ Verified
-        </strong>
-      </div>
-
-      <div class="review-row">
-        <span>Account age</span>
-        <strong id="profileAge">
-          2 years
-        </strong>
-      </div>
-
-      <div class="review-row">
-        <span>Average response</span>
-        <strong id="profileResponse">
-          < 2 min
-        </strong>
-      </div>
-
-      <div class="review-row">
-        <span>Average release</span>
-        <strong id="profileRelease">
-          < 5 min
-        </strong>
-      </div>
-
-      <div class="review-row">
-        <span>Payment methods</span>
-        <strong id="profilePayments">
-          Bank Transfer
-        </strong>
-      </div>
-
-      <div class="review-row">
-        <span>Trust level</span>
-        <strong
-          class="green"
-          id="profileTrust"
-        >
-          Excellent
-        </strong>
-      </div>
-
-    </div>
-
-
-    <div class="profile-actions">
+      <h3>Trader Profile</h3>
 
       <button
-        class="btn btn-secondary"
-        id="profileFavoriteButton"
-        onclick="toggleSelectedFavorite()"
-      >
-        ⭐ Favorite
-      </button>
-
-      <button
-        class="btn btn-danger"
-        onclick="openReportFromProfile()"
-      >
-        🚩 Report
+        class="close"
+        onclick="closeModal('profileModal')">
+        ×
       </button>
 
     </div>
 
-  </div>
+    <div class="modal-body">
 
-</div>
-```
+      <div class="profile">
+
+        <div
+          class="profile-avatar"
+          id="profileAvatar">
+          A
+        </div>
+
+        <h3 id="profileName">
+          Trader
+        </h3>
+
+        <p id="profileOnline">
+          ● Online
+        </p>
+
+        <div class="profile-stats">
+
+          <div class="profile-stat">
+
+            <strong id="profileRating">
+              99%
+            </strong>
+
+            <small>
+              Completion
+            </small>
+
+          </div>
+
+          <div class="profile-stat">
+
+            <strong id="profileTrades">
+              1,248
+            </strong>
+
+            <small>
+              Trades
+            </small>
+
+          </div>
+
+          <div class="profile-stat">
+
+            <strong id="profileVolume">
+              2.8M
+            </strong>
+
+            <small>
+              Volume
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="review-card" style="text-align:left">
+
+          <div class="review-row">
+            <span>Verification</span>
+            <strong
+              class="green"
+              id="profileVerification">
+              ✓ Verified
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Account age</span>
+            <strong id="profileAge">
+              2 years
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Average response</span>
+            <strong id="profileResponse">
+              &lt; 2 min
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Average release</span>
+            <strong id="profileRelease">
+              &lt; 5 min
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Payment methods</span>
+            <strong id="profilePayments">
+              Bank Transfer
+            </strong>
+          </div>
+
+          <div class="review-row">
+            <span>Trust level</span>
+            <strong
+              class="green"
+              id="profileTrust">
+              Excellent
+            </strong>
+          </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+          <button
+            class="btn btn-secondary"
+            id="profileFavoriteButton"
+            onclick="toggleSelectedFavorite()">
+            ⭐ Favorite
+          </button>
+
+          <button
+            class="btn btn-danger"
+            onclick="openReportFromProfile()">
+            🚩 Report
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -2528,66 +2495,55 @@ validation, fraud controls and applicable legal and compliance controls.
 
 <div class="modal" id="reportModal">
 
-  <div class="modal-box" style="max-width:500px">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Report Offer or Trader</h3>
+      <h3>Report Offer or Trader</h3>
 
-  <button
-    class="close"
-    onclick="closeModal('reportModal')"
-  >
-    ×
-  </button>
+      <button
+        class="close"
+        onclick="closeModal('reportModal')">
+        ×
+      </button>
 
-</div>
+    </div>
 
+    <div class="modal-body">
 
-<div class="modal-body">
+      <p style="color:var(--muted);font-size:12px;line-height:1.5">
+        Select the reason for this demo report.
+      </p>
 
-  <p style="color:var(--muted);font-size:12px;line-height:1.5">
+      <div class="report-options">
 
-    Select the reason for this demo report.
+        <button
+          class="report-option"
+          onclick="submitReport('Suspicious offer')">
+          🚩 Suspicious offer
+        </button>
 
-  </p>
+        <button
+          class="report-option"
+          onclick="submitReport('Inappropriate payment instructions')">
+          🚩 Inappropriate payment instructions
+        </button>
 
+        <button
+          class="report-option"
+          onclick="submitReport('Trader behavior')">
+          🚩 Trader behavior
+        </button>
 
-  <div class="report-options">
+        <button
+          class="report-option"
+          onclick="submitReport('Possible fraud')">
+          🚩 Possible fraud
+        </button>
 
-    <button
-      class="report-option"
-      onclick="submitReport('Suspicious offer')"
-    >
-      🚩 Suspicious offer
-    </button>
+      </div>
 
-    <button
-      class="report-option"
-      onclick="submitReport('Inappropriate payment instructions')"
-    >
-      🚩 Inappropriate payment instructions
-    </button>
-
-    <button
-      class="report-option"
-      onclick="submitReport('Trader behavior')"
-    >
-      🚩 Trader behavior
-    </button>
-
-    <button
-      class="report-option"
-      onclick="submitReport('Possible fraud')"
-    >
-      🚩 Possible fraud
-    </button>
-
-  </div>
-
-</div>
-```
+    </div>
 
   </div>
 
@@ -2597,94 +2553,85 @@ validation, fraud controls and applicable legal and compliance controls.
 
 <div class="modal" id="securityCenterModal">
 
-  <div class="modal-box" style="max-width:510px">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Security Center</h3>
+      <h3>Security Center</h3>
 
-  <button
-    class="close"
-    onclick="closeModal('securityCenterModal')"
-  >
-    ×
-  </button>
+      <button
+        class="close"
+        onclick="closeModal('securityCenterModal')">
+        ×
+      </button>
 
-</div>
-
-
-<div class="modal-body">
-
-  <div class="review-card">
-
-    <div class="review-row">
-      <span>Email verification</span>
-      <strong class="green">
-        ✓ Enabled
-      </strong>
     </div>
 
-    <div class="review-row">
-      <span>2FA authenticator</span>
-      <strong class="yellow">
-        Recommended
-      </strong>
+    <div class="modal-body">
+
+      <div class="review-card">
+
+        <div class="review-row">
+          <span>Email verification</span>
+          <strong class="green">
+            ✓ Enabled
+          </strong>
+        </div>
+
+        <div class="review-row">
+          <span>2FA authenticator</span>
+          <strong class="yellow">
+            Recommended
+          </strong>
+        </div>
+
+        <div class="review-row">
+          <span>Transaction PIN</span>
+          <strong class="yellow">
+            Demo
+          </strong>
+        </div>
+
+        <div class="review-row">
+          <span>New device protection</span>
+          <strong class="green">
+            ✓ Planned
+          </strong>
+        </div>
+
+        <div class="review-row">
+          <span>Withdrawal verification</span>
+          <strong class="green">
+            ✓ Required
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="security-box">
+
+        <strong>
+          🔐 Security architecture
+        </strong>
+
+        <p>
+          In the real CryptoVault system, authentication,
+          authorization, OTP generation, transaction permissions
+          and escrow state must be controlled server-side.
+          Never place private keys, service-role keys or payment
+          secrets inside this HTML file.
+        </p>
+
+      </div>
+
+      <button
+        class="btn btn-primary full"
+        style="margin-top:15px"
+        onclick="closeModal('securityCenterModal')">
+        Done
+      </button>
+
     </div>
-
-    <div class="review-row">
-      <span>Transaction PIN</span>
-      <strong class="yellow">
-        Demo
-      </strong>
-    </div>
-
-    <div class="review-row">
-      <span>New device protection</span>
-      <strong class="green">
-        ✓ Planned
-      </strong>
-    </div>
-
-    <div class="review-row">
-      <span>Withdrawal verification</span>
-      <strong class="green">
-        ✓ Required
-      </strong>
-    </div>
-
-  </div>
-
-
-  <div class="security-box">
-
-    <strong>
-      🔐 Security architecture
-    </strong>
-
-    <p>
-
-      In the real CryptoVault system, authentication,
-      authorization, OTP generation, transaction permissions
-      and escrow state must be controlled server-side.
-      Never place private keys, service-role keys or payment
-      secrets inside this HTML file.
-
-    </p>
-
-  </div>
-
-
-  <button
-    class="btn btn-primary full"
-    style="margin-top:15px"
-    onclick="closeModal('securityCenterModal')"
-  >
-    Done
-  </button>
-
-</div>
-```
 
   </div>
 
@@ -2694,405 +2641,403 @@ validation, fraud controls and applicable legal and compliance controls.
 
 <div class="modal" id="activityModal">
 
-  <div class="modal-box" style="max-width:600px">
+  <div class="modal-content">
 
-```
-<div class="modal-header">
+    <div class="modal-header">
 
-  <h3>Market Activity</h3>
+      <h3>Market Activity</h3>
 
-  <button
-    class="close"
-    onclick="closeModal('activityModal')"
-  >
-    ×
-  </button>
+      <button
+        class="close"
+        onclick="closeModal('activityModal')">
+        ×
+      </button>
 
-</div>
-
-
-<div class="modal-body">
-
-  <div class="review-card">
-
-    <div class="review-row">
-      <span>Active traders</span>
-      <strong>1,284</strong>
     </div>
 
-    <div class="review-row">
-      <span>Online traders</span>
-      <strong class="green">312</strong>
+    <div class="modal-body">
+
+      <div class="review-card">
+
+        <div class="review-row">
+          <span>Active traders</span>
+          <strong>1,284</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Online traders</span>
+          <strong class="green">312</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Active offers</span>
+          <strong id="activityOfferCount">7</strong>
+        </div>
+
+        <div class="review-row">
+          <span>24h volume</span>
+          <strong>8.42M USDT</strong>
+        </div>
+
+        <div class="review-row">
+          <span>Average response</span>
+          <strong>2.4 min</strong>
+        </div>
+
+      </div>
+
+      <h4 style="margin-bottom:10px">
+        Recent demo activity
+      </h4>
+
+      <div class="activity-list">
+
+        <div class="activity-item">
+          <span>Trader Alex updated an offer</span>
+          <strong>1 min ago</strong>
+        </div>
+
+        <div class="activity-item">
+          <span>Telebirr offer received a new view</span>
+          <strong>2 min ago</strong>
+        </div>
+
+        <div class="activity-item">
+          <span>Trader Yonas came online</span>
+          <strong>3 min ago</strong>
+        </div>
+
+        <div class="activity-item">
+          <span>Bank Transfer offer volume increased</span>
+          <strong>5 min ago</strong>
+        </div>
+
+        <div class="activity-item">
+          <span>CBE Birr offer updated</span>
+          <strong>7 min ago</strong>
+        </div>
+
+        <div class="activity-item">
+          <span>New demo trader became verified</span>
+          <strong>9 min ago</strong>
+        </div>
+
+      </div>
+
     </div>
-
-    <div class="review-row">
-      <span>Active offers</span>
-      <strong id="activityOfferCount">7</strong>
-    </div>
-
-    <div class="review-row">
-      <span>24h volume</span>
-      <strong>8.42M USDT</strong>
-    </div>
-
-    <div class="review-row">
-      <span>Average response</span>
-      <strong>2.4 min</strong>
-    </div>
-
-  </div>
-
-
-  <h4 style="margin-bottom:10px">
-    Recent demo activity
-  </h4>
-
-
-  <div class="activity-list">
-
-    <div class="activity-item">
-      <span>Trader Alex updated an offer</span>
-      <strong>1 min ago</strong>
-    </div>
-
-    <div class="activity-item">
-      <span>Telebirr offer received a new view</span>
-      <strong>2 min ago</strong>
-    </div>
-
-    <div class="activity-item">
-      <span>Trader Yonas came online</span>
-      <strong>3 min ago</strong>
-    </div>
-
-    <div class="activity-item">
-      <span>Bank Transfer offer volume increased</span>
-      <strong>5 min ago</strong>
-    </div>
-
-    <div class="activity-item">
-      <span>CBE Birr offer updated</span>
-      <strong>7 min ago</strong>
-    </div>
-
-    <div class="activity-item">
-      <span>New demo trader became verified</span>
-      <strong>9 min ago</strong>
-    </div>
-
-  </div>
-
-</div>
-```
 
   </div>
 
 </div>
 
-<!-- NOTIFICATIONS -->
+<!-- FAVORITES -->
 
-<div
-  class="notification-panel"
-  id="notificationPanel"
->
+<div class="modal" id="favoritesModal">
 
-  <div class="notification-panel-header">
+  <div class="modal-content">
 
-```
-<strong>
-  Notifications
-</strong>
+    <div class="modal-header">
 
-<button
-  class="btn btn-secondary btn-small"
-  onclick="markNotificationsRead()"
->
-  Mark read
-</button>
-```
+      <h3>Favorite Traders</h3>
 
-  </div>
+      <button
+        class="close"
+        onclick="closeModal('favoritesModal')">
+        ×
+      </button>
 
-  <div class="notification-item">
+    </div>
 
-```
-<strong>
-  🔔 New offer available
-</strong>
+    <div class="modal-body">
 
-<span>
-  A new demo USDT/ETB offer is available.
-</span>
-```
+      <div class="favorite-list" id="favoriteList"></div>
 
-  </div>
-
-  <div class="notification-item">
-
-```
-<strong>
-  ⭐ Favorite trader online
-</strong>
-
-<span>
-  One of your saved traders is currently online.
-</span>
-```
-
-  </div>
-
-  <div class="notification-item">
-
-```
-<strong>
-  💰 Price update
-</strong>
-
-<span>
-  A demo offer changed its price.
-</span>
-```
-
-  </div>
-
-  <div class="notification-item">
-
-```
-<strong>
-  ⏱ Offer activity
-</strong>
-
-<span>
-  One demo offer is receiving high activity.
-</span>
-```
+    </div>
 
   </div>
 
 </div>
 
-<div
-  class="notification"
-  id="notification"
-></div>
+<div class="toast" id="toast"></div>
 
 <script>
 
 /* =========================================================
-   CRYPTOVAULT STEP #1.1 MARKETPLACE
-   Frontend demo data only.
+   DEMO MARKET DATA
    ========================================================= */
-
 
 const offers = [
 
   {
     id:1,
-    name:"Alex",
-    initial:"A",
-    price:188,
-    available:1000,
-    min:50,
-    max:1000,
-    payment:["Bank Transfer","CBE Birr"],
-    completion:99,
-    trades:1248,
-    volume:2800000,
-    response:2,
-    release:4,
+    trader:"Alex",
+    avatar:"A",
     online:true,
     verified:true,
+    completion:99.4,
+    trades:2480,
+    volume:2850000,
+    response:1.4,
+    release:3.2,
     age:"2 years",
+    price:188,
+    min:100,
+    max:250000,
+    methods:["Bank Transfer","Telebirr"],
+    rating:4.99,
     trust:"Excellent",
-    favorite:true
+    direction:"buy"
   },
 
   {
     id:2,
-    name:"Daniel",
-    initial:"D",
-    price:189,
-    available:2000,
-    min:50,
-    max:2000,
-    payment:["Mobile Money","CBE Birr"],
-    completion:98,
-    trades:978,
-    volume:1900000,
-    response:3,
-    release:6,
+    trader:"Yonas",
+    avatar:"Y",
     online:true,
     verified:true,
-    age:"18 months",
+    completion:98.8,
+    trades:1940,
+    volume:2120000,
+    response:1.8,
+    release:4.1,
+    age:"3 years",
+    price:189,
+    min:200,
+    max:180000,
+    methods:["CBE Birr","Telebirr"],
+    rating:4.98,
     trust:"Excellent",
-    favorite:false
+    direction:"buy"
   },
 
   {
     id:3,
-    name:"Sara",
-    initial:"S",
-    price:190,
-    available:1500,
-    min:20,
-    max:1500,
-    payment:["Telebirr"],
-    completion:97,
-    trades:756,
-    volume:1200000,
-    response:1,
-    release:3,
+    trader:"Miki",
+    avatar:"M",
     online:true,
     verified:true,
-    age:"14 months",
+    completion:97.9,
+    trades:1522,
+    volume:1760000,
+    response:2.1,
+    release:4.8,
+    age:"18 months",
+    price:189.5,
+    min:100,
+    max:120000,
+    methods:["Mobile Money","Bank Transfer"],
+    rating:4.96,
     trust:"Excellent",
-    favorite:true
+    direction:"buy"
   },
 
   {
     id:4,
-    name:"Michael",
-    initial:"M",
-    price:191,
-    available:3000,
-    min:100,
-    max:3000,
-    payment:["Bank Transfer","CBE Birr"],
-    completion:99,
-    trades:2145,
-    volume:5400000,
-    response:2,
-    release:4,
-    online:true,
+    trader:"Sara",
+    avatar:"S",
+    online:false,
     verified:true,
-    age:"3 years",
-    trust:"Elite",
-    favorite:false
+    completion:96.7,
+    trades:980,
+    volume:980000,
+    response:4.2,
+    release:6.2,
+    age:"14 months",
+    price:190,
+    min:500,
+    max:90000,
+    methods:["Cash","Telebirr"],
+    rating:4.92,
+    trust:"Strong",
+    direction:"buy"
   },
 
   {
     id:5,
-    name:"Hana",
-    initial:"H",
-    price:192,
-    available:2500,
-    min:50,
-    max:2500,
-    payment:["Bank Transfer","Cash"],
-    completion:96,
-    trades:532,
-    volume:800000,
-    response:5,
-    release:9,
-    online:false,
-    verified:true,
-    age:"10 months",
-    trust:"Trusted",
-    favorite:false
+    trader:"Dani",
+    avatar:"D",
+    online:true,
+    verified:false,
+    completion:95.2,
+    trades:760,
+    volume:740000,
+    response:2.8,
+    release:7.1,
+    age:"11 months",
+    price:190.5,
+    min:100,
+    max:70000,
+    methods:["Cash","CBE Birr"],
+    rating:4.89,
+    trust:"Strong",
+    direction:"buy"
   },
 
   {
     id:6,
-    name:"Yonas",
-    initial:"Y",
-    price:189.5,
-    available:850,
-    min:25,
-    max:850,
-    payment:["Telebirr","Mobile Money"],
-    completion:99,
-    trades:1680,
-    volume:3300000,
-    response:1,
-    release:3,
-    online:true,
+    trader:"Hana",
+    avatar:"H",
+    online:false,
     verified:true,
-    age:"2 years",
-    trust:"Elite",
-    favorite:true
+    completion:94.8,
+    trades:620,
+    volume:590000,
+    response:6.1,
+    release:8.5,
+    age:"9 months",
+    price:191,
+    min:1000,
+    max:60000,
+    methods:["Bank Transfer","Mobile Money"],
+    rating:4.85,
+    trust:"Good",
+    direction:"buy"
   },
 
   {
     id:7,
-    name:"Mimi",
-    initial:"M",
-    price:190.5,
-    available:4200,
-    min:100,
-    max:4200,
-    payment:["Bank Transfer","Mobile Money","Cash"],
-    completion:98,
-    trades:3105,
-    volume:6900000,
-    response:3,
-    release:5,
+    trader:"Samuel",
+    avatar:"S",
     online:true,
     verified:true,
+    completion:99.1,
+    trades:3210,
+    volume:3640000,
+    response:1.2,
+    release:2.8,
     age:"4 years",
-    trust:"Elite",
-    favorite:false
+    price:192,
+    min:300,
+    max:300000,
+    methods:["Telebirr","CBE Birr","Cash"],
+    rating:5.00,
+    trust:"Excellent",
+    direction:"buy"
+  },
+
+  {
+    id:8,
+    trader:"Meron",
+    avatar:"M",
+    online:true,
+    verified:true,
+    completion:98.2,
+    trades:1320,
+    volume:1450000,
+    response:2.0,
+    release:4.0,
+    age:"20 months",
+    price:187.5,
+    min:100,
+    max:100000,
+    methods:["Bank Transfer","Telebirr"],
+    rating:4.97,
+    trust:"Excellent",
+    direction:"sell"
+  },
+
+  {
+    id:9,
+    trader:"Robel",
+    avatar:"R",
+    online:true,
+    verified:true,
+    completion:97.5,
+    trades:1100,
+    volume:990000,
+    response:2.5,
+    release:5.0,
+    age:"17 months",
+    price:188.5,
+    min:200,
+    max:90000,
+    methods:["CBE Birr","Mobile Money"],
+    rating:4.94,
+    trust:"Strong",
+    direction:"sell"
+  },
+
+  {
+    id:10,
+    trader:"Betty",
+    avatar:"B",
+    online:false,
+    verified:true,
+    completion:96.3,
+    trades:850,
+    volume:830000,
+    response:4.4,
+    release:6.5,
+    age:"13 months",
+    price:189.2,
+    min:500,
+    max:80000,
+    methods:["Cash","Telebirr"],
+    rating:4.90,
+    trust:"Strong",
+    direction:"sell"
   }
 
 ];
 
+/* =========================================================
+   STATE
+   ========================================================= */
 
 let currentMarket = "buy";
 let selectedOffer = null;
-let selectedProfileTrader = null;
-
-let quickFilter = "all";
-
-let verificationCode = "";
-let verificationSeconds = 120;
-let verificationInterval = null;
-
-let tradeSeconds = 1800;
+let selectedProfile = null;
+let otpCode = "";
+let otpInterval = null;
+let otpSeconds = 120;
 let tradeInterval = null;
+let tradeSeconds = 1800;
 
-let notificationTimer = null;
+let favorites =
+  JSON.parse(localStorage.getItem("cryptovaultFavorites") || "[]");
 
+let notificationsRead =
+  localStorage.getItem("cryptovaultNotificationsRead") === "true";
 
 /* =========================================================
-   INITIALIZE
+   INITIALIZATION
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded", () => {
+
+  if(notificationsRead){
+    document.getElementById("notifDot").style.display = "none";
+  }
 
   renderOffers();
-
   updateMarketTitle();
-
   calculateTrade();
 
-  updateMarketStats(offers);
-
 });
-
 
 /* =========================================================
    MARKET
    ========================================================= */
 
-function setMarket(type){
+function setMarket(direction){
 
-  currentMarket = type;
+  currentMarket = direction;
 
-  document
-    .getElementById("buyTab")
-    .classList.toggle("active",type === "buy");
+  document.getElementById("buyTab").classList.toggle(
+    "active",
+    direction === "buy"
+  );
 
-  document
-    .getElementById("sellTab")
-    .classList.toggle("active",type === "sell");
+  document.getElementById("sellTab").classList.toggle(
+    "active",
+    direction === "sell"
+  );
 
   updateMarketTitle();
-
-  filterOffers();
-
+  renderOffers();
   calculateTrade();
 
 }
-
 
 function updateMarketTitle(){
 
@@ -3104,152 +3049,36 @@ function updateMarketTitle(){
 
   document.getElementById("marketTitle").textContent =
     currentMarket === "buy"
-      ? "Buy " + asset + " with " + fiat
-      : "Sell " + asset + " for " + fiat;
+      ? `Buy ${asset} with ${fiat}`
+      : `Sell ${asset} for ${fiat}`;
 
 }
-
-
-function refreshMarket(){
-
-  updateMarketTitle();
-
-  filterOffers();
-
-  calculateTrade();
-
-  showNotification(
-    "Marketplace refreshed with current demo data."
-  );
-
-}
-
 
 /* =========================================================
-   ADVANCED FILTERS
+   FILTERS
    ========================================================= */
 
-function toggleAdvancedFilters(){
-
-  document
-    .getElementById("advancedPanel")
-    .classList.toggle("show");
-
-}
-
-
-function setQuickFilter(type){
-
-  quickFilter = type;
-
-  document
-    .querySelectorAll(".chip")
-    .forEach(function(x){
-      x.classList.remove("active");
-    });
-
-  const ids = {
-
-    all:"allChip",
-
-    online:"onlineChip",
-
-    verified:"verifiedChip",
-
-    fast:"fastChip",
-
-    favorites:"favoriteChip"
-
-  };
-
-  if(ids[type]){
-
-    document
-      .getElementById(ids[type])
-      .classList.add("active");
-
-  }
-
-  filterOffers();
-
-}
-
-
-function resetFilters(){
-
-  document.getElementById("searchInput").value = "";
-
-  document.getElementById("amountFilter").value = "";
-
-  document.getElementById("paymentFilter").value = "all";
-
-  document.getElementById("sortSelect").value = "price";
-
-  document.getElementById("minAmount").value = "";
-
-  document.getElementById("maxAmount").value = "";
-
-  document.getElementById("onlineOnly").checked = false;
-
-  document.getElementById("verifiedOnly").checked = false;
-
-  document.getElementById("fastOnly").checked = false;
-
-  document.getElementById("highCompletionOnly").checked = false;
-
-  document.getElementById("favoritesOnly").checked = false;
-
-  document.getElementById("cashOnly").checked = false;
-
-  quickFilter = "all";
-
-  document
-    .querySelectorAll(".chip")
-    .forEach(function(x){
-      x.classList.remove("active");
-    });
-
-  document
-    .getElementById("allChip")
-    .classList.add("active");
-
-  filterOffers();
-
-  showNotification("All marketplace filters have been reset.");
-
-}
-
-
-/* =========================================================
-   FILTER ENGINE
-   ========================================================= */
-
-function filterOffers(){
+function getFilteredOffers(){
 
   const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+    document.getElementById("searchInput").value
+    .trim()
+    .toLowerCase();
 
   const payment =
     document.getElementById("paymentFilter").value;
 
   const amount =
-    Number(
-      document.getElementById("amountFilter").value
-    ) || 0;
+    parseFloat(document.getElementById("amountFilter").value) || 0;
 
   const minAmount =
-    Number(
-      document.getElementById("minAmount").value
-    ) || 0;
+    parseFloat(document.getElementById("minAmount").value) || 0;
+
+  const maxInput =
+    parseFloat(document.getElementById("maxAmount").value);
 
   const maxAmount =
-    Number(
-      document.getElementById("maxAmount").value
-    ) || Infinity;
+    maxInput > 0 ? maxInput : Infinity;
 
   const onlineOnly =
     document.getElementById("onlineOnly").checked;
@@ -3269,136 +3098,88 @@ function filterOffers(){
   const cashOnly =
     document.getElementById("cashOnly").checked;
 
+  let result = offers.filter(offer => {
 
-  let result = offers.filter(function(o){
+    if(offer.direction !== currentMarket){
+      return false;
+    }
 
-    const searchMatch =
-      !search ||
-      o.name.toLowerCase().includes(search) ||
-      o.payment.some(function(p){
-        return p.toLowerCase().includes(search);
-      });
+    if(search){
 
+      const haystack =
+        (
+          offer.trader + " " +
+          offer.methods.join(" ")
+        ).toLowerCase();
 
-    const paymentMatch =
-      payment === "all" ||
-      o.payment.includes(payment);
+      if(!haystack.includes(search)){
+        return false;
+      }
+    }
 
+    if(payment !== "all" &&
+       !offer.methods.includes(payment)){
+      return false;
+    }
 
-    const amountMatch =
-      !amount ||
-      (
-        amount >= o.min &&
-        amount <= o.max
-      );
+    if(amount &&
+       (amount < offer.min || amount > offer.max)){
+      return false;
+    }
 
+    if(minAmount &&
+       offer.max < minAmount){
+      return false;
+    }
 
-    const minMatch =
-      o.max >= minAmount;
+    if(maxAmount !== Infinity &&
+       offer.min > maxAmount){
+      return false;
+    }
 
+    if(onlineOnly && !offer.online){
+      return false;
+    }
 
-    const maxMatch =
-      o.min <= maxAmount;
+    if(verifiedOnly && !offer.verified){
+      return false;
+    }
 
+    if(fastOnly && offer.response > 3){
+      return false;
+    }
 
-    const quickMatch =
-      quickFilter === "all" ||
+    if(highCompletionOnly && offer.completion < 95){
+      return false;
+    }
 
-      (
-        quickFilter === "online" &&
-        o.online
-      ) ||
+    if(favoritesOnly &&
+       !favorites.includes(offer.id)){
+      return false;
+    }
 
-      (
-        quickFilter === "verified" &&
-        o.verified
-      ) ||
+    if(cashOnly &&
+       !offer.methods.includes("Cash")){
+      return false;
+    }
 
-      (
-        quickFilter === "fast" &&
-        o.response <= 2
-      ) ||
-
-      (
-        quickFilter === "favorites" &&
-        o.favorite
-      );
-
-
-    const onlineMatch =
-      !onlineOnly || o.online;
-
-
-    const verifiedMatch =
-      !verifiedOnly || o.verified;
-
-
-    const fastMatch =
-      !fastOnly || o.response <= 2;
-
-
-    const completionMatch =
-      !highCompletionOnly ||
-      o.completion >= 95;
-
-
-    const favoriteMatch =
-      !favoritesOnly || o.favorite;
-
-
-    const cashMatch =
-      !cashOnly ||
-      o.payment.includes("Cash");
-
-
-    return (
-      searchMatch &&
-      paymentMatch &&
-      amountMatch &&
-      minMatch &&
-      maxMatch &&
-      quickMatch &&
-      onlineMatch &&
-      verifiedMatch &&
-      fastMatch &&
-      completionMatch &&
-      favoriteMatch &&
-      cashMatch
-    );
+    return true;
 
   });
 
+  const sort =
+    document.getElementById("sortSelect").value;
 
-  result =
-    sortData(
-      result,
-      document.getElementById("sortSelect").value
-    );
-
-
-  renderOffers(result);
-
-}
-
-
-/* =========================================================
-   SORTING
-   ========================================================= */
-
-function sortData(data,sort){
-
-  return [...data].sort(function(a,b){
+  result.sort((a,b) => {
 
     if(sort === "price"){
-
       return currentMarket === "buy"
         ? a.price - b.price
         : b.price - a.price;
-
     }
 
     if(sort === "rating"){
-      return b.completion - a.completion;
+      return b.rating - a.rating;
     }
 
     if(sort === "volume"){
@@ -3410,7 +3191,7 @@ function sortData(data,sort){
     }
 
     if(sort === "available"){
-      return b.available - a.available;
+      return b.max - a.max;
     }
 
     if(sort === "release"){
@@ -3421,312 +3202,250 @@ function sortData(data,sort){
 
   });
 
+  return result;
+
 }
 
+function filterOffers(){
+  renderOffers();
+}
+
+function resetFilters(){
+
+  document.getElementById("searchInput").value = "";
+  document.getElementById("amountFilter").value = "";
+  document.getElementById("minAmount").value = "";
+  document.getElementById("maxAmount").value = "";
+
+  document.getElementById("paymentFilter").value = "all";
+  document.getElementById("sortSelect").value = "price";
+
+  [
+    "onlineOnly",
+    "verifiedOnly",
+    "fastOnly",
+    "highCompletionOnly",
+    "favoritesOnly",
+    "cashOnly"
+  ].forEach(id => {
+    document.getElementById(id).checked = false;
+  });
+
+  renderOffers();
+
+}
 
 /* =========================================================
-   OFFER DISPLAY
+   OFFER RENDERING
    ========================================================= */
 
-function renderOffers(data = offers){
+function renderOffers(){
 
-  const container =
-    document.getElementById("offersContainer");
+  const list =
+    document.getElementById("offersList");
 
-  container.innerHTML = "";
+  const filtered =
+    getFilteredOffers();
 
   document.getElementById("offerCount").textContent =
-    data.length +
-    (
-      data.length === 1
-        ? " offer"
-        : " offers"
-    );
-
+    `${filtered.length} offer${filtered.length === 1 ? "" : "s"}`;
 
   document.getElementById("activeOffersStat").textContent =
-    data.length;
+    filtered.length;
 
+  document.getElementById("activityOfferCount").textContent =
+    filtered.length;
 
-  if(!data.length){
+  if(filtered.length === 0){
 
-    container.innerHTML = `
+    list.innerHTML = `
       <div class="empty">
-        <strong>No offers found</strong>
-        <span>
-          Try another amount, payment method or filter.
-        </span>
+        <strong>No offers match your filters.</strong>
+        <br><br>
+        Try changing the payment method, amount, availability or reputation filters.
       </div>
     `;
 
-    updateMarketStats([]);
-
+    updatePriceStats([]);
     return;
-
   }
 
+  list.innerHTML =
+    filtered.map(renderOffer).join("");
 
-  data.forEach(function(offer,index){
+  updatePriceStats(filtered);
 
-    const card =
-      document.createElement("div");
+}
 
-    card.className =
-      "offer" +
-      (index === 0 ? " featured" : "");
+function renderOffer(offer){
 
+  const isFavorite =
+    favorites.includes(offer.id);
 
-    const payment =
-      offer.payment
-        .map(function(p){
-          return `
-            <span class="tag">
-              ${escapeHTML(p)}
-            </span>
-          `;
-        })
-        .join("");
+  const onlineText =
+    offer.online
+      ? `<span class="green">● Online</span>`
+      : `<span style="color:#71839b">● Offline</span>`;
 
+  const verification =
+    offer.verified
+      ? `<span class="badge green-badge">✓ Verified</span>`
+      : "";
 
-    const favoriteIcon =
-      offer.favorite
-        ? "★"
-        : "☆";
+  const fast =
+    offer.response <= 3
+      ? `<span class="badge green-badge">⚡ Fast</span>`
+      : "";
 
+  const completionBadge =
+    offer.completion >= 95
+      ? `<span class="badge green-badge">${offer.completion}% Complete</span>`
+      : "";
 
-    const availability =
-      offer.online
-        ? "🟢 Online"
-        : "⚪ Offline";
+  const methods =
+    offer.methods.map(
+      method => `<span class="payment-tag">${method}</span>`
+    ).join("");
 
+  const volume =
+    formatVolume(offer.volume);
 
-    card.innerHTML = `
+  return `
+
+    <article class="offer-card">
 
       <div class="offer-top">
 
+        <div class="trader-info">
+
+          <div class="trader-avatar">
+            ${offer.avatar}
+          </div>
+
+          <div>
+
+            <div class="trader-name">
+              ${offer.trader}
+            </div>
+
+            <div class="trader-status">
+              ${onlineText}
+              · ${offer.response} min response
+            </div>
+
+            <div class="badges">
+              ${verification}
+              ${fast}
+              ${completionBadge}
+            </div>
+
+          </div>
+
+        </div>
+
+        <button
+          class="favorite ${isFavorite ? "active" : ""}"
+          onclick="toggleFavorite(${offer.id})"
+          aria-label="Favorite ${offer.trader}">
+          ${isFavorite ? "★" : "☆"}
+        </button>
+
+      </div>
+
+      <div class="offer-main">
+
         <div>
 
-          <div class="trader">
-
-            <div class="trader-avatar">
-              ${escapeHTML(offer.initial)}
-            </div>
-
-            <div>
-
-              <div class="trader-name">
-
-                ${escapeHTML(offer.name)}
-
-                ${
-                  offer.verified
-                    ? '<span class="verified">✓ Verified</span>'
-                    : ''
-                }
-
-                <button
-                  class="favorite ${offer.favorite ? 'active' : ''}"
-                  title="Favorite trader"
-                  onclick="toggleFavorite(${offer.id})"
-                >
-                  ${favoriteIcon}
-                </button>
-
-              </div>
-
-              <div
-                class="${offer.online ? 'online' : 'offline'}"
-              >
-                ${availability}
-                · ${offer.completion}% completion
-              </div>
-
-            </div>
-
+          <div class="offer-label">
+            PRICE
           </div>
 
+          <div class="offer-price">
+            ${offer.price.toFixed(2)}
+            <small>${getFiat()}</small>
+          </div>
 
-          <div class="offer-badges">
-
-            ${
-              index === 0
-                ? '<span class="badge blue">★ Best price</span>'
-                : ''
-            }
-
-            ${
-              offer.response <= 2
-                ? '<span class="badge green">⚡ Fast response</span>'
-                : ''
-            }
-
-            ${
-              offer.release <= 4
-                ? '<span class="badge green">⚡ Fast release</span>'
-                : ''
-            }
-
-            ${
-              offer.trades >= 1500
-                ? '<span class="badge">Top trader</span>'
-                : ''
-            }
-
-            ${
-              offer.trust === "Elite"
-                ? '<span class="badge yellow">Elite</span>'
-                : ''
-            }
-
-            ${
-              offer.payment.includes("Telebirr")
-                ? '<span class="badge green">Telebirr</span>'
-                : ''
-            }
-
-            ${
-              offer.payment.includes("CBE Birr")
-                ? '<span class="badge blue">CBE Birr</span>'
-                : ''
-            }
-
+          <div class="offer-label" style="margin-top:5px">
+            ${currentMarket === "buy"
+              ? "You pay fiat"
+              : "You receive fiat"}
           </div>
 
         </div>
 
+        <div>
 
-        <div class="price">
+          <div class="offer-label">
+            LIMIT
+          </div>
 
-          <strong>
-            ${offer.price.toFixed(2)} ETB
-          </strong>
+          <div class="offer-value">
+            ${formatMoney(offer.min)}
+            -
+            ${formatMoney(offer.max)}
+            ${getFiat()}
+          </div>
 
-          <small>
-            per USDT
-          </small>
+          <div class="offer-label" style="margin-top:10px">
+            AVAILABLE
+          </div>
+
+          <div class="offer-value">
+            ${formatMoney(offer.max)}
+            ${getAsset()}
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="offer-label">
+            PAYMENT METHODS
+          </div>
+
+          <div class="payment-tags">
+            ${methods}
+          </div>
 
         </div>
 
       </div>
 
+      <div class="offer-bottom">
 
-      <div class="offer-details">
+        <div class="performance">
 
-        <div class="detail">
+          <span>⭐ ${offer.rating.toFixed(2)}</span>
 
-          <small>
-            Available
-          </small>
+          <span>✓ ${offer.completion}%</span>
 
-          <strong>
-            ${offer.available.toLocaleString()} USDT
-          </strong>
+          <span>Trades ${offer.trades.toLocaleString()}</span>
 
-        </div>
+          <span>Vol ${volume}</span>
 
+          <span>Release ${offer.release} min</span>
 
-        <div class="detail">
-
-          <small>
-            Limits
-          </small>
-
-          <strong>
-            ${offer.min.toLocaleString()} -
-            ${offer.max.toLocaleString()} ETB
-          </strong>
+          <span>${offer.age}</span>
 
         </div>
-
-
-        <div class="detail">
-
-          <small>
-            Trades
-          </small>
-
-          <strong>
-            ${offer.trades.toLocaleString()}
-          </strong>
-
-        </div>
-
-
-        <div class="detail">
-
-          <small>
-            Response
-          </small>
-
-          <strong>
-            ${offer.response} min
-          </strong>
-
-        </div>
-
-
-        <div class="detail">
-
-          <small>
-            Release
-          </small>
-
-          <strong>
-            ${offer.release} min
-          </strong>
-
-        </div>
-
-      </div>
-
-
-      <div class="trader-meta">
-
-        <span>
-          👤 ${offer.age}
-        </span>
-
-        <span>
-          📈 ${(offer.volume / 1000000).toFixed(1)}M volume
-        </span>
-
-        <span>
-          ⭐ ${offer.trust}
-        </span>
-
-      </div>
-
-
-      <div
-        class="payment-row"
-        style="margin-top:12px"
-      >
-
-        <div class="payment-tags">
-          ${payment}
-        </div>
-
 
         <div class="offer-actions">
 
           <button
             class="btn btn-secondary btn-small"
-            onclick="openProfile(${offer.id})"
-          >
+            onclick="openProfile(${offer.id})">
             Profile
           </button>
 
           <button
-            class="btn btn-danger btn-small"
-            onclick="openReport(${offer.id})"
-          >
-            🚩 Report
+            class="btn btn-secondary btn-small"
+            onclick="openReport(${offer.id})">
+            🚩
           </button>
 
           <button
             class="btn btn-primary btn-small"
-            onclick="selectOffer(${offer.id})"
-          >
+            onclick="selectOffer(${offer.id})">
             Trade
           </button>
 
@@ -3734,193 +3453,191 @@ function renderOffers(data = offers){
 
       </div>
 
-    `;
+    </article>
 
-
-    container.appendChild(card);
-
-  });
-
-
-  updateMarketStats(data);
+  `;
 
 }
 
-
 /* =========================================================
-   MARKET STATISTICS
+   PRICE STATS
    ========================================================= */
 
-function updateMarketStats(data){
+function updatePriceStats(list){
 
-  if(!data.length){
+  if(!list.length){
 
     document.getElementById("lowestPrice").textContent = "--";
-
     document.getElementById("averagePrice").textContent = "--";
-
     document.getElementById("priceSpread").textContent = "--";
 
-    return;
+    document.getElementById("summaryLowest").textContent = "--";
+    document.getElementById("summaryAverage").textContent = "--";
+    document.getElementById("summaryHighest").textContent = "--";
+    document.getElementById("summaryReceive").textContent = "--";
 
+    return;
   }
 
-
   const prices =
-    data.map(function(o){
-      return o.price;
-    });
+    list.map(o => o.price);
 
-
-  const lowest =
+  const low =
     Math.min(...prices);
 
-
-  const highest =
+  const high =
     Math.max(...prices);
 
-
   const average =
-    prices.reduce(function(a,b){
-      return a + b;
-    },0) / prices.length;
+    prices.reduce((a,b) => a+b,0) / prices.length;
 
+  const spread =
+    high - low;
+
+  const fiat =
+    getFiat();
 
   document.getElementById("lowestPrice").textContent =
-    lowest.toFixed(2) + " ETB";
-
+    `${low.toFixed(2)} ${fiat}`;
 
   document.getElementById("averagePrice").textContent =
-    average.toFixed(2) + " ETB";
-
+    `${average.toFixed(2)} ${fiat}`;
 
   document.getElementById("priceSpread").textContent =
-    (highest - lowest).toFixed(2) + " ETB";
+    `${spread.toFixed(2)} ${fiat}`;
+
+  document.getElementById("summaryLowest").textContent =
+    `${low.toFixed(2)} ${fiat}`;
+
+  document.getElementById("summaryAverage").textContent =
+    `${average.toFixed(2)} ${fiat}`;
+
+  document.getElementById("summaryHighest").textContent =
+    `${high.toFixed(2)} ${fiat}`;
+
+  const amount =
+    parseFloat(document.getElementById("quickAmount").value) || 100;
+
+  const estimated =
+    currentMarket === "buy"
+      ? amount / low
+      : amount * high;
+
+  document.getElementById("summaryReceive").textContent =
+    currentMarket === "buy"
+      ? `${estimated.toFixed(4)} ${getAsset()}`
+      : `${estimated.toFixed(2)} ${getFiat()}`;
 
 }
 
-
 /* =========================================================
-   SELECT OFFER
+   TRADE SELECTION
    ========================================================= */
 
 function selectOffer(id){
 
-  selectedOffer =
-    offers.find(function(o){
-      return o.id === id;
-    });
+  const offer =
+    offers.find(o => o.id === id);
 
-
-  if(!selectedOffer){
+  if(!offer){
     return;
   }
 
-
-  document.getElementById("selectedTrader").textContent =
-    selectedOffer.name;
-
+  selectedOffer = offer;
 
   document.getElementById("selectedAvatar").textContent =
-    selectedOffer.initial;
+    offer.avatar;
 
+  document.getElementById("selectedTrader").textContent =
+    offer.trader;
 
   document.getElementById("selectedRating").textContent =
-    selectedOffer.completion +
-    "% completion · " +
-    selectedOffer.trades.toLocaleString() +
-    " trades · " +
-    (
-      selectedOffer.online
-        ? "Online"
-        : "Offline"
-    );
+    `${offer.rating.toFixed(2)} rating · ${offer.completion}% completion`;
 
+  const paymentSelect =
+    document.getElementById("quickPayment");
 
-  document.getElementById("quickAmount").value =
-    Math.max(selectedOffer.min,100);
-
-
-  document.getElementById("quickPayment").innerHTML =
-    selectedOffer.payment
-      .map(function(p){
-        return `
-          <option>
-            ${escapeHTML(p)}
-          </option>
-        `;
-      })
-      .join("");
-
+  paymentSelect.innerHTML =
+    offer.methods.map(
+      method => `<option>${method}</option>`
+    ).join("");
 
   calculateTrade();
 
+  scrollToQuickTrade();
 
   showNotification(
-    selectedOffer.name +
-    " selected for your demo trade."
+    `${offer.trader}'s offer selected.`
   );
 
 }
 
-
-/* =========================================================
-   CALCULATE TRADE
-   ========================================================= */
-
 function calculateTrade(){
 
   const amount =
-    Number(
+    parseFloat(
       document.getElementById("quickAmount").value
     ) || 0;
-
 
   const rate =
     selectedOffer
       ? selectedOffer.price
-      : 0;
+      : getDefaultPrice();
 
+  const fee =
+    currentMarket === "buy"
+      ? amount * 0.005
+      : amount * 0.005;
 
-  document.getElementById("calcRate").textContent =
-    rate
-      ? rate.toFixed(2) + " ETB"
-      : "--";
+  let receive;
 
+  if(currentMarket === "buy"){
 
-  if(!rate || !amount){
+    receive =
+      rate > 0
+        ? Math.max(amount - fee,0) / rate
+        : 0;
 
-    document.getElementById("calcFee").textContent =
-      "0.00 ETB";
+  }else{
 
-    document.getElementById("calcReceive").textContent =
-      "-- USDT";
-
-    return;
+    receive =
+      amount * rate;
 
   }
 
-
-  const fee =
-    amount * 0.005;
-
-
-  const receive =
-    (amount - fee) / rate;
-
+  document.getElementById("calcRate").textContent =
+    `${rate.toFixed(2)} ${getFiat()}`;
 
   document.getElementById("calcFee").textContent =
-    fee.toFixed(2) + " ETB";
-
+    `${fee.toFixed(2)} ${getFiat()}`;
 
   document.getElementById("calcReceive").textContent =
-    receive.toFixed(4) + " USDT";
+    currentMarket === "buy"
+      ? `${receive.toFixed(4)} ${getAsset()}`
+      : `${receive.toFixed(2)} ${getFiat()}`;
 
 }
 
+function getDefaultPrice(){
+
+  const list =
+    offers.filter(o => o.direction === currentMarket);
+
+  if(!list.length){
+    return 0;
+  }
+
+  const prices =
+    list.map(o => o.price);
+
+  return currentMarket === "buy"
+    ? Math.min(...prices)
+    : Math.max(...prices);
+
+}
 
 /* =========================================================
-   START TRADE
+   QUICK TRADE
    ========================================================= */
 
 function startQuickTrade(){
@@ -3928,160 +3645,118 @@ function startQuickTrade(){
   if(!selectedOffer){
 
     showNotification(
-      "Please select an offer first."
+      "Select an offer before starting a trade."
     );
 
     return;
-
   }
 
-
   const amount =
-    Number(
+    parseFloat(
       document.getElementById("quickAmount").value
+    ) || 0;
+
+  if(amount <= 0){
+
+    showNotification(
+      "Enter a valid amount."
     );
 
+    return;
+  }
 
   if(
-    !amount ||
     amount < selectedOffer.min ||
     amount > selectedOffer.max
   ){
 
     showNotification(
-      "Amount must be between " +
-      selectedOffer.min +
-      " and " +
-      selectedOffer.max +
-      " ETB."
+      `Amount must be between ${formatMoney(selectedOffer.min)} and ${formatMoney(selectedOffer.max)} ${getFiat()}.`
     );
 
     return;
-
   }
 
-
-  openReview();
-
-}
-
-
-/* =========================================================
-   REVIEW
-   ========================================================= */
-
-function openReview(){
-
-  if(!selectedOffer){
-    return;
-  }
-
-
-  const amount =
-    Number(
-      document.getElementById("quickAmount").value
-    );
-
+  const payment =
+    document.getElementById("quickPayment").value;
 
   const fee =
     amount * 0.005;
 
-
   const receive =
-    (amount - fee) /
-    selectedOffer.price;
-
+    currentMarket === "buy"
+      ? Math.max(amount-fee,0) / selectedOffer.price
+      : amount * selectedOffer.price;
 
   document.getElementById("reviewTrader").textContent =
-    selectedOffer.name;
-
+    selectedOffer.trader;
 
   document.getElementById("reviewAsset").textContent =
-    document.getElementById("assetSelect").value;
-
+    getAsset();
 
   document.getElementById("reviewAmount").textContent =
-    amount.toFixed(2) + " ETB";
-
+    `${amount.toFixed(2)} ${getFiat()}`;
 
   document.getElementById("reviewPrice").textContent =
-    selectedOffer.price.toFixed(2) + " ETB";
-
+    `${selectedOffer.price.toFixed(2)} ${getFiat()}`;
 
   document.getElementById("reviewPayment").textContent =
-    document.getElementById("quickPayment").value;
-
+    payment;
 
   document.getElementById("reviewReceive").textContent =
-    receive.toFixed(4) + " USDT";
+    currentMarket === "buy"
+      ? `${receive.toFixed(4)} ${getAsset()}`
+      : `${receive.toFixed(2)} ${getFiat()}`;
 
-
-  document
-    .getElementById("reviewModal")
-    .classList.add("show");
+  openModal("reviewModal");
 
 }
 
-
 /* =========================================================
-   VERIFICATION
+   SECURITY
    ========================================================= */
 
 function startVerification(){
 
   closeModal("reviewModal");
 
-  generateCode();
+  openModal("securityModal");
 
-  document
-    .getElementById("securityModal")
-    .classList.add("show");
+  generateCode();
 
 }
 
-
 function generateCode(){
 
-  verificationCode =
-    String(
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      )
-    );
-
+  otpCode =
+    Math.floor(100000 + Math.random()*900000).toString();
 
   document.getElementById("demoCode").textContent =
-    verificationCode;
-
+    otpCode;
 
   document.getElementById("otpInput").value = "";
 
   document.getElementById("otpError").textContent = "";
 
-
-  verificationSeconds = 120;
+  otpSeconds = 120;
 
   updateOtpTimer();
 
+  clearInterval(otpInterval);
 
-  clearInterval(verificationInterval);
+  otpInterval =
+    setInterval(() => {
 
-
-  verificationInterval =
-    setInterval(function(){
-
-      verificationSeconds--;
+      otpSeconds--;
 
       updateOtpTimer();
 
+      if(otpSeconds <= 0){
 
-      if(verificationSeconds <= 0){
-
-        clearInterval(verificationInterval);
+        clearInterval(otpInterval);
 
         document.getElementById("otpError").textContent =
-          "Verification code expired.";
+          "Code expired. Generate a new code.";
 
       }
 
@@ -4089,64 +3764,51 @@ function generateCode(){
 
 }
 
-
 function updateOtpTimer(){
 
-  const m =
-    Math.floor(
-      verificationSeconds / 60
-    );
+  const minutes =
+    Math.floor(otpSeconds / 60)
+      .toString()
+      .padStart(2,"0");
 
-
-  const s =
-    verificationSeconds % 60;
-
+  const seconds =
+    (otpSeconds % 60)
+      .toString()
+      .padStart(2,"0");
 
   document.getElementById("otpTimer").textContent =
-    String(m).padStart(2,"0") +
-    ":" +
-    String(s).padStart(2,"0");
+    `${minutes}:${seconds}`;
 
 }
-
 
 function verifyCode(){
 
   const entered =
-    document
-      .getElementById("otpInput")
-      .value
-      .trim();
+    document.getElementById("otpInput").value;
 
-
-  if(verificationSeconds <= 0){
+  if(otpSeconds <= 0){
 
     document.getElementById("otpError").textContent =
-      "Code expired. Please request a new code.";
+      "Code expired.";
 
     return;
-
   }
 
-
-  if(entered !== verificationCode){
+  if(entered !== otpCode){
 
     document.getElementById("otpError").textContent =
-      "Incorrect verification code.";
+      "Incorrect demo verification code.";
 
     return;
-
   }
 
-
-  clearInterval(verificationInterval);
+  clearInterval(otpInterval);
 
   closeModal("securityModal");
 
   openTradeRoom();
 
 }
-
 
 /* =========================================================
    TRADE ROOM
@@ -4158,62 +3820,59 @@ function openTradeRoom(){
     return;
   }
 
-
   const amount =
-    Number(
+    parseFloat(
       document.getElementById("quickAmount").value
-    );
+    ) || 0;
 
-
-  const fee =
-    amount * 0.005;
-
-
-  const receive =
-    (amount - fee) /
-    selectedOffer.price;
-
-
-  document.getElementById("tradeTrader").textContent =
-    selectedOffer.name;
-
-
-  document.getElementById("tradePay").textContent =
-    amount.toFixed(2) + " ETB";
-
-
-  document.getElementById("tradeReceive").textContent =
-    receive.toFixed(4) + " USDT";
-
-
-  document.getElementById("tradePayment").textContent =
+  const payment =
     document.getElementById("quickPayment").value;
 
+  const receive =
+    currentMarket === "buy"
+      ? Math.max(amount - amount*.005,0) /
+        selectedOffer.price
+      : amount * selectedOffer.price;
+
+  document.getElementById("tradeTrader").textContent =
+    selectedOffer.trader;
+
+  document.getElementById("tradePay").textContent =
+    `${amount.toFixed(2)} ${getFiat()}`;
+
+  document.getElementById("tradeReceive").textContent =
+    currentMarket === "buy"
+      ? `${receive.toFixed(4)} ${getAsset()}`
+      : `${receive.toFixed(2)} ${getFiat()}`;
+
+  document.getElementById("tradePayment").textContent =
+    payment;
 
   document.getElementById("tradeStatus").textContent =
     "Awaiting payment";
 
-
-  document.getElementById("tradeStatus").className =
-    "status-value green";
-
-
   resetTradeSteps();
+
+  openModal("tradeModal");
 
   startTradeTimer();
 
-
-  document
-    .getElementById("tradeModal")
-    .classList.add("show");
-
-
-  showNotification(
-    "Verification successful. Demo trade room opened."
-  );
-
 }
 
+function resetTradeSteps(){
+
+  [1,2,3,4].forEach(number => {
+
+    document
+      .getElementById(`step${number}`)
+      .classList.toggle(
+        "active",
+        number === 1
+      );
+
+  });
+
+}
 
 function startTradeTimer(){
 
@@ -4223,24 +3882,19 @@ function startTradeTimer(){
 
   updateTradeTimer();
 
-
   tradeInterval =
-    setInterval(function(){
+    setInterval(() => {
 
       tradeSeconds--;
 
       updateTradeTimer();
-
 
       if(tradeSeconds <= 0){
 
         clearInterval(tradeInterval);
 
         document.getElementById("tradeStatus").textContent =
-          "Trade time expired";
-
-        document.getElementById("tradeStatus").className =
-          "status-value red";
+          "Trade room expired";
 
       }
 
@@ -4248,142 +3902,80 @@ function startTradeTimer(){
 
 }
 
-
 function updateTradeTimer(){
 
-  const m =
-    Math.floor(
-      tradeSeconds / 60
-    );
+  const minutes =
+    Math.floor(tradeSeconds / 60)
+      .toString()
+      .padStart(2,"0");
 
-
-  const s =
-    tradeSeconds % 60;
-
+  const seconds =
+    (tradeSeconds % 60)
+      .toString()
+      .padStart(2,"0");
 
   document.getElementById("tradeTimer").textContent =
-    String(m).padStart(2,"0") +
-    ":" +
-    String(s).padStart(2,"0");
+    `${minutes}:${seconds}`;
 
 }
-
 
 function markPaid(){
 
   document.getElementById("tradeStatus").textContent =
-    "Payment marked as sent";
-
+    "Payment marked in demo";
 
   document.getElementById("tradeStatus").className =
     "status-value yellow";
 
-
-  document
-    .getElementById("step2")
-    .classList.add("active");
-
-
-  addMessage(
-    "me",
-    "I have sent the payment. Please verify it."
-  );
-
+  document.getElementById("step2").classList.add("active");
 
   showNotification(
-    "Payment marked as sent. Demo seller confirmation is pending."
+    "Demo payment status updated. No real payment was sent."
   );
 
 }
 
-
 function releaseCrypto(){
 
-  if(
-    !confirm(
-      "Demo action: release the simulated escrowed crypto?"
-    )
-  ){
-    return;
-  }
-
-
   document.getElementById("tradeStatus").textContent =
-    "Crypto released";
-
+    "Release requested in demo";
 
   document.getElementById("tradeStatus").className =
     "status-value green";
 
-
-  document
-    .querySelectorAll(".step")
-    .forEach(function(s){
-      s.classList.add("active");
-    });
-
-
-  addMessage(
-    "them",
-    "Payment confirmed. Demo crypto has been released."
-  );
-
+  document.getElementById("step3").classList.add("active");
 
   showNotification(
-    "Demo trade completed successfully."
+    "Demo release requested. Real escrow authorization is not connected."
   );
 
 }
 
-
 function openDispute(){
 
-  const reason =
-    prompt(
-      "Demo dispute reason:"
-    );
-
-
-  if(!reason){
-    return;
-  }
-
-
   document.getElementById("tradeStatus").textContent =
-    "Dispute opened";
-
+    "Dispute opened in demo";
 
   document.getElementById("tradeStatus").className =
     "status-value yellow";
 
-
-  addMessage(
-    "me",
-    "Dispute opened: " + reason
-  );
-
+  document.getElementById("step4").classList.add("active");
 
   showNotification(
-    "Demo dispute opened."
+    "Demo dispute created. No real dispute system is connected."
   );
 
 }
 
-
 function cancelTrade(){
-
-  if(
-    !confirm(
-      "Are you sure you want to cancel this demo trade?"
-    )
-  ){
-    return;
-  }
-
 
   clearInterval(tradeInterval);
 
-  closeModal("tradeModal");
+  document.getElementById("tradeStatus").textContent =
+    "Trade cancelled in demo";
+
+  document.getElementById("tradeStatus").className =
+    "status-value red";
 
   showNotification(
     "Demo trade cancelled."
@@ -4391,106 +3983,39 @@ function cancelTrade(){
 
 }
 
-
-function resetTradeSteps(){
-
-  document
-    .querySelectorAll(".step")
-    .forEach(function(s,i){
-
-      s.classList.toggle(
-        "active",
-        i === 0
-      );
-
-    });
-
-}
-
-
-/* =========================================================
-   CHAT
-   ========================================================= */
-
 function sendMessage(){
 
   const input =
     document.getElementById("chatInput");
 
-
-  const message =
+  const text =
     input.value.trim();
 
-
-  if(!message){
+  if(!text){
     return;
   }
-
-
-  addMessage(
-    "me",
-    message
-  );
-
-
-  input.value = "";
-
-
-  setTimeout(function(){
-
-    addMessage(
-      "them",
-      "Thank you. I received your message."
-    );
-
-  },600);
-
-}
-
-
-function addMessage(type,text){
 
   const chat =
     document.getElementById("chat");
 
-
-  const div =
+  const message =
     document.createElement("div");
 
+  message.className =
+    "message me";
 
-  const content =
-    document.createElement("div");
+  message.innerHTML =
+    `${escapeHtml(text)}
+     <small>You • now</small>`;
 
+  chat.appendChild(message);
 
-  const small =
-    document.createElement("small");
-
-
-  div.className =
-    "message " + type;
-
-
-  content.textContent =
-    text;
-
-
-  small.textContent =
-    type === "me"
-      ? "You • now"
-      : "Trader • now";
-
-
-  div.appendChild(content);
-
-  div.appendChild(small);
-
-  chat.appendChild(div);
+  input.value = "";
 
   chat.scrollTop =
     chat.scrollHeight;
 
 }
-
 
 /* =========================================================
    FAVORITES
@@ -4498,144 +4023,210 @@ function addMessage(type,text){
 
 function toggleFavorite(id){
 
-  const trader =
-    offers.find(function(o){
-      return o.id === id;
-    });
+  if(favorites.includes(id)){
 
+    favorites =
+      favorites.filter(
+        favoriteId => favoriteId !== id
+      );
 
-  if(!trader){
-    return;
+    showNotification(
+      "Trader removed from favorites."
+    );
+
+  }else{
+
+    favorites.push(id);
+
+    showNotification(
+      "Trader added to favorites."
+    );
+
   }
 
-
-  trader.favorite =
-    !trader.favorite;
-
-
-  filterOffers();
-
-
-  showNotification(
-    trader.favorite
-      ? trader.name + " added to favorites."
-      : trader.name + " removed from favorites."
+  localStorage.setItem(
+    "cryptovaultFavorites",
+    JSON.stringify(favorites)
   );
+
+  renderOffers();
 
 }
 
-
 function toggleSelectedFavorite(){
 
-  if(!selectedProfileTrader){
+  if(!selectedProfile){
     return;
   }
 
+  toggleFavorite(selectedProfile.id);
 
-  toggleFavorite(
-    selectedProfileTrader.id
-  );
+  updateProfileFavoriteButton();
 
+}
 
-  const trader =
-    selectedProfileTrader;
+function updateProfileFavoriteButton(){
 
+  if(!selectedProfile){
+    return;
+  }
 
-  document.getElementById(
-    "profileFavoriteButton"
-  ).textContent =
-    trader.favorite
+  const button =
+    document.getElementById(
+      "profileFavoriteButton"
+    );
+
+  const saved =
+    favorites.includes(selectedProfile.id);
+
+  button.textContent =
+    saved
       ? "★ Favorited"
       : "⭐ Favorite";
 
 }
 
+function openFavorites(){
+
+  const list =
+    document.getElementById("favoriteList");
+
+  const favoriteOffers =
+    offers.filter(
+      offer => favorites.includes(offer.id)
+    );
+
+  if(!favoriteOffers.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        You have no favorite traders yet.
+      </div>
+    `;
+
+  }else{
+
+    list.innerHTML =
+      favoriteOffers.map(offer => `
+
+        <div class="favorite-row">
+
+          <div class="trader-info">
+
+            <div class="trader-avatar">
+              ${offer.avatar}
+            </div>
+
+            <div>
+
+              <strong>
+                ${offer.trader}
+              </strong>
+
+              <div class="trader-status">
+                ${offer.online
+                  ? '<span class="green">● Online</span>'
+                  : '<span style="color:#71839b">● Offline</span>'}
+                · ${offer.completion}% completion
+              </div>
+
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-primary btn-small"
+            onclick="selectOffer(${offer.id});closeModal('favoritesModal')">
+            Trade
+          </button>
+
+        </div>
+
+      `).join("");
+
+  }
+
+  openModal("favoritesModal");
+
+}
 
 /* =========================================================
-   TRADER PROFILE
+   PROFILE
    ========================================================= */
 
 function openProfile(id){
 
-  const trader =
-    offers.find(function(o){
-      return o.id === id;
-    });
+  const offer =
+    offers.find(o => o.id === id);
 
-
-  if(!trader){
+  if(!offer){
     return;
   }
 
-
-  selectedProfileTrader =
-    trader;
-
+  selectedProfile = offer;
 
   document.getElementById("profileAvatar").textContent =
-    trader.initial;
-
+    offer.avatar;
 
   document.getElementById("profileName").textContent =
-    trader.name;
+    offer.trader;
 
-
-  document.getElementById("profileOnline").textContent =
-    trader.online
+  document.getElementById("profileOnline").innerHTML =
+    offer.online
       ? "● Online"
       : "● Offline";
 
-
-  document.getElementById("profileOnline").className =
-    trader.online
-      ? "green"
-      : "";
-
-
   document.getElementById("profileRating").textContent =
-    trader.completion + "%";
-
+    `${offer.completion}%`;
 
   document.getElementById("profileTrades").textContent =
-    trader.trades.toLocaleString();
-
+    offer.trades.toLocaleString();
 
   document.getElementById("profileVolume").textContent =
-    (trader.volume / 1000000).toFixed(1) + "M";
+    formatVolume(offer.volume);
 
+  document.getElementById("profileVerification").innerHTML =
+    offer.verified
+      ? "✓ Verified"
+      : "Not verified";
+
+  document.getElementById("profileVerification").className =
+    offer.verified
+      ? "green"
+      : "yellow";
 
   document.getElementById("profileAge").textContent =
-    trader.age;
-
+    offer.age;
 
   document.getElementById("profileResponse").textContent =
-    "< " + trader.response + " min";
-
+    `< ${offer.response.toFixed(1)} min`;
 
   document.getElementById("profileRelease").textContent =
-    "< " + trader.release + " min";
-
+    `< ${offer.release.toFixed(1)} min`;
 
   document.getElementById("profilePayments").textContent =
-    trader.payment.join(", ");
-
+    offer.methods.join(", ");
 
   document.getElementById("profileTrust").textContent =
-    trader.trust;
+    offer.trust;
 
+  updateProfileFavoriteButton();
 
-  document.getElementById("profileFavoriteButton").textContent =
-    trader.favorite
-      ? "★ Favorited"
-      : "⭐ Favorite";
-
-
-  document
-    .getElementById("profileModal")
-    .classList.add("show");
+  openModal("profileModal");
 
 }
 
+function openReportFromProfile(){
+
+  if(!selectedProfile){
+    return;
+  }
+
+  closeModal("profileModal");
+
+  openModal("reportModal");
+
+}
 
 /* =========================================================
    REPORTING
@@ -4643,57 +4234,33 @@ function openProfile(id){
 
 function openReport(id){
 
-  const trader =
-    offers.find(function(o){
-      return o.id === id;
-    });
+  const offer =
+    offers.find(o => o.id === id);
 
-
-  if(!trader){
+  if(!offer){
     return;
   }
 
+  selectedProfile = offer;
 
-  selectedProfileTrader =
-    trader;
-
-
-  document
-    .getElementById("reportModal")
-    .classList.add("show");
+  openModal("reportModal");
 
 }
-
-
-function openReportFromProfile(){
-
-  if(!selectedProfileTrader){
-    return;
-  }
-
-
-  closeModal("profileModal");
-
-  openReport(
-    selectedProfileTrader.id
-  );
-
-}
-
 
 function submitReport(reason){
 
+  const trader =
+    selectedProfile
+      ? selectedProfile.trader
+      : "selected trader";
+
   closeModal("reportModal");
 
-
   showNotification(
-    "Demo report submitted: " +
-    reason +
-    "."
+    `Demo report recorded for ${trader}: ${reason}.`
   );
 
 }
-
 
 /* =========================================================
    SECURITY CENTER
@@ -4701,12 +4268,9 @@ function submitReport(reason){
 
 function openSecurityCenter(){
 
-  document
-    .getElementById("securityCenterModal")
-    .classList.add("show");
+  openModal("securityCenterModal");
 
 }
-
 
 /* =========================================================
    MARKET ACTIVITY
@@ -4714,18 +4278,12 @@ function openSecurityCenter(){
 
 function openActivity(){
 
-  document.getElementById(
-    "activityOfferCount"
-  ).textContent =
-    offers.length;
+  document.getElementById("activityOfferCount").textContent =
+    getFilteredOffers().length;
 
-
-  document
-    .getElementById("activityModal")
-    .classList.add("show");
+  openModal("activityModal");
 
 }
-
 
 /* =========================================================
    NOTIFICATIONS
@@ -4733,20 +4291,22 @@ function openActivity(){
 
 function toggleNotifications(){
 
-  document
-    .getElementById("notificationPanel")
-    .classList.toggle("show");
+  const panel =
+    document.getElementById("notificationPanel");
+
+  panel.classList.toggle("hidden");
 
 }
 
-
 function markNotificationsRead(){
 
-  document
-    .getElementById("notifDot")
-    .style.display =
-    "none";
+  localStorage.setItem(
+    "cryptovaultNotificationsRead",
+    "true"
+  );
 
+  document.getElementById("notifDot").style.display =
+    "none";
 
   showNotification(
     "Notifications marked as read."
@@ -4754,94 +4314,223 @@ function markNotificationsRead(){
 
 }
 
+function showNotification(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  },3000);
+
+}
+
+/* =========================================================
+   REFRESH
+   ========================================================= */
+
+function refreshMarket(){
+
+  updateMarketTitle();
+
+  renderOffers();
+
+  calculateTrade();
+
+  showNotification(
+    "Demo marketplace refreshed."
+  );
+
+}
 
 /* =========================================================
    MODALS
    ========================================================= */
 
+function openModal(id){
+
+  document
+    .getElementById(id)
+    .classList.add("open");
+
+}
+
 function closeModal(id){
 
   document
     .getElementById(id)
-    .classList.remove("show");
+    .classList.remove("open");
 
 }
 
+document.querySelectorAll(".modal").forEach(modal => {
 
-window.addEventListener(
-  "click",
-  function(e){
+  modal.addEventListener("click", event => {
 
-    document
-      .querySelectorAll(".modal")
-      .forEach(function(m){
+    if(event.target === modal){
 
-        if(e.target === m){
+      modal.classList.remove("open");
 
-          m.classList.remove("show");
+    }
 
-        }
+  });
 
-      });
+});
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+function openMobileFilters(){
+
+  document
+    .getElementById("filtersPanel")
+    .classList.add("open");
+
+}
+
+function closeMobileFilters(){
+
+  document
+    .getElementById("filtersPanel")
+    .classList.remove("open");
+
+}
+
+function scrollToQuickTrade(){
+
+  const quick =
+    document.querySelector(".quick");
+
+  if(quick){
+
+    quick.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
 
   }
-);
-
-
-/* =========================================================
-   NOTIFICATION TOAST
-   ========================================================= */
-
-function showNotification(message){
-
-  const box =
-    document.getElementById("notification");
-
-
-  box.innerHTML = `
-    <div class="notification-title">
-      CryptoVault
-    </div>
-
-    <div class="notification-text">
-      ${escapeHTML(message)}
-    </div>
-  `;
-
-
-  box.classList.add("show");
-
-
-  clearTimeout(notificationTimer);
-
-
-  notificationTimer =
-    setTimeout(function(){
-
-      box.classList.remove("show");
-
-    },3500);
 
 }
 
-
 /* =========================================================
-   SECURITY HELPER
+   HELPERS
    ========================================================= */
 
-function escapeHTML(value){
+function getAsset(){
 
-  const div =
-    document.createElement("div");
-
-
-  div.textContent =
-    value;
-
-
-  return div.innerHTML;
+  return document.getElementById("assetSelect").value;
 
 }
+
+function getFiat(){
+
+  return document.getElementById("fiatSelect").value;
+
+}
+
+function formatMoney(value){
+
+  return Number(value).toLocaleString(
+    undefined,
+    {
+      maximumFractionDigits:0
+    }
+  );
+
+}
+
+function formatVolume(value){
+
+  if(value >= 1000000){
+
+    return (
+      value / 1000000
+    ).toFixed(2) + "M";
+
+  }
+
+  if(value >= 1000){
+
+    return (
+      value / 1000
+    ).toFixed(0) + "K";
+
+  }
+
+  return value.toString();
+
+}
+
+function escapeHtml(value){
+
+  return value
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+/* =========================================================
+   CLOSE NOTIFICATIONS WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+document.addEventListener("click", event => {
+
+  const panel =
+    document.getElementById("notificationPanel");
+
+  const button =
+    document.querySelector(".notif-button");
+
+  if(
+    !panel.contains(event.target) &&
+    !button.contains(event.target)
+  ){
+
+    panel.classList.add("hidden");
+
+  }
+
+});
+
+/* =========================================================
+   DEMO MARKET SIMULATION
+   ========================================================= */
+
+setInterval(() => {
+
+  /*
+    Frontend demo simulation only.
+    No server data is changed.
+  */
+
+  const randomOffer =
+    offers[
+      Math.floor(
+        Math.random() * offers.length
+      )
+    ];
+
+  if(randomOffer){
+
+    randomOffer.online =
+      Math.random() > 0.25;
+
+  }
+
+  renderOffers();
+
+},30000);
 
 </script>
 
