@@ -10,6 +10,7 @@
           content="CryptoVault P2P marketplace demo for buying and selling USDT with sample ETB rates.">
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,6 +33,10 @@
         input,
         select {
             font: inherit;
+        }
+
+        button {
+            cursor: pointer;
         }
 
         /* HEADER */
@@ -201,7 +206,6 @@
             border: none;
             background: transparent;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
             color: #64748b;
         }
@@ -329,7 +333,6 @@
             color: white;
             padding: 9px 15px;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
             font-size: 13px;
         }
@@ -408,7 +411,6 @@
             background: white;
             padding: 7px 11px;
             border-radius: 7px;
-            cursor: pointer;
             font-size: 12px;
         }
 
@@ -445,7 +447,6 @@
             color: white;
             padding: 13px;
             border-radius: 9px;
-            cursor: pointer;
             font-weight: bold;
         }
 
@@ -508,6 +509,7 @@
             background: white;
             border-radius: 18px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
         }
 
         .modal-header {
@@ -528,7 +530,6 @@
             border: none;
             color: white;
             font-size: 25px;
-            cursor: pointer;
         }
 
         .modal-body {
@@ -623,7 +624,6 @@
             color: white;
             padding: 9px 13px;
             border-radius: 8px;
-            cursor: pointer;
         }
 
         .modal-actions {
@@ -639,7 +639,6 @@
             border: none;
             padding: 11px;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
         }
 
@@ -676,6 +675,187 @@
             color: #166534;
             font-size: 13px;
             margin-top: 5px;
+        }
+
+        /* SECURITY VERIFICATION MODAL */
+
+        .verification-content {
+            max-width: 500px;
+        }
+
+        .verification-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px auto 18px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .verification-title {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 7px;
+        }
+
+        .verification-description {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .review-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+
+        .review-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 0;
+            font-size: 13px;
+        }
+
+        .review-row span {
+            color: #64748b;
+        }
+
+        .review-row strong {
+            color: #172033;
+        }
+
+        .code-label {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            outline: none;
+        }
+
+        .code-input:focus {
+            border-color: #2563eb;
+        }
+
+        .code-input::placeholder {
+            letter-spacing: 5px;
+            color: #cbd5e1;
+        }
+
+        .demo-code-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 14px;
+        }
+
+        .demo-code-box strong {
+            display: block;
+            font-size: 20px;
+            letter-spacing: 4px;
+            margin-top: 3px;
+        }
+
+        .timer {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .timer.expired {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .verification-error {
+            display: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 10px;
+            border-radius: 9px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .verification-error.show {
+            display: block;
+        }
+
+        .verification-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .verification-actions button {
+            flex: 1;
+            border: none;
+            padding: 12px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .verify-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .verify-button:hover {
+            background: #1d4ed8;
+        }
+
+        .verify-button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .verification-cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .resend-button {
+            display: block;
+            margin: 14px auto 0;
+            background: transparent;
+            border: none;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .resend-button:disabled {
+            color: #94a3b8;
+            cursor: not-allowed;
         }
 
         /* FOOTER */
@@ -736,7 +916,17 @@
             .order-summary {
                 grid-template-columns: 1fr;
             }
+
+            .verification-actions {
+                flex-direction: column;
+            }
+
+            .code-input {
+                font-size: 22px;
+                letter-spacing: 6px;
+            }
         }
+
     </style>
 </head>
 
@@ -1046,7 +1236,7 @@
                 <h2>How P2P Works</h2>
 
                 <p>
-                    Review an offer before creating your simulated order.
+                    Your order now includes a security verification step.
                 </p>
 
                 <ul class="info-list">
@@ -1067,7 +1257,12 @@
                     </li>
 
                     <li>
-                        <strong>4. Start trade</strong>
+                        <strong>4. Security verification</strong>
+                        Confirm the order using the security verification code.
+                    </li>
+
+                    <li>
+                        <strong>5. Start trade</strong>
                         Open the simulated order and chat with the seller.
                     </li>
 
@@ -1318,7 +1513,7 @@
 
                     <li>
                         <strong>Order protection</strong>
-                        Order controls are simulated for demonstration.
+                        Security verification is required before the demo trade opens.
                     </li>
 
                 </ul>
@@ -1330,21 +1525,164 @@
     </section>
 
 
-    <!-- SECURITY -->
+    <!-- SECURITY NOTICE -->
 
     <section class="security">
 
         <strong>Security & Demo Notice</strong>
 
         <p>
-            CryptoVault is a demonstration interface. No real cryptocurrency,
-            ETB, bank transfer, wallet, payment processor, or blockchain
-            transaction is processed through this page.
+            CryptoVault is currently a demonstration interface.
+            The verification code on this page is a simulated browser-based
+            security code. No real email, cryptocurrency, ETB, bank transfer,
+            wallet, payment processor, or blockchain transaction is processed.
         </p>
 
     </section>
 
 </main>
+
+
+<!-- SECURITY VERIFICATION MODAL -->
+
+<div id="verificationModal" class="modal">
+
+    <div class="modal-content verification-content">
+
+        <div class="modal-header">
+
+            <h2>Security Verification</h2>
+
+            <button class="close" onclick="cancelVerification()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="verification-icon">
+                ✓
+            </div>
+
+            <h2 class="verification-title">
+                Confirm Your Order
+            </h2>
+
+            <p class="verification-description">
+                For your security, verify this P2P order before continuing.
+            </p>
+
+
+            <!-- ORDER REVIEW -->
+
+            <div class="review-box">
+
+                <div class="review-row">
+                    <span>Transaction</span>
+                    <strong id="verificationType">-</strong>
+                </div>
+
+                <div class="review-row">
+                    <span>Trader</span>
+                    <strong id="verificationTrader">-</strong>
+                </div>
+
+                <div class="review-row">
+                    <span>USDT Amount</span>
+                    <strong id="verificationAmount">0 USDT</strong>
+                </div>
+
+                <div class="review-row">
+                    <span>Rate</span>
+                    <strong id="verificationRate">0 ETB</strong>
+                </div>
+
+                <div class="review-row">
+                    <span>Total</span>
+                    <strong id="verificationTotal">0 ETB</strong>
+                </div>
+
+            </div>
+
+
+            <label class="code-label">
+                Enter 6-digit verification code
+            </label>
+
+            <input
+                type="text"
+                id="verificationCodeInput"
+                class="code-input"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                placeholder="000000"
+            >
+
+
+            <div id="demoCodeBox" class="demo-code-box">
+
+                DEMO MODE: Verification code
+
+                <strong id="demoCode">
+                    000000
+                </strong>
+
+            </div>
+
+
+            <div id="verificationTimer" class="timer">
+                Code expires in 02:00
+            </div>
+
+
+            <div
+                id="verificationError"
+                class="verification-error">
+
+                Incorrect or expired verification code.
+
+            </div>
+
+
+            <div class="verification-actions">
+
+                <button
+                    class="verification-cancel"
+                    onclick="cancelVerification()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    id="verifyButton"
+                    class="verify-button"
+                    onclick="verifySecurityCode()">
+
+                    Verify & Continue
+
+                </button>
+
+            </div>
+
+
+            <button
+                id="resendButton"
+                class="resend-button"
+                onclick="resendVerificationCode()">
+
+                Resend verification code
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- TRADE MODAL -->
@@ -1355,7 +1693,9 @@
 
         <div class="modal-header">
 
-            <h2 id="modalTitle">P2P Order</h2>
+            <h2 id="modalTitle">
+                P2P Order
+            </h2>
 
             <button class="close" onclick="closeModal()">
                 ×
@@ -1454,19 +1794,25 @@
                 <button
                     class="paid"
                     onclick="markPaid()">
+
                     Mark as Paid
+
                 </button>
 
                 <button
                     class="release"
                     onclick="releaseOrder()">
+
                     Release USDT
+
                 </button>
 
                 <button
                     class="cancel"
                     onclick="cancelOrder()">
+
                     Cancel Order
+
                 </button>
 
             </div>
@@ -1494,18 +1840,35 @@
 
 <script>
 
+    /* =========================================================
+       GLOBAL VARIABLES
+    ========================================================= */
+
     let currentType = "";
     let currentTrader = "";
     let currentRate = 0;
 
-    /* TABS */
+    let pendingTrade = null;
+
+    let verificationCode = "";
+    let verificationTimer = null;
+    let verificationSeconds = 120;
+
+
+    /* =========================================================
+       TABS
+    ========================================================= */
 
     function showTab(type) {
 
-        const buyPanel = document.getElementById("buyPanel");
-        const sellPanel = document.getElementById("sellPanel");
+        const buyPanel =
+            document.getElementById("buyPanel");
 
-        const buttons = document.querySelectorAll(".tab-button");
+        const sellPanel =
+            document.getElementById("sellPanel");
+
+        const buttons =
+            document.querySelectorAll(".tab-button");
 
         buttons.forEach(button => {
             button.classList.remove("active");
@@ -1530,12 +1893,16 @@
     }
 
 
-    /* TABLE SEARCH */
+    /* =========================================================
+       TABLE SEARCH
+    ========================================================= */
 
     function filterTable(tableId, inputId) {
 
         const input =
-            document.getElementById(inputId).value.toLowerCase();
+            document.getElementById(inputId)
+                .value
+                .toLowerCase();
 
         const table =
             document.getElementById(tableId);
@@ -1556,7 +1923,9 @@
     }
 
 
-    /* BUY */
+    /* =========================================================
+       BUY
+    ========================================================= */
 
     function chooseBuy(name, rate) {
 
@@ -1572,7 +1941,8 @@
 
     function setBuyAmount(amount) {
 
-        document.getElementById("buyAmount").value = amount;
+        document.getElementById("buyAmount").value =
+            amount;
 
         calculateBuy();
 
@@ -1582,7 +1952,9 @@
     function calculateBuy() {
 
         const selected =
-            document.getElementById("buySeller").value.split("|");
+            document.getElementById("buySeller")
+                .value
+                .split("|");
 
         const rate =
             Number(selected[1]);
@@ -1608,7 +1980,9 @@
     function createBuyOrder() {
 
         const selected =
-            document.getElementById("buySeller").value.split("|");
+            document.getElementById("buySeller")
+                .value
+                .split("|");
 
         const seller = selected[0];
         const rate = Number(selected[1]);
@@ -1624,7 +1998,7 @@
 
         }
 
-        openTrade(
+        startSecurityVerification(
             "Buy USDT",
             "Seller",
             seller,
@@ -1635,7 +2009,9 @@
     }
 
 
-    /* SELL */
+    /* =========================================================
+       SELL
+    ========================================================= */
 
     function chooseSell(name, rate) {
 
@@ -1651,7 +2027,8 @@
 
     function setSellAmount(amount) {
 
-        document.getElementById("sellAmount").value = amount;
+        document.getElementById("sellAmount").value =
+            amount;
 
         calculateSell();
 
@@ -1661,7 +2038,9 @@
     function calculateSell() {
 
         const selected =
-            document.getElementById("sellBuyer").value.split("|");
+            document.getElementById("sellBuyer")
+                .value
+                .split("|");
 
         const rate =
             Number(selected[1]);
@@ -1687,7 +2066,9 @@
     function createSellOrder() {
 
         const selected =
-            document.getElementById("sellBuyer").value.split("|");
+            document.getElementById("sellBuyer")
+                .value
+                .split("|");
 
         const buyer = selected[0];
         const rate = Number(selected[1]);
@@ -1703,7 +2084,7 @@
 
         }
 
-        openTrade(
+        startSecurityVerification(
             "Sell USDT",
             "Buyer",
             buyer,
@@ -1714,7 +2095,299 @@
     }
 
 
-    /* TRADE MODAL */
+    /* =========================================================
+       SECURITY VERIFICATION
+    ========================================================= */
+
+    function generateVerificationCode() {
+
+        return String(
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            )
+        );
+
+    }
+
+
+    function startSecurityVerification(
+        title,
+        traderType,
+        trader,
+        rate,
+        amount
+    ) {
+
+        pendingTrade = {
+            title: title,
+            traderType: traderType,
+            trader: trader,
+            rate: rate,
+            amount: amount
+        };
+
+        verificationCode =
+            generateVerificationCode();
+
+        verificationSeconds = 120;
+
+        document.getElementById(
+            "verificationType"
+        ).textContent = title;
+
+        document.getElementById(
+            "verificationTrader"
+        ).textContent =
+            traderType + ": " + trader;
+
+        document.getElementById(
+            "verificationAmount"
+        ).textContent =
+            amount.toLocaleString() + " USDT";
+
+        document.getElementById(
+            "verificationRate"
+        ).textContent =
+            rate + " ETB / USDT";
+
+        document.getElementById(
+            "verificationTotal"
+        ).textContent =
+            (amount * rate).toLocaleString() +
+            " ETB";
+
+        document.getElementById(
+            "demoCode"
+        ).textContent =
+            verificationCode;
+
+        document.getElementById(
+            "verificationCodeInput"
+        ).value = "";
+
+        document.getElementById(
+            "verificationError"
+        ).classList.remove("show");
+
+        document.getElementById(
+            "verifyButton"
+        ).disabled = false;
+
+        document.getElementById(
+            "verificationModal"
+        ).classList.add("show");
+
+        updateVerificationTimer();
+
+        clearInterval(verificationTimer);
+
+        verificationTimer =
+            setInterval(
+                updateVerificationTimer,
+                1000
+            );
+
+        setTimeout(function() {
+
+            document.getElementById(
+                "verificationCodeInput"
+            ).focus();
+
+        }, 100);
+
+    }
+
+
+    function updateVerificationTimer() {
+
+        const timer =
+            document.getElementById(
+                "verificationTimer"
+            );
+
+        const resendButton =
+            document.getElementById(
+                "resendButton"
+            );
+
+        if (verificationSeconds <= 0) {
+
+            clearInterval(verificationTimer);
+
+            timer.textContent =
+                "Verification code has expired.";
+
+            timer.classList.add("expired");
+
+            resendButton.disabled = false;
+
+            return;
+
+        }
+
+        const minutes =
+            Math.floor(
+                verificationSeconds / 60
+            );
+
+        const seconds =
+            verificationSeconds % 60;
+
+        timer.textContent =
+            "Code expires in " +
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+
+        timer.classList.remove("expired");
+
+        verificationSeconds--;
+
+    }
+
+
+    function verifySecurityCode() {
+
+        const enteredCode =
+            document.getElementById(
+                "verificationCodeInput"
+            ).value.trim();
+
+        const error =
+            document.getElementById(
+                "verificationError"
+            );
+
+        if (verificationSeconds <= 0) {
+
+            error.textContent =
+                "This verification code has expired. Please request a new code.";
+
+            error.classList.add("show");
+
+            return;
+
+        }
+
+        if (
+            enteredCode.length !== 6 ||
+            !/^[0-9]+$/.test(enteredCode)
+        ) {
+
+            error.textContent =
+                "Please enter the complete 6-digit verification code.";
+
+            error.classList.add("show");
+
+            return;
+
+        }
+
+        if (enteredCode !== verificationCode) {
+
+            error.textContent =
+                "Incorrect verification code. Please try again.";
+
+            error.classList.add("show");
+
+            return;
+
+        }
+
+        error.classList.remove("show");
+
+        clearInterval(verificationTimer);
+
+        const trade =
+            pendingTrade;
+
+        pendingTrade = null;
+
+        verificationCode = "";
+
+        document.getElementById(
+            "verificationModal"
+        ).classList.remove("show");
+
+        if (trade) {
+
+            openTrade(
+                trade.title,
+                trade.traderType,
+                trade.trader,
+                trade.rate,
+                trade.amount
+            );
+
+        }
+
+    }
+
+
+    function resendVerificationCode() {
+
+        if (!pendingTrade) {
+            return;
+        }
+
+        verificationCode =
+            generateVerificationCode();
+
+        verificationSeconds = 120;
+
+        document.getElementById(
+            "demoCode"
+        ).textContent =
+            verificationCode;
+
+        document.getElementById(
+            "verificationCodeInput"
+        ).value = "";
+
+        document.getElementById(
+            "verificationError"
+        ).classList.remove("show");
+
+        document.getElementById(
+            "resendButton"
+        ).disabled = true;
+
+        clearInterval(verificationTimer);
+
+        updateVerificationTimer();
+
+        verificationTimer =
+            setInterval(
+                updateVerificationTimer,
+                1000
+            );
+
+        document.getElementById(
+            "verificationCodeInput"
+        ).focus();
+
+    }
+
+
+    function cancelVerification() {
+
+        clearInterval(verificationTimer);
+
+        pendingTrade = null;
+
+        verificationCode = "";
+
+        document.getElementById(
+            "verificationModal"
+        ).classList.remove("show");
+
+    }
+
+
+    /* =========================================================
+       TRADE MODAL
+    ========================================================= */
 
     function openTrade(
         title,
@@ -1728,51 +2401,78 @@
         currentTrader = trader;
         currentRate = rate;
 
-        const total = amount * rate;
+        const total =
+            amount * rate;
 
         const randomNumber =
-            Math.floor(100000 + Math.random() * 900000);
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
 
-        document.getElementById("modalTitle").textContent =
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
             title;
 
-        document.getElementById("orderId").textContent =
+        document.getElementById(
+            "orderId"
+        ).textContent =
             "CV-P2P-" + randomNumber;
 
-        document.getElementById("orderStatus").textContent =
+        document.getElementById(
+            "orderStatus"
+        ).textContent =
             "Awaiting Payment";
 
-        document.getElementById("modalTrader").textContent =
+        document.getElementById(
+            "modalTrader"
+        ).textContent =
             traderType + ": " + trader;
 
-        document.getElementById("modalAmount").textContent =
-            amount.toLocaleString() + " USDT";
+        document.getElementById(
+            "modalAmount"
+        ).textContent =
+            amount.toLocaleString() +
+            " USDT";
 
-        document.getElementById("modalRate").textContent =
+        document.getElementById(
+            "modalRate"
+        ).textContent =
             rate + " ETB / USDT";
 
-        document.getElementById("modalTotal").textContent =
-            total.toLocaleString() + " ETB";
+        document.getElementById(
+            "modalTotal"
+        ).textContent =
+            total.toLocaleString() +
+            " ETB";
 
-        document.getElementById("tradeModal").classList.add("show");
+        document.getElementById(
+            "tradeModal"
+        ).classList.add("show");
 
     }
 
 
     function closeModal() {
 
-        document.getElementById("tradeModal")
-            .classList.remove("show");
+        document.getElementById(
+            "tradeModal"
+        ).classList.remove("show");
 
     }
 
 
-    /* CHAT */
+    /* =========================================================
+       CHAT
+    ========================================================= */
 
     function sendMessage() {
 
         const input =
-            document.getElementById("chatMessage");
+            document.getElementById(
+                "chatMessage"
+            );
 
         const text =
             input.value.trim();
@@ -1784,18 +2484,31 @@
         const message =
             document.createElement("div");
 
-        message.className = "message you";
+        message.className =
+            "message you";
 
-        message.innerHTML =
-            text + "<small>You</small>";
+        const messageText =
+            document.createTextNode(text);
 
-        document.getElementById("messages")
-            .appendChild(message);
+        const small =
+            document.createElement("small");
+
+        small.textContent =
+            "You";
+
+        message.appendChild(messageText);
+        message.appendChild(small);
+
+        document.getElementById(
+            "messages"
+        ).appendChild(message);
 
         input.value = "";
 
         const messages =
-            document.getElementById("messages");
+            document.getElementById(
+                "messages"
+            );
 
         messages.scrollTop =
             messages.scrollHeight;
@@ -1803,12 +2516,16 @@
     }
 
 
-    /* ORDER ACTIONS */
+    /* =========================================================
+       ORDER ACTIONS
+    ========================================================= */
 
     function markPaid() {
 
-        document.getElementById("orderStatus")
-            .textContent = "Payment Marked";
+        document.getElementById(
+            "orderStatus"
+        ).textContent =
+            "Payment Marked";
 
         alert(
             "Demo payment marked as paid. No real payment was made."
@@ -1819,8 +2536,10 @@
 
     function releaseOrder() {
 
-        document.getElementById("orderStatus")
-            .textContent = "Completed";
+        document.getElementById(
+            "orderStatus"
+        ).textContent =
+            "Completed";
 
         alert(
             "Demo order completed. No real USDT was transferred."
@@ -1831,8 +2550,10 @@
 
     function cancelOrder() {
 
-        document.getElementById("orderStatus")
-            .textContent = "Cancelled";
+        document.getElementById(
+            "orderStatus"
+        ).textContent =
+            "Cancelled";
 
         alert(
             "Demo order cancelled."
@@ -1841,31 +2562,100 @@
     }
 
 
-    /* CLOSE MODAL WHEN CLICKING OUTSIDE */
+    /* =========================================================
+       CLOSE MODALS WHEN CLICKING OUTSIDE
+    ========================================================= */
 
-    document.getElementById("tradeModal")
-        .addEventListener("click", function(event) {
+    document.getElementById(
+        "tradeModal"
+    ).addEventListener(
+        "click",
+        function(event) {
 
             if (event.target === this) {
                 closeModal();
             }
 
-        });
+        }
+    );
 
 
-    /* ENTER KEY FOR CHAT */
+    document.getElementById(
+        "verificationModal"
+    ).addEventListener(
+        "click",
+        function(event) {
 
-    document.getElementById("chatMessage")
-        .addEventListener("keydown", function(event) {
-
-            if (event.key === "Enter") {
-                sendMessage();
+            if (event.target === this) {
+                cancelVerification();
             }
 
-        });
+        }
+    );
 
 
-    /* INITIAL CALCULATIONS */
+    /* =========================================================
+       VERIFICATION CODE INPUT
+    ========================================================= */
+
+    document.getElementById(
+        "verificationCodeInput"
+    ).addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value
+                    .replace(/\D/g, "")
+                    .slice(0, 6);
+
+            document.getElementById(
+                "verificationError"
+            ).classList.remove("show");
+
+        }
+    );
+
+
+    document.getElementById(
+        "verificationCodeInput"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                verifySecurityCode();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ENTER KEY FOR CHAT
+    ========================================================= */
+
+    document.getElementById(
+        "chatMessage"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL CALCULATIONS
+    ========================================================= */
 
     calculateBuy();
     calculateSell();
