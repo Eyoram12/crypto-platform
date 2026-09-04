@@ -952,7 +952,7 @@
     const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
 
-    const supabaseClient = window.supabase.createClient(
+   const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
@@ -960,7 +960,18 @@
     let balanceHidden = false;
 
     function toggleBalance() {
-        // your existing code here
+        const balance = document.getElementById("totalBalance");
+        const button = document.querySelector(".hide-button");
+
+        balanceHidden = !balanceHidden;
+
+        if (balanceHidden) {
+            balance.textContent = "••••••••";
+            button.textContent = "Show Balance";
+        } else {
+            balance.textContent = "$10,000.00";
+            button.textContent = "Hide Balance";
+        }
     }
 </script>
 
