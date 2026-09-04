@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -186,6 +187,11 @@ input:focus {
     background: #1d4ed8;
 }
 
+.primary-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 .divider {
     display: flex;
     align-items: center;
@@ -226,6 +232,22 @@ input:focus {
     line-height: 1.6;
 }
 
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.message.error {
+    display: block;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
 .demo {
     text-align: center;
     margin-top: 18px;
@@ -244,6 +266,7 @@ input:focus {
     }
 }
 </style>
+
 </head>
 
 <body>
@@ -251,121 +274,139 @@ input:focus {
 <header>
     <div class="navbar">
 
-        <div class="brand">
+```
+    <div class="brand">
 
-            <div class="logo">CV</div>
+        <div class="logo">CV</div>
 
-            <div class="brand-text">
-                <strong>CryptoVault</strong>
-                <span>DIGITAL ASSET PLATFORM</span>
-            </div>
-
+        <div class="brand-text">
+            <strong>CryptoVault</strong>
+            <span>DIGITAL ASSET PLATFORM</span>
         </div>
 
     </div>
+
+</div>
+```
+
 </header>
 
 <main>
 
-    <div class="login-card">
+```
+<div class="login-card">
 
-        <span class="badge">SECURE SIGN IN</span>
+    <span class="badge">SECURE SIGN IN</span>
 
-        <h1>Welcome Back</h1>
+    <h1>Welcome Back</h1>
 
-        <p class="subtitle">
-            Sign in to access your CryptoVault dashboard and
-            simulated digital asset services.
-        </p>
+    <p class="subtitle">
+        Sign in to access your CryptoVault dashboard
+        and digital asset services.
+    </p>
 
-        <form onsubmit="signIn(event)">
+    <form onsubmit="signIn(event)">
 
-            <label for="email">
-                Email Address
-            </label>
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            required
+        >
+
+        <label for="password">
+            Password
+        </label>
+
+        <div class="password-box">
 
             <input
-                type="email"
-                id="email"
-                placeholder="you@example.com"
+                type="password"
+                id="password"
+                placeholder="Enter your password"
                 required
             >
 
-            <label for="password">
-                Password
-            </label>
-
-            <div class="password-box">
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="show-btn"
-                    onclick="togglePassword()"
-                    id="showButton"
-                >
-                    Show
-                </button>
-
-            </div>
-
-            <div class="options">
-
-                <label class="remember">
-                    <input type="checkbox" id="remember">
-                    Remember me
-                </label>
-
-                <a
-                    href="#"
-                    class="forgot"
-                    onclick="forgotPassword(event)"
-                >
-                    Forgot password?
-                </a>
-
-            </div>
-
             <button
-                type="submit"
-                class="primary-btn"
+                type="button"
+                class="show-btn"
+                onclick="togglePassword()"
+                id="showButton"
             >
-                Sign In
+                Show
             </button>
 
-        </form>
-
-        <div class="divider">
-            OR
         </div>
 
-        <div class="create">
-            Don't have an account?
-            <a href="register.html">Create Account</a>
+        <div class="options">
+
+            <label class="remember">
+                <input type="checkbox" id="remember">
+                Remember me
+            </label>
+
+            <a
+                href="#"
+                class="forgot"
+                onclick="forgotPassword(event)"
+            >
+                Forgot password?
+            </a>
+
         </div>
 
-        <div class="security">
-            <strong>Security Notice</strong><br>
-            This is a demonstration website. Login information is
-            not connected to a real financial account or payment system.
-        </div>
+        <button
+            type="submit"
+            class="primary-btn"
+            id="loginButton"
+        >
+            Sign In
+        </button>
 
-        <div class="demo">
-            Demo interface for educational and presentation purposes.
-            No real cryptocurrency or financial transactions are processed.
-        </div>
+        <div id="message" class="message"></div>
 
+    </form>
+
+    <div class="divider">
+        OR
     </div>
+
+    <div class="create">
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+    </div>
+
+    <div class="security">
+        <strong>Security Notice</strong><br>
+        CryptoVault uses Supabase Authentication to securely
+        manage your account login.
+    </div>
+
+    <div class="demo">
+        CryptoVault digital asset platform.
+    </div>
+
+</div>
+```
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+const SUPABASE_URL = "YOUR_REAL_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_REAL_PUBLIC_KEY";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
 
 function togglePassword() {
 
@@ -384,43 +425,138 @@ function togglePassword() {
 
         password.type = "password";
         button.textContent = "Show";
+
     }
 }
 
-function forgotPassword(event) {
 
-    event.preventDefault();
+function showError(message) {
 
-    alert(
-        "Password recovery is not connected in this demo."
-    );
+    const messageBox =
+        document.getElementById("message");
+
+    messageBox.textContent = message;
+    messageBox.className = "message error";
 }
 
-function signIn(event) {
+
+async function signIn(event) {
 
     event.preventDefault();
 
     const email =
         document.getElementById("email").value.trim();
 
+    const password =
+        document.getElementById("password").value;
+
     const remember =
         document.getElementById("remember").checked;
 
-    if (!email) {
-        alert("Please enter your email address.");
+    const button =
+        document.getElementById("loginButton");
+
+    if (!email || !password) {
+
+        showError("Please enter your email and password.");
+        return;
+
+    }
+
+    button.disabled = true;
+    button.textContent = "Signing In...";
+
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+            password: password
+
+        });
+
+
+    if (error) {
+
+        button.disabled = false;
+        button.textContent = "Sign In";
+
+        showError(error.message);
+
         return;
     }
 
+
+    if (!data.user) {
+
+        button.disabled = false;
+        button.textContent = "Sign In";
+
+        showError("Login was not completed. Please try again.");
+
+        return;
+    }
+
+
     if (remember) {
+
         localStorage.setItem(
             "cryptoVaultRemember",
             "true"
         );
+
+    } else {
+
+        localStorage.removeItem(
+            "cryptoVaultRemember"
+        );
+
     }
 
-    alert("Demo sign-in successful.");
 
     window.location.href = "dashboard.html";
+}
+
+
+async function forgotPassword(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    if (!email) {
+
+        showError(
+            "Enter your email address first, then select Forgot password."
+        );
+
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient.auth.resetPasswordForEmail(
+            email,
+            {
+                redirectTo:
+                    "https://eyoram12.github.io/crypto-platform/login.html"
+            }
+        );
+
+
+    if (error) {
+
+        showError(error.message);
+        return;
+
+    }
+
+
+    alert(
+        "A password reset email has been sent to your email address."
+    );
+
 }
 
 </script>
