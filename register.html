@@ -626,22 +626,25 @@ async function createAccount(event) {
     registerButton.textContent = "Creating Account...";
 
 
-    const { data, error } =
-        await supabaseClient.auth.signUp({
+   const { data, error } =
+await supabaseClient.auth.signUp({
 
-            email: email,
+    email: email,
 
-            password: password,
+    password: password,
 
-            options: {
+    options: {
 
-                data: {
-                    full_name: fullName
-                }
+        emailRedirectTo:
+            "https://eyoram12.github.io/crypto-platform/login.html",
 
-            }
+        data: {
+            full_name: fullName
+        }
 
-        });
+    }
+
+});
 
 
     if (error) {
