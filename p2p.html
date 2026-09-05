@@ -1,31 +1,967 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoVault P2P</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f8fc;
+  color:#172033;
+}
+
+header{
+  background:#0b1f3a;
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:700;
+}
+
+.logo span{
+  color:#155eef;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+
+.container{
+  width:92%;
+  max-width:1200px;
+  margin:30px auto;
+}
+
+.hero{
+  background:#0b1f3a;
+  color:white;
+  border-radius:18px;
+  padding:30px;
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#d0d5dd;
+}
+
+.market-box{
+  background:white;
+  border:1px solid #e4e7ec;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.market-tab{
+  flex:1;
+  border:1px solid #d0d5dd;
+  background:white;
+  padding:13px;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.market-tab.active{
+  background:#155eef;
+  color:white;
+  border-color:#155eef;
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:7px;
+}
+
+select,
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #d0d5dd;
+  border-radius:9px;
+  font-size:15px;
+  background:white;
+}
+
+.market-title{
+  font-size:22px;
+  font-weight:700;
+  margin:10px 0 20px;
+}
+
+.offers{
+  display:grid;
+  gap:15px;
+}
+
+.offer{
+  border:1px solid #e4e7ec;
+  border-radius:14px;
+  padding:20px;
+  background:white;
+}
+
+.offer-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.trader{
+  font-weight:700;
+  font-size:17px;
+}
+
+.verified{
+  color:#15803d;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.price{
+  font-size:22px;
+  font-weight:700;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
+
+.info{
+  background:#f6f8fc;
+  padding:12px;
+  border-radius:9px;
+}
+
+.info small{
+  display:block;
+  color:#667085;
+  margin-bottom:5px;
+}
+
+.payment{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:12px 0;
+}
+
+.payment span{
+  background:#eef4ff;
+  color:#155eef;
+  padding:6px 9px;
+  border-radius:7px;
+  font-size:12px;
+}
+
+.action{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  color:white;
+  background:#155eef;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.action.sell{
+  background:#dc2626;
+}
+
+.empty{
+  text-align:center;
+  padding:40px 20px;
+  color:#667085;
+  border:1px dashed #d0d5dd;
+  border-radius:12px;
+}
+
+.quick{
+  background:white;
+  border:1px solid #e4e7ec;
+  border-radius:16px;
+  padding:20px;
+  margin-top:25px;
+}
+
+.quick h2{
+  margin-bottom:18px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.calc{
+  margin-top:18px;
+  background:#f6f8fc;
+  padding:15px;
+  border-radius:10px;
+}
+
+.calc-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+}
+
+.calc-row strong{
+  font-weight:700;
+}
+
+.status{
+  margin-top:15px;
+  padding:12px;
+  border-radius:9px;
+  display:none;
+}
+
+.status.success{
+  display:block;
+  background:#ecfdf3;
+  color:#15803d;
+}
+
+.status.error{
+  display:block;
+  background:#fef2f2;
+  color:#dc2626;
+}
+
+footer{
+  margin-top:40px;
+  background:#0b1f3a;
+  color:#d0d5dd;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:700px){
+
+  header{
+    padding:15px;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .container{
+    width:94%;
+    margin:20px auto;
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
+
+  .filters,
+  .quick-grid{
+    grid-template-columns:1fr;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .offer-top{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    Crypto<span>Vault</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="p2p.html">P2P</a>
+  </nav>
+</header>
+
+
+<div class="container">
+
+  <section class="hero">
+    <h1 id="heroTitle">P2P Marketplace</h1>
+    <p id="heroText">
+      Buy and sell cryptocurrency directly with verified traders.
+    </p>
+  </section>
+
+
+  <section class="market-box">
+
+    <div class="tabs">
+
+      <button
+        id="buyTab"
+        class="market-tab active"
+        onclick="setMarket('buy')">
+        Buy
+      </button>
+
+      <button
+        id="sellTab"
+        class="market-tab"
+        onclick="setMarket('sell')">
+        Sell
+      </button>
+
+    </div>
+
+
+    <div class="filters">
+
+      <div>
+        <label>Asset</label>
+
+        <select
+          id="assetSelect"
+          onchange="refreshMarket()">
+
+          <option value="USDT">USDT</option>
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
+
+        </select>
+      </div>
+
+
+      <div>
+        <label>Fiat Currency</label>
+
+        <select
+          id="fiatSelect"
+          onchange="refreshMarket()">
+
+          <option value="ETB">ETB</option>
+          <option value="USD">USD</option>
+
+        </select>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="market-box">
+
+    <div
+      id="marketTitle"
+      class="market-title">
+      Buy USDT with ETB
+    </div>
+
+    <div
+      id="offers"
+      class="offers">
+
+      <div class="empty">
+        Loading offers...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="quick">
+
+    <h2>Quick Trade</h2>
+
+    <div class="quick-grid">
+
+      <div>
+        <label id="amountLabel">
+          Amount (ETB)
+        </label>
+
+        <input
+          id="quickAmount"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="Enter amount"
+          oninput="calculateTrade()">
+      </div>
+
+
+      <div>
+
+        <label>
+          Selected Offer
+        </label>
+
+        <input
+          id="selectedTrader"
+          type="text"
+          value="No offer selected"
+          readonly>
+
+      </div>
+
+    </div>
+
+
+    <div class="calc">
+
+      <div class="calc-row">
+        <span>Rate</span>
+        <strong id="calcRate">-</strong>
+      </div>
+
+      <div class="calc-row">
+        <span>Fee</span>
+        <strong id="calcFee">-</strong>
+      </div>
+
+      <div class="calc-row">
+        <span>Receive</span>
+        <strong id="calcReceive">-</strong>
+      </div>
+
+    </div>
+
+
+    <div
+      id="status"
+      class="status">
+    </div>
+
+  </section>
+
+</div>
+
+
+<footer>
+  CryptoVault P2P Marketplace
+</footer>
+
+
 <script>
 
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://zihxnxnviknexlqjjdot.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 let marketSide = "buy";
+
 let selectedOffer = null;
-let selectedTraderData = null;
 
-function setMarket(side) {
-  marketSide = side === "sell" ? "sell" : "buy";
 
-  const buyTab = document.getElementById("buyTab");
-  const sellTab = document.getElementById("sellTab");
+/* =========================================================
+   SET BUY / SELL
+========================================================= */
 
-  if (buyTab) {
-    buyTab.classList.toggle("active", marketSide === "buy");
-  }
+function setMarket(side){
 
-  if (sellTab) {
-    sellTab.classList.toggle("active", marketSide === "sell");
-  }
+  marketSide =
+    side === "sell"
+      ? "sell"
+      : "buy";
+
+  document
+    .getElementById("buyTab")
+    .classList.toggle(
+      "active",
+      marketSide === "buy"
+    );
+
+  document
+    .getElementById("sellTab")
+    .classList.toggle(
+      "active",
+      marketSide === "sell"
+    );
 
   selectedOffer = null;
-  selectedTraderData = null;
+
+  document
+    .getElementById("selectedTrader")
+    .value =
+      "No offer selected";
+
+  document
+    .getElementById("quickAmount")
+    .value = "";
 
   updateMarketTitle();
+
   calculateTrade();
+
   refreshMarket();
 }
 
-/* the rest of your JavaScript here */
 
-</script>
+/* =========================================================
+   TITLE
+========================================================= */
+
+function updateMarketTitle(){
+
+  const asset =
+    document.getElementById(
+      "assetSelect"
+    ).value;
+
+  const fiat =
+    document.getElementById(
+      "fiatSelect"
+    ).value;
+
+  document
+    .getElementById("marketTitle")
+    .textContent =
+      marketSide === "buy"
+        ? `Buy ${asset} with ${fiat}`
+        : `Sell ${asset} for ${fiat}`;
+
+  document
+    .getElementById("heroTitle")
+    .textContent =
+      marketSide === "buy"
+        ? `Buy ${asset}`
+        : `Sell ${asset}`;
+
+  document
+    .getElementById("heroText")
+    .textContent =
+      marketSide === "buy"
+        ? `Buy ${asset} from P2P traders.`
+        : `Sell ${asset} to P2P traders.`;
+
+  document
+    .getElementById("amountLabel")
+    .textContent =
+      marketSide === "buy"
+        ? `Amount (${fiat})`
+        : `Amount (${asset})`;
+}
+
+
+/* =========================================================
+   LOAD OFFERS
+========================================================= */
+
+async function loadOffers(){
+
+  const asset =
+    document.getElementById(
+      "assetSelect"
+    ).value;
+
+  const fiat =
+    document.getElementById(
+      "fiatSelect"
+    ).value;
+
+
+  const { data, error } =
+    await supabaseClient
+
+      .from("p2p_offers")
+
+      .select("*")
+
+      .eq(
+        "status",
+        "active"
+      )
+
+      .eq(
+        "side",
+        marketSide
+      )
+
+      .eq(
+        "asset",
+        asset
+      )
+
+      .eq(
+        "fiat",
+        fiat
+      )
+
+      .order(
+        "price",
+        {
+          ascending:
+            marketSide === "buy"
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "Offer error:",
+      error
+    );
+
+    showStatus(
+      "Could not load P2P offers.",
+      "error"
+    );
+
+    return [];
+  }
+
+
+  return data || [];
+}
+
+
+/* =========================================================
+   LOAD TRADER PAYMENT METHODS
+========================================================= */
+
+async function loadPaymentMethods(
+  offers
+){
+
+  if(
+    !offers ||
+    !offers.length
+  ){
+
+    return offers || [];
+  }
+
+
+  const traderIds = [
+    ...new Set(
+      offers
+        .map(
+          offer =>
+            offer.trader_id
+        )
+        .filter(Boolean)
+    )
+  ];
+
+
+  if(!traderIds.length){
+
+    return offers;
+  }
+
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+
+        .from(
+          "trader_payment_methods"
+        )
+
+        .select(`
+          trader_id,
+          payment_method_id,
+          status,
+          payment_methods (
+            id,
+            name,
+            code,
+            enabled
+          )
+        `)
+
+        .in(
+          "trader_id",
+          traderIds
+        )
+
+        .eq(
+          "status",
+          "active"
+        );
+
+
+    if(error){
+
+      console.warn(
+        "Payment method error:",
+        error.message
+      );
+
+      return offers;
+    }
+
+
+    return offers.map(
+      offer => {
+
+        const methods =
+          (data || [])
+
+            .filter(
+              row =>
+                row.trader_id ===
+                offer.trader_id
+            )
+
+            .map(
+              row =>
+                row.payment_methods
+            )
+
+            .filter(Boolean)
+
+            .filter(
+              method =>
+                method.enabled !== false
+            );
+
+
+        return {
+          ...offer,
+          methods
+        };
+
+      }
+    );
+
+  }catch(error){
+
+    console.warn(
+      error.message
+    );
+
+    return offers;
+  }
+}
+
+
+/* =========================================================
+   LOAD TRADER PROFILE
+========================================================= */
+
+async function enrichOffers(
+  offers
+){
+
+  if(
+    !offers ||
+    !offers.length
+  ){
+
+    return [];
+  }
+
+
+  const traderIds = [
+    ...new Set(
+      offers
+        .map(
+          offer =>
+            offer.trader_id
+        )
+        .filter(Boolean)
+    )
+  ];
+
+
+  if(!traderIds.length){
+
+    return offers;
+  }
+
+
+  let profiles = [];
+  let stats = [];
+
+
+  try{
+
+    const profileResult =
+      await supabaseClient
+
+        .from("profiles")
+
+        .select("*")
+
+        .in(
+          "id",
+          traderIds
+        );
+
+
+    profiles =
+      profileResult.data || [];
+
+
+  }catch(error){
+
+    console.warn(
+      "Profile error:",
+      error.message
+    );
+
+  }
+
+
+  try{
+
+    const statsResult =
+      await supabaseClient
+
+        .from("trader_stats")
+
+        .select("*")
+
+        .in(
+          "user_id",
+          traderIds
+        );
+
+
+    stats =
+      statsResult.data || [];
+
+
+  }catch(error){
+
+    console.warn(
+      "Trader stats error:",
+      error.message
+    );
+
+  }
+
+
+  return offers.map(
+    offer => {
+
+      const profile =
+        profiles.find(
+          p =>
+            p.id ===
+            offer.trader_id
+        );
+
+
+      const traderStats =
+        stats.find(
+          s =>
+            s.user_id ===
+            offer.trader_id
+        );
+
+
+      return {
+        ...offer,
+        profile,
+        traderStats
+      };
+
+    }
+  );
+}
+
+
+/* =========================================================
+   REFRESH MARKET
+========================================================= */
+
+async function refreshMarket(){
+
+  updateMarketTitle();
+
+
+  const offers =
+    await loadOffers();
+
+
+  let enriched =
+    await enrichOffers(
+      offers
+    );
+
+
+  enriched =
+    await loadPaymentMethods(
+      enriched
+    );
+
+
+  renderOffers(
+    enriched
+  );
+}
+
+
+/* =========================================================
+  
