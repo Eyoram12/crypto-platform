@@ -1684,6 +1684,270 @@ document.getElementById("createTradeBtn");
 
 if(button){
 button.disabled = true;
+button.textContent = "Creating Trade...";
+}
+
+try{
+
+if(!selectedOffer){
+
+showStatus(
+"Please select a P2P offer first.",
+"error"
+);
+
+return;
+
+}
+
+if(!selectedPaymentMethod){
+
+showStatus(
+"Please select a payment method.",
+"error"
+);
+
+return;
+
+}
+
+const amount =
+parseFloat(
+document.getElementById("quickAmount").value
+) || 0;
+
+if(amount <= 0){
+
+showStatus(
+"Please enter a valid amount.",
+"error"
+);
+
+return;
+
+}
+
+const user =
+await getCurrentUser();
+
+if(!user){
+
+showStatus(
+"Please log in to CryptoVault before creating a trade.",
+"error"
+);
+
+return;
+
+}
+
+if(
+String(user.id) ===
+String(selectedOffer.trader_id)
+){
+
+showStatus(
+"You cannot create a trade with your own offer.",
+"error"
+);
+
+return;
+
+}
+
+const price =
+Number(selectedOffer.price);
+
+if(!price || price <= 0){
+
+showStatus(
+"Invalid offer price.",
+"error"
+);
+
+return;
+
+}
+
+let cryptoAmount = 0;
+let fiatAmount = 0;
+let tradingFee = 0;
+
+if(marketSide === "buy"){
+
+fiatAmount = amount;
+
+cryptoAmount =
+amount / price;
+
+tradingFee =
+cryptoAmount * 0.005;
+
+}else{
+
+cryptoAmount = amount;
+
+fiatAmount =
+amount * price;
+
+tradingFee =
+fiatAmount * 0.005;
+
+}
+
+const minimum =
+Number(
+selectedOffer.minimum ??
+selectedOffer.min_amount ??
+selectedOffer.minimum_amount ??
+0
+);
+
+const maximum =
+Number(
+selectedOffer.maximum ??
+selectedOffer.max_amount ??
+selectedOffer.maximum_amount ??
+0
+);
+
+if(
+minimum > 0 &&
+fiatAmount < minimum
+){
+
+showStatus(
+`Amount is below the minimum of ${formatNumber(minimum)} ${document.getElementById("fiatSelect").value}.`,
+"error"
+);
+
+return;
+
+}
+
+if(
+maximum > 0 &&
+fiatAmount > maximum
+){
+
+showStatus(
+`Amount is above the maximum of ${formatNumber(maximum)} ${document.getElementById("fiatSelect").value}.`,
+"error"
+);
+
+return;
+
+}
+
+const expires =
+new Date(
+Date.now() + 30 * 60 * 1000
+).toISOString();
+
+const result =
+await supabaseClient.rpc(
+"create_p2p_trade",
+{
+p_offer_id:
+String(selectedOffer.id),
+
+p_crypto_amount:
+cryptoAmount,
+
+p_fiat_amount:
+fiatAmount,
+
+p_price:
+price,
+
+p_trading_fee:
+tradingFee,
+
+p_payment_method:
+String(selectedPaymentMethod.id),
+
+p_expires:
+expires
+}
+);
+
+if(result.error){
+
+console.error(
+"Create trade RPC error:",
+result.error
+);
+
+showStatus(
+"Trade could not be created: " +
+result.error.message,
+"error"
+);
+
+return;
+
+}
+
+selectedTrade =
+Array.isArray(result.data)
+? result.data[0]
+: result.data;
+
+if(!selectedTrade){
+
+showStatus(
+"Trade was created but no trade data was returned.",
+"error"
+);
+
+return;
+
+}
+
+showStatus(
+"P2P trade created successfully. Please review the payment details.",
+"success"
+);
+
+renderMyTrade(
+selectedTrade
+);
+
+document.getElementById("myTrade")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}catch(error){
+
+console.error(
+"Create trade exception:",
+error
+);
+
+showStatus(
+"Something went wrong while creating the trade.",
+"error"
+);
+
+}finally{
+
+if(button){
+
+button.disabled = false;
+button.textContent = "Create Trade";
+
+}
+
+}
+
+}
+
+const button =
+document.getElementById("createTradeBtn");
+
+if(button){
+button.disabled = true;
 }
 
 try{
