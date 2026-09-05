@@ -13,30 +13,21 @@ content="CryptoVault P2P marketplace for buying and selling USDT, Bitcoin and Et
 
 <style>
 
-/* =====================================================
-   CRYPTOVAULT STANDARD COLOR SYSTEM
-===================================================== */
-
 :root {
     --primary: #0B1F3A;
     --primary-light: #163A63;
     --accent: #155EEF;
     --accent-dark: #0E4ACF;
-
     --success: #15803D;
     --success-bg: #ECFDF3;
-
     --warning: #B45309;
     --error: #DC2626;
-
     --background: #F6F8FC;
     --card: #FFFFFF;
     --text: #172033;
     --text-secondary: #667085;
     --text-light: #98A2B3;
-
     --border: #E4E7EC;
-    --border-dark: #344054;
 }
 
 * {
@@ -54,9 +45,7 @@ body {
     color: var(--text);
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 header {
     background: var(--primary);
@@ -126,14 +115,7 @@ nav a.active {
     color: var(--primary);
 }
 
-.nav-profile {
-    display: none;
-    border: 1px solid #475467;
-}
-
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero {
     background:
@@ -161,7 +143,7 @@ nav a.active {
     align-items: center;
     gap: 7px;
     padding: 7px 12px;
-    border: 1px solid var(--border-dark);
+    border: 1px solid #344054;
     border-radius: 30px;
     color: #D0D5DD;
     font-size: 12px;
@@ -224,16 +206,14 @@ nav a.active {
     background: var(--primary-light);
 }
 
-/* =========================
-   TRADE BOX
-========================= */
+/* TRADE BOX */
 
 .trade-box {
-    background: var(--card);
+    background: white;
     color: var(--text);
     border-radius: 18px;
     padding: 25px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, .28);
+    box-shadow: 0 25px 60px rgba(0,0,0,.28);
 }
 
 .trade-tabs {
@@ -282,7 +262,7 @@ nav a.active {
 .form-control:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(21, 94, 239, .12);
+    box-shadow: 0 0 0 3px rgba(21,94,239,.12);
 }
 
 .trade-button {
@@ -307,9 +287,7 @@ nav a.active {
     margin-top: 13px;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container {
     width: 90%;
@@ -337,16 +315,14 @@ nav a.active {
     line-height: 1.6;
 }
 
-/* =========================
-   WALLET
-========================= */
+/* WALLET */
 
 .wallet-card {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 25px;
-    box-shadow: 0 5px 18px rgba(16, 24, 40, .04);
+    box-shadow: 0 5px 18px rgba(16,24,40,.04);
 }
 
 .wallet-header {
@@ -373,7 +349,7 @@ nav a.active {
 
 .wallet-assets {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 15px;
 }
 
@@ -434,13 +410,7 @@ nav a.active {
     color: var(--text);
 }
 
-.wallet-actions a.secondary:hover {
-    background: #E4E7EC;
-}
-
-/* =========================
-   OFFERS
-========================= */
+/* OFFERS */
 
 .offers {
     display: grid;
@@ -448,7 +418,7 @@ nav a.active {
 }
 
 .offer {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 18px;
@@ -518,18 +488,16 @@ nav a.active {
     background: var(--accent-dark);
 }
 
-/* =========================
-   PAYMENT METHODS
-========================= */
+/* PAYMENT METHODS */
 
 .payment-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 15px;
 }
 
 .payment {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 22px;
@@ -552,18 +520,16 @@ nav a.active {
     font-size: 11px;
 }
 
-/* =========================
-   TRUST
-========================= */
+/* TRUST */
 
 .trust-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 20px;
 }
 
 .trust {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 25px;
@@ -586,9 +552,7 @@ nav a.active {
     margin: 0;
 }
 
-/* =========================
-   CTA
-========================= */
+/* CTA */
 
 .cta {
     background: var(--primary);
@@ -608,9 +572,7 @@ nav a.active {
     line-height: 1.6;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer {
     background: var(--primary);
@@ -633,9 +595,7 @@ footer {
     margin-top: 10px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:950px) {
 
@@ -648,7 +608,7 @@ footer {
     }
 
     .payment-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
     .trust-grid {
@@ -711,10 +671,6 @@ footer {
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
 
 <a href="index.html" class="logo">
@@ -731,21 +687,15 @@ footer {
 </a>
 
 <nav>
-
 <a href="index.html" class="active">Home</a>
 <a href="p2p.html">P2P Trading</a>
 <a href="dashboard.html">Wallet</a>
 <a href="transactions.html">Transactions</a>
 <a href="settings.html">Security</a>
 <a href="login.html" id="authLink">Sign In</a>
-
 </nav>
 
 </header>
-
-<!-- =========================
-     HERO
-========================= -->
 
 <section class="hero">
 
@@ -771,11 +721,11 @@ footer {
 
 <div class="hero-buttons">
 
-<a href="p2p.html" class="btn btn-primary">
+<a href="p2p.html?type=buy" class="btn btn-primary">
     Buy Crypto
 </a>
 
-<a href="p2p.html" class="btn btn-outline">
+<a href="p2p.html?type=sell" class="btn btn-outline">
     Sell Crypto
 </a>
 
@@ -783,17 +733,15 @@ footer {
 
 </div>
 
-<!-- TRADE BOX -->
-
 <div class="trade-box">
 
 <div class="trade-tabs">
 
-<button class="trade-tab active" id="buyTab">
+<button class="trade-tab active" id="buyTab" type="button">
     Buy
 </button>
 
-<button class="trade-tab" id="sellTab">
+<button class="trade-tab" id="sellTab" type="button">
     Sell
 </button>
 
@@ -803,10 +751,10 @@ footer {
     I want to trade
 </label>
 
-<select class="form-control">
-    <option>USDT</option>
-    <option>BTC</option>
-    <option>ETH</option>
+<select class="form-control" id="assetSelect">
+    <option value="USDT">USDT</option>
+    <option value="BTC">BTC</option>
+    <option value="ETH">ETH</option>
 </select>
 
 <label class="form-label">
@@ -814,7 +762,7 @@ footer {
 </label>
 
 <select class="form-control">
-    <option>ETB</option>
+    <option value="ETB">ETB</option>
 </select>
 
 <label class="form-label">
@@ -828,9 +776,8 @@ footer {
     <option>Other methods</option>
 </select>
 
-<button class="trade-button"
-        onclick="window.location.href='p2p.html'">
-    Find Offers
+<button class="trade-button" id="tradeButton" type="button">
+    Find Buy Offers
 </button>
 
 <div class="trade-note">
@@ -844,10 +791,6 @@ footer {
 </section>
 
 <main class="container">
-
-<!-- =========================
-     WALLET
-========================= -->
 
 <section class="section">
 
@@ -926,4 +869,448 @@ footer {
 </a>
 
 <a href="dashboard.html" class="secondary">
-   
+    Open Wallet
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>ETB P2P Marketplace</h2>
+
+<p>
+    Find traders and compare prices, limits and payment methods.
+</p>
+
+</div>
+
+<div class="offers">
+
+<div class="offer">
+
+<div class="trader">
+
+<div class="avatar">
+    CV
+</div>
+
+<div>
+    <strong>Verified Trader</strong>
+    <small>Verified account</small>
+</div>
+
+</div>
+
+<div class="offer-info">
+    <span>Asset</span>
+    <strong>USDT</strong>
+</div>
+
+<div class="offer-info">
+    <span>Payment</span>
+    <strong>Bank Transfer</strong>
+</div>
+
+<div class="offer-button">
+    <a href="p2p.html?type=buy">
+        Buy USDT
+    </a>
+</div>
+
+</div>
+
+<div class="offer">
+
+<div class="trader">
+
+<div class="avatar">
+    CV
+</div>
+
+<div>
+    <strong>Verified Trader</strong>
+    <small>Trusted marketplace user</small>
+</div>
+
+</div>
+
+<div class="offer-info">
+    <span>Asset</span>
+    <strong>USDT / ETB</strong>
+</div>
+
+<div class="offer-info">
+    <span>Payment</span>
+    <strong>Mobile Money</strong>
+</div>
+
+<div class="offer-button">
+    <a href="p2p.html?type=buy">
+        Buy USDT
+    </a>
+</div>
+
+</div>
+
+<div class="offer">
+
+<div class="trader">
+
+<div class="avatar">
+    CV
+</div>
+
+<div>
+    <strong>Crypto Trader</strong>
+    <small>Account verification available</small>
+</div>
+
+</div>
+
+<div class="offer-info">
+    <span>Assets</span>
+    <strong>USDT / BTC / ETH</strong>
+</div>
+
+<div class="offer-info">
+    <span>Currency</span>
+    <strong>ETB</strong>
+</div>
+
+<div class="offer-button">
+    <a href="p2p.html?type=buy">
+        Open P2P
+    </a>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>Payment Methods</h2>
+
+<p>
+    Choose a payment method available for your P2P trade.
+</p>
+
+</div>
+
+<div class="payment-grid">
+
+<div class="payment">
+<div class="payment-icon">🏦</div>
+<strong>Bank Transfer</strong>
+<span>Bank-based payments</span>
+</div>
+
+<div class="payment">
+<div class="payment-icon">📱</div>
+<strong>Mobile Money</strong>
+<span>Mobile payment options</span>
+</div>
+
+<div class="payment">
+<div class="payment-icon">💳</div>
+<strong>Digital Payments</strong>
+<span>Supported electronic methods</span>
+</div>
+
+<div class="payment">
+<div class="payment-icon">💰</div>
+<strong>Other Methods</strong>
+<span>Depending on the offer</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>Security and Trust</h2>
+
+<p>
+    Built around account security, verification and transparent trading.
+</p>
+
+</div>
+
+<div class="trust-grid">
+
+<div class="trust">
+
+<div class="trust-icon">🔐</div>
+
+<h3>Account Security</h3>
+
+<p>
+    Secure authentication and account-management features
+    help protect your CryptoVault account.
+</p>
+
+</div>
+
+<div class="trust">
+
+<div class="trust-icon">✓</div>
+
+<h3>Trader Verification</h3>
+
+<p>
+    Verification and trader information help users
+    evaluate who they are trading with.
+</p>
+
+</div>
+
+<div class="trust">
+
+<div class="trust-icon">⭐</div>
+
+<h3>Trust & Reputation</h3>
+
+<p>
+    P2P traders can be evaluated using reputation,
+    completed trades and account status.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="cta">
+
+<h2>
+    Ready to trade?
+</h2>
+
+<p>
+    Explore CryptoVault P2P and find the right offer for your
+    USDT, BTC or ETH trade.
+</p>
+
+<div class="hero-buttons" style="justify-content:center">
+
+<a href="p2p.html?type=buy" class="btn btn-primary">
+    Buy Crypto
+</a>
+
+<a href="p2p.html?type=sell" class="btn btn-outline">
+    Sell Crypto
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<div class="footer-logo">
+    CryptoVault
+</div>
+
+<div>
+    Digital Asset Platform © 2026 CryptoVault
+</div>
+
+<div class="footer-note">
+    CryptoVault wallet balances shown here are retrieved from your
+    connected account. P2P trading functionality must be implemented
+    and secured before processing real cryptocurrency or financial transactions.
+</div>
+
+</footer>
+
+<script>
+
+/* =====================================================
+   SUPABASE CONNECTION
+===================================================== */
+
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+   WALLET
+===================================================== */
+
+async function loadWallet() {
+
+    const {
+        data: {
+            user
+        }
+    } = await supabaseClient.auth.getUser();
+
+    const walletStatus =
+        document.getElementById("walletStatus");
+
+    const walletDescription =
+        document.getElementById("walletDescription");
+
+    const authLink =
+        document.getElementById("authLink");
+
+    if (!user) {
+
+        walletStatus.textContent = "Not signed in";
+
+        walletDescription.textContent =
+            "Sign in to view your actual wallet balances.";
+
+        return;
+    }
+
+    walletStatus.textContent = "● Connected";
+
+    walletDescription.textContent =
+        "Your current balances from your CryptoVault wallet.";
+
+    authLink.textContent = "Account";
+    authLink.href = "dashboard.html";
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("wallets")
+        .select("usdt_balance, btc_balance, eth_balance")
+        .eq("user_id", user.id)
+        .single();
+
+    if (error) {
+
+        console.error("Wallet error:", error);
+
+        document.getElementById("usdtBalance").textContent =
+            "0 USDT";
+
+        document.getElementById("btcBalance").textContent =
+            "0 BTC";
+
+        document.getElementById("ethBalance").textContent =
+            "0 ETH";
+
+        return;
+    }
+
+    document.getElementById("usdtBalance").textContent =
+        Number(data.usdt_balance || 0).toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 8
+            }
+        ) + " USDT";
+
+    document.getElementById("btcBalance").textContent =
+        Number(data.btc_balance || 0).toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 8
+            }
+        ) + " BTC";
+
+    document.getElementById("ethBalance").textContent =
+        Number(data.eth_balance || 0).toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 8
+            }
+        ) + " ETH";
+}
+
+
+/* =====================================================
+   BUY / SELL
+===================================================== */
+
+const buyTab =
+    document.getElementById("buyTab");
+
+const sellTab =
+    document.getElementById("sellTab");
+
+const tradeButton =
+    document.getElementById("tradeButton");
+
+let tradeType = "buy";
+
+
+buyTab.addEventListener("click", function() {
+
+    tradeType = "buy";
+
+    buyTab.classList.add("active");
+    sellTab.classList.remove("active");
+
+    tradeButton.textContent =
+        "Find Buy Offers";
+
+});
+
+
+sellTab.addEventListener("click", function() {
+
+    tradeType = "sell";
+
+    sellTab.classList.add("active");
+    buyTab.classList.remove("active");
+
+    tradeButton.textContent =
+        "Find Sell Offers";
+
+});
+
+
+tradeButton.addEventListener("click", function() {
+
+    const asset =
+        document.getElementById("assetSelect").value;
+
+    window.location.href =
+        "p2p.html?type=" +
+        encodeURIComponent(tradeType) +
+        "&asset=" +
+        encodeURIComponent(asset);
+
+});
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadWallet();
+
+</script>
+
+</body>
+</html>
