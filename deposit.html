@@ -537,7 +537,146 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
+const SUPABASE_KEY = "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const depositAddresses = {
+    USDT: {
+        TRC20: "TVDemoCryptoVault123456789",
+        ERC20: "0xDemoCryptoVaultUSDT123456",
+        BEP20: "0xDemoCryptoVaultBEP20123456"
+    },
+    BTC: {
+        TRC20: "BTC-Demo-Network-Address",
+        ERC20: "BTC-Demo-Ethereum-Address",
+        BEP20: "BTC-Demo-BNB-Address"
+    },
+    ETH: {
+        TRC20: "ETH-Demo-TRON-Address",
+        ERC20: "0xDemoCryptoVaultETH123456",
+        BEP20: "0xDemoCryptoVaultETHBEP20123"
+    }
+};
+
+function updateDepositAddress() {
+
+    const asset = document.getElementById("asset").value;
+    const network = document.getElementById("network").value;
+
+    document.getElementById("depositAddress").textContent =
+        depositAddresses[asset][network];
+}
+
+async function copyAddress() {
+
+    const address =
+        document.getElementById("depositAddress").textContent;
+
+    try {
+        await navigator.clipboard.writeText(address);
+        alert("Demo deposit address copied.");
+    } catch (error) {
+        alert("Copy was not available. Please copy the address manually.");
+    }
+}
+
+async function createDeposit() {
+
+    const asset =
+        document.getElementById("asset").value;
+
+    const network =
+        document.getElementById("network").value;
+
+    const amount =
+        Number(document.getElementById("amount").value);
+
+    const success =
+        document.getElementById("success");
+
+    if (asset !== "USDT") {
+        alert("For now, only USDT demo deposits are connected to the wallet.");
+        return;
+    }
+
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid deposit amount.");
+        return;
+    }
+
+    success.style.display = "block";
+    success.style.background = "#eff6ff";
+    success.style.color = "#1e40af";
+    success.innerHTML = "Processing demo deposit...";
+
+    const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+    if (!user) {
+        success.innerHTML =
+            "<strong>Please sign in first.</strong><br>" +
+            "You must be logged in to make a demo deposit.";
+
+        return;
+    }
+
+    const { data, error } =
+        await supabaseClient.rpc(
+            "deposit_usdt",
+            {
+                p_amount: amount
+            }
+        );
+
+    if (error) {
+
+        console.error(error);
+
+        success.style.background = "#fee2e2";
+        success.style.color = "#991b1b";
+
+        success.innerHTML =
+            "<strong>Deposit failed</strong><br>" +
+            error.message;
+
+        return;
+    }
+
+    const transactionId =
+        "CV-DP-" +
+        Math.floor(10000 + Math.random() * 90000);
+
+    success.style.background = "#dcfce7";
+    success.style.color = "#166534";
+
+    success.innerHTML =
+        "<strong>Demo Deposit Successful</strong><br>" +
+        "Asset: " + asset + "<br>" +
+        "Network: " + network + "<br>" +
+        "Amount Added: " + amount + " USDT<br>" +
+        "New Wallet Balance: " + data + " USDT<br>" +
+        "Transaction ID: " + transactionId;
+
+    document.getElementById("amount").value = "";
+
+    success.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+updateDepositAddress();
+
+</script>
 
 const depositAddresses = {
 
