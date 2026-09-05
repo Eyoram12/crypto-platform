@@ -130,6 +130,14 @@
             font-family: inherit;
         }
 
+        select:disabled,
+        input:disabled,
+        textarea:disabled {
+            background: #f2f4f7;
+            color: #667085;
+            cursor: not-allowed;
+        }
+
         textarea {
             min-height: 90px;
             resize: vertical;
@@ -159,6 +167,19 @@
             border-radius: 14px;
             padding: 20px;
             background: white;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .offer:hover {
+            border-color: #155eef;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .offer.selected {
+            border-color: #15803d;
+            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+            background: #fcfffd;
         }
 
         .offer-top {
@@ -177,6 +198,17 @@
             color: #15803d;
             font-size: 13px;
             margin-top: 5px;
+        }
+
+        .selected-label {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: #ecfdf3;
+            color: #15803d;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .price {
@@ -213,6 +245,18 @@
 
         .info-box strong {
             overflow-wrap: anywhere;
+        }
+
+        .offer-limit {
+            font-size: 13px;
+            color: #667085;
+            margin-bottom: 12px;
+        }
+
+        .offer-reputation {
+            font-size: 13px;
+            color: #667085;
+            margin-bottom: 10px;
         }
 
         .payments {
@@ -877,6 +921,7 @@
             <select
                 id="paymentMethodSelect"
                 onchange="paymentMethodChanged()"
+                disabled
             >
 
                 <option value="">
@@ -1085,7 +1130,6 @@ async function getCurrentUser() {
         const result =
             await supabaseClient.auth.getSession();
 
-
         if (result.error) {
 
             console.error(
@@ -1099,10 +1143,8 @@ async function getCurrentUser() {
 
         }
 
-
         const session =
             result.data.session;
-
 
         if (!session) {
 
@@ -1112,13 +1154,10 @@ async function getCurrentUser() {
 
         }
 
-
         currentUserId =
             session.user.id;
 
-
         return session.user;
-
 
     } catch (error) {
 
@@ -1147,7 +1186,6 @@ function setMarket(side) {
         side === "sell"
             ? "sell"
             : "buy";
-
 
     selectedOffer = null;
 
@@ -1188,7 +1226,6 @@ function updateTabs() {
             marketSide === "buy"
         );
 
-
     document
         .getElementById("sellTab")
         .classList.toggle(
@@ -1206,12 +1243,10 @@ function updateMarketTitle() {
             "assetSelect"
         ).value;
 
-
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
-
 
     if (marketSide === "buy") {
 
@@ -1220,18 +1255,15 @@ function updateMarketTitle() {
         ).textContent =
             `Buy ${asset} with ${fiat}`;
 
-
         document.getElementById(
             "heroTitle"
         ).textContent =
             `Buy ${asset}`;
 
-
         document.getElementById(
             "heroText"
         ).textContent =
             `Buy ${asset} from P2P traders.`;
-
 
         document.getElementById(
             "amountLabel"
@@ -1245,18 +1277,15 @@ function updateMarketTitle() {
         ).textContent =
             `Sell ${asset} for ${fiat}`;
 
-
         document.getElementById(
             "heroTitle"
         ).textContent =
             `Sell ${asset}`;
 
-
         document.getElementById(
             "heroText"
         ).textContent =
             `Sell ${asset} to P2P traders.`;
-
 
         document.getElementById(
             "amountLabel"
@@ -1275,25 +1304,66 @@ function updateMarketTitle() {
 
 function clearTradeForm() {
 
-    document.getElementById(
-        "quickAmount"
-    ).value = "";
+    const amount =
+        document.getElementById(
+            "quickAmount"
+        );
+
+    if (amount) {
+
+        amount.value = "";
+
+    }
 
 
-    document.getElementById(
-        "selectedTrader"
-    ).value =
-        "No offer selected";
+    const trader =
+        document.getElementById(
+            "selectedTrader"
+        );
+
+    if (trader) {
+
+        trader.value =
+            "No offer selected";
+
+    }
 
 
-    document.getElementById(
-        "paymentMethodSelect"
-    ).innerHTML =
-        `
-        <option value="">
-            Select an offer first
-        </option>
-        `;
+    const paymentSelect =
+        document.getElementById(
+            "paymentMethodSelect"
+        );
+
+    if (paymentSelect) {
+
+        paymentSelect.disabled = true;
+
+        paymentSelect.innerHTML =
+            `
+            <option value="">
+                Select an offer first
+            </option>
+            `;
+
+    }
+
+
+    showStatus(
+        "",
+        "info"
+    );
+
+    const statusBox =
+        document.getElementById(
+            "status"
+        );
+
+    if (statusBox) {
+
+        statusBox.style.display =
+            "none";
+
+    }
 
 
     calculateTrade();
@@ -1313,12 +1383,10 @@ async function loadOffers() {
             "assetSelect"
         ).value;
 
-
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
-
 
     const result =
         await supabaseClient
@@ -1336,7 +1404,6 @@ async function loadOffers() {
                 }
             );
 
-
     if (result.error) {
 
         console.error(
@@ -1347,7 +1414,6 @@ async function loadOffers() {
         return [];
 
     }
-
 
     return result.data || [];
 
@@ -1386,7 +1452,6 @@ async function loadPaymentMethods(offers) {
                             }
                         );
 
-
                     if (result.error) {
 
                         console.error(
@@ -1394,14 +1459,12 @@ async function loadPaymentMethods(offers) {
                             result.error
                         );
 
-
                         return {
                             ...offer,
                             methods: []
                         };
 
                     }
-
 
                     const methods =
                         (result.data || [])
@@ -1423,7 +1486,6 @@ async function loadPaymentMethods(offers) {
                                 })
                             );
 
-
                     return {
 
                         ...offer,
@@ -1436,7 +1498,6 @@ async function loadPaymentMethods(offers) {
             )
 
         );
-
 
     return results;
 
@@ -1748,9 +1809,25 @@ function renderOffers(offers) {
                             : `Buy ${asset}`;
 
 
+                    const offerId =
+                        String(
+                            offer.id
+                        );
+
+
                     return `
 
-                        <div class="offer">
+                        <div
+                            class="offer"
+                            data-offer-card-id="${escapeHTML(
+                                offerId
+                            )}"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Select offer from ${escapeHTML(
+                                traderName
+                            )}"
+                        >
 
                             <div class="offer-top">
 
@@ -1774,11 +1851,15 @@ function renderOffers(offers) {
                                         ${formatNumber(
                                             offer.price
                                         )}
-                                        ${escapeHTML(fiat)}
+                                        ${escapeHTML(
+                                            fiat
+                                        )}
                                     </div>
 
                                     <div class="price-label">
-                                        Price per ${escapeHTML(asset)}
+                                        Price per ${escapeHTML(
+                                            asset
+                                        )}
                                     </div>
 
                                 </div>
@@ -1798,7 +1879,9 @@ function renderOffers(offers) {
                                         ${formatNumber(
                                             available
                                         )}
-                                        ${escapeHTML(asset)}
+                                        ${escapeHTML(
+                                            asset
+                                        )}
                                     </strong>
 
                                 </div>
@@ -1814,7 +1897,9 @@ function renderOffers(offers) {
                                         ${formatNumber(
                                             minimum
                                         )}
-                                        ${escapeHTML(asset)}
+                                        ${escapeHTML(
+                                            asset
+                                        )}
                                     </strong>
 
                                 </div>
@@ -1843,13 +1928,7 @@ function renderOffers(offers) {
                                 maximum > 0
                                     ?
                                     `
-                                    <div
-                                        style="
-                                            font-size:13px;
-                                            color:#667085;
-                                            margin-bottom:12px;
-                                        "
-                                    >
+                                    <div class="offer-limit">
 
                                         Maximum:
 
@@ -1857,7 +1936,9 @@ function renderOffers(offers) {
                                             ${formatNumber(
                                                 maximum
                                             )}
-                                            ${escapeHTML(asset)}
+                                            ${escapeHTML(
+                                                asset
+                                            )}
                                         </strong>
 
                                     </div>
@@ -1867,19 +1948,15 @@ function renderOffers(offers) {
                             }
 
 
-                            <div
-                                style="
-                                    font-size:13px;
-                                    color:#667085;
-                                    margin-bottom:10px;
-                                "
-                            >
+                            <div class="offer-reputation">
 
                                 Reputation:
 
                                 <strong>
                                     ${escapeHTML(
-                                        String(reputation)
+                                        String(
+                                            reputation
+                                        )
                                     )}
                                 </strong>
 
@@ -1897,7 +1974,7 @@ function renderOffers(offers) {
                                 type="button"
                                 class="${buttonClass}"
                                 data-offer-id="${escapeHTML(
-                                    String(offer.id)
+                                    offerId
                                 )}"
                             >
                                 ${buttonText}
@@ -1912,6 +1989,63 @@ function renderOffers(offers) {
             .join("");
 
 
+    /*
+     * SELECT OFFER FROM CARD
+     */
+    const selectOfferFromCard =
+        async offerId => {
+
+            container
+                .querySelectorAll(
+                    ".offer"
+                )
+                .forEach(
+                    card => {
+
+                        card.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+
+            const selectedCard =
+                Array.from(
+                    container.querySelectorAll(
+                        "[data-offer-card-id]"
+                    )
+                ).find(
+                    card =>
+                        String(
+                            card.dataset.offerCardId
+                        ) ===
+                        String(
+                            offerId
+                        )
+                );
+
+
+            if (selectedCard) {
+
+                selectedCard.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            await selectOffer(
+                String(offerId),
+                offers
+            );
+
+        };
+
+
+    /*
+     * BUTTON CLICK
+     */
     container
         .querySelectorAll(
             "[data-offer-id]"
@@ -1921,12 +2055,75 @@ function renderOffers(offers) {
 
                 button.addEventListener(
                     "click",
-                    () => {
+                    async event => {
 
-                        selectOffer(
-                            button.dataset.offerId,
-                            offers
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        await selectOfferFromCard(
+                            button.dataset.offerId
                         );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+     * CARD CLICK
+     */
+    container
+        .querySelectorAll(
+            "[data-offer-card-id]"
+        )
+        .forEach(
+            card => {
+
+                card.addEventListener(
+                    "click",
+                    async event => {
+
+                        if (
+                            event.target.closest(
+                                "[data-offer-id]"
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        await selectOfferFromCard(
+                            card.dataset.offerCardId
+                        );
+
+                    }
+                );
+
+
+                /*
+                 * Keyboard support
+                 */
+                card.addEventListener(
+                    "keydown",
+                    async event => {
+
+                        if (
+                            event.key === "Enter" ||
+                            event.key === " "
+                        ) {
+
+                            event.preventDefault();
+
+                            await selectOfferFromCard(
+                                card.dataset.offerCardId
+                            );
+
+                        }
 
                     }
                 );
@@ -1954,6 +2151,7 @@ async function selectOffer(
                 String(offerId)
         );
 
+
     if (!offer) {
 
         showStatus(
@@ -1965,12 +2163,18 @@ async function selectOffer(
 
     }
 
-    selectedOffer = offer;
 
-    selectedPaymentMethod = null;
+    selectedOffer =
+        offer;
+
+
+    selectedPaymentMethod =
+        null;
+
 
     const trader =
         offer.profile || {};
+
 
     const traderName =
         trader.full_name ||
@@ -1978,26 +2182,62 @@ async function selectOffer(
         trader.name ||
         "Trader";
 
+
     document.getElementById(
         "selectedTrader"
-    ).value = traderName;
+    ).value =
+        traderName;
+
+
+    const paymentSelect =
+        document.getElementById(
+            "paymentMethodSelect"
+        );
+
+
+    if (paymentSelect) {
+
+        paymentSelect.disabled =
+            true;
+
+        paymentSelect.innerHTML =
+            `
+            <option value="">
+                Loading payment methods...
+            </option>
+            `;
+
+    }
+
 
     showStatus(
         "Loading payment methods...",
         "info"
     );
 
+
     await loadPaymentMethodSelector(
         offer
     );
 
+
     calculateTrade();
 
-    document.getElementById(
-        "quickAmount"
-    ).focus();
+
+    const amountInput =
+        document.getElementById(
+            "quickAmount"
+        );
+
+
+    if (amountInput) {
+
+        amountInput.focus();
+
+    }
 
 }
+
 
 /* ============================================================
    PAYMENT METHOD SELECTOR
@@ -2013,17 +2253,25 @@ async function loadPaymentMethodSelector(
             "paymentMethodSelect"
         );
 
+
     if (!select) {
+
         return;
+
     }
 
-    select.disabled = true;
 
-    select.innerHTML = `
+    select.disabled =
+        true;
+
+
+    select.innerHTML =
+        `
         <option value="">
             Loading payment methods...
         </option>
-    `;
+        `;
+
 
     try {
 
@@ -2031,9 +2279,11 @@ async function loadPaymentMethodSelector(
             await supabaseClient.rpc(
                 "get_offer_payment_methods",
                 {
-                    p_offer_id: offer.id
+                    p_offer_id:
+                        offer.id
                 }
             );
+
 
         if (result.error) {
 
@@ -2042,11 +2292,14 @@ async function loadPaymentMethodSelector(
                 result.error
             );
 
-            select.innerHTML = `
+
+            select.innerHTML =
+                `
                 <option value="">
                     Unable to load payment methods
                 </option>
-            `;
+                `;
+
 
             showStatus(
                 result.error.message ||
@@ -2054,20 +2307,26 @@ async function loadPaymentMethodSelector(
                 "error"
             );
 
+
             return;
+
         }
+
 
         const methods =
             result.data || [];
+
 
         console.log(
             "Payment methods returned:",
             methods
         );
 
+
         offer.methods =
             methods.map(
                 method => ({
+
                     id:
                         method.payment_method_id,
 
@@ -2079,30 +2338,41 @@ async function loadPaymentMethodSelector(
 
                     account_identifier:
                         method.account_identifier
+
                 })
             );
 
-        if (offer.methods.length === 0) {
 
-            select.innerHTML = `
+        if (
+            offer.methods.length === 0
+        ) {
+
+            select.innerHTML =
+                `
                 <option value="">
                     No active payment method
                 </option>
-            `;
+                `;
+
 
             showStatus(
                 "This trader has no active payment method for this offer.",
                 "warning"
             );
 
+
             return;
+
         }
 
-        select.innerHTML = `
+
+        select.innerHTML =
+            `
             <option value="">
                 Select payment method
             </option>
-        `;
+            `;
+
 
         offer.methods.forEach(
             method => {
@@ -2112,11 +2382,16 @@ async function loadPaymentMethodSelector(
                         "option"
                     );
 
+
                 option.value =
-                    String(method.id);
+                    String(
+                        method.id
+                    );
+
 
                 option.textContent =
                     method.name;
+
 
                 select.appendChild(
                     option
@@ -2125,12 +2400,16 @@ async function loadPaymentMethodSelector(
             }
         );
 
-        select.disabled = false;
+
+        select.disabled =
+            false;
+
 
         showStatus(
-            `${offer.methods.length} payment method loaded.`,
+            `${offer.methods.length} payment method${offer.methods.length === 1 ? "" : "s"} loaded.`,
             "success"
         );
+
 
     } catch (error) {
 
@@ -2139,11 +2418,14 @@ async function loadPaymentMethodSelector(
             error
         );
 
-        select.innerHTML = `
+
+        select.innerHTML =
+            `
             <option value="">
                 Payment method loading failed
             </option>
-        `;
+            `;
+
 
         showStatus(
             "Payment methods could not be loaded.",
@@ -2153,6 +2435,7 @@ async function loadPaymentMethodSelector(
     }
 
 }
+
 
 /* ============================================================
    PAYMENT METHOD CHANGED
@@ -2241,17 +2524,20 @@ function calculateTrade() {
 
         document.getElementById(
             "calcRate"
-        ).textContent = "-";
+        ).textContent =
+            "-";
 
 
         document.getElementById(
             "calcFee"
-        ).textContent = "-";
+        ).textContent =
+            "-";
 
 
         document.getElementById(
             "calcReceive"
-        ).textContent = "-";
+        ).textContent =
+            "-";
 
 
         return;
@@ -2272,7 +2558,8 @@ function calculateTrade() {
 
 
         const tradingFee =
-            cryptoAmount * feeRate;
+            cryptoAmount *
+            feeRate;
 
 
         const receiveAmount =
@@ -2310,11 +2597,13 @@ function calculateTrade() {
 
 
         const fiatAmount =
-            cryptoAmount * rate;
+            cryptoAmount *
+            rate;
 
 
         const tradingFee =
-            cryptoAmount * feeRate;
+            cryptoAmount *
+            feeRate;
 
 
         document.getElementById(
@@ -2358,7 +2647,8 @@ async function createTrade() {
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
 
 
     try {
@@ -2555,7 +2845,8 @@ async function createTrade() {
 
 
         const tradingFee =
-            cryptoAmount * 0.005;
+            cryptoAmount *
+            0.005;
 
 
         const expiresAt =
@@ -2673,7 +2964,8 @@ async function createTrade() {
 
     } finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
     }
 
@@ -3153,7 +3445,8 @@ async function releaseCrypto() {
 
     if (button) {
 
-        button.disabled = true;
+        button.disabled =
+            true;
 
         button.textContent =
             "Releasing...";
@@ -3189,7 +3482,8 @@ async function releaseCrypto() {
 
             if (button) {
 
-                button.disabled = false;
+                button.disabled =
+                    false;
 
                 button.textContent =
                     "Release Crypto";
@@ -3239,7 +3533,8 @@ async function releaseCrypto() {
 
         if (button) {
 
-            button.disabled = false;
+            button.disabled =
+                false;
 
             button.textContent =
                 "Release Crypto";
@@ -3269,15 +3564,6 @@ async function cancelTrade() {
 
     }
 
-
-    /*
-     * Cancellation is allowed only before
-     * payment confirmation.
-     *
-     * Once the seller confirms payment,
-     * the trade must proceed to crypto release
-     * or dispute handling.
-     */
 
     const allowedStatuses = [
 
@@ -3496,10 +3782,6 @@ function renderMyTrade(trade) {
     let actions = "";
 
 
-    /* ========================================================
-       BUYER - AWAITING PAYMENT
-    ======================================================== */
-
     if (
         status === "awaiting_payment" &&
         isBuyer
@@ -3527,7 +3809,6 @@ function renderMyTrade(trade) {
                     )}"
                 >
 
-
                 <button
                     type="button"
                     class="button success"
@@ -3537,14 +3818,12 @@ function renderMyTrade(trade) {
                     Save Payment Reference
                 </button>
 
-
                 <div class="warning-note">
 
                     Only mark payment as sent after
                     you have actually sent the money.
 
                 </div>
-
 
                 <button
                     type="button"
@@ -3554,7 +3833,6 @@ function renderMyTrade(trade) {
                 >
                     I Have Paid
                 </button>
-
 
                 <button
                     type="button"
@@ -3571,10 +3849,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       BUYER - PAYMENT SENT
-    ======================================================== */
 
     if (
         status === "payment_sent" &&
@@ -3598,7 +3872,6 @@ function renderMyTrade(trade) {
 
             </div>
 
-
             <button
                 type="button"
                 class="button danger"
@@ -3612,10 +3885,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       SELLER - PAYMENT SENT
-    ======================================================== */
 
     if (
         status === "payment_sent" &&
@@ -3639,7 +3908,6 @@ function renderMyTrade(trade) {
 
             </div>
 
-
             <button
                 type="button"
                 class="button success"
@@ -3648,7 +3916,6 @@ function renderMyTrade(trade) {
             >
                 Confirm Payment Received
             </button>
-
 
             <button
                 type="button"
@@ -3663,10 +3930,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       SELLER - PAYMENT CONFIRMED
-    ======================================================== */
 
     if (
         status === "payment_confirmed" &&
@@ -3689,7 +3952,6 @@ function renderMyTrade(trade) {
 
             </div>
 
-
             <div class="warning-note">
 
                 Verify payment again before releasing crypto.
@@ -3697,7 +3959,6 @@ function renderMyTrade(trade) {
                 Crypto release is irreversible.
 
             </div>
-
 
             <button
                 id="releaseCryptoButton"
@@ -3713,10 +3974,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       BUYER - PAYMENT CONFIRMED
-    ======================================================== */
 
     if (
         status === "payment_confirmed" &&
@@ -3744,10 +4001,6 @@ function renderMyTrade(trade) {
     }
 
 
-    /* ========================================================
-       CRYPTO RELEASED
-    ======================================================== */
-
     if (
         status === "crypto_released"
     ) {
@@ -3772,10 +4025,6 @@ function renderMyTrade(trade) {
     }
 
 
-    /* ========================================================
-       COMPLETED
-    ======================================================== */
-
     if (
         status === "completed"
     ) {
@@ -3798,10 +4047,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       CANCELLED
-    ======================================================== */
 
     if (
         status === "cancelled"
@@ -3830,10 +4075,6 @@ function renderMyTrade(trade) {
     }
 
 
-    /* ========================================================
-       EXPIRED
-    ======================================================== */
-
     if (
         status === "expired"
     ) {
@@ -3859,10 +4100,6 @@ function renderMyTrade(trade) {
 
     }
 
-
-    /* ========================================================
-       DISPUTED
-    ======================================================== */
 
     if (
         status === "disputed"
@@ -3904,7 +4141,6 @@ function renderMyTrade(trade) {
                     </div>
 
                 </div>
-
 
                 <div class="trade-status">
 
@@ -4675,7 +4911,8 @@ async function sendTradeMessage() {
     }
 
 
-    chatSending = true;
+    chatSending =
+        true;
 
 
     const button =
@@ -4686,7 +4923,8 @@ async function sendTradeMessage() {
 
     if (button) {
 
-        button.disabled = true;
+        button.disabled =
+            true;
 
         button.textContent =
             "Sending...";
@@ -4736,7 +4974,8 @@ async function sendTradeMessage() {
         }
 
 
-        input.value = "";
+        input.value =
+            "";
 
 
         updateMessageCounter();
@@ -4762,12 +5001,14 @@ async function sendTradeMessage() {
 
     } finally {
 
-        chatSending = false;
+        chatSending =
+            false;
 
 
         if (button) {
 
-            button.disabled = false;
+            button.disabled =
+                false;
 
             button.textContent =
                 "Send Message";
@@ -5039,6 +5280,19 @@ function showStatus(
     box.className =
         "status-message " +
         type;
+
+
+    if (!message) {
+
+        box.style.display =
+            "none";
+
+    } else {
+
+        box.style.display =
+            "block";
+
+    }
 
 }
 
@@ -5326,6 +5580,8 @@ document.addEventListener(
         applyURLParameters();
 
         updateMarketTitle();
+
+        clearTradeForm();
 
         await getCurrentUser();
 
