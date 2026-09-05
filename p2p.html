@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -234,6 +235,10 @@ input:focus{
   background:#d97706;
 }
 
+.action.danger-button{
+  background:#dc2626;
+}
+
 .action:disabled{
   opacity:.6;
   cursor:not-allowed;
@@ -368,6 +373,16 @@ input:focus{
   border-radius:9px;
   background:#ecfdf3;
   color:#166534;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.info-box{
+  margin-top:15px;
+  padding:13px;
+  border-radius:9px;
+  background:#eef4ff;
+  color:#155eef;
   font-size:13px;
   line-height:1.5;
 }
@@ -558,7 +573,7 @@ Asset
 
 <select
 id="assetSelect"
-onchange="marketChanged">
+onchange="marketChanged()">
 
 <option value="USDT">USDT</option>
 <option value="BTC">BTC</option>
@@ -743,9 +758,56 @@ let marketSide = "buy";
 let selectedOffer = null;
 let selectedTrade = null;
 let selectedPaymentMethod = null;
+let currentUserId = null;
 
 
-/* MARKET */
+/* =========================
+   AUTH
+========================= */
+
+async function getCurrentUser(){
+
+try{
+
+const result =
+await supabaseClient.auth.getSession();
+
+if(result.error){
+
+console.error(result.error);
+return null;
+
+}
+
+const session =
+result.data.session;
+
+if(!session){
+
+currentUserId = null;
+return null;
+
+}
+
+currentUserId =
+session.user.id;
+
+return session.user;
+
+}catch(error){
+
+console.error(error);
+
+return null;
+
+}
+
+}
+
+
+/* =========================
+   MARKET
+========================= */
 
 function setMarket(side){
 
@@ -756,21 +818,28 @@ side === "sell"
 
 selectedOffer = null;
 selectedPaymentMethod = null;
+
 clearTradeSelection();
+
+updateMarketTabs();
 updateMarketTitle();
 refreshMarket();
 
 }
+
 
 function marketChanged(){
 
 selectedOffer = null;
 selectedPaymentMethod = null;
+
 clearTradeSelection();
+
 updateMarketTitle();
 refreshMarket();
 
 }
+
 
 function clearTradeSelection(){
 
@@ -782,12 +851,38 @@ document.getElementById("quickAmount").value = "";
 document.getElementById("paymentMethodSelect").innerHTML =
 `<option value="">Select an offer first</option>`;
 
+document.getElementById("paymentMethodSelect").disabled =
+false;
+
 calculateTrade();
 
 }
 
 
-/* TITLES */
+/* =========================
+   MARKET TABS
+========================= */
+
+function updateMarketTabs(){
+
+document.getElementById("buyTab")
+.classList.toggle(
+"active",
+marketSide === "buy"
+);
+
+document.getElementById("sellTab")
+.classList.toggle(
+"active",
+marketSide === "sell"
+);
+
+}
+
+
+/* =========================
+   TITLES
+========================= */
 
 function updateMarketTitle(){
 
@@ -830,7 +925,9 @@ document.getElementById("amountLabel").textContent =
 }
 
 
-/* LOAD OFFERS */
+/* =========================
+   LOAD OFFERS
+========================= */
 
 async function loadOffers(){
 
@@ -874,7 +971,9 @@ return result.data || [];
 }
 
 
-/* PAYMENT METHODS */
+/* =========================
+   PAYMENT METHODS
+========================= */
 
 async function loadPaymentMethods(offers){
 
@@ -884,9 +983,9 @@ return offers || [];
 
 const traderIds = [
 ...new Set(
-offers.map(
-offer => offer.trader_id
-).filter(Boolean)
+offers
+.map(offer => offer.trader_id)
+.filter(Boolean)
 )
 ];
 
@@ -991,7 +1090,9 @@ return offers;
 }
 
 
-/* TRADER INFORMATION */
+/* =========================
+   TRADER INFORMATION
+========================= */
 
 async function enrichOffers(offers){
 
@@ -1001,9 +1102,9 @@ return [];
 
 const traderIds = [
 ...new Set(
-offers.map(
-offer => offer.trader_id
-).filter(Boolean)
+offers
+.map(offer => offer.trader_id)
+.filter(Boolean)
 )
 ];
 
@@ -1023,7 +1124,9 @@ profiles = result.data || [];
 }
 
 }catch(error){
+
 console.warn(error);
+
 }
 
 try{
@@ -1039,7 +1142,9 @@ stats = result.data || [];
 }
 
 }catch(error){
+
 console.warn(error);
+
 }
 
 return offers.map(
@@ -1060,9 +1165,13 @@ String(offer.trader_id)
 );
 
 return {
+
 ...offer,
+
 profile,
+
 traderStats
+
 };
 
 }
@@ -1071,7 +1180,9 @@ traderStats
 }
 
 
-/* REFRESH */
+/* =========================
+   REFRESH MARKET
+========================= */
 
 async function refreshMarket(){
 
@@ -1117,7 +1228,9 @@ showStatus(
 }
 
 
-/* RENDER OFFERS */
+/* =========================
+   RENDER OFFERS
+========================= */
 
 function renderOffers(offers){
 
@@ -1128,8 +1241,7 @@ if(!offers || offers.length === 0){
 
 container.innerHTML =
 `<div class="empty">
-No active ${escapeHTML(marketSide)}
-offers are available.
+No active ${escapeHTML(marketSide)} offers are available.
 </div>`;
 
 return;
@@ -1223,7 +1335,7 @@ ${escapeHTML(traderName)}
 </div>
 
 <div class="verified">
-✓ Trader
+✓ Verified Trader
 </div>
 
 </div>
@@ -1315,7 +1427,9 @@ offers
 }
 
 
-/* SELECT OFFER */
+/* =========================
+   SELECT OFFER
+========================= */
 
 function selectOffer(offerId,offers){
 
@@ -1358,7 +1472,8 @@ loadPaymentMethodSelector(offer);
 
 calculateTrade();
 
-document.querySelector(".quick").scrollIntoView({
+document.querySelector(".quick")
+.scrollIntoView({
 behavior:"smooth"
 });
 
@@ -1381,7 +1496,9 @@ showStatus(
 }
 
 
-/* PAYMENT SELECTOR */
+/* =========================
+   PAYMENT SELECTOR
+========================= */
 
 function loadPaymentMethodSelector(offer){
 
@@ -1427,7 +1544,9 @@ select.appendChild(option);
 }
 
 
-/* PAYMENT METHOD CHANGED */
+/* =========================
+   PAYMENT METHOD CHANGED
+========================= */
 
 function paymentMethodChanged(){
 
@@ -1461,7 +1580,9 @@ showStatus(
 }
 
 
-/* CALCULATE */
+/* =========================
+   CALCULATE TRADE
+========================= */
 
 function calculateTrade(){
 
@@ -1481,7 +1602,11 @@ document.getElementById("assetSelect").value;
 const fiat =
 document.getElementById("fiatSelect").value;
 
-if(!selectedOffer || !rate || amount <= 0){
+if(
+!selectedOffer ||
+!rate ||
+amount <= 0
+){
 
 document.getElementById("calcRate").textContent = "-";
 document.getElementById("calcFee").textContent = "-";
@@ -1495,9 +1620,14 @@ const feeRate = 0.005;
 
 if(marketSide === "buy"){
 
-const crypto = amount / rate;
-const fee = crypto * feeRate;
-const receive = crypto - fee;
+const crypto =
+amount / rate;
+
+const fee =
+crypto * feeRate;
+
+const receive =
+crypto - fee;
 
 document.getElementById("calcRate").textContent =
 `${formatNumber(rate)} ${fiat}`;
@@ -1510,9 +1640,14 @@ document.getElementById("calcReceive").textContent =
 
 }else{
 
-const gross = amount * rate;
-const fee = gross * feeRate;
-const receive = gross - fee;
+const gross =
+amount * rate;
+
+const fee =
+gross * feeRate;
+
+const receive =
+gross - fee;
 
 document.getElementById("calcRate").textContent =
 `${formatNumber(rate)} ${fiat}`;
@@ -1528,7 +1663,9 @@ document.getElementById("calcReceive").textContent =
 }
 
 
-/* CREATE TRADE */
+/* =========================
+   CREATE TRADE
+========================= */
 
 async function createTrade(){
 
@@ -1588,6 +1725,17 @@ document.getElementById("fiatSelect").value;
 const price =
 Number(selectedOffer.price);
 
+if(!price || price <= 0){
+
+showStatus(
+"Invalid offer price.",
+"error"
+);
+
+return;
+
+}
+
 const minimum =
 Number(
 selectedOffer.minimum ??
@@ -1611,14 +1759,22 @@ let tradingFee = 0;
 if(marketSide === "buy"){
 
 fiatAmount = amount;
-cryptoAmount = amount / price;
-tradingFee = cryptoAmount * 0.005;
+
+cryptoAmount =
+amount / price;
+
+tradingFee =
+cryptoAmount * 0.005;
 
 }else{
 
 cryptoAmount = amount;
-fiatAmount = amount * price;
-tradingFee = fiatAmount * 0.005;
+
+fiatAmount =
+amount * price;
+
+tradingFee =
+fiatAmount * 0.005;
 
 }
 
@@ -1650,24 +1806,10 @@ return;
 
 }
 
-const sessionResult =
-await supabaseClient.auth.getSession();
+const user =
+await getCurrentUser();
 
-if(sessionResult.error){
-
-showStatus(
-"Could not check your login session.",
-"error"
-);
-
-return;
-
-}
-
-const session =
-sessionResult.data.session;
-
-if(!session){
+if(!user){
 
 showStatus(
 "Please log in to CryptoVault before creating a trade.",
@@ -1678,11 +1820,8 @@ return;
 
 }
 
-const currentUser =
-session.user;
-
 if(
-String(currentUser.id) ===
+String(user.id) ===
 String(selectedOffer.trader_id)
 ){
 
@@ -1697,12 +1836,12 @@ return;
 
 const buyerId =
 marketSide === "buy"
-? currentUser.id
+? user.id
 : selectedOffer.trader_id;
 
 const sellerId =
 marketSide === "sell"
-? currentUser.id
+? user.id
 : selectedOffer.trader_id;
 
 const tradeData = {
@@ -1735,7 +1874,7 @@ payment_method:
 String(selectedPaymentMethod.id),
 
 status:
-"pending",
+"awaiting_payment",
 
 payment_reference:
 null,
@@ -1757,6 +1896,11 @@ await supabaseClient
 
 if(result.error){
 
+console.error(
+"Create trade error:",
+result.error
+);
+
 showStatus(
 "Trade could not be created: " +
 result.error.message,
@@ -1771,13 +1915,16 @@ selectedTrade =
 result.data;
 
 showStatus(
-"P2P trade created successfully.",
+"P2P trade created successfully. Please review the payment details.",
 "success"
 );
 
-renderMyTrade(result.data);
+renderMyTrade(
+result.data
+);
 
-document.getElementById("myTrade").scrollIntoView({
+document.getElementById("myTrade")
+.scrollIntoView({
 behavior:"smooth"
 });
 
@@ -1801,7 +1948,119 @@ button.disabled = false;
 }
 
 
-/* RENDER TRADE */
+/* =========================
+   STATUS ORDER
+========================= */
+
+const STATUS_ORDER = [
+
+"awaiting_payment",
+
+"payment_sent",
+
+"payment_confirmed",
+
+"crypto_released",
+
+"completed"
+
+];
+
+
+function statusLabel(status){
+
+const labels = {
+
+awaiting_payment:
+"Awaiting Payment",
+
+payment_sent:
+"Payment Sent",
+
+payment_confirmed:
+"Payment Confirmed",
+
+crypto_released:
+"Crypto Released",
+
+completed:
+"Completed",
+
+disputed:
+"Disputed",
+
+cancelled:
+"Cancelled",
+
+expired:
+"Expired",
+
+pending:
+"Pending"
+
+};
+
+return labels[status] || status;
+
+}
+
+
+function statusIndex(status){
+
+return STATUS_ORDER.indexOf(status);
+
+}
+
+
+/* =========================
+   STATUS FLOW
+========================= */
+
+function renderStatusFlow(status){
+
+const currentIndex =
+statusIndex(status);
+
+return STATUS_ORDER.map(
+(step,index) => {
+
+let className =
+"status-step";
+
+if(
+currentIndex >= 0 &&
+index < currentIndex
+){
+
+className += " done";
+
+}
+
+if(
+step === status
+){
+
+className += " current";
+
+}
+
+return `
+
+<div class="${className}">
+${escapeHTML(statusLabel(step))}
+</div>
+
+`;
+
+}
+).join("");
+
+}
+
+
+/* =========================
+   RENDER MY TRADE
+========================= */
 
 function renderMyTrade(trade){
 
@@ -1819,7 +2078,7 @@ const fiat =
 document.getElementById("fiatSelect").value;
 
 const status =
-trade.status || "pending";
+trade.status || "awaiting_payment";
 
 const expiresText =
 trade.expires
@@ -1860,11 +2119,260 @@ const paymentReference =
 trade.payment_reference ||
 "";
 
-const isPending =
-status === "pending";
+const isAwaiting =
+status === "awaiting_payment";
 
-const isPaid =
-status === "paid";
+const isPaymentSent =
+status === "payment_sent";
+
+const isPaymentConfirmed =
+status === "payment_confirmed";
+
+const isReleased =
+status === "crypto_released";
+
+const isCompleted =
+status === "completed";
+
+const isSeller =
+currentUserId &&
+String(currentUserId) ===
+String(trade.seller_id);
+
+const isBuyer =
+currentUserId &&
+String(currentUserId) ===
+String(trade.buyer_id);
+
+let actionHTML = "";
+
+
+/* BUYER PAYMENT BUTTON */
+
+if(isAwaiting && isBuyer){
+
+actionHTML = `
+
+<div class="payment-reference">
+
+<label for="paymentReferenceInput">
+Payment Reference
+</label>
+
+<input
+id="paymentReferenceInput"
+type="text"
+maxlength="150"
+placeholder="Enter payment reference">
+
+</div>
+
+<button
+type="button"
+class="action success-button trade-button"
+onclick="submitPaymentReference()">
+
+Save Payment Reference
+
+</button>
+
+<button
+type="button"
+class="action warning-button trade-button"
+onclick="markTradePaymentSent()">
+
+I Have Paid
+
+</button>
+
+<div class="warning-box">
+
+Only click "I Have Paid" after you have actually sent the payment.
+
+The seller will then verify the payment.
+
+</div>
+
+`;
+
+}
+
+
+/* BUYER WAITING */
+
+if(isPaymentSent && isBuyer){
+
+actionHTML = `
+
+<div class="success-box">
+
+<strong>
+Payment Sent
+</strong>
+
+<br><br>
+
+Your payment has been marked as sent.
+
+Waiting for the seller to confirm the payment.
+
+</div>
+
+`;
+
+}
+
+
+/* SELLER VERIFY */
+
+if(isPaymentSent && isSeller){
+
+actionHTML = `
+
+<div class="warning-box">
+
+The buyer says the payment has been sent.
+
+Check your payment account and confirm that the money was actually received before continuing.
+
+</div>
+
+<button
+type="button"
+class="action success-button trade-button"
+onclick="confirmPaymentReceived()">
+
+Confirm Payment Received
+
+</button>
+
+`;
+
+}
+
+
+/* SELLER WAITING AFTER CONFIRMATION */
+
+if(isPaymentConfirmed && isSeller){
+
+actionHTML = `
+
+<div class="success-box">
+
+<strong>
+Payment Confirmed
+</strong>
+
+<br><br>
+
+The payment has been confirmed.
+
+Crypto release should be handled by the secure escrow/release system.
+
+</div>
+
+`;
+
+}
+
+
+/* BUYER AFTER CONFIRMATION */
+
+if(isPaymentConfirmed && isBuyer){
+
+actionHTML = `
+
+<div class="info-box">
+
+<strong>
+Payment Confirmed
+</strong>
+
+<br><br>
+
+The seller has confirmed your payment.
+
+Waiting for crypto release.
+
+</div>
+
+`;
+
+}
+
+
+/* RELEASED */
+
+if(isReleased){
+
+actionHTML = `
+
+<div class="success-box">
+
+<strong>
+Crypto Released
+</strong>
+
+<br><br>
+
+The cryptocurrency has been released.
+
+</div>
+
+`;
+
+}
+
+
+/* COMPLETED */
+
+if(isCompleted){
+
+actionHTML = `
+
+<div class="success-box">
+
+<strong>
+Trade Completed
+</strong>
+
+<br><br>
+
+This P2P trade has been completed successfully.
+
+</div>
+
+`;
+
+}
+
+
+/* SPECIAL STATES */
+
+if(
+status === "disputed" ||
+status === "cancelled" ||
+status === "expired"
+){
+
+actionHTML = `
+
+<div class="warning-box">
+
+<strong>
+${escapeHTML(statusLabel(status))}
+</strong>
+
+<br><br>
+
+This trade is no longer active.
+
+</div>
+
+`;
+
+}
+
 
 box.innerHTML = `
 
@@ -1875,7 +2383,7 @@ box.innerHTML = `
 <div>
 
 <div class="trader">
-Trade Created
+Trade
 </div>
 
 <div class="verified">
@@ -1885,7 +2393,7 @@ Trade Created
 </div>
 
 <div class="trade-status">
-${escapeHTML(String(status))}
+${escapeHTML(statusLabel(status))}
 </div>
 
 </div>
@@ -1899,25 +2407,7 @@ Trade Status
 
 <div class="status-steps">
 
-<div class="status-step done">
-Created
-</div>
-
-<div class="status-step ${isPending ? "current" : "done"}">
-Pending
-</div>
-
-<div class="status-step ${isPaid ? "current" : ""}">
-Paid
-</div>
-
-<div class="status-step">
-Verified
-</div>
-
-<div class="status-step">
-Completed
-</div>
+${renderStatusFlow(status)}
 
 </div>
 
@@ -2012,11 +2502,11 @@ ${escapeHTML(paymentName)}
 <div class="payment-box">
 
 <h3>
-Payment Instructions
+Payment Details
 </h3>
 
 <p>
-Send the payment only to the payment account shown below.
+Use the payment account below for this trade.
 </p>
 
 <div class="payment-detail">
@@ -2066,8 +2556,7 @@ ${escapeHTML(accountIdentifier)}
 Important:
 </strong>
 
-Verify the payment details before sending money.
-Do not mark the trade as paid until the money has actually been sent.
+Verify the payment details carefully before sending money.
 
 </div>
 
@@ -2076,82 +2565,16 @@ ${
 paymentReference
 ?
 `<div class="success-box">
-Payment reference:
-<strong>${escapeHTML(paymentReference)}</strong>
+Payment Reference:
+<strong>
+${escapeHTML(paymentReference)}
+</strong>
 </div>`
 : ""
 }
 
 
-${
-isPending
-?
-`
-
-<div class="payment-reference">
-
-<label for="paymentReferenceInput">
-Payment Reference
-</label>
-
-<input
-id="paymentReferenceInput"
-type="text"
-maxlength="150"
-placeholder="Enter payment reference after making payment">
-
-</div>
-
-<button
-type="button"
-class="action success-button trade-button"
-onclick="submitPaymentReference()">
-
-Save Payment Reference
-
-</button>
-
-<button
-type="button"
-class="action warning-button trade-button"
-onclick="markTradePaid()">
-
-I Have Paid
-
-</button>
-
-<div class="warning-box">
-
-Only click "I Have Paid" after you have actually sent the payment.
-
-The seller still needs to verify the payment.
-
-</div>
-
-`
-: ""
-}
-
-${
-isPaid
-?
-`
-
-<div class="success-box">
-
-<strong>
-Payment marked as PAID.
-</strong>
-
-<br><br>
-
-Waiting for the seller to verify the payment.
-
-</div>
-
-`
-: ""
-}
+${actionHTML}
 
 </div>
 
@@ -2170,7 +2593,9 @@ ${escapeHTML(expiresText)}
 }
 
 
-/* SAVE PAYMENT REFERENCE */
+/* =========================
+   SAVE PAYMENT REFERENCE
+========================= */
 
 async function submitPaymentReference(){
 
@@ -2185,8 +2610,24 @@ return;
 
 }
 
+if(
+selectedTrade.status !==
+"awaiting_payment"
+){
+
+showStatus(
+"Payment reference cannot be changed at this stage.",
+"warning"
+);
+
+return;
+
+}
+
 const input =
-document.getElementById("paymentReferenceInput");
+document.getElementById(
+"paymentReferenceInput"
+);
 
 if(!input){
 return;
@@ -2221,13 +2662,20 @@ const result =
 await supabaseClient
 .from("p2p_trades")
 .update({
-payment_reference: reference
+payment_reference:
+reference
 })
 .eq("id",selectedTrade.id)
+.eq("status","awaiting_payment")
 .select()
 .single();
 
 if(result.error){
+
+console.error(
+"Payment reference error:",
+result.error
+);
 
 showStatus(
 "Payment reference could not be saved: " +
@@ -2242,7 +2690,9 @@ return;
 selectedTrade =
 result.data;
 
-renderMyTrade(selectedTrade);
+renderMyTrade(
+selectedTrade
+);
 
 showStatus(
 "Payment reference saved.",
@@ -2252,9 +2702,11 @@ showStatus(
 }
 
 
-/* MARK PAID */
+/* =========================
+   BUYER MARK PAYMENT SENT
+========================= */
 
-async function markTradePaid(){
+async function markTradePaymentSent(){
 
 if(!selectedTrade){
 
@@ -2267,11 +2719,29 @@ return;
 
 }
 
-if(selectedTrade.status !== "pending"){
+if(
+selectedTrade.status !==
+"awaiting_payment"
+){
 
 showStatus(
-"This trade is no longer pending.",
+"This trade is no longer awaiting payment.",
 "warning"
+);
+
+return;
+
+}
+
+if(
+!currentUserId ||
+String(currentUserId) !==
+String(selectedTrade.buyer_id)
+){
+
+showStatus(
+"Only the buyer can mark the payment as sent.",
+"error"
 );
 
 return;
@@ -2291,22 +2761,23 @@ const result =
 await supabaseClient
 .from("p2p_trades")
 .update({
-status:"paid"
+status:"payment_sent"
 })
 .eq("id",selectedTrade.id)
-.eq("status","pending")
+.eq("buyer_id",currentUserId)
+.eq("status","awaiting_payment")
 .select()
 .single();
 
 if(result.error){
 
 console.error(
-"Mark paid error:",
+"Payment sent error:",
 result.error
 );
 
 showStatus(
-"Could not mark the trade as paid: " +
+"Could not mark payment as sent: " +
 result.error.message,
 "error"
 );
@@ -2318,17 +2789,120 @@ return;
 selectedTrade =
 result.data;
 
-renderMyTrade(selectedTrade);
+renderMyTrade(
+selectedTrade
+);
 
 showStatus(
-"Trade marked as PAID. Waiting for seller verification.",
+"Payment marked as SENT. Waiting for seller confirmation.",
 "success"
 );
 
 }
 
 
-/* STATUS */
+/* =========================
+   SELLER CONFIRM PAYMENT
+========================= */
+
+async function confirmPaymentReceived(){
+
+if(!selectedTrade){
+
+showStatus(
+"No active trade is selected.",
+"error"
+);
+
+return;
+
+}
+
+if(
+selectedTrade.status !==
+"payment_sent"
+){
+
+showStatus(
+"This trade is not waiting for payment confirmation.",
+"warning"
+);
+
+return;
+
+}
+
+if(
+!currentUserId ||
+String(currentUserId) !==
+String(selectedTrade.seller_id)
+){
+
+showStatus(
+"Only the seller can confirm the payment.",
+"error"
+);
+
+return;
+
+}
+
+const confirmed =
+confirm(
+"Have you checked your payment account and actually received the buyer's payment?"
+);
+
+if(!confirmed){
+return;
+}
+
+const result =
+await supabaseClient
+.from("p2p_trades")
+.update({
+status:"payment_confirmed"
+})
+.eq("id",selectedTrade.id)
+.eq("seller_id",currentUserId)
+.eq("status","payment_sent")
+.select()
+.single();
+
+if(result.error){
+
+console.error(
+"Payment confirmation error:",
+result.error
+);
+
+showStatus(
+"Could not confirm payment: " +
+result.error.message,
+"error"
+);
+
+return;
+
+}
+
+selectedTrade =
+result.data;
+
+renderMyTrade(
+selectedTrade
+);
+
+showStatus(
+"Payment confirmed. Crypto release is now required.",
+"success"
+);
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
 
 function showStatus(message,type){
 
@@ -2363,7 +2937,9 @@ box.className =
 }
 
 
-/* FORMAT */
+/* =========================
+   FORMAT
+========================= */
 
 function formatNumber(value){
 
@@ -2384,7 +2960,9 @@ maximumFractionDigits:8
 }
 
 
-/* SECURITY */
+/* =========================
+   SECURITY
+========================= */
 
 function escapeHTML(value){
 
@@ -2398,7 +2976,9 @@ return String(value)
 }
 
 
-/* URL */
+/* =========================
+   URL
+========================= */
 
 function applyURL(){
 
@@ -2415,14 +2995,17 @@ params.get("asset");
 
 if(
 type &&
-type.toLowerCase() === "sell"
+type.toLowerCase() ===
+"sell"
 ){
 
-marketSide = "sell";
+marketSide =
+"sell";
 
 }else{
 
-marketSide = "buy";
+marketSide =
+"buy";
 
 }
 
@@ -2432,7 +3015,9 @@ const upper =
 asset.toUpperCase();
 
 if(
-["USDT","BTC","ETH"].includes(upper)
+["USDT","BTC","ETH"].includes(
+upper
+)
 ){
 
 document.getElementById(
@@ -2444,28 +3029,22 @@ upper;
 
 }
 
-document.getElementById("buyTab")
-.classList.toggle(
-"active",
-marketSide === "buy"
-);
-
-document.getElementById("sellTab")
-.classList.toggle(
-"active",
-marketSide === "sell"
-);
+updateMarketTabs();
 
 }
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 document.addEventListener(
 "DOMContentLoaded",
 async function(){
 
 applyURL();
+
+await getCurrentUser();
 
 updateMarketTitle();
 
@@ -2478,3 +3057,4 @@ await refreshMarket();
 
 </body>
 </html>
+```
