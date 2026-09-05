@@ -1,1043 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CryptoVault P2P Marketplace</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-        }
-
-        header {
-            background: #0b1f3a;
-            color: white;
-            padding: 18px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 25px;
-            font-weight: 700;
-        }
-
-        .logo span {
-            color: #3b82f6;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 15px;
-        }
-
-        .container {
-            width: 92%;
-            max-width: 1200px;
-            margin: 30px auto;
-        }
-
-        .hero {
-            background: #0b1f3a;
-            color: white;
-            border-radius: 18px;
-            padding: 32px;
-            margin-bottom: 25px;
-        }
-
-        .hero h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            color: #d0d5dd;
-            line-height: 1.6;
-        }
-
-        .card {
-            background: white;
-            border: 1px solid #e4e7ec;
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 25px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 22px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 13px;
-            border-radius: 10px;
-            border: 1px solid #d0d5dd;
-            background: white;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .tab.active {
-            background: #155eef;
-            color: white;
-            border-color: #155eef;
-        }
-
-        .filters {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 7px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #d0d5dd;
-            border-radius: 9px;
-            background: white;
-            font-size: 15px;
-            font-family: inherit;
-        }
-
-        select:disabled,
-        input:disabled,
-        textarea:disabled {
-            background: #f2f4f7;
-            color: #667085;
-            cursor: not-allowed;
-        }
-
-        textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #155eef;
-            box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.08);
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-
-        .offers {
-            display: grid;
-            gap: 16px;
-        }
-
-        .offer {
-            border: 1px solid #e4e7ec;
-            border-radius: 14px;
-            padding: 20px;
-            background: white;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .offer:hover {
-            border-color: #155eef;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-        }
-
-        .offer.selected {
-            border-color: #15803d;
-            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
-            background: #fcfffd;
-        }
-
-        .offer-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 16px;
-        }
-
-        .trader-name {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .verified {
-            color: #15803d;
-            font-size: 13px;
-            margin-top: 5px;
-        }
-
-        .selected-label {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 5px 9px;
-            border-radius: 6px;
-            background: #ecfdf3;
-            color: #15803d;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .price {
-            font-size: 22px;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        .price-label {
-            color: #667085;
-            font-size: 12px;
-            margin-top: 4px;
-            text-align: right;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .info-box {
-            background: #f6f8fc;
-            padding: 13px;
-            border-radius: 9px;
-        }
-
-        .info-box small {
-            display: block;
-            color: #667085;
-            margin-bottom: 5px;
-        }
-
-        .info-box strong {
-            overflow-wrap: anywhere;
-        }
-
-        .offer-limit {
-            font-size: 13px;
-            color: #667085;
-            margin-bottom: 12px;
-        }
-
-        .offer-reputation {
-            font-size: 13px;
-            color: #667085;
-            margin-bottom: 10px;
-        }
-
-        .payments {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            margin: 14px 0;
-        }
-
-        .payment-tag {
-            background: #eef4ff;
-            color: #155eef;
-            padding: 7px 10px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        button {
-            font-family: inherit;
-        }
-
-        .button {
-            width: 100%;
-            border: none;
-            padding: 13px;
-            border-radius: 9px;
-            color: white;
-            background: #155eef;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            opacity: 0.92;
-        }
-
-        .button:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-
-        .button.sell {
-            background: #dc2626;
-        }
-
-        .button.success {
-            background: #15803d;
-        }
-
-        .button.warning {
-            background: #d97706;
-        }
-
-        .button.danger {
-            background: #dc2626;
-        }
-
-        .button.secondary {
-            background: #475467;
-        }
-
-        .button + .button {
-            margin-top: 10px;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: #667085;
-            border: 1px dashed #d0d5dd;
-            border-radius: 12px;
-        }
-
-        .trade-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .calculation {
-            background: #f6f8fc;
-            padding: 16px;
-            border-radius: 10px;
-            margin-top: 18px;
-        }
-
-        .calc-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            padding: 8px 0;
-        }
-
-        .calc-row span {
-            color: #667085;
-        }
-
-        .calc-row strong {
-            text-align: right;
-            overflow-wrap: anywhere;
-        }
-
-        .status-message {
-            display: none;
-            margin-top: 15px;
-            padding: 13px;
-            border-radius: 9px;
-            line-height: 1.5;
-        }
-
-        .status-message.success {
-            display: block;
-            background: #ecfdf3;
-            color: #15803d;
-        }
-
-        .status-message.error {
-            display: block;
-            background: #fef2f2;
-            color: #dc2626;
-        }
-
-        .status-message.warning {
-            display: block;
-            background: #fffbeb;
-            color: #92400e;
-        }
-
-        .status-message.info {
-            display: block;
-            background: #eef4ff;
-            color: #155eef;
-        }
-
-        .trade-status {
-            display: inline-block;
-            padding: 7px 11px;
-            border-radius: 7px;
-            background: #fff7ed;
-            color: #c2410c;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .status-flow {
-            background: #f6f8fc;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 18px;
-        }
-
-        .status-flow-title {
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .status-steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .status-step {
-            padding: 7px 10px;
-            border-radius: 7px;
-            background: #e4e7ec;
-            color: #475467;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-step.done {
-            background: #ecfdf3;
-            color: #15803d;
-        }
-
-        .status-step.current {
-            background: #fff7ed;
-            color: #c2410c;
-        }
-
-        .payment-box {
-            margin-top: 18px;
-            background: #f6f8fc;
-            padding: 17px;
-            border-radius: 10px;
-        }
-
-        .payment-box h3 {
-            margin-bottom: 10px;
-        }
-
-        .payment-detail {
-            background: white;
-            border: 1px solid #e4e7ec;
-            border-radius: 9px;
-            padding: 13px;
-            margin-top: 12px;
-        }
-
-        .payment-detail-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            padding: 9px 0;
-            border-bottom: 1px solid #f0f2f5;
-        }
-
-        .payment-detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .payment-detail-row span {
-            color: #667085;
-        }
-
-        .payment-detail-row strong {
-            text-align: right;
-            overflow-wrap: anywhere;
-        }
-
-        .trade-note {
-            margin-top: 13px;
-            padding: 13px;
-            border-radius: 9px;
-            background: #eef4ff;
-            color: #155eef;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .warning-note {
-            margin-top: 13px;
-            padding: 13px;
-            border-radius: 9px;
-            background: #fffbeb;
-            color: #92400e;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .success-note {
-            margin-top: 13px;
-            padding: 13px;
-            border-radius: 9px;
-            background: #ecfdf3;
-            color: #166534;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .expiry {
-            margin-top: 12px;
-            color: #667085;
-            font-size: 13px;
-        }
-
-        /* =====================================================
-           CONVERSATION
-        ===================================================== */
-
-        .conversation {
-            margin-top: 22px;
-            background: #f6f8fc;
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid #e4e7ec;
-        }
-
-        .conversation-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .conversation-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .conversation-status {
-            font-size: 12px;
-            color: #667085;
-            margin-top: 4px;
-        }
-
-        .messages {
-            height: 320px;
-            overflow-y: auto;
-            background: white;
-            border: 1px solid #e4e7ec;
-            border-radius: 10px;
-            padding: 14px;
-        }
-
-        .message-row {
-            display: flex;
-            margin-bottom: 12px;
-        }
-
-        .message-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .message-row.mine {
-            justify-content: flex-end;
-        }
-
-        .message-row.theirs {
-            justify-content: flex-start;
-        }
-
-        .message-bubble {
-            max-width: 78%;
-            padding: 10px 13px;
-            border-radius: 12px;
-            line-height: 1.45;
-            word-break: break-word;
-        }
-
-        .message-row.mine .message-bubble {
-            background: #155eef;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message-row.theirs .message-bubble {
-            background: #eef2f6;
-            color: #172033;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message-sender {
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            opacity: 0.8;
-        }
-
-        .message-time {
-            font-size: 10px;
-            margin-top: 5px;
-            opacity: 0.7;
-        }
-
-        .message-input-area {
-            display: grid;
-            grid-template-columns: 1fr 140px;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .message-input {
-            min-height: 50px;
-            max-height: 120px;
-        }
-
-        .send-message-button {
-            height: 50px;
-        }
-
-        .chat-empty {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #667085;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .chat-loading {
-            text-align: center;
-            color: #667085;
-            padding: 25px;
-        }
-
-        .chat-locked {
-            margin-top: 10px;
-            padding: 11px;
-            border-radius: 8px;
-            background: #fff7ed;
-            color: #92400e;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .chat-counter {
-            text-align: right;
-            margin-top: 5px;
-            color: #667085;
-            font-size: 11px;
-        }
-
-        footer {
-            margin-top: 40px;
-            background: #0b1f3a;
-            color: #d0d5dd;
-            text-align: center;
-            padding: 25px;
-        }
-
-        @media (max-width: 700px) {
-
-            header {
-                padding: 15px;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .container {
-                width: 94%;
-                margin: 20px auto;
-            }
-
-            .hero {
-                padding: 25px;
-            }
-
-            .hero h1 {
-                font-size: 26px;
-            }
-
-            .filters,
-            .trade-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .offer-top {
-                flex-direction: column;
-            }
-
-            .price,
-            .price-label {
-                text-align: left;
-            }
-
-            .payment-detail-row {
-                flex-direction: column;
-                gap: 4px;
-            }
-
-            .payment-detail-row strong {
-                text-align: left;
-            }
-
-            .message-input-area {
-                grid-template-columns: 1fr;
-            }
-
-            .send-message-button {
-                height: auto;
-            }
-
-            .message-bubble {
-                max-width: 90%;
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-<header>
-
-    <div class="logo">
-        Crypto<span>Vault</span>
-    </div>
-
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="p2p.html">P2P</a>
-    </nav>
-
-</header>
-
-
-<div class="container">
-
-
-    <section class="hero">
-
-        <h1 id="heroTitle">
-            P2P Marketplace
-        </h1>
-
-        <p id="heroText">
-            Buy and sell cryptocurrency directly with P2P traders.
-        </p>
-
-    </section>
-
-
-    <!-- MARKET FILTERS -->
-
-    <section class="card">
-
-        <div class="tabs">
-
-            <button
-                id="buyTab"
-                class="tab active"
-                type="button"
-                onclick="setMarket('buy')"
-            >
-                Buy
-            </button>
-
-            <button
-                id="sellTab"
-                class="tab"
-                type="button"
-                onclick="setMarket('sell')"
-            >
-                Sell
-            </button>
-
-        </div>
-
-
-        <div class="filters">
-
-            <div>
-
-                <label for="assetSelect">
-                    Cryptocurrency
-                </label>
-
-                <select
-                    id="assetSelect"
-                    onchange="marketChanged()"
-                >
-
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
-
-                </select>
-
-            </div>
-
-
-            <div>
-
-                <label for="fiatSelect">
-                    Fiat Currency
-                </label>
-
-                <select
-                    id="fiatSelect"
-                    onchange="marketChanged()"
-                >
-
-                    <option value="ETB">ETB</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- OFFERS -->
-
-    <section class="card">
-
-        <div id="marketTitle" class="section-title">
-            Buy USDT with ETB
-        </div>
-
-        <div id="offers" class="offers">
-
-            <div class="empty">
-                Loading offers...
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- CREATE TRADE -->
-
-    <section class="card">
-
-        <div class="section-title">
-            Create P2P Trade
-        </div>
-
-
-        <div class="trade-grid">
-
-            <div>
-
-                <label id="amountLabel">
-                    Amount (ETB)
-                </label>
-
-                <input
-                    id="quickAmount"
-                    type="number"
-                    min="0"
-                    step="any"
-                    placeholder="Enter amount"
-                    oninput="calculateTrade()"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Selected Trader
-                </label>
-
-                <input
-                    id="selectedTrader"
-                    type="text"
-                    value="No offer selected"
-                    readonly
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- PAYMENT METHOD -->
-
-        <div class="payment-box">
-
-            <h3>
-                Payment Method
-            </h3>
-
-            <label for="paymentMethodSelect">
-                Select payment method
-            </label>
-
-            <select
-                id="paymentMethodSelect"
-                onchange="paymentMethodChanged()"
-                disabled
-            >
-
-                <option value="">
-                    Select an offer first
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- CALCULATION -->
-
-        <div class="calculation">
-
-            <div class="calc-row">
-
-                <span>
-                    Price
-                </span>
-
-                <strong id="calcRate">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="calc-row">
-
-                <span>
-                    Trading Fee
-                </span>
-
-                <strong id="calcFee">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div class="calc-row">
-
-                <span>
-                    Receive
-                </span>
-
-                <strong id="calcReceive">
-                    -
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div id="status" class="status-message"></div>
-
-
-        <button
-            id="createTradeBtn"
-            class="button"
-            type="button"
-            onclick="createTrade()"
-        >
-            Create Trade
-        </button>
-
-    </section>
-
-
-    <!-- MY TRADE -->
-
-    <section class="card">
-
-        <div class="section-title">
-            My Trade
-        </div>
-
-
-        <div id="myTrade">
-
-            <div class="empty">
-                No active trade.
-            </div>
-
-        </div>
-
-    </section>
-
-
-</div>
-
-
-<footer>
-
-    CryptoVault P2P Marketplace
-
-</footer>
-
-
 <script>
-
 
 /* ============================================================
    SUPABASE
 ============================================================ */
 
-
 const SUPABASE_URL =
     "https://zihxnxnviknexlqjjdot.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1049,7 +20,6 @@ const supabaseClient =
 /* ============================================================
    STATE
 ============================================================ */
-
 
 let marketSide = "buy";
 
@@ -1069,7 +39,6 @@ let chatSending = false;
 /* ============================================================
    TRADE STATUS
 ============================================================ */
-
 
 const STATUS_ORDER = [
 
@@ -1121,7 +90,6 @@ const STATUS_LABELS = {
 /* ============================================================
    AUTH
 ============================================================ */
-
 
 async function getCurrentUser() {
 
@@ -1179,8 +147,7 @@ async function getCurrentUser() {
    MARKET SELECTION
 ============================================================ */
 
-
-function setMarket(side) {
+async function setMarket(side) {
 
     marketSide =
         side === "sell"
@@ -1197,12 +164,12 @@ function setMarket(side) {
 
     updateMarketTitle();
 
-    refreshMarket();
+    await refreshMarket();
 
 }
 
 
-function marketChanged() {
+async function marketChanged() {
 
     selectedOffer = null;
 
@@ -1212,7 +179,7 @@ function marketChanged() {
 
     updateMarketTitle();
 
-    refreshMarket();
+    await refreshMarket();
 
 }
 
@@ -1301,7 +268,6 @@ function updateMarketTitle() {
    CLEAR TRADE FORM
 ============================================================ */
 
-
 function clearTradeForm() {
 
     const amount =
@@ -1348,17 +314,17 @@ function clearTradeForm() {
     }
 
 
-    showStatus(
-        "",
-        "info"
-    );
-
     const statusBox =
         document.getElementById(
             "status"
         );
 
     if (statusBox) {
+
+        statusBox.textContent = "";
+
+        statusBox.className =
+            "status-message";
 
         statusBox.style.display =
             "none";
@@ -1375,6 +341,17 @@ function clearTradeForm() {
    LOAD OFFERS
 ============================================================ */
 
+/*
+ * VERY IMPORTANT:
+ *
+ * BUY MARKET:
+ * User wants to BUY crypto.
+ * Therefore we show traders' SELL offers.
+ *
+ * SELL MARKET:
+ * User wants to SELL crypto.
+ * Therefore we show traders' BUY offers.
+ */
 
 async function loadOffers() {
 
@@ -1388,14 +365,51 @@ async function loadOffers() {
             "fiatSelect"
         ).value;
 
+
+    const offerSide =
+        marketSide === "buy"
+            ? "sell"
+            : "buy";
+
+
+    console.log(
+        "Loading P2P offers:",
+        {
+            marketSide:
+                marketSide,
+
+            offerSide:
+                offerSide,
+
+            asset:
+                asset,
+
+            fiat:
+                fiat
+        }
+    );
+
+
     const result =
         await supabaseClient
             .from("p2p_offers")
             .select("*")
-            .eq("status", "active")
-            .eq("side", marketSide)
-            .eq("asset", asset)
-            .eq("fiat", fiat)
+            .eq(
+                "status",
+                "active"
+            )
+            .eq(
+                "side",
+                offerSide
+            )
+            .eq(
+                "asset",
+                asset
+            )
+            .eq(
+                "fiat",
+                fiat
+            )
             .order(
                 "price",
                 {
@@ -1404,6 +418,7 @@ async function loadOffers() {
                 }
             );
 
+
     if (result.error) {
 
         console.error(
@@ -1411,9 +426,22 @@ async function loadOffers() {
             result.error
         );
 
+        showStatus(
+            result.error.message ||
+            "Could not load P2P offers.",
+            "error"
+        );
+
         return [];
 
     }
+
+
+    console.log(
+        "P2P offers found:",
+        result.data
+    );
+
 
     return result.data || [];
 
@@ -1423,7 +451,6 @@ async function loadOffers() {
 /* ============================================================
    LOAD OFFER PAYMENT METHODS
 ============================================================ */
-
 
 async function loadPaymentMethods(offers) {
 
@@ -1452,6 +479,7 @@ async function loadPaymentMethods(offers) {
                             }
                         );
 
+
                     if (result.error) {
 
                         console.error(
@@ -1465,6 +493,7 @@ async function loadPaymentMethods(offers) {
                         };
 
                     }
+
 
                     const methods =
                         (result.data || [])
@@ -1486,6 +515,7 @@ async function loadPaymentMethods(offers) {
                                 })
                             );
 
+
                     return {
 
                         ...offer,
@@ -1499,6 +529,7 @@ async function loadPaymentMethods(offers) {
 
         );
 
+
     return results;
 
 }
@@ -1507,7 +538,6 @@ async function loadPaymentMethods(offers) {
 /* ============================================================
    LOAD TRADER DATA
 ============================================================ */
-
 
 async function enrichOffers(offers) {
 
@@ -1534,7 +564,9 @@ async function enrichOffers(offers) {
         ];
 
 
-    if (traderIds.length === 0) {
+    if (
+        traderIds.length === 0
+    ) {
 
         return offers;
 
@@ -1550,13 +582,23 @@ async function enrichOffers(offers) {
         await supabaseClient
             .from("profiles")
             .select("*")
-            .in("id", traderIds);
+            .in(
+                "id",
+                traderIds
+            );
 
 
     if (!profilesResult.error) {
 
         profiles =
             profilesResult.data || [];
+
+    } else {
+
+        console.warn(
+            "Profile loading error:",
+            profilesResult.error
+        );
 
     }
 
@@ -1565,13 +607,23 @@ async function enrichOffers(offers) {
         await supabaseClient
             .from("trader_stats")
             .select("*")
-            .in("user_id", traderIds);
+            .in(
+                "user_id",
+                traderIds
+            );
 
 
     if (!statsResult.error) {
 
         stats =
             statsResult.data || [];
+
+    } else {
+
+        console.warn(
+            "Trader stats loading error:",
+            statsResult.error
+        );
 
     }
 
@@ -1582,16 +634,24 @@ async function enrichOffers(offers) {
             const profile =
                 profiles.find(
                     item =>
-                        String(item.id) ===
-                        String(offer.trader_id)
+                        String(
+                            item.id
+                        ) ===
+                        String(
+                            offer.trader_id
+                        )
                 );
 
 
             const traderStats =
                 stats.find(
                     item =>
-                        String(item.user_id) ===
-                        String(offer.trader_id)
+                        String(
+                            item.user_id
+                        ) ===
+                        String(
+                            offer.trader_id
+                        )
                 );
 
 
@@ -1615,7 +675,6 @@ async function enrichOffers(offers) {
    REFRESH MARKET
 ============================================================ */
 
-
 async function refreshMarket() {
 
     updateMarketTitle();
@@ -1625,6 +684,13 @@ async function refreshMarket() {
         document.getElementById(
             "offers"
         );
+
+
+    if (!container) {
+
+        return;
+
+    }
 
 
     container.innerHTML =
@@ -1670,6 +736,7 @@ async function refreshMarket() {
             `
             <div class="empty">
                 Could not load offers.
+                Please refresh the page.
             </div>
             `;
 
@@ -1682,32 +749,12 @@ async function refreshMarket() {
    RENDER OFFERS
 ============================================================ */
 
-
 function renderOffers(offers) {
 
     const container =
         document.getElementById(
             "offers"
         );
-
-
-    if (
-        !offers ||
-        offers.length === 0
-    ) {
-
-        container.innerHTML =
-            `
-            <div class="empty">
-                No active ${escapeHTML(
-                    marketSide
-                )} offers are available.
-            </div>
-            `;
-
-        return;
-
-    }
 
 
     const asset =
@@ -1720,6 +767,45 @@ function renderOffers(offers) {
         document.getElementById(
             "fiatSelect"
         ).value;
+
+
+    /*
+     * EMPTY OFFER FIX
+     */
+
+    if (
+        !offers ||
+        offers.length === 0
+    ) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+
+                No active offers are available for
+
+                <strong>
+                    ${escapeHTML(asset)}
+                    /
+                    ${escapeHTML(fiat)}
+                </strong>.
+
+                <br><br>
+
+                ${
+                    marketSide === "buy"
+                        ?
+                        "Traders need active SELL offers for this market."
+                        :
+                        "Traders need active BUY offers for this market."
+                }
+
+            </div>
+            `;
+
+        return;
+
+    }
 
 
     container.innerHTML =
@@ -1743,7 +829,8 @@ function renderOffers(offers) {
 
 
                     const completedTrades =
-                        stats.completed_trades ?? 0;
+                        stats.completed_trades ??
+                        0;
 
 
                     const reputation =
@@ -1754,24 +841,28 @@ function renderOffers(offers) {
 
                     const available =
                         Number(
-                            offer.available_amount || 0
+                            offer.available_amount ||
+                            0
                         );
 
 
                     const minimum =
                         Number(
-                            offer.min_amount || 0
+                            offer.min_amount ||
+                            0
                         );
 
 
                     const maximum =
                         Number(
-                            offer.max_amount || 0
+                            offer.max_amount ||
+                            0
                         );
 
 
                     const methods =
-                        offer.methods || [];
+                        offer.methods ||
+                        [];
 
 
                     const paymentHTML =
@@ -1783,7 +874,8 @@ function renderOffers(offers) {
                                         `
                                         <span class="payment-tag">
                                             ${escapeHTML(
-                                                method.name
+                                                method.name ||
+                                                "Payment"
                                             )}
                                         </span>
                                         `
@@ -1843,23 +935,35 @@ function renderOffers(offers) {
                                         ✓ Verified Trader
                                     </div>
 
+                                    <span class="selected-label"
+                                        style="display:none;">
+                                        Selected
+                                    </span>
+
                                 </div>
+
 
                                 <div>
 
                                     <div class="price">
+
                                         ${formatNumber(
                                             offer.price
                                         )}
+
                                         ${escapeHTML(
                                             fiat
                                         )}
+
                                     </div>
 
                                     <div class="price-label">
-                                        Price per ${escapeHTML(
+
+                                        Price per
+                                        ${escapeHTML(
                                             asset
                                         )}
+
                                     </div>
 
                                 </div>
@@ -1876,12 +980,15 @@ function renderOffers(offers) {
                                     </small>
 
                                     <strong>
+
                                         ${formatNumber(
                                             available
                                         )}
+
                                         ${escapeHTML(
                                             asset
                                         )}
+
                                     </strong>
 
                                 </div>
@@ -1894,12 +1001,15 @@ function renderOffers(offers) {
                                     </small>
 
                                     <strong>
+
                                         ${formatNumber(
                                             minimum
                                         )}
+
                                         ${escapeHTML(
                                             asset
                                         )}
+
                                     </strong>
 
                                 </div>
@@ -1912,11 +1022,13 @@ function renderOffers(offers) {
                                     </small>
 
                                     <strong>
+
                                         ${escapeHTML(
                                             String(
                                                 completedTrades
                                             )
                                         )}
+
                                     </strong>
 
                                 </div>
@@ -1933,12 +1045,15 @@ function renderOffers(offers) {
                                         Maximum:
 
                                         <strong>
+
                                             ${formatNumber(
                                                 maximum
                                             )}
+
                                             ${escapeHTML(
                                                 asset
                                             )}
+
                                         </strong>
 
                                     </div>
@@ -1953,11 +1068,13 @@ function renderOffers(offers) {
                                 Reputation:
 
                                 <strong>
+
                                     ${escapeHTML(
                                         String(
                                             reputation
                                         )
                                     )}
+
                                 </strong>
 
                             </div>
@@ -1977,7 +1094,9 @@ function renderOffers(offers) {
                                     offerId
                                 )}"
                             >
+
                                 ${buttonText}
+
                             </button>
 
                         </div>
@@ -1992,6 +1111,7 @@ function renderOffers(offers) {
     /*
      * SELECT OFFER FROM CARD
      */
+
     const selectOfferFromCard =
         async offerId => {
 
@@ -2005,6 +1125,20 @@ function renderOffers(offers) {
                         card.classList.remove(
                             "selected"
                         );
+
+
+                        const label =
+                            card.querySelector(
+                                ".selected-label"
+                            );
+
+
+                        if (label) {
+
+                            label.style.display =
+                                "none";
+
+                        }
 
                     }
                 );
@@ -2032,11 +1166,27 @@ function renderOffers(offers) {
                     "selected"
                 );
 
+
+                const label =
+                    selectedCard.querySelector(
+                        ".selected-label"
+                    );
+
+
+                if (label) {
+
+                    label.style.display =
+                        "inline-block";
+
+                }
+
             }
 
 
             await selectOffer(
-                String(offerId),
+                String(
+                    offerId
+                ),
                 offers
             );
 
@@ -2046,6 +1196,7 @@ function renderOffers(offers) {
     /*
      * BUTTON CLICK
      */
+
     container
         .querySelectorAll(
             "[data-offer-id]"
@@ -2075,6 +1226,7 @@ function renderOffers(offers) {
     /*
      * CARD CLICK
      */
+
     container
         .querySelectorAll(
             "[data-offer-card-id]"
@@ -2105,9 +1257,6 @@ function renderOffers(offers) {
                 );
 
 
-                /*
-                 * Keyboard support
-                 */
                 card.addEventListener(
                     "keydown",
                     async event => {
@@ -2138,7 +1287,6 @@ function renderOffers(offers) {
    SELECT OFFER
 ============================================================ */
 
-
 async function selectOffer(
     offerId,
     offers
@@ -2147,8 +1295,12 @@ async function selectOffer(
     const offer =
         offers.find(
             item =>
-                String(item.id) ===
-                String(offerId)
+                String(
+                    item.id
+                ) ===
+                String(
+                    offerId
+                )
         );
 
 
@@ -2242,7 +1394,6 @@ async function selectOffer(
 /* ============================================================
    PAYMENT METHOD SELECTOR
 ============================================================ */
-
 
 async function loadPaymentMethodSelector(
     offer
@@ -2441,7 +1592,6 @@ async function loadPaymentMethodSelector(
    PAYMENT METHOD CHANGED
 ============================================================ */
 
-
 function paymentMethodChanged() {
 
     const select =
@@ -2464,8 +1614,12 @@ function paymentMethodChanged() {
         (selectedOffer.methods || [])
             .find(
                 method =>
-                    String(method.id) ===
-                    String(select.value)
+                    String(
+                        method.id
+                    ) ===
+                    String(
+                        select.value
+                    )
             ) || null;
 
 
@@ -2484,7 +1638,6 @@ function paymentMethodChanged() {
 /* ============================================================
    CALCULATE TRADE
 ============================================================ */
-
 
 function calculateTrade() {
 
@@ -2638,7 +1791,6 @@ function calculateTrade() {
    CREATE TRADE
 ============================================================ */
 
-
 async function createTrade() {
 
     const button =
@@ -2779,19 +1931,22 @@ async function createTrade() {
 
         const minimum =
             Number(
-                selectedOffer.min_amount || 0
+                selectedOffer.min_amount ||
+                0
             );
 
 
         const maximum =
             Number(
-                selectedOffer.max_amount || 0
+                selectedOffer.max_amount ||
+                0
             );
 
 
         const available =
             Number(
-                selectedOffer.available_amount || 0
+                selectedOffer.available_amount ||
+                0
             );
 
 
@@ -2854,6 +2009,30 @@ async function createTrade() {
                 Date.now() +
                 30 * 60 * 1000
             ).toISOString();
+
+
+        console.log(
+            "Creating trade:",
+            {
+                offerId:
+                    selectedOffer.id,
+
+                marketSide:
+                    marketSide,
+
+                offerSide:
+                    selectedOffer.side,
+
+                cryptoAmount:
+                    cryptoAmount,
+
+                fiatAmount:
+                    fiatAmount,
+
+                price:
+                    price
+            }
+        );
 
 
         const result =
@@ -2975,7 +2154,6 @@ async function createTrade() {
 /* ============================================================
    SAVE PAYMENT REFERENCE
 ============================================================ */
-
 
 async function submitPaymentReference() {
 
@@ -3123,7 +2301,6 @@ async function submitPaymentReference() {
    MARK PAYMENT SENT
 ============================================================ */
 
-
 async function markTradePaymentSent() {
 
     if (!selectedTrade) {
@@ -3155,7 +2332,9 @@ async function markTradePaymentSent() {
 
     if (
         String(currentUserId) !==
-        String(selectedTrade.buyer_id)
+        String(
+            selectedTrade.buyer_id
+        )
     ) {
 
         showStatus(
@@ -3251,7 +2430,6 @@ async function markTradePaymentSent() {
    CONFIRM PAYMENT RECEIVED
 ============================================================ */
 
-
 async function confirmPaymentReceived() {
 
     if (!selectedTrade) {
@@ -3283,7 +2461,9 @@ async function confirmPaymentReceived() {
 
     if (
         String(currentUserId) !==
-        String(selectedTrade.seller_id)
+        String(
+            selectedTrade.seller_id
+        )
     ) {
 
         showStatus(
@@ -3379,7 +2559,6 @@ async function confirmPaymentReceived() {
    RELEASE CRYPTO
 ============================================================ */
 
-
 async function releaseCrypto() {
 
     if (!selectedTrade) {
@@ -3411,7 +2590,9 @@ async function releaseCrypto() {
 
     if (
         String(currentUserId) !==
-        String(selectedTrade.seller_id)
+        String(
+            selectedTrade.seller_id
+        )
     ) {
 
         showStatus(
@@ -3550,7 +2731,6 @@ async function releaseCrypto() {
    CANCEL TRADE
 ============================================================ */
 
-
 async function cancelTrade() {
 
     if (!selectedTrade) {
@@ -3676,7 +2856,6 @@ async function cancelTrade() {
    RENDER MY TRADE
 ============================================================ */
 
-
 function renderMyTrade(trade) {
 
     const container =
@@ -3738,7 +2917,9 @@ function renderMyTrade(trade) {
         paymentMethod =
             selectedOffer.methods.find(
                 method =>
-                    String(method.id) ===
+                    String(
+                        method.id
+                    ) ===
                     String(
                         trade.payment_method_id
                     )
@@ -3769,14 +2950,22 @@ function renderMyTrade(trade) {
 
     const isBuyer =
         currentUserId &&
-        String(currentUserId) ===
-        String(trade.buyer_id);
+        String(
+            currentUserId
+        ) ===
+        String(
+            trade.buyer_id
+        );
 
 
     const isSeller =
         currentUserId &&
-        String(currentUserId) ===
-        String(trade.seller_id);
+        String(
+            currentUserId
+        ) ===
+        String(
+            trade.seller_id
+        );
 
 
     let actions = "";
@@ -4179,10 +3368,15 @@ function renderMyTrade(trade) {
                     </small>
 
                     <strong>
+
                         ${formatNumber(
                             trade.crypto_amount
                         )}
-                        ${escapeHTML(asset)}
+
+                        ${escapeHTML(
+                            asset
+                        )}
+
                     </strong>
 
                 </div>
@@ -4195,10 +3389,15 @@ function renderMyTrade(trade) {
                     </small>
 
                     <strong>
+
                         ${formatNumber(
                             trade.fiat_amount
                         )}
-                        ${escapeHTML(fiat)}
+
+                        ${escapeHTML(
+                            fiat
+                        )}
+
                     </strong>
 
                 </div>
@@ -4211,10 +3410,15 @@ function renderMyTrade(trade) {
                     </small>
 
                     <strong>
+
                         ${formatNumber(
                             trade.price
                         )}
-                        ${escapeHTML(fiat)}
+
+                        ${escapeHTML(
+                            fiat
+                        )}
+
                     </strong>
 
                 </div>
@@ -4231,10 +3435,15 @@ function renderMyTrade(trade) {
                     </span>
 
                     <strong>
+
                         ${formatNumber(
                             trade.trading_fee
                         )}
-                        ${escapeHTML(asset)}
+
+                        ${escapeHTML(
+                            asset
+                        )}
+
                     </strong>
 
                 </div>
@@ -4247,9 +3456,11 @@ function renderMyTrade(trade) {
                     </span>
 
                     <strong>
+
                         ${escapeHTML(
                             paymentName
                         )}
+
                     </strong>
 
                 </div>
@@ -4273,9 +3484,11 @@ function renderMyTrade(trade) {
                         </span>
 
                         <strong>
+
                             ${escapeHTML(
                                 paymentName
                             )}
+
                         </strong>
 
                     </div>
@@ -4288,9 +3501,11 @@ function renderMyTrade(trade) {
                         </span>
 
                         <strong>
+
                             ${escapeHTML(
                                 accountName
                             )}
+
                         </strong>
 
                     </div>
@@ -4303,9 +3518,11 @@ function renderMyTrade(trade) {
                         </span>
 
                         <strong>
+
                             ${escapeHTML(
                                 accountIdentifier
                             )}
+
                         </strong>
 
                     </div>
@@ -4322,9 +3539,11 @@ function renderMyTrade(trade) {
                             Payment Reference:
 
                             <strong>
+
                                 ${escapeHTML(
                                     paymentReference
                                 )}
+
                             </strong>
 
                         </div>
@@ -4380,7 +3599,6 @@ function renderMyTrade(trade) {
 /* ============================================================
    CONVERSATION HTML
 ============================================================ */
-
 
 function renderConversationHTML(
     trade
@@ -4515,7 +3733,6 @@ function renderConversationHTML(
    CHECK TRADE PARTICIPANT
 ============================================================ */
 
-
 function isTradeParticipant(
     trade
 ) {
@@ -4531,12 +3748,23 @@ function isTradeParticipant(
 
 
     return (
-        String(currentUserId) ===
-        String(trade.buyer_id)
-    ) ||
-    (
-        String(currentUserId) ===
-        String(trade.seller_id)
+
+        String(
+            currentUserId
+        ) ===
+        String(
+            trade.buyer_id
+        )
+
+    ) || (
+
+        String(
+            currentUserId
+        ) ===
+        String(
+            trade.seller_id
+        )
+
     );
 
 }
@@ -4545,7 +3773,6 @@ function isTradeParticipant(
 /* ============================================================
    LOAD TRADE MESSAGES
 ============================================================ */
-
 
 async function loadTradeMessages(
     tradeId
@@ -4569,8 +3796,12 @@ async function loadTradeMessages(
 
 
     if (
-        String(selectedTrade.id) !==
-        String(tradeId)
+        String(
+            selectedTrade.id
+        ) !==
+        String(
+            tradeId
+        )
     ) {
 
         return;
@@ -4663,7 +3894,6 @@ async function loadTradeMessages(
    RENDER MESSAGES
 ============================================================ */
 
-
 function renderMessages(
     messages
 ) {
@@ -4745,7 +3975,8 @@ function renderMessages(
 
                     const safeMessage =
                         escapeHTML(
-                            message.message || ""
+                            message.message ||
+                            ""
                         ).replace(
                             /\n/g,
                             "<br>"
@@ -4759,19 +3990,25 @@ function renderMessages(
                             <div class="message-bubble">
 
                                 <div class="message-sender">
+
                                     ${escapeHTML(
                                         senderLabel
                                     )}
+
                                 </div>
 
                                 <div>
+
                                     ${safeMessage}
+
                                 </div>
 
                                 <div class="message-time">
+
                                     ${escapeHTML(
                                         time
                                     )}
+
                                 </div>
 
                             </div>
@@ -4800,7 +4037,6 @@ function renderMessages(
 /* ============================================================
    SEND TRADE MESSAGE
 ============================================================ */
-
 
 async function sendTradeMessage() {
 
@@ -5024,7 +4260,6 @@ async function sendTradeMessage() {
    MESSAGE COUNTER
 ============================================================ */
 
-
 function updateMessageCounter() {
 
     const input =
@@ -5059,7 +4294,6 @@ function updateMessageCounter() {
    ENTER TO SEND
 ============================================================ */
 
-
 function handleMessageKeydown(
     event
 ) {
@@ -5081,7 +4315,6 @@ function handleMessageKeydown(
 /* ============================================================
    AUTOMATIC CHAT REFRESH
 ============================================================ */
-
 
 function startChatRefresh() {
 
@@ -5144,7 +4377,6 @@ function startChatRefresh() {
    STOP CHAT REFRESH
 ============================================================ */
 
-
 function stopChatRefresh() {
 
     if (
@@ -5166,7 +4398,6 @@ function stopChatRefresh() {
 /* ============================================================
    STATUS STEPS
 ============================================================ */
-
 
 function renderStatusSteps(
     currentStatus
@@ -5236,7 +4467,6 @@ function renderStatusSteps(
    STATUS LABEL
 ============================================================ */
 
-
 function statusLabel(
     status
 ) {
@@ -5253,7 +4483,6 @@ function statusLabel(
 /* ============================================================
    STATUS MESSAGE
 ============================================================ */
-
 
 function showStatus(
     message,
@@ -5301,7 +4530,6 @@ function showStatus(
    NUMBER FORMAT
 ============================================================ */
 
-
 function formatNumber(
     value
 ) {
@@ -5333,7 +4561,6 @@ function formatNumber(
 /* ============================================================
    HTML ESCAPE
 ============================================================ */
-
 
 function escapeHTML(
     value
@@ -5367,7 +4594,6 @@ function escapeHTML(
 /* ============================================================
    URL PARAMETERS
 ============================================================ */
-
 
 function applyURLParameters() {
 
@@ -5439,7 +4665,6 @@ function applyURLParameters() {
    LOAD EXISTING TRADE
 ============================================================ */
 
-
 async function loadExistingTrade() {
 
     if (!currentUserId) {
@@ -5509,7 +4734,6 @@ async function loadExistingTrade() {
    AUTH STATE CHANGES
 ============================================================ */
 
-
 supabaseClient.auth.onAuthStateChange(
     async (
         event,
@@ -5556,7 +4780,9 @@ supabaseClient.auth.onAuthStateChange(
                 myTrade.innerHTML =
                     `
                     <div class="empty">
+
                         Please log in to view your trades.
+
                     </div>
                     `;
 
@@ -5571,7 +4797,6 @@ supabaseClient.auth.onAuthStateChange(
 /* ============================================================
    PAGE START
 ============================================================ */
-
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -5592,10 +4817,4 @@ document.addEventListener(
     }
 );
 
-
 </script>
-
-
-</body>
-
-</html>
