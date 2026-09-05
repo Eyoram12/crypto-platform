@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,6 +13,32 @@ content="CryptoVault P2P marketplace for buying and selling USDT, Bitcoin and Et
 
 <style>
 
+/* =====================================================
+   CRYPTOVAULT STANDARD COLOR SYSTEM
+===================================================== */
+
+:root {
+    --primary: #0B1F3A;
+    --primary-light: #163A63;
+    --accent: #155EEF;
+    --accent-dark: #0E4ACF;
+
+    --success: #15803D;
+    --success-bg: #ECFDF3;
+
+    --warning: #B45309;
+    --error: #DC2626;
+
+    --background: #F6F8FC;
+    --card: #FFFFFF;
+    --text: #172033;
+    --text-secondary: #667085;
+    --text-light: #98A2B3;
+
+    --border: #E4E7EC;
+    --border-dark: #344054;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -25,8 +50,8 @@ html {
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f6f8fb;
-    color: #172033;
+    background: var(--background);
+    color: var(--text);
 }
 
 /* =========================
@@ -34,7 +59,7 @@ body {
 ========================= */
 
 header {
-    background: #101828;
+    background: var(--primary);
     color: white;
     padding: 13px 5%;
     display: flex;
@@ -44,7 +69,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #1d2939;
+    border-bottom: 1px solid var(--primary-light);
 }
 
 .logo {
@@ -60,7 +85,7 @@ header {
     height: 40px;
     border-radius: 10px;
     background: white;
-    color: #101828;
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,7 +99,7 @@ header {
 
 .logo-text small {
     display: block;
-    color: #98a2b3;
+    color: #B8C2D2;
     font-size: 8px;
     letter-spacing: 1px;
     margin-top: 2px;
@@ -88,7 +113,7 @@ nav {
 }
 
 nav a {
-    color: #d0d5dd;
+    color: #D0D5DD;
     text-decoration: none;
     padding: 9px 11px;
     border-radius: 7px;
@@ -98,7 +123,7 @@ nav a {
 nav a:hover,
 nav a.active {
     background: white;
-    color: #101828;
+    color: var(--primary);
 }
 
 .nav-profile {
@@ -112,8 +137,12 @@ nav a.active {
 
 .hero {
     background:
-        radial-gradient(circle at 80% 10%, rgba(37,99,235,.24), transparent 30%),
-        #101828;
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(21, 94, 239, .28),
+            transparent 30%
+        ),
+        var(--primary);
     color: white;
     padding: 70px 5% 80px;
 }
@@ -132,9 +161,9 @@ nav a.active {
     align-items: center;
     gap: 7px;
     padding: 7px 12px;
-    border: 1px solid #344054;
+    border: 1px solid var(--border-dark);
     border-radius: 30px;
-    color: #d0d5dd;
+    color: #D0D5DD;
     font-size: 12px;
 }
 
@@ -142,7 +171,7 @@ nav a.active {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #12b76a;
+    background: var(--success);
 }
 
 .hero h1 {
@@ -153,7 +182,7 @@ nav a.active {
 }
 
 .hero p {
-    color: #b8c2d2;
+    color: #B8C2D2;
     line-height: 1.7;
     font-size: 16px;
     max-width: 620px;
@@ -178,21 +207,21 @@ nav a.active {
 }
 
 .btn-primary {
-    background: white;
-    color: #101828;
+    background: var(--accent);
+    color: white;
 }
 
 .btn-primary:hover {
-    background: #eaecf0;
+    background: var(--accent-dark);
 }
 
 .btn-outline {
-    border: 1px solid #475467;
+    border: 1px solid #60708A;
     color: white;
 }
 
 .btn-outline:hover {
-    background: #1d2939;
+    background: var(--primary-light);
 }
 
 /* =========================
@@ -200,17 +229,17 @@ nav a.active {
 ========================= */
 
 .trade-box {
-    background: white;
-    color: #172033;
+    background: var(--card);
+    color: var(--text);
     border-radius: 18px;
     padding: 25px;
-    box-shadow: 0 25px 60px rgba(0,0,0,.28);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .28);
 }
 
 .trade-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: #f2f4f7;
+    background: #F2F4F7;
     border-radius: 9px;
     padding: 4px;
     margin-bottom: 22px;
@@ -223,18 +252,18 @@ nav a.active {
     border-radius: 7px;
     font-weight: bold;
     cursor: pointer;
-    color: #667085;
+    color: var(--text-secondary);
 }
 
 .trade-tab.active {
-    background: #101828;
+    background: var(--accent);
     color: white;
 }
 
 .form-label {
     display: block;
     font-size: 12px;
-    color: #667085;
+    color: var(--text-secondary);
     margin-bottom: 7px;
     font-weight: bold;
 }
@@ -242,11 +271,18 @@ nav a.active {
 .form-control {
     width: 100%;
     padding: 13px;
-    border: 1px solid #d0d5dd;
+    border: 1px solid #D0D5DD;
     border-radius: 8px;
     background: white;
     font-size: 14px;
     margin-bottom: 15px;
+    color: var(--text);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(21, 94, 239, .12);
 }
 
 .trade-button {
@@ -254,19 +290,19 @@ nav a.active {
     padding: 14px;
     border: none;
     border-radius: 8px;
-    background: #101828;
+    background: var(--accent);
     color: white;
     font-weight: bold;
     cursor: pointer;
 }
 
 .trade-button:hover {
-    background: #1d2939;
+    background: var(--accent-dark);
 }
 
 .trade-note {
     text-align: center;
-    color: #98a2b3;
+    color: var(--text-light);
     font-size: 11px;
     margin-top: 13px;
 }
@@ -292,11 +328,12 @@ nav a.active {
 .section-title h2 {
     margin: 0 0 8px;
     font-size: 29px;
+    color: var(--primary);
 }
 
 .section-title p {
     margin: 0;
-    color: #667085;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
@@ -305,11 +342,11 @@ nav a.active {
 ========================= */
 
 .wallet-card {
-    background: white;
-    border: 1px solid #e4e7ec;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 25px;
-    box-shadow: 0 5px 18px rgba(16,24,40,.04);
+    box-shadow: 0 5px 18px rgba(16, 24, 40, .04);
 }
 
 .wallet-header {
@@ -322,11 +359,12 @@ nav a.active {
 
 .wallet-header h2 {
     margin: 0;
+    color: var(--primary);
 }
 
 .wallet-status {
-    background: #ecfdf3;
-    color: #027a48;
+    background: var(--success-bg);
+    color: var(--success);
     padding: 6px 10px;
     border-radius: 20px;
     font-size: 11px;
@@ -335,13 +373,13 @@ nav a.active {
 
 .wallet-assets {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
 
 .wallet-asset {
-    background: #f8fafc;
-    border: 1px solid #eaecf0;
+    background: #F8FAFC;
+    border: 1px solid #EAECF0;
     border-radius: 12px;
     padding: 20px;
 }
@@ -350,7 +388,8 @@ nav a.active {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #eaecf0;
+    background: #EEF4FF;
+    color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -360,13 +399,14 @@ nav a.active {
 
 .wallet-asset span {
     display: block;
-    color: #667085;
+    color: var(--text-secondary);
     font-size: 12px;
     margin-bottom: 6px;
 }
 
 .wallet-asset strong {
     font-size: 20px;
+    color: var(--primary);
 }
 
 .wallet-actions {
@@ -379,15 +419,23 @@ nav a.active {
     text-decoration: none;
     padding: 10px 16px;
     border-radius: 7px;
-    background: #101828;
+    background: var(--accent);
     color: white;
     font-size: 13px;
     font-weight: bold;
 }
 
+.wallet-actions a:hover {
+    background: var(--accent-dark);
+}
+
 .wallet-actions a.secondary {
-    background: #f2f4f7;
-    color: #172033;
+    background: #F2F4F7;
+    color: var(--text);
+}
+
+.wallet-actions a.secondary:hover {
+    background: #E4E7EC;
 }
 
 /* =========================
@@ -400,8 +448,8 @@ nav a.active {
 }
 
 .offer {
-    background: white;
-    border: 1px solid #e4e7ec;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 18px;
     display: grid;
@@ -420,33 +468,35 @@ nav a.active {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: #eef4ff;
+    background: #EEF4FF;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: #175cd3;
+    color: var(--accent);
 }
 
 .trader strong {
     display: block;
     font-size: 14px;
+    color: var(--primary);
 }
 
 .trader small {
-    color: #667085;
+    color: var(--text-secondary);
     font-size: 11px;
 }
 
 .offer-info span {
     display: block;
-    color: #667085;
+    color: var(--text-secondary);
     font-size: 11px;
     margin-bottom: 4px;
 }
 
 .offer-info strong {
     font-size: 14px;
+    color: var(--primary);
 }
 
 .offer-button {
@@ -457,11 +507,15 @@ nav a.active {
     display: inline-block;
     padding: 10px 17px;
     border-radius: 7px;
-    background: #101828;
+    background: var(--accent);
     color: white;
     text-decoration: none;
     font-size: 12px;
     font-weight: bold;
+}
+
+.offer-button a:hover {
+    background: var(--accent-dark);
 }
 
 /* =========================
@@ -470,13 +524,13 @@ nav a.active {
 
 .payment-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
 }
 
 .payment {
-    background: white;
-    border: 1px solid #e4e7ec;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 22px;
     text-align: center;
@@ -490,10 +544,11 @@ nav a.active {
 .payment strong {
     display: block;
     font-size: 14px;
+    color: var(--primary);
 }
 
 .payment span {
-    color: #667085;
+    color: var(--text-secondary);
     font-size: 11px;
 }
 
@@ -503,13 +558,13 @@ nav a.active {
 
 .trust-grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
 .trust {
-    background: white;
-    border: 1px solid #e4e7ec;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 25px;
 }
@@ -521,10 +576,11 @@ nav a.active {
 
 .trust h3 {
     margin: 0 0 9px;
+    color: var(--primary);
 }
 
 .trust p {
-    color: #667085;
+    color: var(--text-secondary);
     font-size: 13px;
     line-height: 1.65;
     margin: 0;
@@ -535,7 +591,7 @@ nav a.active {
 ========================= */
 
 .cta {
-    background: #101828;
+    background: var(--primary);
     color: white;
     border-radius: 18px;
     text-align: center;
@@ -548,7 +604,7 @@ nav a.active {
 }
 
 .cta p {
-    color: #b8c2d2;
+    color: #B8C2D2;
     line-height: 1.6;
 }
 
@@ -557,8 +613,8 @@ nav a.active {
 ========================= */
 
 footer {
-    background: #101828;
-    color: #98a2b3;
+    background: var(--primary);
+    color: #98A2B3;
     text-align: center;
     padding: 35px 5%;
     font-size: 12px;
@@ -592,7 +648,7 @@ footer {
     }
 
     .payment-grid {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .trust-grid {
@@ -651,7 +707,6 @@ footer {
 }
 
 </style>
-
 </head>
 
 <body>
@@ -664,7 +719,6 @@ footer {
 
 <a href="index.html" class="logo">
 
-```
 <div class="logo-icon">
     CV
 </div>
@@ -673,20 +727,17 @@ footer {
     CryptoVault
     <small>DIGITAL ASSET PLATFORM</small>
 </div>
-```
 
 </a>
 
 <nav>
 
-```
 <a href="index.html" class="active">Home</a>
 <a href="p2p.html">P2P Trading</a>
 <a href="dashboard.html">Wallet</a>
 <a href="transactions.html">Transactions</a>
 <a href="settings.html">Security</a>
 <a href="login.html" id="authLink">Sign In</a>
-```
 
 </nav>
 
@@ -702,7 +753,6 @@ footer {
 
 <div>
 
-```
 <div class="hero-badge">
     <span></span>
     Secure P2P Digital Asset Marketplace
@@ -721,16 +771,15 @@ footer {
 
 <div class="hero-buttons">
 
-    <a href="p2p.html" class="btn btn-primary">
-        Buy Crypto
-    </a>
+<a href="p2p.html" class="btn btn-primary">
+    Buy Crypto
+</a>
 
-    <a href="p2p.html" class="btn btn-outline">
-        Sell Crypto
-    </a>
+<a href="p2p.html" class="btn btn-outline">
+    Sell Crypto
+</a>
 
 </div>
-```
 
 </div>
 
@@ -738,16 +787,15 @@ footer {
 
 <div class="trade-box">
 
-```
 <div class="trade-tabs">
 
-    <button class="trade-tab active" id="buyTab">
-        Buy
-    </button>
+<button class="trade-tab active" id="buyTab">
+    Buy
+</button>
 
-    <button class="trade-tab" id="sellTab">
-        Sell
-    </button>
+<button class="trade-tab" id="sellTab">
+    Sell
+</button>
 
 </div>
 
@@ -788,7 +836,6 @@ footer {
 <div class="trade-note">
     Compare available P2P offers before starting a trade.
 </div>
-```
 
 </div>
 
@@ -806,582 +853,77 @@ footer {
 
 <div class="section-title">
 
-```
 <h2>Your CryptoVault Wallet</h2>
 
 <p id="walletDescription">
     Sign in to view your actual wallet balances.
 </p>
-```
 
 </div>
 
 <div class="wallet-card">
 
-```
 <div class="wallet-header">
 
-    <h2>Available Assets</h2>
+<h2>Available Assets</h2>
 
-    <div class="wallet-status" id="walletStatus">
-        Not signed in
-    </div>
+<div class="wallet-status" id="walletStatus">
+    Not signed in
+</div>
 
 </div>
 
 <div class="wallet-assets">
 
-    <div class="wallet-asset">
+<div class="wallet-asset">
 
-        <div class="wallet-symbol">
-            ₮
-        </div>
+<div class="wallet-symbol">
+    ₮
+</div>
 
-        <span>USDT</span>
+<span>USDT</span>
 
-        <strong id="usdtBalance">
-            Sign in
-        </strong>
+<strong id="usdtBalance">
+    Sign in
+</strong>
 
-    </div>
+</div>
 
+<div class="wallet-asset">
 
-    <div class="wallet-asset">
+<div class="wallet-symbol">
+    ₿
+</div>
 
-        <div class="wallet-symbol">
-            ₿
-        </div>
+<span>BTC</span>
 
-        <span>BTC</span>
+<strong id="btcBalance">
+    Sign in
+</strong>
 
-        <strong id="btcBalance">
-            Sign in
-        </strong>
+</div>
 
-    </div>
+<div class="wallet-asset">
 
+<div class="wallet-symbol">
+    Ξ
+</div>
 
-    <div class="wallet-asset">
+<span>ETH</span>
 
-        <div class="wallet-symbol">
-            Ξ
-        </div>
+<strong id="ethBalance">
+    Sign in
+</strong>
 
-        <span>ETH</span>
-
-        <strong id="ethBalance">
-            Sign in
-        </strong>
-
-    </div>
+</div>
 
 </div>
 
 <div class="wallet-actions">
 
-    <a href="deposit.html">
-        Deposit
-    </a>
-
-    <a href="dashboard.html" class="secondary">
-        Open Wallet
-    </a>
-
-</div>
-```
-
-</div>
-
-</section>
-
-<!-- =========================
-     P2P MARKETPLACE
-========================= -->
-
-<section class="section">
-
-<div class="section-title">
-
-```
-<h2>ETB P2P Marketplace</h2>
-
-<p>
-    Find traders and compare prices, limits and payment methods.
-</p>
-```
-
-</div>
-
-<div class="offers">
-
-<div class="offer">
-
-```
-<div class="trader">
-
-    <div class="avatar">
-        CV
-    </div>
-
-    <div>
-        <strong>Verified Trader</strong>
-        <small>Verified account</small>
-    </div>
-
-</div>
-
-<div class="offer-info">
-    <span>Asset</span>
-    <strong>USDT</strong>
-</div>
-
-<div class="offer-info">
-    <span>Payment</span>
-    <strong>Bank Transfer</strong>
-</div>
-
-<div class="offer-button">
-    <a href="p2p.html">
-        View Offers
-    </a>
-</div>
-```
-
-</div>
-
-<div class="offer">
-
-```
-<div class="trader">
-
-    <div class="avatar">
-        CV
-    </div>
-
-    <div>
-        <strong>Verified Trader</strong>
-        <small>Trusted marketplace user</small>
-    </div>
-
-</div>
-
-<div class="offer-info">
-    <span>Asset</span>
-    <strong>USDT / ETB</strong>
-</div>
-
-<div class="offer-info">
-    <span>Payment</span>
-    <strong>Mobile Money</strong>
-</div>
-
-<div class="offer-button">
-    <a href="p2p.html">
-        View Offers
-    </a>
-</div>
-```
-
-</div>
-
-<div class="offer">
-
-```
-<div class="trader">
-
-    <div class="avatar">
-        CV
-    </div>
-
-    <div>
-        <strong>Crypto Trader</strong>
-        <small>Account verification available</small>
-    </div>
-
-</div>
-
-<div class="offer-info">
-    <span>Assets</span>
-    <strong>USDT / BTC / ETH</strong>
-</div>
-
-<div class="offer-info">
-    <span>Currency</span>
-    <strong>ETB</strong>
-</div>
-
-<div class="offer-button">
-    <a href="p2p.html">
-        Open P2P
-    </a>
-</div>
-```
-
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================
-     PAYMENT METHODS
-========================= -->
-
-<section class="section">
-
-<div class="section-title">
-
-```
-<h2>Payment Methods</h2>
-
-<p>
-    Choose a payment method available for your P2P trade.
-</p>
-```
-
-</div>
-
-<div class="payment-grid">
-
-```
-<div class="payment">
-
-    <div class="payment-icon">
-        🏦
-    </div>
-
-    <strong>Bank Transfer</strong>
-
-    <span>
-        Bank-based payments
-    </span>
-
-</div>
-
-
-<div class="payment">
-
-    <div class="payment-icon">
-        📱
-    </div>
-
-    <strong>Mobile Money</strong>
-
-    <span>
-        Mobile payment options
-    </span>
-
-</div>
-
-
-<div class="payment">
-
-    <div class="payment-icon">
-        💳
-    </div>
-
-    <strong>Digital Payments</strong>
-
-    <span>
-        Supported electronic methods
-    </span>
-
-</div>
-
-
-<div class="payment">
-
-    <div class="payment-icon">
-        💰
-    </div>
-
-    <strong>Other Methods</strong>
-
-    <span>
-        Depending on the offer
-    </span>
-
-</div>
-```
-
-</div>
-
-</section>
-
-<!-- =========================
-     TRUST & SECURITY
-========================= -->
-
-<section class="section">
-
-<div class="section-title">
-
-```
-<h2>Security and Trust</h2>
-
-<p>
-    Built around account security, verification and transparent trading.
-</p>
-```
-
-</div>
-
-<div class="trust-grid">
-
-```
-<div class="trust">
-
-    <div class="trust-icon">
-        🔐
-    </div>
-
-    <h3>Account Security</h3>
-
-    <p>
-        Secure authentication and account-management features
-        help protect your CryptoVault account.
-    </p>
-
-</div>
-
-
-<div class="trust">
-
-    <div class="trust-icon">
-        ✓
-    </div>
-
-    <h3>Trader Verification</h3>
-
-    <p>
-        Verification and trader information can help users
-        evaluate who they are trading with.
-    </p>
-
-</div>
-
-
-<div class="trust">
-
-    <div class="trust-icon">
-        ⭐
-    </div>
-
-    <h3>Trust & Reputation</h3>
-
-    <p>
-        P2P traders can be evaluated using reputation,
-        completed trades and account status.
-    </p>
-
-</div>
-```
-
-</div>
-
-</section>
-
-<!-- =========================
-     CTA
-========================= -->
-
-<section class="section">
-
-<div class="cta">
-
-```
-<h2>
-    Ready to trade?
-</h2>
-
-<p>
-    Explore CryptoVault P2P and find the right offer for your
-    USDT, BTC or ETH trade.
-</p>
-
-<div class="hero-buttons" style="justify-content:center">
-
-    <a href="p2p.html" class="btn btn-primary">
-        Open P2P Marketplace
-    </a>
-
-    <a href="register.html" class="btn btn-outline">
-        Create Account
-    </a>
-
-</div>
-```
-
-</div>
-
-</section>
-
-</main>
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-```
-<div class="footer-logo">
-    CryptoVault
-</div>
-
-<div>
-    Digital Asset Platform © 2026 CryptoVault
-</div>
-
-<div class="footer-note">
-    CryptoVault wallet balances shown here are retrieved from your
-    connected account. P2P trading functionality must be implemented
-    and secured before processing real cryptocurrency or financial transactions.
-</div>
-```
-
-</footer>
-
-<script>
-
-/* =====================================================
-   SUPABASE CONNECTION
-   USE THE SAME VALUES AS dashboard.html
-===================================================== */
-
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-/* =====================================================
-   LOAD USER WALLET
-===================================================== */
-
-async function loadWallet() {
-
-    const {
-        data: {
-            user
-        }
-    } = await supabaseClient.auth.getUser();
-
-    const walletStatus =
-        document.getElementById("walletStatus");
-
-    const walletDescription =
-        document.getElementById("walletDescription");
-
-    const authLink =
-        document.getElementById("authLink");
-
-    if (!user) {
-
-        walletStatus.textContent = "Not signed in";
-
-        walletDescription.textContent =
-            "Sign in to view your actual wallet balances.";
-
-        return;
-    }
-
-    walletStatus.textContent = "● Connected";
-
-    walletDescription.textContent =
-        "Your current balances from your CryptoVault wallet.";
-
-    authLink.textContent = "Account";
-    authLink.href = "dashboard.html";
-
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("wallets")
-        .select("usdt_balance, btc_balance, eth_balance")
-        .eq("user_id", user.id)
-        .single();
-
-
-    if (error) {
-
-        console.error("Wallet error:", error);
-
-        document.getElementById("usdtBalance").textContent = "0 USDT";
-        document.getElementById("btcBalance").textContent = "0 BTC";
-        document.getElementById("ethBalance").textContent = "0 ETH";
-
-        return;
-    }
-
-
-    document.getElementById("usdtBalance").textContent =
-        Number(data.usdt_balance || 0).toLocaleString(
-            undefined,
-            {
-                maximumFractionDigits: 8
-            }
-        ) + " USDT";
-
-
-    document.getElementById("btcBalance").textContent =
-        Number(data.btc_balance || 0).toLocaleString(
-            undefined,
-            {
-                maximumFractionDigits: 8
-            }
-        ) + " BTC";
-
-
-    document.getElementById("ethBalance").textContent =
-        Number(data.eth_balance || 0).toLocaleString(
-            undefined,
-            {
-                maximumFractionDigits: 8
-            }
-        ) + " ETH";
-}
-
-
-/* =====================================================
-   BUY / SELL TABS
-===================================================== */
-
-const buyTab =
-    document.getElementById("buyTab");
-
-const sellTab =
-    document.getElementById("sellTab");
-
-
-buyTab.addEventListener("click", function() {
-
-    buyTab.classList.add("active");
-    sellTab.classList.remove("active");
-
-});
-
-
-sellTab.addEventListener("click", function() {
-
-    sellTab.classList.add("active");
-    buyTab.classList.remove("active");
-
-});
-
-
-/* =====================================================
-   START
-===================================================== */
-
-loadWallet();
-
-</script>
-
-</body>
-</html>
+<a href="deposit.html">
+    Deposit
+</a>
+
+<a href="dashboard.html" class="secondary">
+   
