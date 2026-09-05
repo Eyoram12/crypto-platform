@@ -1,9 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CryptoVault P2P</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -521,6 +521,7 @@ footer{
   }
 }
 </style>
+
 </head>
 
 <body>
@@ -561,16 +562,14 @@ type="button"
 id="buyTab"
 class="market-tab active"
 onclick="setMarket('buy')">
-Buy
-</button>
+Buy </button>
 
 <button
 type="button"
 id="sellTab"
 class="market-tab"
 onclick="setMarket('sell')">
-Sell
-</button>
+Sell </button>
 
 </div>
 
@@ -724,8 +723,7 @@ type="button"
 id="createTradeBtn"
 class="action trade-button"
 onclick="createTrade()">
-Create Trade
-</button>
+Create Trade </button>
 
 </section>
 
@@ -2770,6 +2768,7 @@ showStatus(
 
 /* =========================
    BUYER MARK PAYMENT SENT
+   SECURE RPC
 ========================= */
 
 async function markTradePaymentSent(){
@@ -2823,17 +2822,16 @@ if(!confirmed){
 return;
 }
 
+try{
+
 const result =
-await supabaseClient
-.from("p2p_trades")
-.update({
-status:"payment_sent"
-})
-.eq("id",selectedTrade.id)
-.eq("buyer_id",currentUserId)
-.eq("status","awaiting_payment")
-.select()
-.single();
+await supabaseClient.rpc(
+"mark_payment_sent",
+{
+p_trade_id:
+String(selectedTrade.id)
+}
+);
 
 if(result.error){
 
@@ -2852,8 +2850,21 @@ return;
 
 }
 
-selectedTrade =
-result.data;
+if(!result.data){
+
+showStatus(
+"Payment could not be marked as sent.",
+"error"
+);
+
+return;
+
+}
+
+selectedTrade = {
+...selectedTrade,
+status:"payment_sent"
+};
 
 renderMyTrade(
 selectedTrade
@@ -2864,11 +2875,26 @@ showStatus(
 "success"
 );
 
+}catch(error){
+
+console.error(
+"Payment sent exception:",
+error
+);
+
+showStatus(
+"Something went wrong while marking payment as sent.",
+"error"
+);
+
+}
+
 }
 
 
 /* =========================
    SELLER CONFIRM PAYMENT
+   SECURE RPC
 ========================= */
 
 async function confirmPaymentReceived(){
@@ -2922,17 +2948,16 @@ if(!confirmed){
 return;
 }
 
+try{
+
 const result =
-await supabaseClient
-.from("p2p_trades")
-.update({
-status:"payment_confirmed"
-})
-.eq("id",selectedTrade.id)
-.eq("seller_id",currentUserId)
-.eq("status","payment_sent")
-.select()
-.single();
+await supabaseClient.rpc(
+"confirm_payment_received",
+{
+p_trade_id:
+String(selectedTrade.id)
+}
+);
 
 if(result.error){
 
@@ -2951,8 +2976,21 @@ return;
 
 }
 
-selectedTrade =
-result.data;
+if(!result.data){
+
+showStatus(
+"Payment could not be confirmed.",
+"error"
+);
+
+return;
+
+}
+
+selectedTrade = {
+...selectedTrade,
+status:"payment_confirmed"
+};
 
 renderMyTrade(
 selectedTrade
@@ -2963,11 +3001,25 @@ showStatus(
 "success"
 );
 
+}catch(error){
+
+console.error(
+"Payment confirmation exception:",
+error
+);
+
+showStatus(
+"Something went wrong while confirming payment.",
+"error"
+);
+
+}
+
 }
 
 
 /* =========================
-   SECURE CRYPTO RELEASE
+   CRYPTO RELEASE
 ========================= */
 
 async function releaseCrypto(){
@@ -3038,7 +3090,7 @@ await supabaseClient.rpc(
 "release_p2p_crypto",
 {
 p_trade_id:
-selectedTrade.id
+String(selectedTrade.id)
 }
 );
 
