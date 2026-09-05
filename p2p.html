@@ -1942,7 +1942,7 @@ function renderOffers(offers) {
 ============================================================ */
 
 
-function selectOffer(
+async function selectOffer(
     offerId,
     offers
 ) {
@@ -1953,7 +1953,6 @@ function selectOffer(
                 String(item.id) ===
                 String(offerId)
         );
-
 
     if (!offer) {
 
@@ -1966,18 +1965,12 @@ function selectOffer(
 
     }
 
+    selectedOffer = offer;
 
-    selectedOffer =
-        offer;
-
-
-    selectedPaymentMethod =
-        null;
-
+    selectedPaymentMethod = null;
 
     const trader =
         offer.profile || {};
-
 
     const traderName =
         trader.full_name ||
@@ -1985,40 +1978,33 @@ function selectOffer(
         trader.name ||
         "Trader";
 
-
     document.getElementById(
         "selectedTrader"
-    ).value =
-        traderName;
+    ).value = traderName;
 
+    showStatus(
+        "Loading payment methods...",
+        "info"
+    );
 
-    loadPaymentMethodSelector(
+    await loadPaymentMethodSelector(
         offer
     );
 
-
     calculateTrade();
-
 
     document.getElementById(
         "quickAmount"
     ).focus();
 
-
-    showStatus(
-        "Offer selected. Enter your amount and choose a payment method.",
-        "success"
-    );
-
 }
-
 
 /* ============================================================
    PAYMENT METHOD SELECTOR
 ============================================================ */
 
 
-function loadPaymentMethodSelector(
+async function loadPaymentMethodSelector(
     offer
 ) {
 
@@ -2027,66 +2013,146 @@ function loadPaymentMethodSelector(
             "paymentMethodSelect"
         );
 
+    if (!select) {
+        return;
+    }
 
-    select.disabled = false;
+    select.disabled = true;
 
-
-    select.innerHTML =
-        `
+    select.innerHTML = `
         <option value="">
-            Select payment method
+            Loading payment methods...
         </option>
-        `;
+    `;
 
+    try {
 
-    const methods =
-        offer.methods || [];
+        const result =
+            await supabaseClient.rpc(
+                "get_offer_payment_methods",
+                {
+                    p_offer_id: offer.id
+                }
+            );
 
+        if (result.error) {
 
-    if (methods.length === 0) {
+            console.error(
+                "Payment method RPC error:",
+                result.error
+            );
 
-        select.innerHTML =
-            `
-            <option value="">
-                No active payment method
-            </option>
+            select.innerHTML = `
+                <option value="">
+                    Unable to load payment methods
+                </option>
             `;
 
+            showStatus(
+                result.error.message ||
+                "Payment methods could not be loaded.",
+                "error"
+            );
 
-        select.disabled = true;
+            return;
+        }
 
+        const methods =
+            result.data || [];
 
-        return;
+        console.log(
+            "Payment methods returned:",
+            methods
+        );
+
+        offer.methods =
+            methods.map(
+                method => ({
+                    id:
+                        method.payment_method_id,
+
+                    name:
+                        method.payment_method_name,
+
+                    account_name:
+                        method.account_name,
+
+                    account_identifier:
+                        method.account_identifier
+                })
+            );
+
+        if (offer.methods.length === 0) {
+
+            select.innerHTML = `
+                <option value="">
+                    No active payment method
+                </option>
+            `;
+
+            showStatus(
+                "This trader has no active payment method for this offer.",
+                "warning"
+            );
+
+            return;
+        }
+
+        select.innerHTML = `
+            <option value="">
+                Select payment method
+            </option>
+        `;
+
+        offer.methods.forEach(
+            method => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    String(method.id);
+
+                option.textContent =
+                    method.name;
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+        select.disabled = false;
+
+        showStatus(
+            `${offer.methods.length} payment method loaded.`,
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Payment method loading exception:",
+            error
+        );
+
+        select.innerHTML = `
+            <option value="">
+                Payment method loading failed
+            </option>
+        `;
+
+        showStatus(
+            "Payment methods could not be loaded.",
+            "error"
+        );
 
     }
 
-
-    methods.forEach(
-        method => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                String(method.id);
-
-
-            option.textContent =
-                method.name;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
 }
-
 
 /* ============================================================
    PAYMENT METHOD CHANGED
