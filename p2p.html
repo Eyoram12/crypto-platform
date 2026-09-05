@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -460,6 +459,18 @@ input:focus{
   color:#15803d;
 }
 
+.release-box{
+  margin-top:15px;
+  padding:15px;
+  border:1px solid #bbf7d0;
+  border-radius:10px;
+  background:#f0fdf4;
+}
+
+.release-box strong{
+  color:#166534;
+}
+
 footer{
   margin-top:40px;
   background:#0b1f3a;
@@ -846,7 +857,8 @@ function clearTradeSelection(){
 document.getElementById("selectedTrader").value =
 "No offer selected";
 
-document.getElementById("quickAmount").value = "";
+document.getElementById("quickAmount").value =
+"";
 
 document.getElementById("paymentMethodSelect").innerHTML =
 `<option value="">Select an offer first</option>`;
@@ -2147,7 +2159,9 @@ String(trade.buyer_id);
 let actionHTML = "";
 
 
-/* BUYER PAYMENT BUTTON */
+/* =========================
+   BUYER PAYMENT
+========================= */
 
 if(isAwaiting && isBuyer){
 
@@ -2198,7 +2212,9 @@ The seller will then verify the payment.
 }
 
 
-/* BUYER WAITING */
+/* =========================
+   BUYER WAITING
+========================= */
 
 if(isPaymentSent && isBuyer){
 
@@ -2223,7 +2239,9 @@ Waiting for the seller to confirm the payment.
 }
 
 
-/* SELLER VERIFY */
+/* =========================
+   SELLER CONFIRM
+========================= */
 
 if(isPaymentSent && isSeller){
 
@@ -2251,7 +2269,9 @@ Confirm Payment Received
 }
 
 
-/* SELLER WAITING AFTER CONFIRMATION */
+/* =========================
+   SELLER RELEASE
+========================= */
 
 if(isPaymentConfirmed && isSeller){
 
@@ -2265,18 +2285,42 @@ Payment Confirmed
 
 <br><br>
 
-The payment has been confirmed.
+The buyer's payment has been confirmed.
 
-Crypto release should be handled by the secure escrow/release system.
+The seller can now release the cryptocurrency.
 
 </div>
+
+<div class="release-box">
+
+<strong>
+Security Check
+</strong>
+
+<br><br>
+
+Release crypto only after confirming that the payment was actually received.
+
+</div>
+
+<button
+type="button"
+id="releaseCryptoButton"
+class="action success-button trade-button"
+onclick="releaseCrypto()">
+
+Release Crypto
+
+</button>
 
 `;
 
 }
 
 
-/* BUYER AFTER CONFIRMATION */
+/* =========================
+   BUYER AFTER CONFIRMATION
+========================= */
 
 if(isPaymentConfirmed && isBuyer){
 
@@ -2301,7 +2345,9 @@ Waiting for crypto release.
 }
 
 
-/* RELEASED */
+/* =========================
+   RELEASED
+========================= */
 
 if(isReleased){
 
@@ -2315,7 +2361,7 @@ Crypto Released
 
 <br><br>
 
-The cryptocurrency has been released.
+The cryptocurrency release has been recorded.
 
 </div>
 
@@ -2324,7 +2370,9 @@ The cryptocurrency has been released.
 }
 
 
-/* COMPLETED */
+/* =========================
+   COMPLETED
+========================= */
 
 if(isCompleted){
 
@@ -2347,7 +2395,9 @@ This P2P trade has been completed successfully.
 }
 
 
-/* SPECIAL STATES */
+/* =========================
+   SPECIAL STATES
+========================= */
 
 if(
 status === "disputed" ||
@@ -2624,6 +2674,21 @@ return;
 
 }
 
+if(
+!currentUserId ||
+String(currentUserId) !==
+String(selectedTrade.buyer_id)
+){
+
+showStatus(
+"Only the buyer can save the payment reference.",
+"error"
+);
+
+return;
+
+}
+
 const input =
 document.getElementById(
 "paymentReferenceInput"
@@ -2666,6 +2731,7 @@ payment_reference:
 reference
 })
 .eq("id",selectedTrade.id)
+.eq("buyer_id",currentUserId)
 .eq("status","awaiting_payment")
 .select()
 .single();
@@ -2893,9 +2959,154 @@ selectedTrade
 );
 
 showStatus(
-"Payment confirmed. Crypto release is now required.",
+"Payment confirmed. Crypto release is now available.",
 "success"
 );
+
+}
+
+
+/* =========================
+   SECURE CRYPTO RELEASE
+========================= */
+
+async function releaseCrypto(){
+
+if(!selectedTrade){
+
+showStatus(
+"No active trade is selected.",
+"error"
+);
+
+return;
+
+}
+
+if(
+selectedTrade.status !==
+"payment_confirmed"
+){
+
+showStatus(
+"Crypto can only be released after payment is confirmed.",
+"warning"
+);
+
+return;
+
+}
+
+if(
+!currentUserId ||
+String(currentUserId) !==
+String(selectedTrade.seller_id)
+){
+
+showStatus(
+"Only the seller can release the crypto.",
+"error"
+);
+
+return;
+
+}
+
+const confirmed =
+confirm(
+"Confirm that you received the buyer's payment. Release the crypto?"
+);
+
+if(!confirmed){
+return;
+}
+
+const button =
+document.getElementById(
+"releaseCryptoButton"
+);
+
+if(button){
+button.disabled = true;
+button.textContent = "Releasing...";
+}
+
+try{
+
+const result =
+await supabaseClient.rpc(
+"release_p2p_crypto",
+{
+p_trade_id:
+selectedTrade.id
+}
+);
+
+if(result.error){
+
+console.error(
+"Crypto release error:",
+result.error
+);
+
+showStatus(
+"Crypto release failed: " +
+result.error.message,
+"error"
+);
+
+if(button){
+button.disabled = false;
+button.textContent = "Release Crypto";
+}
+
+return;
+
+}
+
+selectedTrade =
+Array.isArray(result.data)
+? result.data[0]
+: result.data;
+
+if(!selectedTrade){
+
+showStatus(
+"Crypto release returned no trade data.",
+"error"
+);
+
+return;
+
+}
+
+renderMyTrade(
+selectedTrade
+);
+
+showStatus(
+"Crypto release recorded successfully.",
+"success"
+);
+
+}catch(error){
+
+console.error(
+"Crypto release exception:",
+error
+);
+
+showStatus(
+"Something went wrong while releasing crypto.",
+"error"
+);
+
+if(button){
+button.disabled = false;
+button.textContent = "Release Crypto";
+}
+
+}
 
 }
 
@@ -3057,4 +3268,3 @@ await refreshMarket();
 
 </body>
 </html>
-```
