@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -213,6 +214,11 @@ input{
   background:#dc2626;
 }
 
+.action:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 .empty{
   text-align:center;
   padding:40px 20px;
@@ -275,6 +281,10 @@ input{
   color:#dc2626;
 }
 
+.trade-button{
+  margin-top:15px;
+}
+
 footer{
   margin-top:40px;
   background:#0b1f3a;
@@ -333,10 +343,7 @@ footer{
 
 </header>
 
-
 <div class="container">
-
-  <!-- HERO -->
 
   <section class="hero">
 
@@ -349,9 +356,6 @@ footer{
     </p>
 
   </section>
-
-
-  <!-- MARKET -->
 
   <section class="market-box">
 
@@ -375,7 +379,6 @@ footer{
 
     </div>
 
-
     <div class="filters">
 
       <div>
@@ -388,22 +391,13 @@ footer{
           id="assetSelect"
           onchange="refreshMarket()">
 
-          <option value="USDT">
-            USDT
-          </option>
-
-          <option value="BTC">
-            BTC
-          </option>
-
-          <option value="ETH">
-            ETH
-          </option>
+          <option value="USDT">USDT</option>
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
 
         </select>
 
       </div>
-
 
       <div>
 
@@ -415,13 +409,8 @@ footer{
           id="fiatSelect"
           onchange="refreshMarket()">
 
-          <option value="ETB">
-            ETB
-          </option>
-
-          <option value="USD">
-            USD
-          </option>
+          <option value="ETB">ETB</option>
+          <option value="USD">USD</option>
 
         </select>
 
@@ -431,19 +420,13 @@ footer{
 
   </section>
 
-
-  <!-- OFFERS -->
-
   <section class="market-box">
 
     <div
       id="marketTitle"
       class="market-title">
-
       Buy USDT with ETB
-
     </div>
-
 
     <div
       id="offers"
@@ -457,7 +440,6 @@ footer{
 
   </section>
 
-
   <!-- QUICK TRADE -->
 
   <section class="quick">
@@ -465,7 +447,6 @@ footer{
     <h2>
       Quick Trade
     </h2>
-
 
     <div class="quick-grid">
 
@@ -485,7 +466,6 @@ footer{
 
       </div>
 
-
       <div>
 
         <label>
@@ -502,7 +482,6 @@ footer{
 
     </div>
 
-
     <div class="calc">
 
       <div class="calc-row">
@@ -517,7 +496,6 @@ footer{
 
       </div>
 
-
       <div class="calc-row">
 
         <span>
@@ -529,7 +507,6 @@ footer{
         </strong>
 
       </div>
-
 
       <div class="calc-row">
 
@@ -545,21 +522,26 @@ footer{
 
     </div>
 
-
     <div
       id="status"
       class="status">
     </div>
 
+    <button
+      type="button"
+      id="createTradeBtn"
+      class="action trade-button"
+      onclick="createTrade()">
+      Create Trade
+    </button>
+
   </section>
 
 </div>
 
-
 <footer>
   CryptoVault P2P Marketplace
 </footer>
-
 
 <script>
 
@@ -595,16 +577,10 @@ let selectedOffer = null;
 
 function setMarket(side){
 
-  if(side === "sell"){
-
-    marketSide = "sell";
-
-  }else{
-
-    marketSide = "buy";
-
-  }
-
+  marketSide =
+    side === "sell"
+      ? "sell"
+      : "buy";
 
   document
     .getElementById("buyTab")
@@ -613,7 +589,6 @@ function setMarket(side){
       marketSide === "buy"
     );
 
-
   document
     .getElementById("sellTab")
     .classList.toggle(
@@ -621,20 +596,16 @@ function setMarket(side){
       marketSide === "sell"
     );
 
-
   selectedOffer = null;
-
 
   document
     .getElementById("selectedTrader")
     .value =
       "No offer selected";
 
-
   document
     .getElementById("quickAmount")
     .value = "";
-
 
   updateMarketTitle();
 
@@ -656,12 +627,10 @@ function updateMarketTitle(){
       .getElementById("assetSelect")
       .value;
 
-
   const fiat =
     document
       .getElementById("fiatSelect")
       .value;
-
 
   if(marketSide === "buy"){
 
@@ -670,18 +639,15 @@ function updateMarketTitle(){
       .textContent =
         `Buy ${asset} with ${fiat}`;
 
-
     document
       .getElementById("heroTitle")
       .textContent =
         `Buy ${asset}`;
 
-
     document
       .getElementById("heroText")
       .textContent =
         `Buy ${asset} from P2P traders.`;
-
 
     document
       .getElementById("amountLabel")
@@ -695,18 +661,15 @@ function updateMarketTitle(){
       .textContent =
         `Sell ${asset} for ${fiat}`;
 
-
     document
       .getElementById("heroTitle")
       .textContent =
         `Sell ${asset}`;
 
-
     document
       .getElementById("heroText")
       .textContent =
         `Sell ${asset} to P2P traders.`;
-
 
     document
       .getElementById("amountLabel")
@@ -729,12 +692,10 @@ async function loadOffers(){
       .getElementById("assetSelect")
       .value;
 
-
   const fiat =
     document
       .getElementById("fiatSelect")
       .value;
-
 
   const result =
     await supabaseClient
@@ -752,7 +713,6 @@ async function loadOffers(){
         }
       );
 
-
   if(result.error){
 
     console.error(
@@ -760,17 +720,14 @@ async function loadOffers(){
       result.error
     );
 
-
     showStatus(
       "Could not load P2P offers.",
       "error"
     );
 
-
     return [];
 
   }
-
 
   return result.data || [];
 
@@ -792,7 +749,6 @@ async function loadPaymentMethods(offers){
 
   }
 
-
   const traderIds = [
     ...new Set(
       offers
@@ -804,7 +760,6 @@ async function loadPaymentMethods(offers){
     )
   ];
 
-
   if(
     traderIds.length === 0
   ){
@@ -813,13 +768,7 @@ async function loadPaymentMethods(offers){
 
   }
 
-
   try{
-
-    /*
-      We intentionally use only id, name and enabled
-      here. This avoids depending on a "code" column.
-    */
 
     const result =
       await supabaseClient
@@ -843,7 +792,6 @@ async function loadPaymentMethods(offers){
           "active"
         );
 
-
     if(result.error){
 
       console.warn(
@@ -851,11 +799,9 @@ async function loadPaymentMethods(offers){
         result.error.message
       );
 
-
       return offers;
 
     }
-
 
     return offers.map(
       offer => {
@@ -877,7 +823,6 @@ async function loadPaymentMethods(offers){
                 method.enabled !== false
             );
 
-
         return {
           ...offer,
           methods
@@ -886,14 +831,12 @@ async function loadPaymentMethods(offers){
       }
     );
 
-
   }catch(error){
 
     console.warn(
       "Payment method exception:",
       error.message
     );
-
 
     return offers;
 
@@ -917,7 +860,6 @@ async function enrichOffers(offers){
 
   }
 
-
   const traderIds = [
     ...new Set(
       offers
@@ -929,7 +871,6 @@ async function enrichOffers(offers){
     )
   ];
 
-
   if(
     traderIds.length === 0
   ){
@@ -938,15 +879,9 @@ async function enrichOffers(offers){
 
   }
 
-
   let profiles = [];
 
   let stats = [];
-
-
-  /*
-     PROFILES
-  */
 
   try{
 
@@ -958,7 +893,6 @@ async function enrichOffers(offers){
           "id",
           traderIds
         );
-
 
     if(!result.error){
 
@@ -976,11 +910,6 @@ async function enrichOffers(offers){
 
   }
 
-
-  /*
-     TRADER STATS
-  */
-
   try{
 
     const result =
@@ -991,7 +920,6 @@ async function enrichOffers(offers){
           "user_id",
           traderIds
         );
-
 
     if(!result.error){
 
@@ -1009,7 +937,6 @@ async function enrichOffers(offers){
 
   }
 
-
   return offers.map(
     offer => {
 
@@ -1020,14 +947,12 @@ async function enrichOffers(offers){
             offer.trader_id
         );
 
-
       const traderStats =
         stats.find(
           stat =>
             stat.user_id ===
             offer.trader_id
         );
-
 
       return {
         ...offer,
@@ -1049,12 +974,10 @@ async function refreshMarket(){
 
   updateMarketTitle();
 
-
   const container =
     document.getElementById(
       "offers"
     );
-
 
   container.innerHTML = `
     <div class="empty">
@@ -1062,29 +985,24 @@ async function refreshMarket(){
     </div>
   `;
 
-
   try{
 
     const offers =
       await loadOffers();
-
 
     let enriched =
       await enrichOffers(
         offers
       );
 
-
     enriched =
       await loadPaymentMethods(
         enriched
       );
 
-
     renderOffers(
       enriched
     );
-
 
   }catch(error){
 
@@ -1093,13 +1011,11 @@ async function refreshMarket(){
       error
     );
 
-
     container.innerHTML = `
       <div class="empty">
         Could not load offers.
       </div>
     `;
-
 
     showStatus(
       "Something went wrong while loading the marketplace.",
@@ -1122,7 +1038,6 @@ function renderOffers(offers){
       "offers"
     );
 
-
   if(
     !offers ||
     offers.length === 0
@@ -1143,18 +1058,15 @@ function renderOffers(offers){
 
   }
 
-
   const asset =
     document
       .getElementById("assetSelect")
       .value;
 
-
   const fiat =
     document
       .getElementById("fiatSelect")
       .value;
-
 
   container.innerHTML =
     offers.map(
@@ -1163,10 +1075,8 @@ function renderOffers(offers){
         const profile =
           offer.profile || {};
 
-
         const stats =
           offer.traderStats || {};
-
 
         const traderName =
           profile.full_name ||
@@ -1174,18 +1084,15 @@ function renderOffers(offers){
           profile.name ||
           "Trader";
 
-
         const rating =
           stats.rating ??
           stats.average_rating ??
           "New";
 
-
         const completed =
           stats.completed_trades ??
           stats.total_trades ??
           0;
-
 
         const available =
           offer.amount ??
@@ -1194,25 +1101,20 @@ function renderOffers(offers){
           offer.quantity ??
           0;
 
-
         const minimum =
           offer.min_amount ??
           offer.minimum_amount ??
           0;
-
 
         const maximum =
           offer.max_amount ??
           offer.maximum_amount ??
           0;
 
-
         const methods =
           offer.methods || [];
 
-
         let paymentHTML;
-
 
         if(methods.length > 0){
 
@@ -1238,18 +1140,15 @@ function renderOffers(offers){
 
         }
 
-
         const buttonText =
           marketSide === "buy"
             ? `Buy ${asset}`
             : `Sell ${asset}`;
 
-
         const buttonClass =
           marketSide === "sell"
             ? "action sell"
             : "action";
-
 
         return `
 
@@ -1271,7 +1170,6 @@ function renderOffers(offers){
 
               </div>
 
-
               <div class="price">
 
                 ${formatNumber(
@@ -1283,7 +1181,6 @@ function renderOffers(offers){
               </div>
 
             </div>
-
 
             <div class="info-grid">
 
@@ -1301,7 +1198,6 @@ function renderOffers(offers){
 
               </div>
 
-
               <div class="info">
 
                 <small>
@@ -1315,7 +1211,6 @@ function renderOffers(offers){
                 ${fiat}
 
               </div>
-
 
               <div class="info">
 
@@ -1331,13 +1226,11 @@ function renderOffers(offers){
 
             </div>
 
-
             <div class="payment">
 
               ${paymentHTML}
 
             </div>
-
 
             <div style="
               font-size:13px;
@@ -1354,7 +1247,6 @@ function renderOffers(offers){
               </strong>
 
             </div>
-
 
             ${
               maximum
@@ -1374,7 +1266,6 @@ function renderOffers(offers){
                 : ""
             }
 
-
             <button
               type="button"
               class="${buttonClass}"
@@ -1392,12 +1283,6 @@ function renderOffers(offers){
 
       }
     ).join("");
-
-
-  /*
-     Attach buttons after rendering.
-     This is more reliable than inline onclick.
-  */
 
   container
     .querySelectorAll(
@@ -1440,7 +1325,6 @@ function selectOffer(
         String(offerId)
     );
 
-
   if(!offer){
 
     showStatus(
@@ -1452,21 +1336,17 @@ function selectOffer(
 
   }
 
-
   selectedOffer =
     offer;
 
-
   const profile =
     offer.profile || {};
-
 
   const traderName =
     profile.full_name ||
     profile.username ||
     profile.name ||
     "Trader";
-
 
   document
     .getElementById(
@@ -1475,16 +1355,13 @@ function selectOffer(
     .value =
       traderName;
 
-
   calculateTrade();
-
 
   document
     .querySelector(".quick")
     .scrollIntoView({
       behavior:"smooth"
     });
-
 
   showStatus(
     "Offer selected. Enter your amount.",
@@ -1509,14 +1386,12 @@ function calculateTrade(){
         .value
     ) || 0;
 
-
   const rate =
     selectedOffer
       ? Number(
           selectedOffer.price
         )
       : 0;
-
 
   const asset =
     document
@@ -1525,7 +1400,6 @@ function calculateTrade(){
       )
       .value;
 
-
   const fiat =
     document
       .getElementById(
@@ -1533,13 +1407,11 @@ function calculateTrade(){
       )
       .value;
 
-
   const rateElement =
     document
       .getElementById(
         "calcRate"
       );
-
 
   const feeElement =
     document
@@ -1547,13 +1419,11 @@ function calculateTrade(){
         "calcFee"
       );
 
-
   const receiveElement =
     document
       .getElementById(
         "calcReceive"
       );
-
 
   if(
     !selectedOffer ||
@@ -1574,18 +1444,8 @@ function calculateTrade(){
 
   }
 
-
   const feeRate =
     0.005;
-
-
-  /*
-     BUY
-
-     User enters ETB/USD.
-     Crypto = fiat / price.
-     Fee = crypto * 0.5%.
-  */
 
   if(
     marketSide === "buy"
@@ -1594,62 +1454,387 @@ function calculateTrade(){
     const crypto =
       amount / rate;
 
-
     const fee =
       crypto * feeRate;
-
 
     const receive =
       crypto - fee;
 
-
     rateElement.textContent =
       `${formatNumber(rate)} ${fiat}`;
-
 
     feeElement.textContent =
       `${fee.toFixed(6)} ${asset}`;
 
-
     receiveElement.textContent =
       `${receive.toFixed(6)} ${asset}`;
-
 
     return;
 
   }
 
-
-  /*
-     SELL
-
-     User enters crypto.
-     Fiat = crypto * price.
-     Fee = fiat * 0.5%.
-  */
-
   const gross =
     amount * rate;
-
 
   const fee =
     gross * feeRate;
 
-
   const receive =
     gross - fee;
-
 
   rateElement.textContent =
     `${formatNumber(rate)} ${fiat}`;
 
-
   feeElement.textContent =
     `${fee.toFixed(2)} ${fiat}`;
 
-
   receiveElement.textContent =
     `${receive.toFixed(2)} ${fiat}`;
+
+}
+
+
+/* =========================================================
+   CREATE P2P TRADE
+========================================================= */
+
+async function createTrade(){
+
+  const button =
+    document.getElementById(
+      "createTradeBtn"
+    );
+
+  if(button){
+
+    button.disabled = true;
+
+  }
+
+  try{
+
+    if(!selectedOffer){
+
+      showStatus(
+        "Please select a P2P offer first.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    const amount =
+      parseFloat(
+        document
+          .getElementById(
+            "quickAmount"
+          )
+          .value
+      ) || 0;
+
+    if(amount <= 0){
+
+      showStatus(
+        "Please enter a valid amount.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    const asset =
+      document
+        .getElementById(
+          "assetSelect"
+        )
+        .value;
+
+    const fiat =
+      document
+        .getElementById(
+          "fiatSelect"
+        )
+        .value;
+
+    const price =
+      Number(
+        selectedOffer.price
+      );
+
+    if(!price || price <= 0){
+
+      showStatus(
+        "This offer has an invalid price.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    const minimum =
+      Number(
+        selectedOffer.min_amount ??
+        selectedOffer.minimum_amount ??
+        0
+      );
+
+    const maximum =
+      Number(
+        selectedOffer.max_amount ??
+        selectedOffer.maximum_amount ??
+        0
+      );
+
+    /*
+       For BUY:
+       amount is fiat.
+
+       For SELL:
+       amount is crypto.
+    */
+
+    let cryptoAmount = 0;
+
+    let fiatAmount = 0;
+
+    let tradingFee = 0;
+
+    if(marketSide === "buy"){
+
+      fiatAmount =
+        amount;
+
+      cryptoAmount =
+        amount / price;
+
+      tradingFee =
+        cryptoAmount * 0.005;
+
+    }else{
+
+      cryptoAmount =
+        amount;
+
+      fiatAmount =
+        amount * price;
+
+      tradingFee =
+        fiatAmount * 0.005;
+
+    }
+
+    /*
+       Validate offer limits.
+
+       Existing P2P offers use minimum and maximum
+       values. We validate against the entered
+       amount in the offer's displayed currency.
+    */
+
+    if(
+      minimum > 0 &&
+      fiatAmount < minimum &&
+      marketSide === "buy"
+    ){
+
+      showStatus(
+        `Amount is below the minimum of ${formatNumber(minimum)} ${fiat}.`,
+        "error"
+      );
+
+      return;
+
+    }
+
+    if(
+      maximum > 0 &&
+      fiatAmount > maximum &&
+      marketSide === "buy"
+    ){
+
+      showStatus(
+        `Amount is above the maximum of ${formatNumber(maximum)} ${fiat}.`,
+        "error"
+      );
+
+      return;
+
+    }
+
+    const sessionResult =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    if(
+      sessionResult.error
+    ){
+
+      console.error(
+        "Session error:",
+        sessionResult.error
+      );
+
+      showStatus(
+        "Could not check your login session.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    const session =
+      sessionResult.data.session;
+
+    if(!session){
+
+      showStatus(
+        "Please log in to CryptoVault before creating a trade.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    const currentUser =
+      session.user;
+
+    const buyerId =
+      marketSide === "buy"
+        ? currentUser.id
+        : selectedOffer.trader_id;
+
+    const sellerId =
+      marketSide === "sell"
+        ? currentUser.id
+        : selectedOffer.trader_id;
+
+    if(!selectedOffer.trader_id){
+
+      showStatus(
+        "This offer has no trader ID.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    /*
+       The payment method is intentionally left null
+       until a specific payment method is selected.
+    */
+
+    const tradeData = {
+
+      offer_id:
+        selectedOffer.id,
+
+      buyer_id:
+        buyerId,
+
+      seller_id:
+        sellerId,
+
+      asset:
+        asset,
+
+      crypto_amount:
+        cryptoAmount,
+
+      fiat_amount:
+        fiatAmount,
+
+      price:
+        price,
+
+      trading_fee:
+        tradingFee,
+
+      payment_method:
+        null,
+
+      status:
+        "pending",
+
+      payment_reference:
+        null,
+
+      expires:
+        new Date(
+          Date.now() +
+          30 * 60 * 1000
+        ).toISOString()
+
+    };
+
+    console.log(
+      "Creating P2P trade:",
+      tradeData
+    );
+
+    const result =
+      await supabaseClient
+        .from("p2p_trades")
+        .insert(
+          tradeData
+        )
+        .select()
+        .single();
+
+    if(result.error){
+
+      console.error(
+        "P2P trade creation error:",
+        result.error
+      );
+
+      showStatus(
+        "Trade could not be created: " +
+        result.error.message,
+        "error"
+      );
+
+      return;
+
+    }
+
+    showStatus(
+      "P2P trade created successfully.",
+      "success"
+    );
+
+    console.log(
+      "Created P2P trade:",
+      result.data
+    );
+
+  }catch(error){
+
+    console.error(
+      "Create trade exception:",
+      error
+    );
+
+    showStatus(
+      "Something went wrong while creating the trade.",
+      "error"
+    );
+
+  }finally{
+
+    if(button){
+
+      button.disabled = false;
+
+    }
+
+  }
 
 }
 
@@ -1668,10 +1853,8 @@ function showStatus(
       "status"
     );
 
-
   box.textContent =
     message;
-
 
   box.className =
     "status " +
@@ -1693,7 +1876,6 @@ function formatNumber(value){
   const number =
     Number(value);
 
-
   if(
     Number.isNaN(number)
   ){
@@ -1701,7 +1883,6 @@ function formatNumber(value){
     return "0";
 
   }
-
 
   return number.toLocaleString(
     undefined,
@@ -1755,18 +1936,11 @@ function applyURL(){
       window.location.search
     );
 
-
   const type =
     params.get("type");
 
-
   const asset =
     params.get("asset");
-
-
-  /*
-     BUY / SELL
-  */
 
   if(
     type &&
@@ -1783,16 +1957,10 @@ function applyURL(){
 
   }
 
-
-  /*
-     ASSET
-  */
-
   if(asset){
 
     const upper =
       asset.toUpperCase();
-
 
     if(
       [
@@ -1813,11 +1981,6 @@ function applyURL(){
 
   }
 
-
-  /*
-     UPDATE BUTTONS
-  */
-
   document
     .getElementById(
       "buyTab"
@@ -1826,7 +1989,6 @@ function applyURL(){
       "active",
       marketSide === "buy"
     );
-
 
   document
     .getElementById(
@@ -1861,3 +2023,4 @@ document.addEventListener(
 
 </body>
 </html>
+```
