@@ -1224,214 +1224,55 @@ async function loadOffers() {
 
 async function loadPaymentMethods(offers) {
 
-    if (
-        !offers ||
-        offers.length === 0
-    ) {
-
+    if (!offers || offers.length === 0) {
         return offers || [];
-
     }
 
+    const results = await Promise.all(
 
-    const offerIds =
-        offers
-            .map(
-                offer =>
-                    offer.id
-            )
-            .filter(Boolean);
+        offers.map(async (offer) => {
 
-
-    const traderIds =
-        [
-            ...new Set(
-                offers
-                    .map(
-                        offer =>
-                            offer.trader_id
-                    )
-                    .filter(Boolean)
-            )
-        ];
-
-
-    if (
-        offerIds.length === 0 ||
-        traderIds.length === 0
-    ) {
-
-        return offers;
-
-    }
-
-
-    const offerMethodsResult =
-        await supabaseClient
-            .from("offer_payment_methods")
-            .select(`
-                offer_id,
-                payment_method_id,
-                payment_methods (
-                    id,
-                    name,
-                    enabled
-                )
-            `)
-            .in(
-                "offer_id",
-                offerIds
-            );
-
-
-    if (
-        offerMethodsResult.error
-    ) {
-
-        console.warn(
-            offerMethodsResult.error
-        );
-
-        return offers;
-
-    }
-
-
-    const traderMethodsResult =
-        await supabaseClient
-            .from("trader_payment_methods")
-            .select(`
-                id,
-                trader_id,
-                payment_method_id,
-                account_name,
-                account_identifier,
-                status,
-                payment_methods (
-                    id,
-                    name,
-                    enabled
-                )
-            `)
-            .in(
-                "trader_id",
-                traderIds
-            )
-            .eq(
-                "status",
-                "active"
-            );
-
-
-    if (
-        traderMethodsResult.error
-    ) {
-
-        console.warn(
-            traderMethodsResult.error
-        );
-
-        return offers;
-
-    }
-
-
-    const offerMethods =
-        offerMethodsResult.data || [];
-
-
-    const traderMethods =
-        traderMethodsResult.data || [];
-
-
-    return offers.map(
-        offer => {
-
-            const acceptedMethods =
-                offerMethods.filter(
-                    row =>
-                        String(
-                            row.offer_id
-                        ) ===
-                        String(
-                            offer.id
-                        )
+            const result =
+                await supabaseClient.rpc(
+                    "get_offer_payment_methods",
+                    {
+                        p_offer_id: offer.id
+                    }
                 );
 
+            if (result.error) {
+
+                console.error(
+                    "Payment method error:",
+                    result.error
+                );
+
+                return {
+                    ...offer,
+                    methods: []
+                };
+            }
 
             const methods =
-                acceptedMethods
-                    .map(
-                        row => {
-
-                            const method =
-                                row.payment_methods ||
-                                {};
-
-
-                            const traderMethod =
-                                traderMethods.find(
-                                    item =>
-                                        String(
-                                            item.trader_id
-                                        ) ===
-                                        String(
-                                            offer.trader_id
-                                        ) &&
-                                        String(
-                                            item.payment_method_id
-                                        ) ===
-                                        String(
-                                            row.payment_method_id
-                                        )
-                                );
-
-
-                            if (
-                                !traderMethod ||
-                                method.enabled !== true
-                            ) {
-
-                                return null;
-
-                            }
-
-
-                            return {
-
-                                id:
-                                    row.payment_method_id,
-
-                                name:
-                                    method.name ||
-                                    "Payment Method",
-
-                                account_name:
-                                    traderMethod.account_name ||
-                                    "",
-
-                                account_identifier:
-                                    traderMethod.account_identifier ||
-                                    ""
-
-                            };
-
-                        }
-                    )
-                    .filter(Boolean);
-
+                (result.data || []).map(
+                    method => ({
+                        id: method.payment_method_id,
+                        name: method.payment_method_name,
+                        account_name: method.account_name,
+                        account_identifier: method.account_identifier
+                    })
+                );
 
             return {
-
                 ...offer,
-
                 methods
-
             };
 
-        }
+        })
+
     );
 
+    return results;
 }
 
 
