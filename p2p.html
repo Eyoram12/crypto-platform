@@ -342,25 +342,27 @@ footer{
   </section>
 
 
-  <section class="market-box">
+<section class="market-box">
 
-    <div class="tabs">
+  <div class="tabs">
 
-      <button
-        id="buyTab"
-        class="market-tab active"
-        onclick="setMarket('buy')">
-        Buy
-      </button>
+    <button
+      type="button"
+      id="buyTab"
+      class="market-tab active"
+      onclick="setMarket('buy'); return false;">
+      Buy
+    </button>
 
-      <button
-        id="sellTab"
-        class="market-tab"
-        onclick="setMarket('sell')">
-        Sell
-      </button>
+    <button
+      type="button"
+      id="sellTab"
+      class="market-tab"
+      onclick="setMarket('sell'); return false;">
+      Sell
+    </button>
 
-    </div>
+  </div>
 
 
     <div class="filters">
