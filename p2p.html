@@ -1,44 +1,163 @@
-  if(!supabaseClient || !offers.length)
-    return offers;
+let marketSide = "buy";
+let selectedOffer = null;
+let selectedTraderData = null;
+
+
+/* =========================
+   BUY / SELL SWITCH
+========================= */
+
+function setMarket(side) {
+
+  marketSide = side === "sell" ? "sell" : "buy";
+
+  const buyTab = document.getElementById("buyTab");
+  const sellTab = document.getElementById("sellTab");
+
+  if (buyTab) {
+    buyTab.classList.toggle(
+      "active",
+      marketSide === "buy"
+    );
+  }
+
+  if (sellTab) {
+    sellTab.classList.toggle(
+      "active",
+      marketSide === "sell"
+    );
+  }
+
+  selectedOffer = null;
+  selectedTraderData = null;
+
+  const selectedTrader =
+    document.getElementById("selectedTrader");
+
+  const selectedRating =
+    document.getElementById("selectedRating");
+
+  if (selectedTrader) {
+    selectedTrader.textContent =
+      "Select an offer";
+  }
+
+  if (selectedRating) {
+    selectedRating.textContent =
+      "Choose a trader below";
+  }
+
+  const amount =
+    document.getElementById("quickAmount");
+
+  if (amount) {
+    amount.value = "";
+  }
+
+  updateMarketTitle();
+  calculateTrade();
+  refreshMarket();
+}
+
+
+/* =========================
+   MARKET TITLE
+========================= */
+
+function updateMarketTitle() {
+
+  const asset =
+    document.getElementById("assetSelect")?.value ||
+    "USDT";
+
+  const fiat =
+    document.getElementById("fiatSelect")?.value ||
+    "ETB";
+
+  const title =
+    document.getElementById("marketTitle");
+
+  if (!title) return;
+
+  title.textContent =
+    marketSide === "buy"
+      ? `Buy ${asset} with ${fiat}`
+      : `Sell ${asset} for ${fiat}`;
+}
+
+
+/* =========================
+   PAYMENT METHODS
+========================= */
+
+async function loadTraderPaymentMethods(offers) {
+
+  if (
+    !supabaseClient ||
+    !offers ||
+    !offers.length
+  ) {
+    return offers || [];
+  }
 
   const traderIds = [
     ...new Set(
-      offers.map(o => o.trader_id)
+      offers
+        .map(o => o.trader_id)
+        .filter(Boolean)
     )
   ];
 
-  try{
+  if (!traderIds.length) {
+    return offers;
+  }
 
-    const {data:links,error} =
+  try {
+
+    const { data: links, error } =
       await supabaseClient
         .from("trader_payment_methods")
         .select(`
           trader_id,
           payment_method_id,
+          status,
           payment_methods (
             id,
             name,
+            code,
             enabled
           )
         `)
-        .in("trader_id",traderIds)
-        .eq("enabled",true);
+        .in(
+          "trader_id",
+          traderIds
+        )
+        .eq(
+          "status",
+          "active"
+        );
 
-    if(error) throw error;
+    if (error) {
+      throw error;
+    }
 
     return offers.map(offer => {
 
       const methods =
         (links || [])
           .filter(
-            x => x.trader_id === offer.trader_id
+            x =>
+              x.trader_id ===
+              offer.trader_id
           )
           .map(
-            x => x.payment_methods
+            x =>
+              x.payment_methods
           )
           .filter(Boolean)
           .filter(
-            x => x.enabled !== false
+            x =>
+              x.enabled !== false
           );
 
       return {
@@ -48,7 +167,7 @@
 
     });
 
-  }catch(error){
+  } catch (error) {
 
     console.warn(
       "Payment method loading error:",
@@ -56,7 +175,458 @@
     );
 
     return offers;
+  }
+}
 
+
+/* =========================
+   LOAD P2P OFFERS
+========================= */
+
+async function loadOffersFromSupabase() {
+
+  if (!supabaseClient) {
+    console.warn(
+      "Supabase client not available"
+    );
+
+    return [];
   }
 
+  const asset =
+    document.getElementById(
+      "assetSelect"
+    )?.value || "USDT";
+
+  const fiat =
+    document.getElementById(
+      "fiatSelect"
+    )?.value || "ETB";
+
+  try {
+
+    const { data, error } =
+      await supabaseClient
+        .from("p2p_offers")
+        .select("*")
+        .eq(
+          "status",
+          "active"
+        )
+        .eq(
+          "side",
+          marketSide
+        )
+        .eq(
+          "asset",
+          asset
+        )
+        .eq(
+          "fiat",
+          fiat
+        )
+        .order(
+          "price",
+          {
+            ascending:
+              marketSide === "buy"
+          }
+        );
+
+    if (error) {
+      throw error;
+    }
+
+    return await
+      loadTraderPaymentMethods(
+        data || []
+      );
+
+  } catch (error) {
+
+    console.error(
+      "P2P offer loading error:",
+      error.message
+    );
+
+    return [];
+  }
 }
+
+
+/* =========================
+   REFRESH MARKET
+========================= */
+
+async function refreshMarket() {
+
+  updateMarketTitle();
+
+  const offers =
+    await loadOffersFromSupabase();
+
+  const enriched =
+    typeof enrichOffers === "function"
+      ? await enrichOffers(offers)
+      : offers;
+
+  const finalOffers =
+    await loadTraderPaymentMethods(
+      enriched || []
+    );
+
+  if (
+    typeof renderOffers ===
+    "function"
+  ) {
+    renderOffers(finalOffers);
+  }
+
+  if (
+    typeof updateMarketStats ===
+    "function"
+  ) {
+    updateMarketStats(
+      finalOffers
+    );
+  }
+
+  return finalOffers;
+}
+
+
+/* =========================
+   BUY / SELL CALCULATOR
+========================= */
+
+function calculateTrade() {
+
+  const amountInput =
+    document.getElementById(
+      "quickAmount"
+    );
+
+  if (!amountInput) {
+    return;
+  }
+
+  const amount =
+    parseFloat(
+      amountInput.value
+    ) || 0;
+
+  const asset =
+    document.getElementById(
+      "assetSelect"
+    )?.value || "USDT";
+
+  const fiat =
+    document.getElementById(
+      "fiatSelect"
+    )?.value || "ETB";
+
+  const price =
+    selectedOffer
+      ? Number(selectedOffer.price)
+      : 0;
+
+  const calcRate =
+    document.getElementById(
+      "calcRate"
+    );
+
+  const calcFee =
+    document.getElementById(
+      "calcFee"
+    );
+
+  const calcReceive =
+    document.getElementById(
+      "calcReceive"
+    );
+
+  if (!price || amount <= 0) {
+
+    if (calcRate)
+      calcRate.textContent = "-";
+
+    if (calcFee)
+      calcFee.textContent = "-";
+
+    if (calcReceive)
+      calcReceive.textContent = "-";
+
+    return;
+  }
+
+  const feeRate = 0.005;
+
+  if (marketSide === "buy") {
+
+    /*
+      BUY
+
+      User enters fiat.
+      User receives crypto.
+    */
+
+    const cryptoAmount =
+      amount / price;
+
+    const fee =
+      cryptoAmount * feeRate;
+
+    const receive =
+      Math.max(
+        cryptoAmount - fee,
+        0
+      );
+
+    if (calcRate) {
+      calcRate.textContent =
+        `${price} ${fiat}`;
+    }
+
+    if (calcFee) {
+      calcFee.textContent =
+        `${fee.toFixed(6)} ${asset}`;
+    }
+
+    if (calcReceive) {
+      calcReceive.textContent =
+        `${receive.toFixed(6)} ${asset}`;
+    }
+
+  } else {
+
+    /*
+      SELL
+
+      User enters crypto.
+      User receives fiat.
+    */
+
+    const gross =
+      amount * price;
+
+    const fee =
+      gross * feeRate;
+
+    const receive =
+      Math.max(
+        gross - fee,
+        0
+      );
+
+    if (calcRate) {
+      calcRate.textContent =
+        `${price} ${fiat}`;
+    }
+
+    if (calcFee) {
+      calcFee.textContent =
+        `${fee.toFixed(2)} ${fiat}`;
+    }
+
+    if (calcReceive) {
+      calcReceive.textContent =
+        `${receive.toFixed(2)} ${fiat}`;
+    }
+  }
+}
+
+
+/* =========================
+   URL TYPE
+========================= */
+
+function applyMarketFromURL() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const type =
+    params.get("type");
+
+  const asset =
+    params.get("asset");
+
+  if (
+    type &&
+    type.toLowerCase() === "sell"
+  ) {
+
+    marketSide = "sell";
+
+  } else {
+
+    marketSide = "buy";
+  }
+
+  if (
+    asset &&
+    ["USDT", "BTC", "ETH"]
+      .includes(
+        asset.toUpperCase()
+      )
+  ) {
+
+    const assetSelect =
+      document.getElementById(
+        "assetSelect"
+      );
+
+    if (assetSelect) {
+      assetSelect.value =
+        asset.toUpperCase();
+    }
+  }
+
+  const buyTab =
+    document.getElementById(
+      "buyTab"
+    );
+
+  const sellTab =
+    document.getElementById(
+      "sellTab"
+    );
+
+  if (buyTab) {
+    buyTab.classList.toggle(
+      "active",
+      marketSide === "buy"
+    );
+  }
+
+  if (sellTab) {
+    sellTab.classList.toggle(
+      "active",
+      marketSide === "sell"
+    );
+  }
+
+  updateMarketTitle();
+}
+
+
+/* =========================
+   ASSET CHANGE
+========================= */
+
+function handleAssetChange() {
+
+  selectedOffer = null;
+  selectedTraderData = null;
+
+  updateMarketTitle();
+
+  calculateTrade();
+
+  refreshMarket();
+}
+
+
+/* =========================
+   FIAT CHANGE
+========================= */
+
+function handleFiatChange() {
+
+  selectedOffer = null;
+  selectedTraderData = null;
+
+  updateMarketTitle();
+
+  calculateTrade();
+
+  refreshMarket();
+}
+
+
+/* =========================
+   QUICK AMOUNT CHANGE
+========================= */
+
+function handleQuickAmountChange() {
+
+  calculateTrade();
+}
+
+
+/* =========================
+   INITIALIZATION
+========================= */
+
+async function initP2PMarket() {
+
+  applyMarketFromURL();
+
+  const assetSelect =
+    document.getElementById(
+      "assetSelect"
+    );
+
+  const fiatSelect =
+    document.getElementById(
+      "fiatSelect"
+    );
+
+  const quickAmount =
+    document.getElementById(
+      "quickAmount"
+    );
+
+  if (assetSelect) {
+
+    assetSelect.addEventListener(
+      "change",
+      handleAssetChange
+    );
+  }
+
+  if (fiatSelect) {
+
+    fiatSelect.addEventListener(
+      "change",
+      handleFiatChange
+    );
+  }
+
+  if (quickAmount) {
+
+    quickAmount.addEventListener(
+      "input",
+      handleQuickAmountChange
+    );
+  }
+
+  await refreshMarket();
+}
+
+
+/* =========================
+   START P2P
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    if (
+      typeof supabaseClient !==
+      "undefined"
+    ) {
+
+      initP2PMarket();
+
+    } else {
+
+      console.warn(
+        "Supabase client not initialized"
+      );
+    }
+  }
+);
