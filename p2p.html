@@ -45,10 +45,18 @@ button{
     cursor:pointer;
 }
 
+button:disabled{
+    cursor:not-allowed;
+}
+
 a{
     text-decoration:none;
     color:inherit;
 }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
 
 .header{
     height:72px;
@@ -122,6 +130,10 @@ a{
     font-weight:800;
 }
 
+/* ============================================================
+   PAGE
+   ============================================================ */
+
 .page{
     max-width:1450px;
     margin:auto;
@@ -153,6 +165,10 @@ a{
     flex-wrap:wrap;
 }
 
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
 .btn{
     border:none;
     border-radius:9px;
@@ -176,16 +192,28 @@ a{
     color:#fff;
 }
 
+.btn-secondary:hover{
+    background:#1a304d;
+}
+
 .btn-success{
     background:rgba(37,197,138,.13);
     color:#46d9a2;
     border:1px solid rgba(37,197,138,.25);
 }
 
+.btn-success:hover{
+    background:rgba(37,197,138,.2);
+}
+
 .btn-danger{
     background:rgba(239,91,104,.12);
     color:#ff7d88;
     border:1px solid rgba(239,91,104,.25);
+}
+
+.btn-danger:hover{
+    background:rgba(239,91,104,.2);
 }
 
 .btn-small{
@@ -196,6 +224,10 @@ a{
 .full{
     width:100%;
 }
+
+/* ============================================================
+   MARKET BAR
+   ============================================================ */
 
 .market-bar{
     background:var(--panel);
@@ -260,6 +292,17 @@ a{
     outline:none;
 }
 
+.control input:focus,
+.control select:focus,
+.quick-field input:focus,
+.quick-field select:focus{
+    border-color:var(--primary);
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+
 .stats{
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -297,6 +340,10 @@ a{
     color:var(--red);
 }
 
+/* ============================================================
+   MAIN GRID
+   ============================================================ */
+
 .main-grid{
     display:grid;
     grid-template-columns:minmax(0,1fr) 360px;
@@ -329,6 +376,10 @@ a{
     font-size:12px;
 }
 
+/* ============================================================
+   OFFERS
+   ============================================================ */
+
 .offers{
     padding:13px;
     display:flex;
@@ -341,6 +392,12 @@ a{
     background:#0c192a;
     border-radius:13px;
     padding:15px;
+    transition:.2s;
+}
+
+.offer:hover{
+    border-color:#365277;
+    transform:translateY(-1px);
 }
 
 .offer-top{
@@ -447,6 +504,10 @@ a{
     margin-bottom:6px;
 }
 
+/* ============================================================
+   QUICK TRADE
+   ============================================================ */
+
 .quick-body{
     padding:18px;
 }
@@ -501,9 +562,17 @@ a{
     font-size:13px;
 }
 
+.calc-row:last-child{
+    margin-bottom:0;
+}
+
 .calc-row span:first-child{
     color:var(--muted);
 }
+
+/* ============================================================
+   TRADE CENTER
+   ============================================================ */
 
 .trade-center{
     margin-top:18px;
@@ -533,6 +602,7 @@ a{
 .trade-id{
     color:var(--muted);
     font-size:11px;
+    margin-top:3px;
 }
 
 .status-badge{
@@ -540,6 +610,7 @@ a{
     border-radius:7px;
     font-size:10px;
     font-weight:700;
+    white-space:nowrap;
 }
 
 .status-awaiting_payment{
@@ -557,7 +628,9 @@ a{
     color:#46d9a2;
 }
 
-.status-cancelled{
+.status-cancelled,
+.status-canceled,
+.status-closed{
     background:rgba(239,91,104,.12);
     color:#ff7d88;
 }
@@ -591,6 +664,10 @@ a{
     margin-top:12px;
 }
 
+/* ============================================================
+   MODALS
+   ============================================================ */
+
 .modal{
     display:none;
     position:fixed;
@@ -608,7 +685,7 @@ a{
 
 .modal-box{
     width:100%;
-    max-width:650px;
+    max-width:680px;
     max-height:94vh;
     overflow-y:auto;
     background:#0e1d30;
@@ -622,6 +699,10 @@ a{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    position:sticky;
+    top:0;
+    background:#0e1d30;
+    z-index:2;
 }
 
 .modal-header h3{
@@ -633,11 +714,20 @@ a{
     background:transparent;
     color:var(--muted);
     font-size:24px;
+    line-height:1;
+}
+
+.close:hover{
+    color:#fff;
 }
 
 .modal-body{
     padding:20px;
 }
+
+/* ============================================================
+   REVIEW / PAYMENT
+   ============================================================ */
 
 .review-card{
     background:#0a1727;
@@ -716,7 +806,6 @@ a{
 
 .trade-actions button:disabled{
     opacity:.45;
-    cursor:not-allowed;
 }
 
 .success-box{
@@ -730,6 +819,156 @@ a{
     margin-top:12px;
 }
 
+/* ============================================================
+   CHAT
+   ============================================================ */
+
+.chat-box{
+    margin-top:16px;
+    background:#091626;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.chat-header{
+    padding:13px 15px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.chat-header strong{
+    font-size:14px;
+}
+
+.chat-header span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.chat-messages{
+    height:280px;
+    overflow-y:auto;
+    padding:13px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    scroll-behavior:smooth;
+}
+
+.chat-empty{
+    min-height:240px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding:20px;
+}
+
+.chat-message{
+    display:flex;
+    flex-direction:column;
+    max-width:82%;
+}
+
+.chat-message.mine{
+    align-self:flex-end;
+    align-items:flex-end;
+}
+
+.chat-message.theirs{
+    align-self:flex-start;
+    align-items:flex-start;
+}
+
+.chat-sender{
+    margin-bottom:3px;
+    color:#9eb4cf;
+    font-size:10px;
+    font-weight:700;
+}
+
+.chat-bubble{
+    padding:9px 12px;
+    border-radius:11px;
+    font-size:13px;
+    line-height:1.45;
+    word-break:break-word;
+    white-space:pre-wrap;
+}
+
+.chat-message.mine .chat-bubble{
+    background:var(--primary);
+    color:#fff;
+    border-bottom-right-radius:3px;
+}
+
+.chat-message.theirs .chat-bubble{
+    background:#14263d;
+    color:#e8eef7;
+    border-bottom-left-radius:3px;
+}
+
+.chat-meta{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.chat-input-row{
+    display:flex;
+    gap:7px;
+    padding:10px;
+    border-top:1px solid var(--border);
+}
+
+.chat-input{
+    flex:1;
+    min-width:0;
+    background:#07111f;
+    color:#fff;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:11px;
+    outline:none;
+}
+
+.chat-input:focus{
+    border-color:var(--primary);
+}
+
+.chat-send{
+    border:0;
+    border-radius:8px;
+    background:var(--primary);
+    color:#fff;
+    padding:0 16px;
+    font-weight:700;
+}
+
+.chat-send:hover{
+    background:var(--primary2);
+}
+
+.chat-send:disabled{
+    opacity:.5;
+}
+
+.chat-status{
+    padding:0 12px 9px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* ============================================================
+   OTHER
+   ============================================================ */
+
 .notification{
     position:fixed;
     right:20px;
@@ -742,6 +981,7 @@ a{
     display:none;
     z-index:900;
     font-size:13px;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
 .notification.show{
@@ -754,7 +994,12 @@ a{
     color:var(--muted);
 }
 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
 @media(max-width:1150px){
+
     .main-grid{
         grid-template-columns:1fr;
     }
@@ -765,6 +1010,7 @@ a{
 }
 
 @media(max-width:800px){
+
     .header{
         padding:0 14px;
     }
@@ -797,6 +1043,7 @@ a{
 }
 
 @media(max-width:520px){
+
     .stats{
         grid-template-columns:1fr 1fr;
     }
@@ -833,6 +1080,30 @@ a{
     .trade-actions{
         grid-template-columns:1fr;
     }
+
+    .chat-messages{
+        height:250px;
+    }
+
+    .chat-message{
+        max-width:90%;
+    }
+
+    .chat-input-row{
+        padding:8px;
+    }
+
+    .chat-send{
+        padding:0 13px;
+    }
+
+    .modal-body{
+        padding:14px;
+    }
+
+    .review-row{
+        font-size:12px;
+    }
 }
 </style>
 </head>
@@ -867,6 +1138,7 @@ a{
 
     <div>
         <h1>Professional P2P Marketplace</h1>
+
         <p>
             Buy and sell crypto directly with other verified traders.
             CryptoVault protects the crypto through the P2P trade workflow.
@@ -874,7 +1146,9 @@ a{
     </div>
 
     <div class="hero-actions">
-        <button class="btn btn-secondary" onclick="loadAll()">
+
+        <button class="btn btn-secondary"
+                onclick="loadAll()">
             ↻ Refresh
         </button>
 
@@ -882,13 +1156,18 @@ a{
                 onclick="showNotification('Create Offer will be connected in the next step.')">
             ＋ Create Offer
         </button>
+
     </div>
 
 </section>
 
+
+<!-- MARKET FILTERS -->
+
 <section class="market-bar">
 
     <div class="market-tabs">
+
         <button class="market-tab active"
                 id="buyTab"
                 onclick="setMarket('buy')">
@@ -900,38 +1179,52 @@ a{
                 onclick="setMarket('sell')">
             Sell
         </button>
+
     </div>
 
     <div class="control">
+
         <label>Asset</label>
 
-        <select id="assetSelect" onchange="loadOffers()">
+        <select id="assetSelect"
+                onchange="loadOffers()">
+
             <option value="USDT">USDT</option>
             <option value="BTC">BTC</option>
             <option value="ETH">ETH</option>
+
         </select>
+
     </div>
 
     <div class="control">
+
         <label>Fiat</label>
 
-        <select id="fiatSelect" onchange="loadOffers()">
+        <select id="fiatSelect"
+                onchange="loadOffers()">
+
             <option value="ETB">ETB</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
+
         </select>
+
     </div>
 
     <div class="control search">
+
         <label>Search</label>
 
         <input id="searchInput"
                type="search"
                placeholder="Trader or payment method"
                oninput="renderOffers()">
+
     </div>
 
     <div class="control">
+
         <label>Crypto amount</label>
 
         <input id="amountFilter"
@@ -939,74 +1232,162 @@ a{
                min="0"
                placeholder="USDT"
                oninput="renderOffers()">
+
     </div>
 
     <div class="control">
+
         <label>Payment method</label>
 
-        <select id="paymentFilter" onchange="renderOffers()">
-            <option value="all">All methods</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Mobile Money">Mobile Money</option>
-            <option value="Telebirr">Telebirr</option>
-            <option value="Cash">Cash</option>
-            <option value="CBE Birr">CBE Birr</option>
+        <select id="paymentFilter"
+                onchange="renderOffers()">
+
+            <option value="all">
+                All methods
+            </option>
+
+            <option value="Bank Transfer">
+                Bank Transfer
+            </option>
+
+            <option value="Mobile Money">
+                Mobile Money
+            </option>
+
+            <option value="Telebirr">
+                Telebirr
+            </option>
+
+            <option value="Cash">
+                Cash
+            </option>
+
+            <option value="CBE Birr">
+                CBE Birr
+            </option>
+
         </select>
+
     </div>
 
 </section>
+
+
+<!-- STATS -->
 
 <section class="stats">
 
     <div class="stat">
-        <div class="stat-label">Current offers</div>
-        <div class="stat-value" id="offerStat">0</div>
+
+        <div class="stat-label">
+            Current offers
+        </div>
+
+        <div class="stat-value"
+             id="offerStat">
+            0
+        </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-label">Active trades</div>
-        <div class="stat-value" id="activeTradeStat">0</div>
+
+        <div class="stat-label">
+            Active trades
+        </div>
+
+        <div class="stat-value"
+             id="activeTradeStat">
+            0
+        </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-label">Lowest price</div>
-        <div class="stat-value" id="lowestPrice">--</div>
+
+        <div class="stat-label">
+            Lowest price
+        </div>
+
+        <div class="stat-value"
+             id="lowestPrice">
+            --
+        </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-label">Average price</div>
-        <div class="stat-value" id="averagePrice">--</div>
+
+        <div class="stat-label">
+            Average price
+        </div>
+
+        <div class="stat-value"
+             id="averagePrice">
+            --
+        </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-label">Platform status</div>
-        <div class="stat-value green">Protected</div>
+
+        <div class="stat-label">
+            Platform status
+        </div>
+
+        <div class="stat-value green">
+            Protected
+        </div>
+
     </div>
 
 </section>
+
+
+<!-- MARKETPLACE + QUICK TRADE -->
 
 <section class="main-grid">
 
 <div class="marketplace">
 
     <div class="section-header">
-        <h2 id="marketTitle">Buy USDT with ETB</h2>
-        <span id="offerCount">Loading...</span>
+
+        <h2 id="marketTitle">
+            Buy USDT with ETB
+        </h2>
+
+        <span id="offerCount">
+            Loading...
+        </span>
+
     </div>
 
-    <div class="offers" id="offersContainer">
+    <div class="offers"
+         id="offersContainer">
+
         <div class="loading">
             Loading offers...
         </div>
+
     </div>
 
 </div>
 
+
+<!-- QUICK TRADE -->
+
 <aside class="quick-trade">
 
     <div class="section-header">
-        <h2>Quick Trade</h2>
-        <span>Secure order</span>
+
+        <h2>
+            Quick Trade
+        </h2>
+
+        <span>
+            Secure order
+        </span>
+
     </div>
 
     <div class="quick-body">
@@ -1021,6 +1402,7 @@ a{
                 </div>
 
                 <div>
+
                     <strong id="selectedTrader">
                         Select an offer
                     </strong>
@@ -1030,11 +1412,13 @@ a{
                          id="selectedRating">
                         Choose a trader below
                     </div>
+
                 </div>
 
             </div>
 
         </div>
+
 
         <div class="quick-field">
 
@@ -1051,53 +1435,102 @@ a{
 
         </div>
 
+
         <div class="quick-field">
 
-            <label>Payment method</label>
+            <label>
+                Payment method
+            </label>
 
             <select id="quickPayment">
-                <option value="">Select an offer first</option>
+
+                <option value="">
+                    Select an offer first
+                </option>
+
             </select>
 
         </div>
 
+
         <div class="calculation">
 
             <div class="calc-row">
-                <span>Rate</span>
-                <span id="calcRate">--</span>
+
+                <span>
+                    Rate
+                </span>
+
+                <span id="calcRate">
+                    --
+                </span>
+
             </div>
 
             <div class="calc-row">
-                <span>Crypto amount</span>
-                <span id="calcCrypto">-- USDT</span>
+
+                <span>
+                    Crypto amount
+                </span>
+
+                <span id="calcCrypto">
+                    -- USDT
+                </span>
+
             </div>
 
             <div class="calc-row">
-                <span>Fiat amount</span>
-                <span id="calcFiat">-- ETB</span>
+
+                <span>
+                    Fiat amount
+                </span>
+
+                <span id="calcFiat">
+                    -- ETB
+                </span>
+
             </div>
 
             <div class="calc-row">
-                <span>Trading fee (0.5%)</span>
-                <span id="calcFee">0.00 ETB</span>
+
+                <span>
+                    Trading fee (0.5%)
+                </span>
+
+                <span id="calcFee">
+                    0.00 ETB
+                </span>
+
             </div>
 
             <div class="calc-row">
-                <span id="calcFinalLabel">You pay</span>
-                <span id="calcFinal">--</span>
+
+                <span id="calcFinalLabel">
+                    You pay
+                </span>
+
+                <span id="calcFinal">
+                    --
+                </span>
+
             </div>
 
         </div>
 
+
         <button class="btn btn-primary full"
                 onclick="startQuickTrade()">
+
             Continue to Review
+
         </button>
 
+
         <div class="success-box">
+
             🔐 Your crypto is protected by the P2P escrow workflow.
             Never release crypto before independently verifying the payment.
+
         </div>
 
     </div>
@@ -1106,14 +1539,25 @@ a{
 
 </section>
 
+
+<!-- TRADE CENTER -->
+
 <section class="trade-center">
 
     <div class="section-header">
-        <h2>My Trade Center</h2>
-        <span id="tradeCount">0 trades</span>
+
+        <h2>
+            My Trade Center
+        </h2>
+
+        <span id="tradeCount">
+            0 trades
+        </span>
+
     </div>
 
-    <div class="trades" id="tradesContainer">
+    <div class="trades"
+         id="tradesContainer">
 
         <div class="loading">
             Loading trades...
@@ -1126,19 +1570,26 @@ a{
 </main>
 
 
-<!-- REVIEW MODAL -->
+<!-- ============================================================
+     REVIEW MODAL
+     ============================================================ -->
 
-<div class="modal" id="reviewModal">
+<div class="modal"
+     id="reviewModal">
 
 <div class="modal-box">
 
     <div class="modal-header">
-        <h3>Review P2P Order</h3>
+
+        <h3>
+            Review P2P Order
+        </h3>
 
         <button class="close"
                 onclick="closeModal('reviewModal')">
             ×
         </button>
+
     </div>
 
     <div class="modal-body">
@@ -1186,30 +1637,46 @@ a{
             </div>
 
             <div class="review-row">
-                <span id="reviewFinalLabel">You pay</span>
-                <strong class="green" id="reviewFinal">--</strong>
+
+                <span id="reviewFinalLabel">
+                    You pay
+                </span>
+
+                <strong class="green"
+                        id="reviewFinal">
+                    --
+                </strong>
+
             </div>
 
         </div>
 
+
         <div class="warning">
+
             Check the trader, crypto amount, price and payment method
             carefully before creating the trade.
+
         </div>
+
 
         <div style="display:flex;gap:8px;margin-top:16px">
 
             <button class="btn btn-secondary"
                     style="flex:1"
                     onclick="closeModal('reviewModal')">
+
                 Back
+
             </button>
 
             <button class="btn btn-primary"
                     style="flex:1"
                     id="confirmTradeButton"
                     onclick="confirmCreateTrade()">
+
                 Create Trade
+
             </button>
 
         </div>
@@ -1221,15 +1688,20 @@ a{
 </div>
 
 
-<!-- TRADE DETAIL MODAL -->
+<!-- ============================================================
+     TRADE DETAIL MODAL
+     ============================================================ -->
 
-<div class="modal" id="tradeModal">
+<div class="modal"
+     id="tradeModal">
 
 <div class="modal-box">
 
     <div class="modal-header">
 
-        <h3>P2P Trade</h3>
+        <h3>
+            P2P Trade
+        </h3>
 
         <button class="close"
                 onclick="closeModal('tradeModal')">
@@ -1243,62 +1715,121 @@ a{
         <div class="review-card">
 
             <div class="review-row">
-                <span>Trade ID</span>
-                <strong id="tradeId">--</strong>
+
+                <span>
+                    Trade ID
+                </span>
+
+                <strong id="tradeId">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Status</span>
+
+                <span>
+                    Status
+                </span>
+
                 <strong id="tradeStatus"
                         class="yellow">
                     --
                 </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Role</span>
-                <strong id="tradeRole">--</strong>
+
+                <span>
+                    Role
+                </span>
+
+                <strong id="tradeRole">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Crypto amount</span>
-                <strong id="tradeCrypto">--</strong>
+
+                <span>
+                    Crypto amount
+                </span>
+
+                <strong id="tradeCrypto">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Fiat amount</span>
-                <strong id="tradeFiat">--</strong>
+
+                <span>
+                    Fiat amount
+                </span>
+
+                <strong id="tradeFiat">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Price</span>
-                <strong id="tradePrice">--</strong>
+
+                <span>
+                    Price
+                </span>
+
+                <strong id="tradePrice">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Payment method</span>
-                <strong id="tradePayment">--</strong>
+
+                <span>
+                    Payment method
+                </span>
+
+                <strong id="tradePayment">
+                    --
+                </strong>
+
             </div>
 
             <div class="review-row">
-                <span>Payment reference</span>
-                <strong id="tradeReference">Not submitted</strong>
+
+                <span>
+                    Payment reference
+                </span>
+
+                <strong id="tradeReference">
+                    Not submitted
+                </strong>
+
             </div>
 
         </div>
 
 
-        <!-- STEP 3 PAYMENT SECTION -->
+        <!-- BUYER PAYMENT -->
 
         <div class="payment-box"
              id="buyerPaymentBox">
 
-            <h4>💳 Step 3: Confirm Payment</h4>
+            <h4>
+                💳 Step 3: Confirm Payment
+            </h4>
 
             <p>
+
                 Send the required fiat payment using the selected payment
                 method. After you have actually sent the payment, enter
-                the payment reference below and click <strong>I Have Paid</strong>.
+                the payment reference below and click
+                <strong>I Have Paid</strong>.
+
             </p>
 
             <input
@@ -1312,11 +1843,15 @@ a{
                 class="btn btn-success full"
                 id="markPaidButton"
                 onclick="markPaid()">
+
                 ✓ I Have Paid
+
             </button>
 
         </div>
 
+
+        <!-- PAYMENT SENT -->
 
         <div class="success-box"
              id="paymentSentBox"
@@ -1329,29 +1864,102 @@ a{
         </div>
 
 
-        <!-- SELLER SECTION -->
+        <!-- SELLER RELEASE -->
 
         <div class="payment-box"
              id="sellerReleaseBox"
              style="display:none">
 
-            <h4>🔐 Seller Verification</h4>
+            <h4>
+                🔐 Seller Verification
+            </h4>
 
             <p>
+
                 Verify the fiat payment independently in your bank,
                 Telebirr, CBE Birr or other payment account before releasing
                 any cryptocurrency.
+
             </p>
 
             <button
                 class="btn btn-primary full"
                 id="releaseButton"
                 onclick="releaseCrypto()">
+
                 ✓ Payment Verified, Release Crypto
+
             </button>
 
         </div>
 
+
+        <!-- ====================================================
+             LIVE BUYER / SELLER CHAT
+             ==================================================== -->
+
+        <div class="chat-box">
+
+            <div class="chat-header">
+
+                <div>
+
+                    <strong>
+                        💬 Trade Conversation
+                    </strong>
+
+                </div>
+
+                <span id="chatParticipant">
+                    Buyer &amp; Seller
+                </span>
+
+            </div>
+
+
+            <div class="chat-messages"
+                 id="chatMessages">
+
+                <div class="chat-loading">
+                    Open a trade to view the conversation.
+                </div>
+
+            </div>
+
+
+            <div class="chat-status"
+                 id="chatStatus">
+
+                Secure trade conversation
+
+            </div>
+
+
+            <div class="chat-input-row">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    class="chat-input"
+                    maxlength="2000"
+                    placeholder="Type a message..."
+                    autocomplete="off">
+
+                <button
+                    class="chat-send"
+                    id="chatSendButton"
+                    onclick="sendChatMessage()">
+
+                    Send
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRADE ACTIONS -->
 
         <div class="trade-actions">
 
@@ -1359,14 +1967,18 @@ a{
                 class="btn btn-secondary"
                 id="refreshTradeButton"
                 onclick="refreshCurrentTrade()">
+
                 ↻ Refresh
+
             </button>
 
             <button
                 class="btn btn-danger"
                 id="cancelTradeButton"
                 onclick="cancelTrade()">
+
                 Cancel Trade
+
             </button>
 
         </div>
@@ -1377,6 +1989,8 @@ a{
 
 </div>
 
+
+<!-- NOTIFICATION -->
 
 <div class="notification"
      id="notification">
@@ -1420,12 +2034,27 @@ let notificationTimer = null;
 
 
 /* ============================================================
+   CHAT GLOBAL VARIABLES
+   ============================================================ */
+
+let chatChannel = null;
+
+let chatTradeId = null;
+
+let chatSending = false;
+
+let chatLoadedTradeId = null;
+
+
+/* ============================================================
    START
    ============================================================ */
 
 document.addEventListener(
     "DOMContentLoaded",
     async function(){
+
+        setupChatInput();
 
         await checkLogin();
 
@@ -1439,45 +2068,69 @@ document.addEventListener(
 
 async function checkLogin(){
 
-    const {
-        data,
-        error
-    } = await supabaseClient.auth.getUser();
+    try{
 
-    if(error || !data || !data.user){
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.getUser();
 
-        showNotification(
-            "Please log in to use P2P trading."
+
+        if(error || !data || !data.user){
+
+            showNotification(
+                "Please log in to use P2P trading."
+            );
+
+            setTimeout(function(){
+
+                window.location.href =
+                    "login.html";
+
+            },1500);
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        document.getElementById(
+            "userEmail"
+        ).textContent =
+            currentUser.email || "User";
+
+
+        const initial =
+            (currentUser.email || "G")
+            .charAt(0)
+            .toUpperCase();
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            initial;
+
+
+        await loadAll();
+
+    }catch(error){
+
+        console.error(
+            "LOGIN CHECK ERROR:",
+            error
         );
 
-        setTimeout(function(){
-
-            window.location.href =
-                "login.html";
-
-        },1500);
-
-        return;
+        showNotification(
+            "Unable to initialize P2P."
+        );
 
     }
 
-    currentUser = data.user;
-
-    document.getElementById(
-        "userEmail"
-    ).textContent =
-        currentUser.email || "User";
-
-    const initial =
-        (currentUser.email || "G")
-        .charAt(0)
-        .toUpperCase();
-
-    document.getElementById(
-        "avatar"
-    ).textContent = initial;
-
-    await loadAll();
 }
 
 
@@ -1491,20 +2144,27 @@ async function loadAll(){
 
         const {
             data
-        } = await supabaseClient.auth.getUser();
+        } =
+        await supabaseClient.auth.getUser();
 
-        if(!data.user){
+
+        if(!data || !data.user){
 
             return;
 
         }
 
-        currentUser = data.user;
+
+        currentUser =
+            data.user;
+
     }
 
-    await loadOffers();
 
-    await loadTrades();
+    await Promise.all([
+        loadOffers(),
+        loadTrades()
+    ]);
 
 }
 
@@ -1515,7 +2175,9 @@ async function loadAll(){
 
 function setMarket(side){
 
-    currentMarket = side;
+    currentMarket =
+        side;
+
 
     document
         .getElementById("buyTab")
@@ -1524,6 +2186,7 @@ function setMarket(side){
             side === "buy"
         );
 
+
     document
         .getElementById("sellTab")
         .classList.toggle(
@@ -1531,29 +2194,30 @@ function setMarket(side){
             side === "sell"
         );
 
+
     updateMarketTitle();
 
+    selectedOffer =
+        null;
+
+
+    resetQuickTrade();
+
     loadOffers();
+
 }
 
 
-/*
-   Important:
-
-   BUY UI means:
-   Buyer wants to buy crypto.
-   Therefore database offer must be SIDE = SELL.
-
-   SELL UI means:
-   Seller wants to sell crypto.
-   Therefore database offer must be SIDE = BUY.
-*/
+/* ============================================================
+   DATABASE SIDE
+   ============================================================ */
 
 function databaseSideForMarketplace(){
 
     return currentMarket === "buy"
         ? "sell"
         : "buy";
+
 }
 
 
@@ -1568,10 +2232,12 @@ function updateMarketTitle(){
             "assetSelect"
         ).value;
 
+
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
+
 
     document.getElementById(
         "marketTitle"
@@ -1580,10 +2246,17 @@ function updateMarketTitle(){
         ? `Buy ${asset} with ${fiat}`
         : `Sell ${asset} for ${fiat}`;
 
+
     document.getElementById(
         "amountLabel"
     ).textContent =
         `Amount in ${asset}`;
+
+
+    document.getElementById(
+        "amountFilter"
+    ).placeholder =
+        asset;
 
 }
 
@@ -1594,26 +2267,42 @@ function updateMarketTitle(){
 
 async function loadOffers(){
 
+    if(!currentUser){
+
+        return;
+
+    }
+
+
     updateMarketTitle();
+
 
     const asset =
         document.getElementById(
             "assetSelect"
         ).value;
 
+
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
 
+
     const dbSide =
         databaseSideForMarketplace();
 
 
-    document.getElementById(
-        "offersContainer"
-    ).innerHTML =
-        `<div class="loading">Loading offers...</div>`;
+    const container =
+        document.getElementById(
+            "offersContainer"
+        );
+
+
+    container.innerHTML =
+        `<div class="loading">
+            Loading offers...
+         </div>`;
 
 
     let query =
@@ -1624,36 +2313,54 @@ async function loadOffers(){
         .eq("asset", asset)
         .eq("fiat", fiat)
         .eq("status", "active")
-        .order("price", {
-            ascending:
-                currentMarket === "buy"
-        });
+        .order(
+            "price",
+            {
+                ascending:
+                    currentMarket === "buy"
+            }
+        );
 
 
     const {
         data,
         error
-    } = await query;
+    } =
+    await query;
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "LOAD OFFERS ERROR:",
+            error
+        );
 
-        document.getElementById(
-            "offersContainer"
-        ).innerHTML =
+
+        container.innerHTML =
             `<div class="empty">
-                <strong>Unable to load offers</strong>
-                <span>${escapeHTML(error.message)}</span>
+
+                <strong>
+                    Unable to load offers
+                </strong>
+
+                <span>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </span>
+
              </div>`;
+
 
         return;
 
     }
 
 
-    offers = data || [];
+    offers =
+        data || [];
+
 
     await enrichOffers();
 
@@ -1672,6 +2379,7 @@ async function enrichOffers(){
 
         offer.payment = [];
 
+
         try{
 
             const {
@@ -1681,15 +2389,18 @@ async function enrichOffers(){
             await supabaseClient.rpc(
                 "get_offer_payment_methods",
                 {
-                    p_offer_id: offer.id
+                    p_offer_id:
+                        offer.id
                 }
             );
+
 
             if(!error && data){
 
                 offer.payment =
                     data.map(
-                        x => x.name
+                        x =>
+                        x.name
                     );
 
             }
@@ -1697,7 +2408,7 @@ async function enrichOffers(){
         }catch(error){
 
             console.error(
-                "Payment method error:",
+                "PAYMENT METHOD ERROR:",
                 error
             );
 
@@ -1711,11 +2422,15 @@ async function enrichOffers(){
             .charAt(0)
             .toUpperCase();
 
+
         offer.name =
             "Trader " +
             String(
                 offer.trader_id || ""
-            ).substring(0,6);
+            ).substring(
+                0,
+                6
+            );
 
     }
 
@@ -1735,10 +2450,12 @@ function renderOffers(){
         .trim()
         .toLowerCase();
 
+
     const payment =
         document.getElementById(
             "paymentFilter"
         ).value;
+
 
     const amount =
         Number(
@@ -1751,29 +2468,42 @@ function renderOffers(){
     let result =
         offers.filter(function(o){
 
+            const name =
+                String(
+                    o.name || ""
+                ).toLowerCase();
+
+
             const searchMatch =
                 !search ||
-                o.name
-                    .toLowerCase()
-                    .includes(search) ||
+                name.includes(search) ||
                 o.payment.some(
                     p =>
-                    p.toLowerCase()
-                     .includes(search)
+                    String(p)
+                    .toLowerCase()
+                    .includes(search)
                 );
+
 
             const paymentMatch =
                 payment === "all" ||
                 o.payment.includes(payment);
 
+
             const amountMatch =
                 !amount ||
                 (
                     amount >=
-                    Number(o.min_amount) &&
+                    Number(
+                        o.min_amount
+                    ) &&
+
                     amount <=
-                    Number(o.max_amount)
+                    Number(
+                        o.max_amount
+                    )
                 );
+
 
             return (
                 searchMatch &&
@@ -1789,15 +2519,21 @@ function renderOffers(){
             "offersContainer"
         );
 
-    container.innerHTML = "";
+
+    container.innerHTML =
+        "";
+
 
     document.getElementById(
         "offerCount"
     ).textContent =
         result.length +
-        (result.length === 1
+        (
+            result.length === 1
             ? " offer"
-            : " offers");
+            : " offers"
+        );
+
 
     document.getElementById(
         "offerStat"
@@ -1807,13 +2543,31 @@ function renderOffers(){
 
     if(!result.length){
 
+        document.getElementById(
+            "lowestPrice"
+        ).textContent =
+            "--";
+
+
+        document.getElementById(
+            "averagePrice"
+        ).textContent =
+            "--";
+
+
         container.innerHTML =
             `<div class="empty">
-                <strong>No offers found</strong>
+
+                <strong>
+                    No offers found
+                </strong>
+
                 <span>
                     Try another amount or payment method.
                 </span>
+
              </div>`;
+
 
         return;
 
@@ -1821,36 +2575,61 @@ function renderOffers(){
 
 
     const prices =
-        result.map(
-            x => Number(x.price)
+        result
+        .map(
+            x =>
+            Number(x.price)
+        )
+        .filter(
+            x =>
+            Number.isFinite(x)
         );
 
 
-    document.getElementById(
-        "lowestPrice"
-    ).textContent =
-        Math.min(...prices).toFixed(2)
-        + " ETB";
+    if(prices.length){
+
+        const fiat =
+            document.getElementById(
+                "fiatSelect"
+            ).value;
 
 
-    document.getElementById(
-        "averagePrice"
-    ).textContent =
-        (
-            prices.reduce(
-                (a,b)=>a+b,
-                0
-            ) / prices.length
-        ).toFixed(2)
-        + " ETB";
+        document.getElementById(
+            "lowestPrice"
+        ).textContent =
+            Math.min(
+                ...prices
+            ).toFixed(2)
+            + " "
+            + fiat;
+
+
+        document.getElementById(
+            "averagePrice"
+        ).textContent =
+            (
+                prices.reduce(
+                    (a,b) => a+b,
+                    0
+                ) /
+                prices.length
+            ).toFixed(2)
+            + " "
+            + fiat;
+
+    }
 
 
     result.forEach(function(offer){
 
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        card.className = "offer";
+
+        card.className =
+            "offer";
 
 
         const payments =
@@ -1864,6 +2643,16 @@ function renderOffers(){
             .join("");
 
 
+        const asset =
+            offer.asset ||
+            "USDT";
+
+
+        const fiat =
+            offer.fiat ||
+            "ETB";
+
+
         card.innerHTML = `
 
             <div class="offer-top">
@@ -1873,22 +2662,28 @@ function renderOffers(){
                     <div class="trader">
 
                         <div class="trader-avatar">
+
                             ${escapeHTML(
                                 offer.initial
                             )}
+
                         </div>
 
                         <div>
 
                             <div class="trader-name">
+
                                 ${escapeHTML(
                                     offer.name
                                 )}
+
                             </div>
 
                             <div class="green"
                                  style="font-size:11px">
+
                                 Active trader
+
                             </div>
 
                         </div>
@@ -1897,18 +2692,26 @@ function renderOffers(){
 
                 </div>
 
+
                 <div class="price">
 
                     <strong>
+
                         ${Number(
                             offer.price
-                        ).toFixed(2)} ETB
+                        ).toFixed(2)}
+                        ${escapeHTML(
+                            fiat
+                        )}
+
                     </strong>
 
                     <small>
+
                         per ${escapeHTML(
-                            offer.asset
+                            asset
                         )}
+
                     </small>
 
                 </div>
@@ -1919,48 +2722,84 @@ function renderOffers(){
             <div class="offer-details">
 
                 <div class="detail">
-                    <small>Available</small>
+
+                    <small>
+                        Available
+                    </small>
+
                     <strong>
+
                         ${Number(
                             offer.available_amount
                         ).toLocaleString()}
+
                         ${escapeHTML(
-                            offer.asset
+                            asset
                         )}
+
                     </strong>
+
                 </div>
 
+
                 <div class="detail">
-                    <small>Minimum</small>
+
+                    <small>
+                        Minimum
+                    </small>
+
                     <strong>
+
                         ${Number(
                             offer.min_amount
                         ).toLocaleString()}
+
                         ${escapeHTML(
-                            offer.asset
+                            asset
                         )}
+
                     </strong>
+
                 </div>
 
+
                 <div class="detail">
-                    <small>Maximum</small>
+
+                    <small>
+                        Maximum
+                    </small>
+
                     <strong>
+
                         ${Number(
                             offer.max_amount
                         ).toLocaleString()}
+
                         ${escapeHTML(
-                            offer.asset
+                            asset
                         )}
+
                     </strong>
+
                 </div>
 
+
                 <div class="detail">
-                    <small>Response</small>
+
+                    <small>
+                        Response
+                    </small>
+
                     <strong>
+
                         ${Number(
                             offer.response_time_seconds || 0
-                        )} sec
+                        )}
+
+                        sec
+
                     </strong>
+
                 </div>
 
             </div>
@@ -1969,24 +2808,34 @@ function renderOffers(){
             <div class="payment-row">
 
                 <div class="payment-tags">
+
                     ${payments}
+
                 </div>
+
 
                 <div class="offer-actions">
 
                     <button
                         class="btn btn-primary btn-small"
-                        onclick="selectOffer('${offer.id}')">
+                        onclick="selectOffer('${escapeJS(
+                            offer.id
+                        )}')">
+
                         Trade
+
                     </button>
 
                 </div>
 
             </div>
+
         `;
 
 
-        container.appendChild(card);
+        container.appendChild(
+            card
+        );
 
     });
 
@@ -2001,7 +2850,9 @@ async function selectOffer(id){
 
     selectedOffer =
         offers.find(
-            x => String(x.id) === String(id)
+            x =>
+            String(x.id) ===
+            String(id)
         );
 
 
@@ -2040,10 +2891,44 @@ async function selectOffer(id){
         );
 
 
+    const available =
+        Number(
+            selectedOffer.available_amount
+        );
+
+
+    let startingAmount =
+        min;
+
+
+    if(
+        !Number.isFinite(startingAmount) ||
+        startingAmount <= 0
+    ){
+
+        startingAmount = 1;
+
+    }
+
+
+    if(
+        Number.isFinite(available) &&
+        available > 0
+    ){
+
+        startingAmount =
+            Math.min(
+                startingAmount,
+                available
+            );
+
+    }
+
+
     document.getElementById(
         "quickAmount"
     ).value =
-        min;
+        startingAmount;
 
 
     const paymentSelect =
@@ -2053,21 +2938,87 @@ async function selectOffer(id){
 
 
     paymentSelect.innerHTML =
+        "";
+
+
+    if(
+        !selectedOffer.payment ||
+        !selectedOffer.payment.length
+    ){
+
+        paymentSelect.innerHTML =
+            `<option value="">
+                No payment method available
+             </option>`;
+
+    }else{
+
         selectedOffer.payment
-        .map(
-            p =>
-            `<option value="${escapeHTML(p)}">
-                ${escapeHTML(p)}
-             </option>`
-        )
-        .join("");
+        .forEach(function(payment){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                payment;
+
+            option.textContent =
+                payment;
+
+            paymentSelect.appendChild(
+                option
+            );
+
+        });
+
+    }
 
 
     calculateTrade();
 
+
     showNotification(
         "Offer selected."
     );
+
+}
+
+
+/* ============================================================
+   RESET QUICK TRADE
+   ============================================================ */
+
+function resetQuickTrade(){
+
+    document.getElementById(
+        "selectedTrader"
+    ).textContent =
+        "Select an offer";
+
+
+    document.getElementById(
+        "selectedAvatar"
+    ).textContent =
+        "?";
+
+
+    document.getElementById(
+        "selectedRating"
+    ).textContent =
+        "Choose a trader below";
+
+
+    document.getElementById(
+        "quickPayment"
+    ).innerHTML =
+        `<option value="">
+            Select an offer first
+         </option>`;
+
+
+    calculateTrade();
 
 }
 
@@ -2082,24 +3033,33 @@ function calculateTrade(){
 
         document.getElementById(
             "calcRate"
-        ).textContent = "--";
+        ).textContent =
+            "--";
+
 
         document.getElementById(
             "calcCrypto"
-        ).textContent = "--";
+        ).textContent =
+            "--";
+
 
         document.getElementById(
             "calcFiat"
-        ).textContent = "--";
+        ).textContent =
+            "--";
+
 
         document.getElementById(
             "calcFee"
         ).textContent =
             "0.00 ETB";
 
+
         document.getElementById(
             "calcFinal"
-        ).textContent = "--";
+        ).textContent =
+            "--";
+
 
         return;
 
@@ -2121,18 +3081,31 @@ function calculateTrade(){
 
 
     const fiatAmount =
-        cryptoAmount * price;
+        cryptoAmount *
+        price;
 
 
     const fee =
-        fiatAmount * 0.005;
+        fiatAmount *
+        0.005;
+
+
+    const asset =
+        selectedOffer.asset ||
+        "USDT";
+
+
+    const fiat =
+        selectedOffer.fiat ||
+        "ETB";
 
 
     document.getElementById(
         "calcRate"
     ).textContent =
         price.toFixed(2)
-        + " ETB";
+        + " "
+        + fiat;
 
 
     document.getElementById(
@@ -2140,7 +3113,7 @@ function calculateTrade(){
     ).textContent =
         cryptoAmount.toFixed(4)
         + " "
-        + selectedOffer.asset;
+        + asset;
 
 
     document.getElementById(
@@ -2148,7 +3121,7 @@ function calculateTrade(){
     ).textContent =
         fiatAmount.toFixed(2)
         + " "
-        + selectedOffer.fiat;
+        + fiat;
 
 
     document.getElementById(
@@ -2156,7 +3129,7 @@ function calculateTrade(){
     ).textContent =
         fee.toFixed(2)
         + " "
-        + selectedOffer.fiat;
+        + fiat;
 
 
     if(currentMarket === "buy"){
@@ -2170,10 +3143,12 @@ function calculateTrade(){
         document.getElementById(
             "calcFinal"
         ).textContent =
-            (fiatAmount + fee)
-            .toFixed(2)
+            (
+                fiatAmount +
+                fee
+            ).toFixed(2)
             + " "
-            + selectedOffer.fiat;
+            + fiat;
 
     }else{
 
@@ -2186,10 +3161,12 @@ function calculateTrade(){
         document.getElementById(
             "calcFinal"
         ).textContent =
-            (fiatAmount - fee)
-            .toFixed(2)
+            (
+                fiatAmount -
+                fee
+            ).toFixed(2)
             + " "
-            + selectedOffer.fiat;
+            + fiat;
 
     }
 
@@ -2239,7 +3216,12 @@ function startQuickTrade(){
         );
 
 
-    if(!cryptoAmount || cryptoAmount <= 0){
+    if(
+        !Number.isFinite(
+            cryptoAmount
+        ) ||
+        cryptoAmount <= 0
+    ){
 
         showNotification(
             "Enter a valid crypto amount."
@@ -2250,7 +3232,10 @@ function startQuickTrade(){
     }
 
 
-    if(cryptoAmount < min){
+    if(
+        Number.isFinite(min) &&
+        cryptoAmount < min
+    ){
 
         showNotification(
             `Amount below the minimum allowed: ${min} ${selectedOffer.asset}`
@@ -2261,7 +3246,10 @@ function startQuickTrade(){
     }
 
 
-    if(cryptoAmount > max){
+    if(
+        Number.isFinite(max) &&
+        cryptoAmount > max
+    ){
 
         showNotification(
             `Amount above the maximum allowed: ${max} ${selectedOffer.asset}`
@@ -2272,10 +3260,28 @@ function startQuickTrade(){
     }
 
 
-    if(cryptoAmount > available){
+    if(
+        Number.isFinite(available) &&
+        cryptoAmount > available
+    ){
 
         showNotification(
             `Only ${available} ${selectedOffer.asset} is available.`
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !document.getElementById(
+            "quickPayment"
+        ).value
+    ){
+
+        showNotification(
+            "Select a payment method."
         );
 
         return;
@@ -2309,11 +3315,23 @@ function openReview(){
 
 
     const fiatAmount =
-        cryptoAmount * price;
+        cryptoAmount *
+        price;
 
 
     const fee =
-        fiatAmount * 0.005;
+        fiatAmount *
+        0.005;
+
+
+    const asset =
+        selectedOffer.asset ||
+        "USDT";
+
+
+    const fiat =
+        selectedOffer.fiat ||
+        "ETB";
 
 
     document.getElementById(
@@ -2333,7 +3351,7 @@ function openReview(){
     document.getElementById(
         "reviewAsset"
     ).textContent =
-        selectedOffer.asset;
+        asset;
 
 
     document.getElementById(
@@ -2341,7 +3359,7 @@ function openReview(){
     ).textContent =
         cryptoAmount.toFixed(4)
         + " "
-        + selectedOffer.asset;
+        + asset;
 
 
     document.getElementById(
@@ -2349,7 +3367,7 @@ function openReview(){
     ).textContent =
         price.toFixed(2)
         + " "
-        + selectedOffer.fiat;
+        + fiat;
 
 
     document.getElementById(
@@ -2357,7 +3375,7 @@ function openReview(){
     ).textContent =
         fiatAmount.toFixed(2)
         + " "
-        + selectedOffer.fiat;
+        + fiat;
 
 
     document.getElementById(
@@ -2365,7 +3383,7 @@ function openReview(){
     ).textContent =
         fee.toFixed(2)
         + " "
-        + selectedOffer.fiat;
+        + fiat;
 
 
     document.getElementById(
@@ -2388,17 +3406,26 @@ function openReview(){
         "reviewFinal"
     ).textContent =
         currentMarket === "buy"
-        ? (fiatAmount + fee).toFixed(2)
-            + " "
-            + selectedOffer.fiat
-        : (fiatAmount - fee).toFixed(2)
-            + " "
-            + selectedOffer.fiat;
+        ? (
+            fiatAmount +
+            fee
+        ).toFixed(2)
+        + " "
+        + fiat
+
+        : (
+            fiatAmount -
+            fee
+        ).toFixed(2)
+        + " "
+        + fiat;
 
 
     document.getElementById(
         "reviewModal"
-    ).classList.add("show");
+    ).classList.add(
+        "show"
+    );
 
 }
 
@@ -2446,11 +3473,13 @@ async function confirmCreateTrade(){
 
 
     const fiatAmount =
-        cryptoAmount * price;
+        cryptoAmount *
+        price;
 
 
     const tradingFee =
-        fiatAmount * 0.005;
+        fiatAmount *
+        0.005;
 
 
     const paymentName =
@@ -2476,18 +3505,15 @@ async function confirmCreateTrade(){
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
+
 
     button.textContent =
         "Creating trade...";
 
 
     try{
-
-        /*
-          Get payment method ID
-          through the same offer-payment RPC.
-        */
 
         const {
             data:paymentMethods,
@@ -2513,7 +3539,8 @@ async function confirmCreateTrade(){
             (paymentMethods || [])
             .find(
                 x =>
-                x.name === paymentName
+                x.name ===
+                paymentName
             );
 
 
@@ -2526,20 +3553,12 @@ async function confirmCreateTrade(){
         }
 
 
-        /*
-          Trade expires after 30 minutes.
-        */
-
         const expiresAt =
             new Date(
                 Date.now() +
                 30 * 60 * 1000
             ).toISOString();
 
-
-        /*
-          REAL BACKEND RPC
-        */
 
         const {
             data:tradeId,
@@ -2602,7 +3621,6 @@ async function confirmCreateTrade(){
 
         await loadTrades();
 
-
         await openTrade(
             tradeId
         );
@@ -2623,7 +3641,8 @@ async function confirmCreateTrade(){
 
     }finally{
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "Create Trade";
@@ -2666,17 +3685,29 @@ async function loadTrades(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "LOAD TRADES ERROR:",
+            error
+        );
+
 
         document.getElementById(
             "tradesContainer"
         ).innerHTML =
             `<div class="empty">
-                <strong>Unable to load trades</strong>
-                <span>${escapeHTML(
-                    error.message
-                )}</span>
+
+                <strong>
+                    Unable to load trades
+                </strong>
+
+                <span>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </span>
+
              </div>`;
+
 
         return;
 
@@ -2696,7 +3727,9 @@ async function loadTrades(){
                 "canceled",
                 "closed"
             ].includes(
-                String(t.status).toLowerCase()
+                String(
+                    t.status
+                ).toLowerCase()
             )
         ).length;
 
@@ -2737,18 +3770,25 @@ function renderTrades(trades){
         );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     if(!trades.length){
 
         container.innerHTML =
             `<div class="empty">
-                <strong>No P2P trades yet</strong>
+
+                <strong>
+                    No P2P trades yet
+                </strong>
+
                 <span>
                     Create a trade from an offer above.
                 </span>
+
              </div>`;
+
 
         return;
 
@@ -2766,6 +3806,16 @@ function renderTrades(trades){
             String(
                 trade.status || ""
             ).toLowerCase();
+
+
+        const asset =
+            trade.asset ||
+            "USDT";
+
+
+        const fiat =
+            trade.fiat ||
+            "ETB";
 
 
         const card =
@@ -2792,26 +3842,36 @@ function renderTrades(trades){
             <div class="trade-card-top">
 
                 <div>
+
                     <strong>
                         ${escapeHTML(
-                            trade.asset || "USDT"
+                            asset
                         )}
                     </strong>
 
                     <div class="trade-id">
-                        Trade #${escapeHTML(
+
+                        Trade #
+                        ${escapeHTML(
                             shortId
                         )}
+
                     </div>
+
                 </div>
 
+
                 <span class="status-badge
-                    status-${escapeHTML(status)}">
+                    status-${escapeHTML(
+                        status
+                    )}">
+
                     ${escapeHTML(
                         formatStatus(
                             trade.status
                         )
                     )}
+
                 </span>
 
             </div>
@@ -2820,44 +3880,80 @@ function renderTrades(trades){
             <div class="trade-grid">
 
                 <div>
-                    <small>Role</small>
+
+                    <small>
+                        Role
+                    </small>
+
                     <strong>
                         ${isBuyer
                             ? "Buyer"
                             : "Seller"}
                     </strong>
+
                 </div>
 
+
                 <div>
-                    <small>Crypto</small>
+
+                    <small>
+                        Crypto
+                    </small>
+
                     <strong>
+
                         ${Number(
                             trade.crypto_amount || 0
                         ).toFixed(4)}
+
                         ${escapeHTML(
-                            trade.asset || "USDT"
+                            asset
                         )}
+
                     </strong>
+
                 </div>
 
+
                 <div>
-                    <small>Fiat</small>
+
+                    <small>
+                        Fiat
+                    </small>
+
                     <strong>
+
                         ${Number(
                             trade.fiat_amount || 0
                         ).toFixed(2)}
-                        ETB
+
+                        ${escapeHTML(
+                            fiat
+                        )}
+
                     </strong>
+
                 </div>
 
+
                 <div>
-                    <small>Price</small>
+
+                    <small>
+                        Price
+                    </small>
+
                     <strong>
+
                         ${Number(
                             trade.price || 0
                         ).toFixed(2)}
-                        ETB
+
+                        ${escapeHTML(
+                            fiat
+                        )}
+
                     </strong>
+
                 </div>
 
             </div>
@@ -2867,8 +3963,12 @@ function renderTrades(trades){
 
                 <button
                     class="btn btn-primary btn-small"
-                    onclick="openTrade('${trade.id}')">
+                    onclick="openTrade('${escapeJS(
+                        trade.id
+                    )}')">
+
                     Open Trade
+
                 </button>
 
             </div>
@@ -2891,6 +3991,17 @@ function renderTrades(trades){
 
 async function openTrade(tradeId){
 
+    if(!currentUser){
+
+        showNotification(
+            "Please log in first."
+        );
+
+        return;
+
+    }
+
+
     const {
         data:trade,
         error
@@ -2898,11 +4009,20 @@ async function openTrade(tradeId){
     await supabaseClient
     .from("p2p_trades")
     .select("*")
-    .eq("id", tradeId)
+    .eq(
+        "id",
+        tradeId
+    )
     .maybeSingle();
 
 
     if(error){
+
+        console.error(
+            "OPEN TRADE ERROR:",
+            error
+        );
+
 
         showNotification(
             error.message
@@ -2924,11 +4044,34 @@ async function openTrade(tradeId){
     }
 
 
+    const isBuyer =
+        trade.buyer_id ===
+        currentUser.id;
+
+
+    const isSeller =
+        trade.seller_id ===
+        currentUser.id;
+
+
+    if(!isBuyer && !isSeller){
+
+        showNotification(
+            "You are not authorized to view this trade."
+        );
+
+        return;
+
+    }
+
+
     selectedTrade =
         trade;
 
 
-    showTradeDetails();
+    await showTradeDetails(
+        true
+    );
 
 }
 
@@ -2937,7 +4080,9 @@ async function openTrade(tradeId){
    SHOW TRADE DETAILS
    ============================================================ */
 
-async function showTradeDetails(){
+async function showTradeDetails(
+    firstOpen = false
+){
 
     if(!selectedTrade){
 
@@ -2955,10 +4100,25 @@ async function showTradeDetails(){
         currentUser.id;
 
 
+    const isSeller =
+        trade.seller_id ===
+        currentUser.id;
+
+
     const status =
         String(
             trade.status || ""
         ).toLowerCase();
+
+
+    const asset =
+        trade.asset ||
+        "USDT";
+
+
+    const fiat =
+        trade.fiat ||
+        "ETB";
 
 
     document.getElementById(
@@ -2980,18 +4140,25 @@ async function showTradeDetails(){
         );
 
 
-    document.getElementById(
-        "tradeStatus"
-    ).className =
-        "status-value " +
-        (
-            status === "completed"
+    const statusElement =
+        document.getElementById(
+            "tradeStatus"
+        );
+
+
+    statusElement.className =
+        status === "completed"
+        ? "green"
+        : (
+            status === "payment_sent"
             ? "green"
-            : status === "payment_sent"
-            ? "green"
-            : status === "cancelled"
-            ? "red"
-            : "yellow"
+            : (
+                status === "cancelled" ||
+                status === "canceled" ||
+                status === "closed"
+                ? "red"
+                : "yellow"
+            )
         );
 
 
@@ -3010,10 +4177,7 @@ async function showTradeDetails(){
             trade.crypto_amount || 0
         ).toFixed(4)
         + " "
-        + (
-            trade.asset ||
-            "USDT"
-        );
+        + asset;
 
 
     document.getElementById(
@@ -3022,7 +4186,8 @@ async function showTradeDetails(){
         Number(
             trade.fiat_amount || 0
         ).toFixed(2)
-        + " ETB";
+        + " "
+        + fiat;
 
 
     document.getElementById(
@@ -3031,12 +4196,8 @@ async function showTradeDetails(){
         Number(
             trade.price || 0
         ).toFixed(2)
-        + " ETB";
-
-
-    await loadTradePaymentMethod(
-        trade
-    );
+        + " "
+        + fiat;
 
 
     document.getElementById(
@@ -3044,6 +4205,26 @@ async function showTradeDetails(){
     ).textContent =
         trade.payment_reference ||
         "Not submitted";
+
+
+    const paymentReferenceInput =
+        document.getElementById(
+            "paymentReferenceInput"
+        );
+
+
+    if(paymentReferenceInput){
+
+        paymentReferenceInput.value =
+            trade.payment_reference ||
+            "";
+
+    }
+
+
+    await loadTradePaymentMethod(
+        trade
+    );
 
 
     /*
@@ -3082,6 +4263,9 @@ async function showTradeDetails(){
         markPaidButton.disabled =
             false;
 
+        markPaidButton.textContent =
+            "✓ I Have Paid";
+
     }else{
 
         buyerBox.style.display =
@@ -3091,7 +4275,7 @@ async function showTradeDetails(){
 
 
     /*
-      IF PAYMENT WAS ALREADY SENT
+      PAYMENT SENT
     */
 
     if(
@@ -3111,7 +4295,7 @@ async function showTradeDetails(){
 
 
     /*
-      SELLER RELEASE SECTION
+      SELLER RELEASE
     */
 
     const sellerBox =
@@ -3121,7 +4305,7 @@ async function showTradeDetails(){
 
 
     if(
-        !isBuyer &&
+        isSeller &&
         status === "payment_sent"
     ){
 
@@ -3137,7 +4321,7 @@ async function showTradeDetails(){
 
 
     /*
-      CANCEL BUTTON
+      CANCEL
     */
 
     const cancelButton =
@@ -3155,11 +4339,61 @@ async function showTradeDetails(){
         : "none";
 
 
+    /*
+      CHAT PARTICIPANT LABEL
+    */
+
+    const chatParticipant =
+        document.getElementById(
+            "chatParticipant"
+        );
+
+
+    if(chatParticipant){
+
+        chatParticipant.textContent =
+            isBuyer
+            ? "You are Buyer"
+            : "You are Seller";
+
+    }
+
+
     document.getElementById(
         "tradeModal"
     ).classList.add(
         "show"
     );
+
+
+    /*
+      Only load the chat when:
+      1. The trade is opened for the first time.
+      2. A different trade is opened.
+      3. The chat has not already been loaded.
+    */
+
+    const currentChatTrade =
+        String(
+            chatTradeId || ""
+        );
+
+
+    const thisTradeId =
+        String(
+            trade.id
+        );
+
+
+    if(
+        firstOpen ||
+        chatLoadedTradeId !== thisTradeId ||
+        currentChatTrade !== thisTradeId
+    ){
+
+        await loadTradeChat();
+
+    }
 
 }
 
@@ -3181,13 +4415,6 @@ async function loadTradePaymentMethod(
     paymentElement.textContent =
         "Loading...";
 
-
-    /*
-      We already store payment_method_id
-      in the trade.
-
-      Get the payment method directly.
-    */
 
     if(!trade.payment_method_id){
 
@@ -3233,7 +4460,7 @@ async function loadTradePaymentMethod(
 
 /* ============================================================
    STEP 3
-   BUYER MARKS PAYMENT AS SENT
+   BUYER MARKS PAYMENT SENT
    ============================================================ */
 
 async function markPaid(){
@@ -3321,22 +4548,15 @@ async function markPaid(){
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
+
 
     button.textContent =
         "Submitting payment...";
 
 
     try{
-
-        /*
-          REAL BACKEND RPC
-
-          mark_payment_sent(
-              p_trade_id,
-              p_payment_reference
-          )
-        */
 
         const {
             data,
@@ -3375,14 +4595,7 @@ async function markPaid(){
         );
 
 
-        /*
-          Reload the trade from Supabase
-          so the UI uses the actual database
-          status, not a simulated status.
-        */
-
         await refreshCurrentTrade();
-
 
         await loadTrades();
 
@@ -3401,7 +4614,8 @@ async function markPaid(){
         );
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "✓ I Have Paid";
@@ -3424,6 +4638,10 @@ async function refreshCurrentTrade(){
     }
 
 
+    const tradeId =
+        selectedTrade.id;
+
+
     const {
         data,
         error
@@ -3433,12 +4651,18 @@ async function refreshCurrentTrade(){
     .select("*")
     .eq(
         "id",
-        selectedTrade.id
+        tradeId
     )
     .maybeSingle();
 
 
     if(error){
+
+        console.error(
+            "REFRESH TRADE ERROR:",
+            error
+        );
+
 
         showNotification(
             error.message
@@ -3468,19 +4692,14 @@ async function refreshCurrentTrade(){
         data;
 
 
-    document.getElementById(
-        "paymentReferenceInput"
-    ).value =
-        data.payment_reference || "";
-
-
-    await showTradeDetails();
+    await showTradeDetails(
+        false
+    );
 
 }
 
 
 /* ============================================================
-   STEP 4 PREPARATION
    SELLER RELEASES CRYPTO
    ============================================================ */
 
@@ -3542,7 +4761,9 @@ async function releaseCrypto(){
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
+
 
     button.textContent =
         "Releasing crypto...";
@@ -3605,7 +4826,8 @@ async function releaseCrypto(){
         );
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "✓ Payment Verified, Release Crypto";
@@ -3665,7 +4887,9 @@ async function cancelTrade(){
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
+
 
     button.textContent =
         "Cancelling...";
@@ -3728,7 +4952,8 @@ async function cancelTrade(){
         );
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "Cancel Trade";
@@ -3739,10 +4964,972 @@ async function cancelTrade(){
 
 
 /* ============================================================
+   ============================================================
+   LIVE P2P CHAT
+   ============================================================
+   ============================================================ */
+
+
+/* ============================================================
+   LOAD CHAT
+   ============================================================ */
+
+async function loadTradeChat(){
+
+    if(
+        !selectedTrade ||
+        !currentUser
+    ){
+
+        return;
+
+    }
+
+
+    const tradeId =
+        String(
+            selectedTrade.id
+        );
+
+
+    const isBuyer =
+        selectedTrade.buyer_id ===
+        currentUser.id;
+
+
+    const isSeller =
+        selectedTrade.seller_id ===
+        currentUser.id;
+
+
+    const messagesBox =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if(!messagesBox){
+
+        return;
+
+    }
+
+
+    if(!isBuyer && !isSeller){
+
+        messagesBox.innerHTML =
+            `<div class="chat-empty">
+
+                You are not part of this trade.
+
+             </div>`;
+
+        return;
+
+    }
+
+
+    messagesBox.innerHTML =
+        `<div class="loading"
+              style="padding:30px 10px">
+
+            Loading conversation...
+
+         </div>`;
+
+
+    const statusElement =
+        document.getElementById(
+            "chatStatus"
+        );
+
+
+    if(statusElement){
+
+        statusElement.textContent =
+            "Loading secure conversation...";
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("p2p_messages")
+        .select(
+            "id,trade_id,sender_id,message,created_at"
+        )
+        .eq(
+            "trade_id",
+            tradeId
+        )
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        renderChatMessages(
+            data || []
+        );
+
+
+        chatLoadedTradeId =
+            tradeId;
+
+
+        setupChatRealtime(
+            tradeId
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "LOAD CHAT ERROR:",
+            error
+        );
+
+
+        messagesBox.innerHTML =
+            `<div class="chat-empty">
+
+                Unable to load conversation.
+
+                <br><br>
+
+                ${escapeHTML(
+                    error.message ||
+                    "Unknown chat error"
+                )}
+
+             </div>`;
+
+
+        if(statusElement){
+
+            statusElement.textContent =
+                "Chat unavailable";
+
+        }
+
+    }
+
+}
+
+
+/* ============================================================
+   RENDER CHAT MESSAGES
+   ============================================================ */
+
+function renderChatMessages(
+    messages
+){
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    if(!messages.length){
+
+        container.innerHTML =
+            `<div class="chat-empty">
+
+                No messages yet.
+
+                <br>
+
+                Say hello to the other trader.
+
+             </div>`;
+
+        return;
+
+    }
+
+
+    messages.forEach(
+        function(message){
+
+            appendChatMessage(
+                message,
+                false
+            );
+
+        }
+    );
+
+
+    scrollChatToBottom();
+
+}
+
+
+/* ============================================================
+   CHECK DUPLICATE MESSAGE
+   ============================================================ */
+
+function chatMessageExists(
+    messageId
+){
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if(!container){
+
+        return false;
+
+    }
+
+
+    const wantedId =
+        String(
+            messageId
+        );
+
+
+    const messages =
+        container.querySelectorAll(
+            "[data-message-id]"
+        );
+
+
+    for(
+        const element
+        of messages
+    ){
+
+        if(
+            element.dataset.messageId ===
+            wantedId
+        ){
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/* ============================================================
+   APPEND CHAT MESSAGE
+   ============================================================ */
+
+function appendChatMessage(
+    message,
+    scroll = true
+){
+
+    if(
+        !message ||
+        !message.id ||
+        !message.sender_id
+    ){
+
+        return;
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    if(
+        chatMessageExists(
+            message.id
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const empty =
+        container.querySelector(
+            ".chat-empty,.loading"
+        );
+
+
+    if(empty){
+
+        empty.remove();
+
+    }
+
+
+    const mine =
+        message.sender_id ===
+        currentUser.id;
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "chat-message " +
+        (
+            mine
+            ? "mine"
+            : "theirs"
+        );
+
+
+    wrapper.dataset.messageId =
+        String(
+            message.id
+        );
+
+
+    let senderName =
+        "Trader";
+
+
+    if(mine){
+
+        senderName =
+            "You";
+
+    }else if(
+        selectedTrade &&
+        message.sender_id ===
+        selectedTrade.buyer_id
+    ){
+
+        senderName =
+            "Buyer";
+
+    }else if(
+        selectedTrade &&
+        message.sender_id ===
+        selectedTrade.seller_id
+    ){
+
+        senderName =
+            "Seller";
+
+    }
+
+
+    const sender =
+        document.createElement(
+            "div"
+        );
+
+
+    sender.className =
+        "chat-sender";
+
+
+    sender.textContent =
+        senderName;
+
+
+    const bubble =
+        document.createElement(
+            "div"
+        );
+
+
+    bubble.className =
+        "chat-bubble";
+
+
+    /*
+      textContent is deliberately used here.
+      This prevents HTML/script injection.
+    */
+
+    bubble.textContent =
+        message.message;
+
+
+    const meta =
+        document.createElement(
+            "div"
+        );
+
+
+    meta.className =
+        "chat-meta";
+
+
+    meta.textContent =
+        formatChatTime(
+            message.created_at
+        );
+
+
+    wrapper.appendChild(
+        sender
+    );
+
+
+    wrapper.appendChild(
+        bubble
+    );
+
+
+    wrapper.appendChild(
+        meta
+    );
+
+
+    container.appendChild(
+        wrapper
+    );
+
+
+    if(scroll){
+
+        scrollChatToBottom();
+
+    }
+
+}
+
+
+/* ============================================================
+   SEND CHAT MESSAGE
+   ============================================================ */
+
+async function sendChatMessage(){
+
+    if(chatSending){
+
+        return;
+
+    }
+
+
+    if(!currentUser){
+
+        showNotification(
+            "Please log in first."
+        );
+
+        return;
+
+    }
+
+
+    if(!selectedTrade){
+
+        showNotification(
+            "Open a trade before sending a message."
+        );
+
+        return;
+
+    }
+
+
+    const isBuyer =
+        selectedTrade.buyer_id ===
+        currentUser.id;
+
+
+    const isSeller =
+        selectedTrade.seller_id ===
+        currentUser.id;
+
+
+    if(!isBuyer && !isSeller){
+
+        showNotification(
+            "You are not authorized to use this conversation."
+        );
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "chatInput"
+        );
+
+
+    const button =
+        document.getElementById(
+            "chatSendButton"
+        );
+
+
+    if(
+        !input ||
+        !button
+    ){
+
+        return;
+
+    }
+
+
+    const message =
+        input.value.trim();
+
+
+    if(!message){
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    if(message.length > 2000){
+
+        showNotification(
+            "Message is too long."
+        );
+
+        return;
+
+    }
+
+
+    chatSending =
+        true;
+
+
+    input.disabled =
+        true;
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "Sending...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("p2p_messages")
+        .insert({
+            trade_id:
+                selectedTrade.id,
+
+            sender_id:
+                currentUser.id,
+
+            message:
+                message
+        })
+        .select(
+            "id,trade_id,sender_id,message,created_at"
+        )
+        .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /*
+          Add immediately.
+
+          Realtime may also deliver the same message.
+          chatMessageExists() prevents duplicates.
+        */
+
+        if(data){
+
+            appendChatMessage(
+                data,
+                true
+            );
+
+        }
+
+
+        input.value =
+            "";
+
+
+        input.focus();
+
+
+    }catch(error){
+
+        console.error(
+            "SEND CHAT ERROR:",
+            error
+        );
+
+
+        showNotification(
+            error.message ||
+            "Unable to send message."
+        );
+
+    }finally{
+
+        chatSending =
+            false;
+
+
+        input.disabled =
+            false;
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "Send";
+
+    }
+
+}
+
+
+/* ============================================================
+   CHAT REALTIME
+   ============================================================ */
+
+function setupChatRealtime(
+    tradeId
+){
+
+    tradeId =
+        String(
+            tradeId
+        );
+
+
+    if(
+        chatChannel &&
+        chatTradeId ===
+        tradeId
+    ){
+
+        return;
+
+    }
+
+
+    removeChatRealtime();
+
+
+    chatTradeId =
+        tradeId;
+
+
+    chatChannel =
+        supabaseClient
+        .channel(
+            "p2p-chat-" +
+            tradeId
+        )
+        .on(
+            "postgres_changes",
+            {
+                event:"INSERT",
+                schema:"public",
+                table:"p2p_messages",
+                filter:
+                    "trade_id=eq." +
+                    tradeId
+            },
+            function(payload){
+
+                if(
+                    payload &&
+                    payload.new &&
+                    String(
+                        payload.new.trade_id
+                    ) ===
+                    tradeId
+                ){
+
+                    appendChatMessage(
+                        payload.new,
+                        true
+                    );
+
+                }
+
+            }
+        )
+        .subscribe(
+            function(status){
+
+                const statusElement =
+                    document.getElementById(
+                        "chatStatus"
+                    );
+
+
+                if(!statusElement){
+
+                    return;
+
+                }
+
+
+                if(
+                    status ===
+                    "SUBSCRIBED"
+                ){
+
+                    statusElement.textContent =
+                        "🟢 Live conversation";
+
+                }else if(
+                    status ===
+                    "CHANNEL_ERROR"
+                ){
+
+                    statusElement.textContent =
+                        "🔴 Chat connection error";
+
+                }else if(
+                    status ===
+                    "TIMED_OUT"
+                ){
+
+                    statusElement.textContent =
+                        "🟠 Chat connection timed out";
+
+                }else if(
+                    status ===
+                    "CLOSED"
+                ){
+
+                    statusElement.textContent =
+                        "Chat disconnected";
+
+                }
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   REMOVE REALTIME CHANNEL
+   ============================================================ */
+
+function removeChatRealtime(){
+
+    if(chatChannel){
+
+        try{
+
+            supabaseClient
+                .removeChannel(
+                    chatChannel
+                );
+
+        }catch(error){
+
+            console.error(
+                "REMOVE CHAT CHANNEL ERROR:",
+                error
+            );
+
+        }
+
+    }
+
+
+    chatChannel =
+        null;
+
+
+    chatTradeId =
+        null;
+
+}
+
+
+/* ============================================================
+   CHAT INPUT
+   ============================================================ */
+
+function setupChatInput(){
+
+    const input =
+        document.getElementById(
+            "chatInput"
+        );
+
+
+    if(!input){
+
+        return;
+
+    }
+
+
+    input.addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key ===
+                "Enter" &&
+                !event.shiftKey
+            ){
+
+                event.preventDefault();
+
+                sendChatMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   CHAT TIME
+   ============================================================ */
+
+function formatChatTime(
+    timestamp
+){
+
+    if(!timestamp){
+
+        return "";
+
+    }
+
+
+    const date =
+        new Date(
+            timestamp
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "";
+
+    }
+
+
+    return date.toLocaleString(
+        undefined,
+        {
+            month:"short",
+            day:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* ============================================================
+   SCROLL CHAT
+   ============================================================ */
+
+function scrollChatToBottom(){
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    requestAnimationFrame(
+        function(){
+
+            container.scrollTop =
+                container.scrollHeight;
+
+        }
+    );
+
+}
+
+
+/* ============================================================
    STATUS FORMAT
    ============================================================ */
 
-function formatStatus(status){
+function formatStatus(
+    status
+){
 
     if(!status){
 
@@ -3751,12 +5938,18 @@ function formatStatus(status){
     }
 
 
-    return String(status)
-        .replaceAll("_"," ")
-        .replace(
-            /\b\w/g,
-            x => x.toUpperCase()
-        );
+    return String(
+        status
+    )
+    .replaceAll(
+        "_",
+        " "
+    )
+    .replace(
+        /\b\w/g,
+        x =>
+        x.toUpperCase()
+    );
 
 }
 
@@ -3765,23 +5958,105 @@ function formatStatus(status){
    MODALS
    ============================================================ */
 
-function closeModal(id){
+function closeModal(
+    id
+){
 
-    document
-        .getElementById(id)
-        .classList.remove(
+    const modal =
+        document.getElementById(
+            id
+        );
+
+
+    if(modal){
+
+        modal.classList.remove(
             "show"
         );
 
+    }
+
+
+    if(
+        id ===
+        "tradeModal"
+    ){
+
+        /*
+          Stop realtime when
+          trade modal closes.
+        */
+
+        removeChatRealtime();
+
+
+        chatLoadedTradeId =
+            null;
+
+
+        const input =
+            document.getElementById(
+                "chatInput"
+            );
+
+
+        if(input){
+
+            input.value =
+                "";
+
+        }
+
+
+        const messages =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        if(messages){
+
+            messages.innerHTML =
+                `<div class="loading"
+                      style="padding:30px 10px">
+
+                    Open a trade to view the conversation.
+
+                 </div>`;
+
+        }
+
+
+        const status =
+            document.getElementById(
+                "chatStatus"
+            );
+
+
+        if(status){
+
+            status.textContent =
+                "Secure trade conversation";
+
+        }
+
+    }
+
 }
 
+
+/* ============================================================
+   MODAL BACKGROUND CLICK
+   ============================================================ */
 
 window.addEventListener(
     "click",
     function(event){
 
         document
-        .querySelectorAll(".modal")
+        .querySelectorAll(
+            ".modal"
+        )
         .forEach(
             function(modal){
 
@@ -3794,6 +6069,19 @@ window.addEventListener(
                         "show"
                     );
 
+
+                    if(
+                        modal.id ===
+                        "tradeModal"
+                    ){
+
+                        removeChatRealtime();
+
+                        chatLoadedTradeId =
+                            null;
+
+                    }
+
                 }
 
             }
@@ -3804,15 +6092,82 @@ window.addEventListener(
 
 
 /* ============================================================
+   ESC KEY
+   ============================================================ */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            const tradeModal =
+                document.getElementById(
+                    "tradeModal"
+                );
+
+
+            const reviewModal =
+                document.getElementById(
+                    "reviewModal"
+                );
+
+
+            if(
+                tradeModal &&
+                tradeModal.classList.contains(
+                    "show"
+                )
+            ){
+
+                closeModal(
+                    "tradeModal"
+                );
+
+            }
+
+
+            if(
+                reviewModal &&
+                reviewModal.classList.contains(
+                    "show"
+                )
+            ){
+
+                closeModal(
+                    "reviewModal"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ============================================================
    NOTIFICATION
    ============================================================ */
 
-function showNotification(message){
+function showNotification(
+    message
+){
 
     const box =
         document.getElementById(
             "notification"
         );
+
+
+    if(!box){
+
+        return;
+
+    }
 
 
     box.textContent =
@@ -3848,19 +6203,56 @@ function showNotification(message){
    HTML SECURITY
    ============================================================ */
 
-function escapeHTML(value){
+function escapeHTML(
+    value
+){
 
     const div =
         document.createElement(
             "div"
         );
 
+
     div.textContent =
         value == null
         ? ""
         : String(value);
 
+
     return div.innerHTML;
+
+}
+
+
+/* ============================================================
+   JAVASCRIPT STRING SECURITY
+   ============================================================ */
+
+function escapeJS(
+    value
+){
+
+    return String(
+        value == null
+        ? ""
+        : value
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /\r/g,
+        "\\r"
+    )
+    .replace(
+        /\n/g,
+        "\\n"
+    );
 
 }
 
@@ -3879,33 +6271,63 @@ setInterval(
         }
 
 
-        await loadOffers();
+        try{
 
-        await loadTrades();
+            await loadOffers();
+
+            await loadTrades();
 
 
-        /*
-          If a trade modal is open,
-          refresh its real database status.
-        */
+            /*
+              If trade modal is open,
+              refresh only the trade status/data.
 
-        if(
-            selectedTrade &&
-            document
-            .getElementById(
-                "tradeModal"
-            )
-            .classList.contains(
-                "show"
-            )
-        ){
+              Chat is NOT reloaded unnecessarily.
+            */
 
-            await refreshCurrentTrade();
+            const tradeModal =
+                document.getElementById(
+                    "tradeModal"
+                );
+
+
+            if(
+                selectedTrade &&
+                tradeModal &&
+                tradeModal.classList.contains(
+                    "show"
+                )
+            ){
+
+                await refreshCurrentTrade();
+
+            }
+
+        }catch(error){
+
+            console.error(
+                "AUTO REFRESH ERROR:",
+                error
+            );
 
         }
 
     },
     30000
+);
+
+
+/* ============================================================
+   CLEANUP BEFORE PAGE LEAVE
+   ============================================================ */
+
+window.addEventListener(
+    "beforeunload",
+    function(){
+
+        removeChatRealtime();
+
+    }
 );
 
 </script>
