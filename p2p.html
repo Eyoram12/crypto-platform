@@ -7,6 +7,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta
+        name="description"
+        content="CryptoVault secure peer-to-peer cryptocurrency marketplace"
+    >
+
     <title>CryptoVault P2P Marketplace</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -74,6 +79,21 @@
             line-height: 1.6;
         }
 
+        .hero-security {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .hero-security span {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
         .card {
             background: white;
             border: 1px solid #e4e7ec;
@@ -107,8 +127,12 @@
 
         .filters {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
+        }
+
+        .filter-full {
+            grid-column: span 2;
         }
 
         label {
@@ -151,6 +175,70 @@
             box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.08);
         }
 
+        .filter-help {
+            color: #667085;
+            font-size: 11px;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .find-button-wrap {
+            display: flex;
+            align-items: end;
+        }
+
+        .find-button {
+            width: 100%;
+            min-height: 48px;
+            border: none;
+            border-radius: 9px;
+            background: #155eef;
+            color: white;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .find-button:hover {
+            opacity: 0.92;
+        }
+
+        .find-button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .market-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .market-summary-text {
+            color: #667085;
+            font-size: 13px;
+        }
+
+        .network-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            background: #ecfdf3;
+            color: #15803d;
+        }
+
+        .network-status.offline {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
         .section-title {
             font-size: 22px;
             font-weight: 700;
@@ -180,6 +268,21 @@
             border-color: #15803d;
             box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
             background: #fcfffd;
+        }
+
+        .offer.recommended {
+            border-color: #155eef;
+        }
+
+        .recommended-label {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background: #eef4ff;
+            color: #155eef;
+            font-size: 11px;
+            font-weight: 800;
         }
 
         .offer-top {
@@ -257,6 +360,56 @@
             font-size: 13px;
             color: #667085;
             margin-bottom: 10px;
+        }
+
+        .trust-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .trust-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .trust-high {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .trust-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .trust-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .risk {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .risk-low {
+            color: #15803d;
+        }
+
+        .risk-medium {
+            color: #b45309;
+        }
+
+        .risk-high {
+            color: #dc2626;
         }
 
         .payments {
@@ -517,6 +670,40 @@
         }
 
         /* =====================================================
+           SECURITY PANEL
+        ===================================================== */
+
+        .security-panel {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 11px;
+            background: #f8fafc;
+            border: 1px solid #e4e7ec;
+        }
+
+        .security-panel h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .security-list {
+            display: grid;
+            gap: 7px;
+            color: #475467;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .security-item {
+            display: flex;
+            gap: 8px;
+        }
+
+        .security-icon {
+            font-weight: 700;
+        }
+
+        /* =====================================================
            CONVERSATION
         ===================================================== */
 
@@ -664,6 +851,18 @@
             padding: 25px;
         }
 
+        @media (max-width: 900px) {
+
+            .filters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-full {
+                grid-column: span 1;
+            }
+
+        }
+
         @media (max-width: 700px) {
 
             header {
@@ -764,10 +963,24 @@
             Buy and sell cryptocurrency directly with P2P traders.
         </p>
 
+        <div class="hero-security">
+
+            <span>🔐 Secure Trade Flow</span>
+
+            <span>⭐ Trust-Based Matching</span>
+
+            <span>📱 Mobile Friendly</span>
+
+            <span>🛡️ Security First</span>
+
+        </div>
+
     </section>
 
 
-    <!-- MARKET FILTERS -->
+    <!-- =====================================================
+         MARKET FILTERS
+    ====================================================== -->
 
     <section class="card">
 
@@ -796,6 +1009,89 @@
 
         <div class="filters">
 
+
+            <div>
+
+                <label for="countrySelect">
+                    Country
+                </label>
+
+                <select
+                    id="countrySelect"
+                    onchange="countryChanged()"
+                >
+
+                    <option value="ET" data-fiat="ETB">
+                        🇪🇹 Ethiopia
+                    </option>
+
+                    <option value="KE" data-fiat="KES">
+                        🇰🇪 Kenya
+                    </option>
+
+                    <option value="NG" data-fiat="NGN">
+                        🇳🇬 Nigeria
+                    </option>
+
+                    <option value="GH" data-fiat="GHS">
+                        🇬🇭 Ghana
+                    </option>
+
+                    <option value="UG" data-fiat="UGX">
+                        🇺🇬 Uganda
+                    </option>
+
+                    <option value="TZ" data-fiat="TZS">
+                        🇹🇿 Tanzania
+                    </option>
+
+                    <option value="ZA" data-fiat="ZAR">
+                        🇿🇦 South Africa
+                    </option>
+
+                    <option value="US" data-fiat="USD">
+                        🇺🇸 United States
+                    </option>
+
+                    <option value="EU" data-fiat="EUR">
+                        🇪🇺 Euro Market
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="fiatSelect">
+                    Currency
+                </label>
+
+                <select
+                    id="fiatSelect"
+                    onchange="marketChanged()"
+                >
+
+                    <option value="ETB">ETB</option>
+                    <option value="KES">KES</option>
+                    <option value="NGN">NGN</option>
+                    <option value="GHS">GHS</option>
+                    <option value="UGX">UGX</option>
+                    <option value="TZS">TZS</option>
+                    <option value="ZAR">ZAR</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+
+                </select>
+
+                <div class="filter-help">
+                    Automatically selected from country.
+                </div>
+
+            </div>
+
+
             <div>
 
                 <label for="assetSelect">
@@ -818,35 +1114,138 @@
 
             <div>
 
-                <label for="fiatSelect">
-                    Fiat Currency
+                <label for="paymentFilter">
+                    Payment Method
                 </label>
 
                 <select
-                    id="fiatSelect"
-                    onchange="marketChanged()"
+                    id="paymentFilter"
+                    onchange="smartFilterChanged()"
                 >
 
-                    <option value="ETB">ETB</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
+                    <option value="">
+                        All Payment Methods
+                    </option>
 
                 </select>
 
             </div>
 
+
+            <div>
+
+                <label for="amountFilter">
+                    Trade Amount
+                </label>
+
+                <input
+                    id="amountFilter"
+                    type="number"
+                    min="0"
+                    step="any"
+                    placeholder="Enter amount"
+                    oninput="smartFilterChanged()"
+                >
+
+                <div
+                    id="amountHelp"
+                    class="filter-help"
+                >
+                    Enter the amount you want to trade.
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <label for="sortFilter">
+                    Smart Sort
+                </label>
+
+                <select
+                    id="sortFilter"
+                    onchange="smartFilterChanged()"
+                >
+
+                    <option value="trust">
+                        ⭐ Trust First
+                    </option>
+
+                    <option value="price">
+                        💰 Best Price
+                    </option>
+
+                    <option value="completion">
+                        ✅ Completion Rate
+                    </option>
+
+                    <option value="speed">
+                        ⚡ Fastest Trader
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="find-button-wrap">
+
+                <button
+                    id="findOffersButton"
+                    class="find-button"
+                    type="button"
+                    onclick="findBestOffers()"
+                >
+                    🔍 Find Best Offers
+                </button>
+
+            </div>
+
+
         </div>
+
+
+        <div
+            id="filterStatus"
+            class="status-message"
+        ></div>
 
     </section>
 
 
-    <!-- OFFERS -->
+    <!-- =====================================================
+         OFFERS
+    ====================================================== -->
 
     <section class="card">
 
-        <div id="marketTitle" class="section-title">
-            Buy USDT with ETB
+        <div class="market-summary">
+
+            <div>
+
+                <div id="marketTitle" class="section-title">
+                    Buy USDT with ETB
+                </div>
+
+                <div
+                    id="marketSummaryText"
+                    class="market-summary-text"
+                >
+                    Finding trusted traders...
+                </div>
+
+            </div>
+
+            <div
+                id="networkStatus"
+                class="network-status"
+            >
+                ● Online
+            </div>
+
         </div>
+
 
         <div id="offers" class="offers">
 
@@ -859,7 +1258,9 @@
     </section>
 
 
-    <!-- CREATE TRADE -->
+    <!-- =====================================================
+         CREATE TRADE
+    ====================================================== -->
 
     <section class="card">
 
@@ -906,8 +1307,6 @@
         </div>
 
 
-        <!-- PAYMENT METHOD -->
-
         <div class="payment-box">
 
             <h3>
@@ -932,8 +1331,6 @@
 
         </div>
 
-
-        <!-- CALCULATION -->
 
         <div class="calculation">
 
@@ -978,6 +1375,47 @@
         </div>
 
 
+        <div class="security-panel">
+
+            <h3>
+                🔐 Trade Security
+            </h3>
+
+            <div class="security-list">
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>
+                        Always verify the payment account before sending money.
+                    </span>
+                </div>
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>
+                        Never share passwords, private keys, or recovery phrases.
+                    </span>
+                </div>
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>
+                        Never release crypto until payment is actually received.
+                    </span>
+                </div>
+
+                <div class="security-item">
+                    <span class="security-icon">✓</span>
+                    <span>
+                        Trade actions are processed through the CryptoVault backend.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
         <div id="status" class="status-message"></div>
 
 
@@ -993,7 +1431,9 @@
     </section>
 
 
-    <!-- MY TRADE -->
+    <!-- =====================================================
+         MY TRADE
+    ====================================================== -->
 
     <section class="card">
 
@@ -1064,6 +1504,36 @@ let currentUserId = null;
 let chatRefreshTimer = null;
 
 let chatSending = false;
+
+
+/*
+ * Phase 1 state
+ */
+let currentOffers = [];
+
+let filteredOffers = [];
+
+let lastMarketRequest = 0;
+
+
+/* ============================================================
+   COUNTRY / CURRENCY
+============================================================ */
+
+
+const COUNTRY_FIAT_MAP = {
+
+    ET: "ETB",
+    KE: "KES",
+    NG: "NGN",
+    GH: "GHS",
+    UG: "UGX",
+    TZ: "TZS",
+    ZA: "ZAR",
+    US: "USD",
+    EU: "EUR"
+
+};
 
 
 /* ============================================================
@@ -1176,6 +1646,52 @@ async function getCurrentUser() {
 
 
 /* ============================================================
+   COUNTRY CHANGED
+============================================================ */
+
+
+function countryChanged() {
+
+    const countrySelect =
+        document.getElementById(
+            "countrySelect"
+        );
+
+    const fiatSelect =
+        document.getElementById(
+            "fiatSelect"
+        );
+
+
+    if (
+        !countrySelect ||
+        !fiatSelect
+    ) {
+
+        return;
+
+    }
+
+
+    const country =
+        countrySelect.value;
+
+
+    const fiat =
+        COUNTRY_FIAT_MAP[country] ||
+        "USD";
+
+
+    fiatSelect.value =
+        fiat;
+
+
+    marketChanged();
+
+}
+
+
+/* ============================================================
    MARKET SELECTION
 ============================================================ */
 
@@ -1187,15 +1703,19 @@ function setMarket(side) {
             ? "sell"
             : "buy";
 
+
     selectedOffer = null;
 
     selectedPaymentMethod = null;
+
 
     clearTradeForm();
 
     updateTabs();
 
     updateMarketTitle();
+
+    updateAmountHelp();
 
     refreshMarket();
 
@@ -1208,9 +1728,12 @@ function marketChanged() {
 
     selectedPaymentMethod = null;
 
+
     clearTradeForm();
 
     updateMarketTitle();
+
+    updateAmountHelp();
 
     refreshMarket();
 
@@ -1225,6 +1748,7 @@ function updateTabs() {
             "active",
             marketSide === "buy"
         );
+
 
     document
         .getElementById("sellTab")
@@ -1243,10 +1767,12 @@ function updateMarketTitle() {
             "assetSelect"
         ).value;
 
+
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
+
 
     if (marketSide === "buy") {
 
@@ -1255,15 +1781,18 @@ function updateMarketTitle() {
         ).textContent =
             `Buy ${asset} with ${fiat}`;
 
+
         document.getElementById(
             "heroTitle"
         ).textContent =
             `Buy ${asset}`;
 
+
         document.getElementById(
             "heroText"
         ).textContent =
-            `Buy ${asset} from P2P traders.`;
+            `Buy ${asset} from P2P traders with your preferred payment method.`;
+
 
         document.getElementById(
             "amountLabel"
@@ -1277,20 +1806,61 @@ function updateMarketTitle() {
         ).textContent =
             `Sell ${asset} for ${fiat}`;
 
+
         document.getElementById(
             "heroTitle"
         ).textContent =
             `Sell ${asset}`;
 
+
         document.getElementById(
             "heroText"
         ).textContent =
-            `Sell ${asset} to P2P traders.`;
+            `Sell ${asset} to trusted P2P traders.`;
+
 
         document.getElementById(
             "amountLabel"
         ).textContent =
             `Amount (${asset})`;
+
+    }
+
+}
+
+
+function updateAmountHelp() {
+
+    const help =
+        document.getElementById(
+            "amountHelp"
+        );
+
+
+    if (!help) return;
+
+
+    const asset =
+        document.getElementById(
+            "assetSelect"
+        ).value;
+
+
+    const fiat =
+        document.getElementById(
+            "fiatSelect"
+        ).value;
+
+
+    if (marketSide === "buy") {
+
+        help.textContent =
+            `Enter the ${fiat} amount you want to spend.`;
+
+    } else {
+
+        help.textContent =
+            `Enter the ${asset} amount you want to sell.`;
 
     }
 
@@ -1309,6 +1879,7 @@ function clearTradeForm() {
             "quickAmount"
         );
 
+
     if (amount) {
 
         amount.value = "";
@@ -1320,6 +1891,7 @@ function clearTradeForm() {
         document.getElementById(
             "selectedTrader"
         );
+
 
     if (trader) {
 
@@ -1334,6 +1906,7 @@ function clearTradeForm() {
             "paymentMethodSelect"
         );
 
+
     if (paymentSelect) {
 
         paymentSelect.disabled = true;
@@ -1344,24 +1917,6 @@ function clearTradeForm() {
                 Select an offer first
             </option>
             `;
-
-    }
-
-
-    showStatus(
-        "",
-        "info"
-    );
-
-    const statusBox =
-        document.getElementById(
-            "status"
-        );
-
-    if (statusBox) {
-
-        statusBox.style.display =
-            "none";
 
     }
 
@@ -1383,10 +1938,12 @@ async function loadOffers() {
             "assetSelect"
         ).value;
 
+
     const fiat =
         document.getElementById(
             "fiatSelect"
         ).value;
+
 
     const result =
         await supabaseClient
@@ -1404,6 +1961,7 @@ async function loadOffers() {
                 }
             );
 
+
     if (result.error) {
 
         console.error(
@@ -1411,9 +1969,11 @@ async function loadOffers() {
             result.error
         );
 
+
         return [];
 
     }
+
 
     return result.data || [];
 
@@ -1425,7 +1985,9 @@ async function loadOffers() {
 ============================================================ */
 
 
-async function loadPaymentMethods(offers) {
+async function loadPaymentMethods(
+    offers
+) {
 
     if (
         !offers ||
@@ -1437,67 +1999,101 @@ async function loadPaymentMethods(offers) {
     }
 
 
-    const results =
-        await Promise.all(
+    /*
+     * Limit simultaneous requests to avoid
+     * unnecessary mobile network load.
+     */
+    const results = [];
 
-            offers.map(
-                async offer => {
 
-                    const result =
-                        await supabaseClient.rpc(
-                            "get_offer_payment_methods",
-                            {
-                                p_offer_id:
-                                    offer.id
-                            }
-                        );
+    for (
+        const offer of offers
+    ) {
 
-                    if (result.error) {
+        try {
 
-                        console.error(
-                            "Payment method error:",
-                            result.error
-                        );
-
-                        return {
-                            ...offer,
-                            methods: []
-                        };
-
+            const result =
+                await supabaseClient.rpc(
+                    "get_offer_payment_methods",
+                    {
+                        p_offer_id:
+                            offer.id
                     }
+                );
 
-                    const methods =
-                        (result.data || [])
-                            .map(
-                                method => ({
 
-                                    id:
-                                        method.payment_method_id,
+            if (result.error) {
 
-                                    name:
-                                        method.payment_method_name,
+                console.error(
+                    "Payment method error:",
+                    result.error
+                );
 
-                                    account_name:
-                                        method.account_name,
 
-                                    account_identifier:
-                                        method.account_identifier
+                results.push({
 
-                                })
-                            );
+                    ...offer,
 
-                    return {
+                    methods: []
 
-                        ...offer,
+                });
 
-                        methods
 
-                    };
+                continue;
 
-                }
-            )
+            }
 
-        );
+
+            const methods =
+                (result.data || [])
+                    .map(
+                        method => ({
+
+                            id:
+                                method.payment_method_id,
+
+                            name:
+                                method.payment_method_name,
+
+                            account_name:
+                                method.account_name,
+
+                            account_identifier:
+                                method.account_identifier
+
+                        })
+                    );
+
+
+            results.push({
+
+                ...offer,
+
+                methods
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Payment method exception:",
+                error
+            );
+
+
+            results.push({
+
+                ...offer,
+
+                methods: []
+
+            });
+
+        }
+
+    }
+
 
     return results;
 
@@ -1509,7 +2105,9 @@ async function loadPaymentMethods(offers) {
 ============================================================ */
 
 
-async function enrichOffers(offers) {
+async function enrichOffers(
+    offers
+) {
 
     if (
         !offers ||
@@ -1534,7 +2132,9 @@ async function enrichOffers(offers) {
         ];
 
 
-    if (traderIds.length === 0) {
+    if (
+        traderIds.length === 0
+    ) {
 
         return offers;
 
@@ -1550,7 +2150,10 @@ async function enrichOffers(offers) {
         await supabaseClient
             .from("profiles")
             .select("*")
-            .in("id", traderIds);
+            .in(
+                "id",
+                traderIds
+            );
 
 
     if (!profilesResult.error) {
@@ -1565,7 +2168,10 @@ async function enrichOffers(offers) {
         await supabaseClient
             .from("trader_stats")
             .select("*")
-            .in("user_id", traderIds);
+            .in(
+                "user_id",
+                traderIds
+            );
 
 
     if (!statsResult.error) {
@@ -1612,6 +2218,695 @@ async function enrichOffers(offers) {
 
 
 /* ============================================================
+   TRUST SCORE
+============================================================ */
+
+
+function calculateTrustScore(
+    offer
+) {
+
+    const stats =
+        offer.traderStats || {};
+
+
+    const completed =
+        Number(
+            stats.completed_trades ??
+            stats.total_completed ??
+            stats.total_trades ??
+            offer.completed_trades ??
+            0
+        );
+
+
+    const completionRate =
+        Number(
+            stats.completion_rate ??
+            stats.completionRate ??
+            0
+        );
+
+
+    const reputation =
+        Number(
+            stats.reputation_score ??
+            stats.reputation ??
+            stats.rating ??
+            0
+        );
+
+
+    const disputes =
+        Number(
+            stats.disputes ??
+            stats.dispute_count ??
+            0
+        );
+
+
+    let score = 50;
+
+
+    if (completed >= 10) {
+        score += 8;
+    }
+
+    if (completed >= 50) {
+        score += 8;
+    }
+
+    if (completed >= 100) {
+        score += 7;
+    }
+
+
+    if (completionRate >= 90) {
+        score += 7;
+    }
+
+    if (completionRate >= 97) {
+        score += 8;
+    }
+
+
+    if (reputation >= 4) {
+        score += 5;
+    }
+
+    if (reputation >= 4.5) {
+        score += 5;
+    }
+
+
+    if (disputes > 0) {
+
+        score -=
+            Math.min(
+                disputes * 3,
+                20
+            );
+
+    }
+
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            Math.round(score)
+        )
+    );
+
+}
+
+
+/* ============================================================
+   TRUST INFORMATION
+============================================================ */
+
+
+function getTrustInformation(
+    score
+) {
+
+    if (score >= 85) {
+
+        return {
+
+            label:
+                "High Trust",
+
+            className:
+                "trust-high",
+
+            risk:
+                "Low Risk",
+
+            riskClass:
+                "risk-low"
+
+        };
+
+    }
+
+
+    if (score >= 65) {
+
+        return {
+
+            label:
+                "Trusted",
+
+            className:
+                "trust-medium",
+
+            risk:
+                "Medium Risk",
+
+            riskClass:
+                "risk-medium"
+
+        };
+
+    }
+
+
+    return {
+
+        label:
+            "Low Trust",
+
+        className:
+            "trust-low",
+
+        risk:
+            "Higher Risk",
+
+        riskClass:
+            "risk-high"
+
+    };
+
+}
+
+
+/* ============================================================
+   SMART PAYMENT METHOD LIST
+============================================================ */
+
+
+function updatePaymentFilter(
+    offers
+) {
+
+    const select =
+        document.getElementById(
+            "paymentFilter"
+        );
+
+
+    if (!select) return;
+
+
+    const oldValue =
+        select.value;
+
+
+    const methods =
+        new Map();
+
+
+    for (
+        const offer of offers || []
+    ) {
+
+        for (
+            const method of
+                offer.methods || []
+        ) {
+
+            if (
+                method &&
+                method.id
+            ) {
+
+                methods.set(
+                    String(method.id),
+                    method
+                );
+
+            }
+
+        }
+
+    }
+
+
+    select.innerHTML =
+        `
+        <option value="">
+            All Payment Methods
+        </option>
+        `;
+
+
+    Array.from(
+        methods.values()
+    )
+        .sort(
+            (a, b) =>
+                String(
+                    a.name || ""
+                ).localeCompare(
+                    String(
+                        b.name || ""
+                    )
+                )
+        )
+        .forEach(
+            method => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    String(
+                        method.id
+                    );
+
+
+                option.textContent =
+                    method.name ||
+                    "Payment Method";
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    if (
+        Array.from(
+            select.options
+        ).some(
+            option =>
+                option.value ===
+                oldValue
+        )
+    ) {
+
+        select.value =
+            oldValue;
+
+    }
+
+}
+
+
+/* ============================================================
+   SMART FILTER
+============================================================ */
+
+
+function applySmartFilters(
+    offers
+) {
+
+    const paymentMethod =
+        document.getElementById(
+            "paymentFilter"
+        )?.value || "";
+
+
+    const amount =
+        parseFloat(
+            document.getElementById(
+                "amountFilter"
+            )?.value || "0"
+        ) || 0;
+
+
+    const sort =
+        document.getElementById(
+            "sortFilter"
+        )?.value || "trust";
+
+
+    let result =
+        [...offers];
+
+
+    /*
+     * Payment method filtering
+     */
+    if (paymentMethod) {
+
+        result =
+            result.filter(
+                offer => {
+
+                    return (
+                        offer.methods ||
+                        []
+                    ).some(
+                        method =>
+                            String(
+                                method.id
+                            ) ===
+                            String(
+                                paymentMethod
+                            )
+                    );
+
+                }
+            );
+
+    }
+
+
+    /*
+     * Amount matching
+     */
+    if (amount > 0) {
+
+        result =
+            result.filter(
+                offer => {
+
+                    const price =
+                        Number(
+                            offer.price || 0
+                        );
+
+
+                    if (
+                        price <= 0
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    const minimum =
+                        Number(
+                            offer.min_amount ||
+                            0
+                        );
+
+
+                    const maximum =
+                        Number(
+                            offer.max_amount ||
+                            0
+                        );
+
+
+                    const available =
+                        Number(
+                            offer.available_amount ||
+                            0
+                        );
+
+
+                    let cryptoAmount;
+
+
+                    if (
+                        marketSide ===
+                        "buy"
+                    ) {
+
+                        cryptoAmount =
+                            amount / price;
+
+                    } else {
+
+                        cryptoAmount =
+                            amount;
+
+                    }
+
+
+                    if (
+                        cryptoAmount <
+                        minimum
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        maximum > 0 &&
+                        cryptoAmount >
+                        maximum
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        available > 0 &&
+                        cryptoAmount >
+                        available
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    return true;
+
+                }
+            );
+
+    }
+
+
+    /*
+     * Calculate trust
+     */
+    result.forEach(
+        offer => {
+
+            offer._trustScore =
+                calculateTrustScore(
+                    offer
+                );
+
+        }
+    );
+
+
+    /*
+     * Smart sorting
+     */
+    result.sort(
+        (a, b) => {
+
+            if (
+                sort ===
+                "trust"
+            ) {
+
+                return (
+                    b._trustScore -
+                    a._trustScore
+                );
+
+            }
+
+
+            if (
+                sort ===
+                "price"
+            ) {
+
+                const aPrice =
+                    Number(
+                        a.price || 0
+                    );
+
+
+                const bPrice =
+                    Number(
+                        b.price || 0
+                    );
+
+
+                /*
+                 * For BUY:
+                 * lower price is better.
+                 *
+                 * For SELL:
+                 * higher price is better.
+                 */
+                return marketSide === "buy"
+                    ? aPrice - bPrice
+                    : bPrice - aPrice;
+
+            }
+
+
+            if (
+                sort ===
+                "completion"
+            ) {
+
+                const aRate =
+                    Number(
+                        a.traderStats
+                            ?.completion_rate ||
+                        0
+                    );
+
+
+                const bRate =
+                    Number(
+                        b.traderStats
+                            ?.completion_rate ||
+                        0
+                    );
+
+
+                return (
+                    bRate -
+                    aRate
+                );
+
+            }
+
+
+            if (
+                sort ===
+                "speed"
+            ) {
+
+                const aSpeed =
+                    Number(
+                        a.traderStats
+                            ?.avg_response_minutes ??
+                        a.traderStats
+                            ?.response_time_minutes ??
+                        999999
+                    );
+
+
+                const bSpeed =
+                    Number(
+                        b.traderStats
+                            ?.avg_response_minutes ??
+                        b.traderStats
+                            ?.response_time_minutes ??
+                        999999
+                    );
+
+
+                return (
+                    aSpeed -
+                    bSpeed
+                );
+
+            }
+
+
+            return 0;
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+/* ============================================================
+   SMART FILTER CHANGED
+============================================================ */
+
+
+function smartFilterChanged() {
+
+    if (
+        !currentOffers ||
+        !Array.isArray(
+            currentOffers
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    filteredOffers =
+        applySmartFilters(
+            currentOffers
+        );
+
+
+    renderOffers(
+        filteredOffers
+    );
+
+
+    updateMarketSummary(
+        filteredOffers
+    );
+
+}
+
+
+/* ============================================================
+   FIND BEST OFFERS
+============================================================ */
+
+
+async function findBestOffers() {
+
+    const button =
+        document.getElementById(
+            "findOffersButton"
+        );
+
+
+    if (button) {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "⏳ Finding Best Offers...";
+
+    }
+
+
+    try {
+
+        /*
+         * Refresh the market first so matching
+         * is based on current active offers.
+         */
+        await refreshMarket();
+
+        showFilterStatus(
+            `${filteredOffers.length} matching offer${filteredOffers.length === 1 ? "" : "s"} found.`,
+            filteredOffers.length
+                ? "success"
+                : "warning"
+        );
+
+    } finally {
+
+        if (button) {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "🔍 Find Best Offers";
+
+        }
+
+    }
+
+}
+
+
+/* ============================================================
    REFRESH MARKET
 ============================================================ */
 
@@ -1619,6 +2914,8 @@ async function enrichOffers(offers) {
 async function refreshMarket() {
 
     updateMarketTitle();
+
+    updateAmountHelp();
 
 
     const container =
@@ -1630,15 +2927,33 @@ async function refreshMarket() {
     container.innerHTML =
         `
         <div class="empty">
-            Loading offers...
+            Finding trusted offers...
         </div>
         `;
+
+
+    const requestId =
+        ++lastMarketRequest;
 
 
     try {
 
         let offers =
             await loadOffers();
+
+
+        /*
+         * Prevent an old request from overwriting
+         * a newer market selection.
+         */
+        if (
+            requestId !==
+            lastMarketRequest
+        ) {
+
+            return;
+
+        }
 
 
         offers =
@@ -1653,8 +2968,38 @@ async function refreshMarket() {
             );
 
 
-        renderOffers(
+        if (
+            requestId !==
+            lastMarketRequest
+        ) {
+
+            return;
+
+        }
+
+
+        currentOffers =
+            offers;
+
+
+        updatePaymentFilter(
             offers
+        );
+
+
+        filteredOffers =
+            applySmartFilters(
+                offers
+            );
+
+
+        renderOffers(
+            filteredOffers
+        );
+
+
+        updateMarketSummary(
+            filteredOffers
         );
 
 
@@ -1669,7 +3014,7 @@ async function refreshMarket() {
         container.innerHTML =
             `
             <div class="empty">
-                Could not load offers.
+                Could not load offers. Please try again.
             </div>
             `;
 
@@ -1679,11 +3024,125 @@ async function refreshMarket() {
 
 
 /* ============================================================
+   MARKET SUMMARY
+============================================================ */
+
+
+function updateMarketSummary(
+    offers
+) {
+
+    const summary =
+        document.getElementById(
+            "marketSummaryText"
+        );
+
+
+    if (!summary) return;
+
+
+    const total =
+        offers?.length || 0;
+
+
+    const payment =
+        document.getElementById(
+            "paymentFilter"
+        )?.value;
+
+
+    const amount =
+        parseFloat(
+            document.getElementById(
+                "amountFilter"
+            )?.value || "0"
+        ) || 0;
+
+
+    let text =
+        `${total} matching offer${total === 1 ? "" : "s"}`;
+
+
+    if (payment) {
+
+        const paymentSelect =
+            document.getElementById(
+                "paymentFilter"
+            );
+
+
+        const selected =
+            paymentSelect?.options[
+                paymentSelect.selectedIndex
+            ];
+
+
+        if (selected) {
+
+            text +=
+                ` • ${selected.textContent}`;
+
+        }
+
+    }
+
+
+    if (amount > 0) {
+
+        text +=
+            ` • Amount matched`;
+
+    }
+
+
+    summary.textContent =
+        text;
+
+}
+
+
+/* ============================================================
+   FILTER STATUS
+============================================================ */
+
+
+function showFilterStatus(
+    message,
+    type = "info"
+) {
+
+    const box =
+        document.getElementById(
+            "filterStatus"
+        );
+
+
+    if (!box) return;
+
+
+    box.textContent =
+        message;
+
+
+    box.className =
+        "status-message " +
+        type;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+/* ============================================================
    RENDER OFFERS
 ============================================================ */
 
 
-function renderOffers(offers) {
+function renderOffers(
+    offers
+) {
 
     const container =
         document.getElementById(
@@ -1699,9 +3158,19 @@ function renderOffers(offers) {
         container.innerHTML =
             `
             <div class="empty">
-                No active ${escapeHTML(
+
+                No matching active
+                ${escapeHTML(
                     marketSide
-                )} offers are available.
+                )}
+                offers are available.
+
+                <br><br>
+
+                Try another currency,
+                payment method,
+                amount, or cryptocurrency.
+
             </div>
             `;
 
@@ -1725,7 +3194,10 @@ function renderOffers(offers) {
     container.innerHTML =
         offers
             .map(
-                offer => {
+                (
+                    offer,
+                    index
+                ) => {
 
                     const profile =
                         offer.profile || {};
@@ -1743,35 +3215,61 @@ function renderOffers(offers) {
 
 
                     const completedTrades =
-                        stats.completed_trades ?? 0;
+                        stats.completed_trades ??
+                        stats.total_completed ??
+                        0;
 
 
                     const reputation =
                         stats.reputation_score ??
+                        stats.reputation ??
                         stats.completion_rate ??
                         "New";
 
 
+                    const completionRate =
+                        Number(
+                            stats.completion_rate ||
+                            0
+                        );
+
+
                     const available =
                         Number(
-                            offer.available_amount || 0
+                            offer.available_amount ||
+                            0
                         );
 
 
                     const minimum =
                         Number(
-                            offer.min_amount || 0
+                            offer.min_amount ||
+                            0
                         );
 
 
                     const maximum =
                         Number(
-                            offer.max_amount || 0
+                            offer.max_amount ||
+                            0
                         );
 
 
                     const methods =
                         offer.methods || [];
+
+
+                    const trustScore =
+                        offer._trustScore ??
+                        calculateTrustScore(
+                            offer
+                        );
+
+
+                    const trust =
+                        getTrustInformation(
+                            trustScore
+                        );
 
 
                     const paymentHTML =
@@ -1783,7 +3281,8 @@ function renderOffers(offers) {
                                         `
                                         <span class="payment-tag">
                                             ${escapeHTML(
-                                                method.name
+                                                method.name ||
+                                                "Payment Method"
                                             )}
                                         </span>
                                         `
@@ -1815,10 +3314,14 @@ function renderOffers(offers) {
                         );
 
 
+                    const recommended =
+                        index === 0;
+
+
                     return `
 
                         <div
-                            class="offer"
+                            class="offer ${recommended ? "recommended" : ""}"
                             data-offer-card-id="${escapeHTML(
                                 offerId
                             )}"
@@ -1828,6 +3331,19 @@ function renderOffers(offers) {
                                 traderName
                             )}"
                         >
+
+                            ${
+                                recommended
+                                    ?
+                                    `
+                                    <span class="recommended-label">
+                                        ⭐ SMART MATCH
+                                    </span>
+                                    `
+                                    :
+                                    ""
+                            }
+
 
                             <div class="offer-top">
 
@@ -1840,7 +3356,7 @@ function renderOffers(offers) {
                                     </div>
 
                                     <div class="verified">
-                                        ✓ Verified Trader
+                                        ✓ Trader Profile
                                     </div>
 
                                 </div>
@@ -1863,6 +3379,24 @@ function renderOffers(offers) {
                                     </div>
 
                                 </div>
+
+                            </div>
+
+
+                            <div class="trust-row">
+
+                                <span
+                                    class="trust-score ${trust.className}"
+                                >
+                                    ⭐ ${trustScore}/100
+                                    ${trust.label}
+                                </span>
+
+                                <span
+                                    class="risk ${trust.riskClass}"
+                                >
+                                    ● ${trust.risk}
+                                </span>
 
                             </div>
 
@@ -1960,6 +3494,18 @@ function renderOffers(offers) {
                                     )}
                                 </strong>
 
+                                ${
+                                    completionRate > 0
+                                        ?
+                                        `
+                                        • ${formatNumber(
+                                            completionRate
+                                        )}% completion
+                                        `
+                                        :
+                                        ""
+                                }
+
                             </div>
 
 
@@ -1989,9 +3535,6 @@ function renderOffers(offers) {
             .join("");
 
 
-    /*
-     * SELECT OFFER FROM CARD
-     */
     const selectOfferFromCard =
         async offerId => {
 
@@ -2043,9 +3586,6 @@ function renderOffers(offers) {
         };
 
 
-    /*
-     * BUTTON CLICK
-     */
     container
         .querySelectorAll(
             "[data-offer-id]"
@@ -2072,9 +3612,6 @@ function renderOffers(offers) {
         );
 
 
-    /*
-     * CARD CLICK
-     */
     container
         .querySelectorAll(
             "[data-offer-card-id]"
@@ -2105,9 +3642,6 @@ function renderOffers(offers) {
                 );
 
 
-                /*
-                 * Keyboard support
-                 */
                 card.addEventListener(
                     "keydown",
                     async event => {
@@ -2315,12 +3849,6 @@ async function loadPaymentMethodSelector(
 
         const methods =
             result.data || [];
-
-
-        console.log(
-            "Payment methods returned:",
-            methods
-        );
 
 
         offer.methods =
@@ -2779,24 +4307,28 @@ async function createTrade() {
 
         const minimum =
             Number(
-                selectedOffer.min_amount || 0
+                selectedOffer.min_amount ||
+                0
             );
 
 
         const maximum =
             Number(
-                selectedOffer.max_amount || 0
+                selectedOffer.max_amount ||
+                0
             );
 
 
         const available =
             Number(
-                selectedOffer.available_amount || 0
+                selectedOffer.available_amount ||
+                0
             );
 
 
         if (
-            cryptoAmount < minimum
+            cryptoAmount <
+            minimum
         ) {
 
             showStatus(
@@ -2813,7 +4345,8 @@ async function createTrade() {
 
         if (
             maximum > 0 &&
-            cryptoAmount > maximum
+            cryptoAmount >
+            maximum
         ) {
 
             showStatus(
@@ -2829,7 +4362,8 @@ async function createTrade() {
 
 
         if (
-            cryptoAmount > available
+            cryptoAmount >
+            available
         ) {
 
             showStatus(
@@ -3677,7 +5211,9 @@ async function cancelTrade() {
 ============================================================ */
 
 
-function renderMyTrade(trade) {
+function renderMyTrade(
+    trade
+) {
 
     const container =
         document.getElementById(
@@ -4015,8 +5551,7 @@ function renderMyTrade(trade) {
 
                 <br><br>
 
-                The crypto has been released successfully
-                through the secure wallet process.
+                The crypto has been released successfully.
 
             </div>
 
@@ -4065,8 +5600,7 @@ function renderMyTrade(trade) {
                 The trade has been cancelled.
 
                 Reserved crypto has been returned to
-                the seller according to the secure
-                cancellation process.
+                the seller according to the cancellation process.
 
             </div>
 
@@ -4090,9 +5624,6 @@ function renderMyTrade(trade) {
                 <br><br>
 
                 The trade expiry time was reached.
-
-                Reserved crypto is returned through
-                the expiry process.
 
             </div>
 
@@ -4137,7 +5668,7 @@ function renderMyTrade(trade) {
                     </div>
 
                     <div class="verified">
-                        ✓ CryptoVault Secure Trade
+                        ✓ Secure Trade Flow
                     </div>
 
                 </div>
@@ -5365,6 +6896,71 @@ function escapeHTML(
 
 
 /* ============================================================
+   NETWORK STATUS
+============================================================ */
+
+
+function updateNetworkStatus() {
+
+    const element =
+        document.getElementById(
+            "networkStatus"
+        );
+
+
+    if (!element) return;
+
+
+    if (
+        navigator.onLine
+    ) {
+
+        element.textContent =
+            "● Online";
+
+        element.classList.remove(
+            "offline"
+        );
+
+    } else {
+
+        element.textContent =
+            "● Offline";
+
+        element.classList.add(
+            "offline"
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "online",
+    () => {
+
+        updateNetworkStatus();
+
+        if (
+            currentOffers.length === 0
+        ) {
+
+            refreshMarket();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "offline",
+    updateNetworkStatus
+);
+
+
+/* ============================================================
    URL PARAMETERS
 ============================================================ */
 
@@ -5383,6 +6979,10 @@ function applyURLParameters() {
 
     const asset =
         params.get("asset");
+
+
+    const fiat =
+        params.get("fiat");
 
 
     if (
@@ -5424,6 +7024,37 @@ function applyURLParameters() {
                 )
                 .value =
                     upper;
+
+        }
+
+    }
+
+
+    if (fiat) {
+
+        const upperFiat =
+            fiat.toUpperCase();
+
+
+        const fiatSelect =
+            document.getElementById(
+                "fiatSelect"
+            );
+
+
+        if (
+            fiatSelect &&
+            Array.from(
+                fiatSelect.options
+            ).some(
+                option =>
+                    option.value ===
+                    upperFiat
+            )
+        ) {
+
+            fiatSelect.value =
+                upperFiat;
 
         }
 
@@ -5577,9 +7208,13 @@ document.addEventListener(
     "DOMContentLoaded",
     async () => {
 
+        updateNetworkStatus();
+
         applyURLParameters();
 
         updateMarketTitle();
+
+        updateAmountHelp();
 
         clearTradeForm();
 
