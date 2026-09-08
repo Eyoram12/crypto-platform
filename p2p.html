@@ -240,6 +240,11 @@ textarea:focus {
     background: #273449;
 }
 
+.primary:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
 .secondary {
     background: white;
     color: #111827;
@@ -518,7 +523,10 @@ textarea:focus {
 
 <header>
     <div class="nav">
-        <div class="logo">CryptoVault</div>
+
+        <div class="logo">
+            CryptoVault
+        </div>
 
         <div class="nav-links">
             <a href="index.html">Home</a>
@@ -526,88 +534,202 @@ textarea:focus {
             <a href="p2p.html">P2P Trading</a>
             <a href="transactions.html">Transactions</a>
             <a href="settings.html">Settings</a>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
+            <button class="logout-btn" id="logoutBtn">
+                Logout
+            </button>
         </div>
+
     </div>
 </header>
 
 <main class="container">
 
     <section class="hero">
+
         <h1>P2P Trading</h1>
+
         <p>
-            Buy or sell crypto directly with other traders through the CryptoVault marketplace.
+            Buy or sell crypto directly with other traders
+            through the CryptoVault marketplace.
         </p>
+
     </section>
 
-    <div id="globalMessage" class="message hidden"></div>
+    <div id="globalMessage"
+         class="message hidden">
+    </div>
 
     <!-- MARKETPLACE -->
+
     <section class="card">
 
         <div class="tabs">
-            <button id="buyBtn" class="tab active">Buy Crypto</button>
-            <button id="sellBtn" class="tab">Sell Crypto</button>
+
+            <button id="buyBtn"
+                    class="tab active">
+                Buy Crypto
+            </button>
+
+            <button id="sellBtn"
+                    class="tab">
+                Sell Crypto
+            </button>
+
         </div>
 
-        <div id="sideExplanation" class="message">
+        <div id="sideExplanation"
+             class="message">
+
             Buy mode: you are buying crypto from sellers.
+
         </div>
 
         <div class="filters">
 
             <div class="field">
+
                 <label>Country</label>
+
                 <select id="countrySelect">
-                    <option value="ET">Ethiopia</option>
-                    <option value="KE">Kenya</option>
-                    <option value="NG">Nigeria</option>
-                    <option value="GH">Ghana</option>
-                    <option value="UG">Uganda</option>
-                    <option value="TZ">Tanzania</option>
-                    <option value="ZA">South Africa</option>
-                    <option value="INT">International</option>
+
+                    <option value="ET">
+                        Ethiopia
+                    </option>
+
+                    <option value="KE">
+                        Kenya
+                    </option>
+
+                    <option value="NG">
+                        Nigeria
+                    </option>
+
+                    <option value="GH">
+                        Ghana
+                    </option>
+
+                    <option value="UG">
+                        Uganda
+                    </option>
+
+                    <option value="TZ">
+                        Tanzania
+                    </option>
+
+                    <option value="ZA">
+                        South Africa
+                    </option>
+
+                    <option value="INT">
+                        International
+                    </option>
+
                 </select>
+
             </div>
 
             <div class="field">
+
                 <label>Currency</label>
+
                 <select id="fiatSelect">
-                    <option value="ETB">ETB</option>
-                    <option value="KES">KES</option>
-                    <option value="NGN">NGN</option>
-                    <option value="GHS">GHS</option>
-                    <option value="UGX">UGX</option>
-                    <option value="TZS">TZS</option>
-                    <option value="ZAR">ZAR</option>
-                    <option value="USD">USD</option>
+
+                    <option value="ETB">
+                        ETB
+                    </option>
+
+                    <option value="KES">
+                        KES
+                    </option>
+
+                    <option value="NGN">
+                        NGN
+                    </option>
+
+                    <option value="GHS">
+                        GHS
+                    </option>
+
+                    <option value="UGX">
+                        UGX
+                    </option>
+
+                    <option value="TZS">
+                        TZS
+                    </option>
+
+                    <option value="ZAR">
+                        ZAR
+                    </option>
+
+                    <option value="USD">
+                        USD
+                    </option>
+
                 </select>
+
             </div>
 
             <div class="field">
+
                 <label>Asset</label>
+
                 <select id="assetSelect">
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
+
+                    <option value="USDT">
+                        USDT
+                    </option>
+
+                    <option value="BTC">
+                        BTC
+                    </option>
+
+                    <option value="ETH">
+                        ETH
+                    </option>
+
                 </select>
+
             </div>
 
             <div class="field">
+
                 <label>Payment Method</label>
+
                 <select id="paymentFilter">
-                    <option value="">All methods</option>
+
+                    <option value="">
+                        All methods
+                    </option>
+
                 </select>
+
             </div>
 
             <div class="field">
+
                 <label>Sort</label>
+
                 <select id="sortSelect">
-                    <option value="price_low">Lowest price</option>
-                    <option value="price_high">Highest price</option>
-                    <option value="amount_high">Highest amount</option>
-                    <option value="reputation">Best trader</option>
+
+                    <option value="price_low">
+                        Lowest price
+                    </option>
+
+                    <option value="price_high">
+                        Highest price
+                    </option>
+
+                    <option value="amount_high">
+                        Highest amount
+                    </option>
+
+                    <option value="reputation">
+                        Best trader
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
@@ -615,30 +737,62 @@ textarea:focus {
     </section>
 
     <!-- OFFERS -->
+
     <section class="card">
 
-        <h2 id="marketTitle">Available Sellers</h2>
+        <h2 id="marketTitle">
+            Available Sellers
+        </h2>
 
-        <div id="offerList" class="offer-list">
-            <div class="loading">Loading offers...</div>
+        <div id="offerList"
+             class="offer-list">
+
+            <div class="loading">
+                Loading offers...
+            </div>
+
         </div>
 
     </section>
 
     <!-- TRADE CENTER -->
+
     <section class="card">
 
-        <h2>My P2P Trade Center</h2>
+        <h2>
+            My P2P Trade Center
+        </h2>
 
         <div class="tabs">
-            <button class="tab active trade-filter" data-filter="all">All</button>
-            <button class="tab trade-filter" data-filter="active">Active</button>
-            <button class="tab trade-filter" data-filter="action">Needs Action</button>
-            <button class="tab trade-filter" data-filter="completed">Completed</button>
+
+            <button class="tab active trade-filter"
+                    data-filter="all">
+                All
+            </button>
+
+            <button class="tab trade-filter"
+                    data-filter="active">
+                Active
+            </button>
+
+            <button class="tab trade-filter"
+                    data-filter="action">
+                Needs Action
+            </button>
+
+            <button class="tab trade-filter"
+                    data-filter="completed">
+                Completed
+            </button>
+
         </div>
 
         <div id="tradeList">
-            <div class="loading">Loading trades...</div>
+
+            <div class="loading">
+                Loading trades...
+            </div>
+
         </div>
 
     </section>
@@ -646,41 +800,81 @@ textarea:focus {
 </main>
 
 <!-- TRADE CREATION MODAL -->
-<div id="tradeModal" class="modal">
+
+<div id="tradeModal"
+     class="modal">
 
     <div class="modal-box">
 
         <div class="modal-head">
-            <h2 id="tradeModalTitle">Create Trade</h2>
-            <button class="close" id="closeTradeModal">×</button>
+
+            <h2 id="tradeModalTitle">
+                Create Trade
+            </h2>
+
+            <button class="close"
+                    id="closeTradeModal">
+                ×
+            </button>
+
         </div>
 
-        <div id="tradeMessage" class="message hidden"></div>
-
-        <div id="selectedOfferInfo"></div>
-
-        <div class="field" style="margin-top:15px;">
-            <label id="amountLabel">Amount</label>
-            <input id="tradeAmount" type="number" min="0" step="any" placeholder="Enter amount">
+        <div id="tradeMessage"
+             class="message hidden">
         </div>
 
-        <div class="field" style="margin-top:15px;">
-            <label>Payment Method</label>
+        <div id="selectedOfferInfo">
+        </div>
+
+        <div class="field"
+             style="margin-top:15px;">
+
+            <label id="amountLabel">
+                Amount in USDT
+            </label>
+
+            <input id="tradeAmount"
+                   type="number"
+                   min="0"
+                   step="any"
+                   placeholder="Enter crypto amount">
+
+        </div>
+
+        <div class="field"
+             style="margin-top:15px;">
+
+            <label>
+                Payment Method
+            </label>
+
             <select id="tradePaymentMethod">
-                <option value="">Select payment method</option>
+
+                <option value="">
+                    Select payment method
+                </option>
+
             </select>
+
         </div>
 
-        <div id="tradeCalculation" class="trade-summary" style="margin-top:15px;"></div>
+        <div id="tradeCalculation"
+             class="trade-summary"
+             style="margin-top:15px;">
+        </div>
 
         <div class="actions">
-            <button id="createTradeBtn" class="primary">
+
+            <button id="createTradeBtn"
+                    class="primary">
                 Create Trade
             </button>
 
-            <button id="cancelTradeModal" class="secondary">
+            <button id="cancelTradeModal"
+                    class="secondary">
                 Cancel
             </button>
+
         </div>
 
     </div>
@@ -688,21 +882,35 @@ textarea:focus {
 </div>
 
 <!-- TRADE DETAIL MODAL -->
-<div id="detailModal" class="modal">
+
+<div id="detailModal"
+     class="modal">
 
     <div class="modal-box">
 
         <div class="modal-head">
-            <h2>Trade Details</h2>
-            <button class="close" id="closeDetailModal">×</button>
+
+            <h2>
+                Trade Details
+            </h2>
+
+            <button class="close"
+                    id="closeDetailModal">
+                ×
+            </button>
+
         </div>
 
-        <div id="tradeDetails"></div>
+        <div id="tradeDetails">
+        </div>
 
         <div class="actions">
-            <button id="openTradePageBtn" class="primary">
+
+            <button id="openTradePageBtn"
+                    class="primary">
                 Open Trade
             </button>
+
         </div>
 
     </div>
@@ -710,10 +918,12 @@ textarea:focus {
 </div>
 
 <script>
-const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
+
+const SUPABASE_URL =
+    "https://zihxnxnviknexlqjjdot.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+    "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -722,22 +932,27 @@ const supabaseClient =
     );
 
 let currentUserId = null;
+
 let currentSide = "buy";
+
 let currentAsset = "USDT";
+
 let currentFiat = "ETB";
 
 let selectedOffer = null;
+
 let selectedOfferPaymentMethods = [];
 
 let allLoadedOffers = [];
+
 let currentTrades = [];
 
 let currentTradeFilter = "all";
+
 let currentDetailTrade = null;
 
-let tradePolling = null;
-
 const countryCurrency = {
+
     ET: "ETB",
     KE: "KES",
     NG: "NGN",
@@ -746,38 +961,73 @@ const countryCurrency = {
     TZ: "TZS",
     ZA: "ZAR",
     INT: "USD"
+
 };
 
-const buyBtn = document.getElementById("buyBtn");
-const sellBtn = document.getElementById("sellBtn");
+const buyBtn =
+    document.getElementById("buyBtn");
 
-const countrySelect = document.getElementById("countrySelect");
-const fiatSelect = document.getElementById("fiatSelect");
-const assetSelect = document.getElementById("assetSelect");
-const paymentFilter = document.getElementById("paymentFilter");
-const sortSelect = document.getElementById("sortSelect");
+const sellBtn =
+    document.getElementById("sellBtn");
 
-const offerList = document.getElementById("offerList");
+const countrySelect =
+    document.getElementById("countrySelect");
 
-const tradeModal = document.getElementById("tradeModal");
-const detailModal = document.getElementById("detailModal");
+const fiatSelect =
+    document.getElementById("fiatSelect");
 
-const tradeAmount = document.getElementById("tradeAmount");
+const assetSelect =
+    document.getElementById("assetSelect");
+
+const paymentFilter =
+    document.getElementById("paymentFilter");
+
+const sortSelect =
+    document.getElementById("sortSelect");
+
+const offerList =
+    document.getElementById("offerList");
+
+const tradeModal =
+    document.getElementById("tradeModal");
+
+const detailModal =
+    document.getElementById("detailModal");
+
+const tradeAmount =
+    document.getElementById("tradeAmount");
+
 const tradePaymentMethod =
-    document.getElementById("tradePaymentMethod");
+    document.getElementById(
+        "tradePaymentMethod"
+    );
 
 const tradeCalculation =
-    document.getElementById("tradeCalculation");
+    document.getElementById(
+        "tradeCalculation"
+    );
 
 const tradeMessage =
-    document.getElementById("tradeMessage");
+    document.getElementById(
+        "tradeMessage"
+    );
 
 const globalMessage =
-    document.getElementById("globalMessage");
+    document.getElementById(
+        "globalMessage"
+    );
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return "";
     }
 
@@ -789,62 +1039,111 @@ function escapeHtml(value) {
         .replace(/'/g, "&#039;");
 }
 
-function showGlobalMessage(message, type = "") {
 
-    globalMessage.textContent = message;
+function showGlobalMessage(
+    message,
+    type = ""
+) {
+
+    globalMessage.textContent =
+        message;
 
     globalMessage.className =
-        "message" + (type ? " " + type : "");
+        "message" +
+        (type
+            ? " " + type
+            : "");
 
-    globalMessage.classList.remove("hidden");
+    globalMessage.classList.remove(
+        "hidden"
+    );
 }
+
 
 function hideGlobalMessage() {
-    globalMessage.classList.add("hidden");
+
+    globalMessage.classList.add(
+        "hidden"
+    );
 }
 
-function showTradeMessage(message, type = "") {
 
-    tradeMessage.textContent = message;
+function showTradeMessage(
+    message,
+    type = ""
+) {
+
+    tradeMessage.textContent =
+        message;
 
     tradeMessage.className =
-        "message" + (type ? " " + type : "");
+        "message" +
+        (type
+            ? " " + type
+            : "");
 
-    tradeMessage.classList.remove("hidden");
+    tradeMessage.classList.remove(
+        "hidden"
+    );
 }
+
 
 function hideTradeMessage() {
-    tradeMessage.classList.add("hidden");
+
+    tradeMessage.classList.add(
+        "hidden"
+    );
 }
 
-function formatNumber(value, decimals = 8) {
 
-    const n = Number(value);
+function formatNumber(
+    value,
+    decimals = 8
+) {
 
-    if (!Number.isFinite(n)) {
+    const n =
+        Number(value);
+
+    if (
+        !Number.isFinite(n)
+    ) {
         return "0";
     }
 
-    return n.toLocaleString(undefined, {
-        maximumFractionDigits: decimals
-    });
+    return n.toLocaleString(
+        undefined,
+        {
+            maximumFractionDigits:
+                decimals
+        }
+    );
 }
 
-function normalizeStatus(status) {
 
-    return String(status || "")
-        .toLowerCase()
-        .trim();
+function normalizeStatus(
+    status
+) {
+
+    return String(
+        status || ""
+    )
+    .toLowerCase()
+    .trim();
 }
 
-function isCompletedStatus(status) {
 
-    const s = normalizeStatus(status);
+function isCompletedStatus(
+    status
+) {
+
+    const s =
+        normalizeStatus(status);
 
     return [
         "completed",
         "complete",
         "released",
+        "crypto_released",
         "cancelled",
         "canceled",
         "disputed_closed",
@@ -852,49 +1151,64 @@ function isCompletedStatus(status) {
     ].includes(s);
 }
 
-function isActiveStatus(status) {
 
-    const s = normalizeStatus(status);
+function isActiveStatus(
+    status
+) {
 
-    return !isCompletedStatus(s);
+    return !isCompletedStatus(
+        status
+    );
 }
 
-/*
- IMPORTANT P2P SEMANTIC FIX
 
- p2p_offers.side represents the action of the OFFER OWNER.
+/* =========================================================
+   MARKETPLACE SIDE
+========================================================= */
 
- SELL offer:
-     Offer owner is selling crypto.
-     A BUYER takes that offer.
-
- BUY offer:
-     Offer owner is buying crypto.
-     A SELLER takes that offer.
-
- Therefore:
-
- UI BUY  -> display SELL offers
- UI SELL -> display BUY offers
-*/
 function databaseSideForMarketplace() {
+
+    /*
+     BUY screen:
+     user buys from SELL offer.
+
+     SELL screen:
+     user sells to BUY offer.
+    */
 
     return currentSide === "buy"
         ? "sell"
         : "buy";
 }
 
-function getTradeSide(trade) {
+
+/* =========================================================
+   TRADE SIDE
+========================================================= */
+
+function getTradeSide(
+    trade
+) {
 
     if (!trade) {
         return "";
     }
 
     const userIsBuyer =
-        String(trade.buyer_id || "") === String(currentUserId);
+        String(
+            trade.buyer_id || ""
+        ) ===
+        String(
+            currentUserId
+        );
 
     const userIsSeller =
-        String(trade.seller_id || "") === String(currentUserId);
+        String(
+            trade.seller_id || ""
+        ) ===
+        String(
+            currentUserId
+        );
 
     if (userIsBuyer) {
         return "buy";
@@ -907,7 +1221,10 @@ function getTradeSide(trade) {
     return "";
 }
 
-function getTradeAsset(trade) {
+
+function getTradeAsset(
+    trade
+) {
 
     return trade?.asset ||
            trade?.crypto_asset ||
@@ -915,7 +1232,10 @@ function getTradeAsset(trade) {
            "USDT";
 }
 
-function getCryptoAmount(trade) {
+
+function getCryptoAmount(
+    trade
+) {
 
     return Number(
         trade?.crypto_amount ??
@@ -925,7 +1245,10 @@ function getCryptoAmount(trade) {
     );
 }
 
-function getFiatAmount(trade) {
+
+function getFiatAmount(
+    trade
+) {
 
     return Number(
         trade?.fiat_amount ??
@@ -935,7 +1258,10 @@ function getFiatAmount(trade) {
     );
 }
 
-function getPrice(trade) {
+
+function getPrice(
+    trade
+) {
 
     return Number(
         trade?.price ??
@@ -944,11 +1270,20 @@ function getPrice(trade) {
     );
 }
 
-function getOfferPrice(offer) {
-    return Number(offer?.price || 0);
+
+function getOfferPrice(
+    offer
+) {
+
+    return Number(
+        offer?.price || 0
+    );
 }
 
-function getTraderName(offer) {
+
+function getTraderName(
+    offer
+) {
 
     return (
         offer?.profiles?.full_name ||
@@ -959,7 +1294,10 @@ function getTraderName(offer) {
     );
 }
 
-function getTraderRating(offer) {
+
+function getTraderRating(
+    offer
+) {
 
     return Number(
         offer?.trader_stats?.rating ??
@@ -969,7 +1307,10 @@ function getTraderRating(offer) {
     );
 }
 
-function getCompletedTrades(offer) {
+
+function getCompletedTrades(
+    offer
+) {
 
     return Number(
         offer?.trader_stats?.completed_trades ??
@@ -979,16 +1320,25 @@ function getCompletedTrades(offer) {
     );
 }
 
-/* AUTH */
+
+/* =========================================================
+   AUTH
+========================================================= */
 
 async function checkAuth() {
 
     const {
         data,
         error
-    } = await supabaseClient.auth.getUser();
+    } =
+        await supabaseClient
+            .auth
+            .getUser();
 
-    if (error || !data?.user) {
+    if (
+        error ||
+        !data?.user
+    ) {
 
         window.location.href =
             "login.html?next=p2p.html";
@@ -996,93 +1346,159 @@ async function checkAuth() {
         return false;
     }
 
-    currentUserId = data.user.id;
+    currentUserId =
+        data.user.id;
 
     return true;
 }
 
-/* COUNTRY */
 
-countrySelect.addEventListener("change", async () => {
+/* =========================================================
+   COUNTRY
+========================================================= */
 
-    currentFiat =
-        countryCurrency[countrySelect.value] || "ETB";
+countrySelect.addEventListener(
+    "change",
+    async () => {
 
-    fiatSelect.value = currentFiat;
+        currentFiat =
+            countryCurrency[
+                countrySelect.value
+            ] || "ETB";
 
-    await loadMarket();
-});
+        fiatSelect.value =
+            currentFiat;
 
-fiatSelect.addEventListener("change", async () => {
+        await loadMarket();
+    }
+);
 
-    currentFiat = fiatSelect.value;
 
-    await loadMarket();
-});
+fiatSelect.addEventListener(
+    "change",
+    async () => {
 
-assetSelect.addEventListener("change", async () => {
+        currentFiat =
+            fiatSelect.value;
 
-    currentAsset = assetSelect.value;
+        await loadMarket();
+    }
+);
 
-    await loadMarket();
-});
 
-/* BUY / SELL */
+assetSelect.addEventListener(
+    "change",
+    async () => {
 
-buyBtn.addEventListener("click", async () => {
+        currentAsset =
+            assetSelect.value;
 
-    currentSide = "buy";
+        await loadMarket();
+    }
+);
 
-    buyBtn.classList.add("active");
-    sellBtn.classList.remove("active");
 
-    document.getElementById("sideExplanation").textContent =
-        "Buy mode: you are buying crypto from sellers.";
+/* =========================================================
+   BUY / SELL
+========================================================= */
 
-    document.getElementById("marketTitle").textContent =
-        "Available Sellers";
+buyBtn.addEventListener(
+    "click",
+    async () => {
 
-    await loadMarket();
-});
+        currentSide = "buy";
 
-sellBtn.addEventListener("click", async () => {
+        buyBtn.classList.add(
+            "active"
+        );
 
-    currentSide = "sell";
+        sellBtn.classList.remove(
+            "active"
+        );
 
-    sellBtn.classList.add("active");
-    buyBtn.classList.remove("active");
+        document.getElementById(
+            "sideExplanation"
+        ).textContent =
+            "Buy mode: you are buying crypto from sellers.";
 
-    document.getElementById("sideExplanation").textContent =
-        "Sell mode: you are selling your crypto to buyers. The offers below are from buyers.";
+        document.getElementById(
+            "marketTitle"
+        ).textContent =
+            "Available Sellers";
 
-    document.getElementById("marketTitle").textContent =
-        "Available Buyers";
+        await loadMarket();
+    }
+);
 
-    await loadMarket();
-});
 
-/* FILTERS */
+sellBtn.addEventListener(
+    "click",
+    async () => {
 
-paymentFilter.addEventListener("change", renderOffers);
-sortSelect.addEventListener("change", renderOffers);
+        currentSide = "sell";
 
-/* LOAD PAYMENT METHODS */
+        sellBtn.classList.add(
+            "active"
+        );
 
-async function getOfferPaymentMethods(offerId) {
+        buyBtn.classList.remove(
+            "active"
+        );
+
+        document.getElementById(
+            "sideExplanation"
+        ).textContent =
+            "Sell mode: you are selling crypto to buyers.";
+
+        document.getElementById(
+            "marketTitle"
+        ).textContent =
+            "Available Buyers";
+
+        await loadMarket();
+    }
+);
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+paymentFilter.addEventListener(
+    "change",
+    renderOffers
+);
+
+sortSelect.addEventListener(
+    "change",
+    renderOffers
+);
+
+
+/* =========================================================
+   PAYMENT METHODS
+========================================================= */
+
+async function getOfferPaymentMethods(
+    offerId
+) {
 
     try {
 
         const {
             data,
             error
-        } = await supabaseClient.rpc(
-            "get_offer_payment_methods",
-            {
-                p_offer_id: offerId
-            }
-        );
+        } =
+            await supabaseClient.rpc(
+                "get_offer_payment_methods",
+                {
+                    p_offer_id:
+                        offerId
+                }
+            );
 
         if (error) {
+
             console.error(
                 "Payment method error:",
                 error
@@ -1101,9 +1517,14 @@ async function getOfferPaymentMethods(offerId) {
     }
 }
 
-/* ENRICH OFFERS */
 
-async function enrichOffers(offers) {
+/* =========================================================
+   ENRICH OFFERS
+========================================================= */
+
+async function enrichOffers(
+    offers
+) {
 
     if (!offers.length) {
         return [];
@@ -1112,12 +1533,16 @@ async function enrichOffers(offers) {
     const traderIds = [
         ...new Set(
             offers
-                .map(o => o.trader_id)
+                .map(
+                    o =>
+                        o.trader_id
+                )
                 .filter(Boolean)
         )
     ];
 
     let profiles = [];
+
     let stats = [];
 
     if (traderIds.length) {
@@ -1126,46 +1551,84 @@ async function enrichOffers(offers) {
             await supabaseClient
                 .from("profiles")
                 .select("*")
-                .in("id", traderIds);
+                .in(
+                    "id",
+                    traderIds
+                );
 
-        if (!profileResult.error) {
+        if (
+            !profileResult.error
+        ) {
+
             profiles =
-                profileResult.data || [];
+                profileResult.data ||
+                [];
         }
 
         const statsResult =
             await supabaseClient
                 .from("trader_stats")
                 .select("*")
-                .in("trader_id", traderIds);
+                .in(
+                    "trader_id",
+                    traderIds
+                );
 
-        if (!statsResult.error) {
+        if (
+            !statsResult.error
+        ) {
+
             stats =
-                statsResult.data || [];
+                statsResult.data ||
+                [];
         }
     }
 
     const profileMap = {};
+
     const statsMap = {};
 
-    profiles.forEach(profile => {
-        profileMap[profile.id] = profile;
-    });
+    profiles.forEach(
+        profile => {
 
-    stats.forEach(stat => {
-        statsMap[stat.trader_id] = stat;
-    });
+            profileMap[
+                profile.id
+            ] = profile;
+        }
+    );
 
-    return offers.map(offer => ({
-        ...offer,
-        profiles:
-            profileMap[offer.trader_id] || null,
-        trader_stats:
-            statsMap[offer.trader_id] || null
-    }));
+    stats.forEach(
+        stat => {
+
+            statsMap[
+                stat.trader_id
+            ] = stat;
+        }
+    );
+
+    return offers.map(
+        offer => ({
+
+            ...offer,
+
+            profiles:
+                profileMap[
+                    offer.trader_id
+                ] || null,
+
+            trader_stats:
+                statsMap[
+                    offer.trader_id
+                ] || null
+
+        })
+    );
 }
 
-/* LOAD MARKET */
+
+/* =========================================================
+   LOAD MARKET
+========================================================= */
 
 async function loadMarket() {
 
@@ -1174,36 +1637,40 @@ async function loadMarket() {
 
     hideGlobalMessage();
 
-    /*
-     The important fix:
-     
-     BUY screen:
-       show sellers => side = sell
-
-     SELL screen:
-       show buyers => side = buy
-    */
-
     const offerSide =
         databaseSideForMarketplace();
 
     const {
         data,
         error
-    } = await supabaseClient
-        .from("p2p_offers")
-        .select("*")
-        .eq("status", "active")
-        .eq("side", offerSide)
-        .eq("asset", currentAsset)
-        .eq("fiat", currentFiat)
-        .order(
-            "price",
-            {
-                ascending:
-                    currentSide === "buy"
-            }
-        );
+    } =
+        await supabaseClient
+            .from("p2p_offers")
+            .select("*")
+            .eq(
+                "status",
+                "active"
+            )
+            .eq(
+                "side",
+                offerSide
+            )
+            .eq(
+                "asset",
+                currentAsset
+            )
+            .eq(
+                "fiat",
+                currentFiat
+            )
+            .order(
+                "price",
+                {
+                    ascending:
+                        currentSide ===
+                        "buy"
+                }
+            );
 
     if (error) {
 
@@ -1212,30 +1679,41 @@ async function loadMarket() {
         offerList.innerHTML =
             `<div class="empty">
                 Unable to load offers.<br>
-                ${escapeHtml(error.message)}
+                ${escapeHtml(
+                    error.message
+                )}
             </div>`;
 
         return;
     }
 
     allLoadedOffers =
-        await enrichOffers(data || []);
+        await enrichOffers(
+            data || []
+        );
 
     await loadPaymentFilter();
 
     renderOffers();
 }
 
-/* PAYMENT FILTER */
+
+/* =========================================================
+   PAYMENT FILTER
+========================================================= */
 
 async function loadPaymentFilter() {
 
     paymentFilter.innerHTML =
         '<option value="">All methods</option>';
 
-    const names = new Set();
+    const names =
+        new Set();
 
-    for (const offer of allLoadedOffers) {
+    for (
+        const offer
+        of allLoadedOffers
+    ) {
 
         const methods =
             await getOfferPaymentMethods(
@@ -1245,51 +1723,8 @@ async function loadPaymentFilter() {
         offer.__paymentMethods =
             methods;
 
-        methods.forEach(method => {
-
-            const name =
-                method?.name ||
-                method?.payment_method_name ||
-                method?.method ||
-                "";
-
-            if (name) {
-                names.add(name);
-            }
-        });
-    }
-
-    [...names]
-        .sort()
-        .forEach(name => {
-
-            const option =
-                document.createElement("option");
-
-            option.value = name;
-            option.textContent = name;
-
-            paymentFilter.appendChild(option);
-        });
-}
-
-/* RENDER OFFERS */
-
-function renderOffers() {
-
-    let offers = [...allLoadedOffers];
-
-    const selectedPayment =
-        paymentFilter.value;
-
-    if (selectedPayment) {
-
-        offers = offers.filter(offer => {
-
-            const methods =
-                offer.__paymentMethods || [];
-
-            return methods.some(method => {
+        methods.forEach(
+            method => {
 
                 const name =
                     method?.name ||
@@ -1297,12 +1732,83 @@ function renderOffers() {
                     method?.method ||
                     "";
 
-                return name === selectedPayment;
-            });
-        });
+                if (name) {
+                    names.add(name);
+                }
+            }
+        );
     }
 
-    switch (sortSelect.value) {
+    [
+        ...names
+    ]
+    .sort()
+    .forEach(
+        name => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                name;
+
+            option.textContent =
+                name;
+
+            paymentFilter.appendChild(
+                option
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   RENDER OFFERS
+========================================================= */
+
+function renderOffers() {
+
+    let offers =
+        [...allLoadedOffers];
+
+    const selectedPayment =
+        paymentFilter.value;
+
+    if (selectedPayment) {
+
+        offers =
+            offers.filter(
+                offer => {
+
+                    const methods =
+                        offer.__paymentMethods ||
+                        [];
+
+                    return methods.some(
+                        method => {
+
+                            const name =
+                                method?.name ||
+                                method?.payment_method_name ||
+                                method?.method ||
+                                "";
+
+                            return (
+                                name ===
+                                selectedPayment
+                            );
+                        }
+                    );
+                }
+            );
+    }
+
+    switch (
+        sortSelect.value
+    ) {
 
         case "price_high":
 
@@ -1318,8 +1824,14 @@ function renderOffers() {
 
             offers.sort(
                 (a, b) =>
-                    Number(b.available_amount || 0) -
-                    Number(a.available_amount || 0)
+                    Number(
+                        b.available_amount ||
+                        0
+                    ) -
+                    Number(
+                        a.available_amount ||
+                        0
+                    )
             );
 
             break;
@@ -1350,173 +1862,326 @@ function renderOffers() {
                 ? "sell"
                 : "buy";
 
-        offerList.innerHTML = `
+        offerList.innerHTML =
+            `
             <div class="empty">
-                <strong>No matching ${currentSide === "buy" ? "seller" : "buyer"} offers found.</strong>
+
+                <strong>
+                    No matching
+                    ${
+                        currentSide === "buy"
+                            ? "seller"
+                            : "buyer"
+                    }
+                    offers found.
+                </strong>
+
                 <br><br>
+
                 Looking for:
+
                 <br>
-                Asset: ${escapeHtml(currentAsset)}
+
+                Asset:
+                ${escapeHtml(
+                    currentAsset
+                )}
+
                 <br>
-                Fiat: ${escapeHtml(currentFiat)}
+
+                Fiat:
+                ${escapeHtml(
+                    currentFiat
+                )}
+
                 <br>
-                Offer side in database: ${opposite}
+
+                Offer side in database:
+                ${opposite}
+
             </div>
-        `;
+            `;
 
         return;
     }
 
     offerList.innerHTML =
-        offers.map(renderOffer).join("");
+        offers
+            .map(
+                renderOffer
+            )
+            .join("");
 }
 
-/* OFFER HTML */
 
-function renderOffer(offer) {
+/* =========================================================
+   OFFER HTML
+========================================================= */
+
+function renderOffer(
+    offer
+) {
 
     const price =
-        getOfferPrice(offer);
+        getOfferPrice(
+            offer
+        );
 
     const available =
         Number(
-            offer.available_amount || 0
+            offer.available_amount ||
+            0
         );
 
     const min =
         Number(
-            offer.min_amount || 0
+            offer.min_amount ||
+            0
         );
 
     const max =
         Number(
-            offer.max_amount || 0
+            offer.max_amount ||
+            0
         );
 
     const trader =
-        getTraderName(offer);
+        getTraderName(
+            offer
+        );
 
     const rating =
-        getTraderRating(offer);
+        getTraderRating(
+            offer
+        );
 
     const completed =
-        getCompletedTrades(offer);
+        getCompletedTrades(
+            offer
+        );
 
     const methods =
-        offer.__paymentMethods || [];
+        offer.__paymentMethods ||
+        [];
 
     const methodNames =
-        methods.map(method =>
-            method?.name ||
-            method?.payment_method_name ||
-            method?.method
-        )
-        .filter(Boolean);
+        methods
+            .map(
+                method =>
+                    method?.name ||
+                    method?.payment_method_name ||
+                    method?.method
+            )
+            .filter(Boolean);
 
     return `
+
         <div class="offer">
 
             <div class="offer-top">
 
                 <div>
+
                     <div class="offer-title">
-                        ${escapeHtml(trader)}
+                        ${escapeHtml(
+                            trader
+                        )}
                     </div>
 
                     <div class="trader">
+
                         ${
                             rating
-                                ? `Rating: ${formatNumber(rating, 2)}`
+                                ? `Rating:
+                                   ${formatNumber(
+                                       rating,
+                                       2
+                                   )}`
                                 : "Rating not available"
                         }
 
                         ${
                             completed
-                                ? ` • ${completed} completed trades`
+                                ? ` •
+                                   ${completed}
+                                   completed trades`
                                 : ""
                         }
+
                     </div>
+
                 </div>
 
                 <div class="price">
-                    ${formatNumber(price, 8)}
-                    ${escapeHtml(currentFiat)}
+
+                    ${formatNumber(
+                        price,
+                        8
+                    )}
+
+                    ${escapeHtml(
+                        currentFiat
+                    )}
+
+                    /
+                    ${escapeHtml(
+                        currentAsset
+                    )}
+
                 </div>
 
             </div>
+
 
             <div class="offer-grid">
 
                 <div class="info">
-                    <small>Asset</small>
-                    <strong>${escapeHtml(offer.asset)}</strong>
+
+                    <small>
+                        Asset
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            offer.asset
+                        )}
+                    </strong>
+
                 </div>
 
-                <div class="info">
-                    <small>Available</small>
-                    <strong>
-                        ${formatNumber(available)}
-                        ${escapeHtml(offer.asset)}
-                    </strong>
-                </div>
 
                 <div class="info">
-                    <small>Minimum</small>
+
+                    <small>
+                        Available
+                    </small>
+
                     <strong>
-                        ${formatNumber(min)}
-                        ${escapeHtml(offer.fiat)}
+
+                        ${formatNumber(
+                            available
+                        )}
+
+                        ${escapeHtml(
+                            offer.asset
+                        )}
+
                     </strong>
+
                 </div>
 
+
                 <div class="info">
-                    <small>Maximum</small>
+
+                    <small>
+                        Minimum
+                    </small>
+
                     <strong>
-                        ${formatNumber(max)}
-                        ${escapeHtml(offer.fiat)}
+
+                        ${formatNumber(
+                            min
+                        )}
+
+                        ${escapeHtml(
+                            offer.asset
+                        )}
+
                     </strong>
+
+                </div>
+
+
+                <div class="info">
+
+                    <small>
+                        Maximum
+                    </small>
+
+                    <strong>
+
+                        ${formatNumber(
+                            max
+                        )}
+
+                        ${escapeHtml(
+                            offer.asset
+                        )}
+
+                    </strong>
+
                 </div>
 
             </div>
 
+
             <div class="offer-bottom">
 
                 <div class="trader">
-                    <strong>Payment:</strong>
+
+                    <strong>
+                        Payment:
+                    </strong>
+
                     ${
                         methodNames.length
                             ? escapeHtml(
-                                methodNames.join(", ")
-                              )
+                                methodNames.join(
+                                    ", "
+                                )
+                            )
                             : "Payment method available after selection"
                     }
+
                 </div>
+
 
                 <button
                     class="primary"
-                    onclick="selectOffer('${escapeHtml(offer.id)}')"
+                    onclick="selectOffer('${escapeHtml(
+                        offer.id
+                    )}')"
                 >
+
                     ${
                         currentSide === "buy"
-                            ? "Buy " + escapeHtml(currentAsset)
-                            : "Sell " + escapeHtml(currentAsset)
+                            ? "Buy "
+                            + escapeHtml(
+                                currentAsset
+                            )
+                            : "Sell "
+                            + escapeHtml(
+                                currentAsset
+                            )
                     }
+
                 </button>
 
             </div>
 
         </div>
+
     `;
 }
 
-/* SELECT OFFER */
 
-async function selectOffer(offerId) {
+/* =========================================================
+   SELECT OFFER
+========================================================= */
+
+async function selectOffer(
+    offerId
+) {
 
     selectedOffer =
         allLoadedOffers.find(
             offer =>
-                String(offer.id) ===
-                String(offerId)
+                String(
+                    offer.id
+                ) ===
+                String(
+                    offerId
+                )
         );
 
     if (!selectedOffer) {
@@ -1529,13 +2194,14 @@ async function selectOffer(offerId) {
         return;
     }
 
-    /*
-     Do not allow self-trading.
-    */
 
     if (
-        String(selectedOffer.trader_id) ===
-        String(currentUserId)
+        String(
+            selectedOffer.trader_id
+        ) ===
+        String(
+            currentUserId
+        )
     ) {
 
         showGlobalMessage(
@@ -1546,11 +2212,13 @@ async function selectOffer(offerId) {
         return;
     }
 
+
     selectedOfferPaymentMethods =
         selectedOffer.__paymentMethods ||
         await getOfferPaymentMethods(
             selectedOffer.id
         );
+
 
     document.getElementById(
         "tradeModalTitle"
@@ -1559,12 +2227,17 @@ async function selectOffer(offerId) {
             ? "Buy " + currentAsset
             : "Sell " + currentAsset;
 
+
+    /*
+     IMPORTANT:
+     User always enters crypto amount.
+    */
+
     document.getElementById(
         "amountLabel"
     ).textContent =
-        currentSide === "buy"
-            ? `Amount in ${currentFiat}`
-            : `Amount in ${currentAsset}`;
+        `Amount in ${currentAsset}`;
+
 
     document.getElementById(
         "selectedOfferInfo"
@@ -1573,93 +2246,144 @@ async function selectOffer(offerId) {
         <div class="message">
 
             <strong>
-                ${currentSide === "buy"
-                    ? "Seller"
-                    : "Buyer"}:
+                ${
+                    currentSide === "buy"
+                        ? "Seller"
+                        : "Buyer"
+                }:
             </strong>
 
             ${escapeHtml(
-                getTraderName(selectedOffer)
+                getTraderName(
+                    selectedOffer
+                )
             )}
 
             <br>
 
-            <strong>Price:</strong>
+            <strong>
+                Price:
+            </strong>
+
             ${formatNumber(
                 selectedOffer.price,
                 8
             )}
-            ${escapeHtml(currentFiat)}
+
+            ${escapeHtml(
+                currentFiat
+            )}
+
+            /
+            ${escapeHtml(
+                currentAsset
+            )}
 
             <br>
 
-            <strong>Available:</strong>
+            <strong>
+                Available:
+            </strong>
+
             ${formatNumber(
                 selectedOffer.available_amount
             )}
-            ${escapeHtml(currentAsset)}
+
+            ${escapeHtml(
+                currentAsset
+            )}
 
             <br>
 
-            <strong>Limits:</strong>
+            <strong>
+                Limits:
+            </strong>
+
             ${formatNumber(
                 selectedOffer.min_amount
             )}
+
             -
             ${formatNumber(
                 selectedOffer.max_amount
             )}
-            ${escapeHtml(currentFiat)}
+
+            ${escapeHtml(
+                currentAsset
+            )}
 
         </div>
+
     `;
 
+
     tradePaymentMethod.innerHTML =
-        '<option value="">Select payment method</option>';
+        `
+        <option value="">
+            Select payment method
+        </option>
+        `;
+
 
     selectedOfferPaymentMethods
-        .forEach(method => {
+        .forEach(
+            method => {
 
-            const id =
-                method?.id ||
-                method?.payment_method_id;
+                const id =
+                    method?.id ||
+                    method?.payment_method_id;
 
-            const name =
-                method?.name ||
-                method?.payment_method_name ||
-                method?.method ||
-                "Payment method";
+                const name =
+                    method?.name ||
+                    method?.payment_method_name ||
+                    method?.method ||
+                    "Payment method";
 
-            if (!id) {
-                return;
+                if (!id) {
+                    return;
+                }
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    id;
+
+                option.textContent =
+                    name;
+
+                tradePaymentMethod
+                    .appendChild(
+                        option
+                    );
             }
+        );
 
-            const option =
-                document.createElement("option");
-
-            option.value = id;
-            option.textContent = name;
-
-            tradePaymentMethod.appendChild(
-                option
-            );
-        });
 
     tradeAmount.value = "";
 
-    tradeCalculation.innerHTML = "";
+    tradeCalculation.innerHTML =
+        "";
 
     hideTradeMessage();
 
-    tradeModal.classList.add("show");
+    tradeModal.classList.add(
+        "show"
+    );
 }
 
-/* CALCULATE TRADE */
+
+/* =========================================================
+   CALCULATE TRADE
+========================================================= */
 
 tradeAmount.addEventListener(
     "input",
     calculateTrade
 );
+
 
 function calculateTrade() {
 
@@ -1667,119 +2391,162 @@ function calculateTrade() {
         return;
     }
 
-    const entered =
-        Number(tradeAmount.value);
+    const cryptoAmount =
+        Number(
+            tradeAmount.value
+        );
 
     const price =
-        Number(selectedOffer.price);
+        Number(
+            selectedOffer.price
+        );
 
     if (
-        !Number.isFinite(entered) ||
-        entered <= 0 ||
-        !Number.isFinite(price) ||
+        !Number.isFinite(
+            cryptoAmount
+        ) ||
+        cryptoAmount <= 0 ||
+        !Number.isFinite(
+            price
+        ) ||
         price <= 0
     ) {
 
-        tradeCalculation.innerHTML = "";
+        tradeCalculation.innerHTML =
+            "";
 
         return;
     }
 
-    let cryptoAmount;
-    let fiatAmount;
 
     /*
-     BUY:
-       user enters fiat
-       crypto = fiat / price
+     User enters crypto.
 
-     SELL:
-       user enters crypto
-       fiat = crypto * price
+     Example:
+
+     10 USDT × 150 ETB
+     = 1,500 ETB
     */
 
-    if (currentSide === "buy") {
+    const fiatAmount =
+        cryptoAmount * price;
 
-        fiatAmount = entered;
-
-        cryptoAmount =
-            fiatAmount / price;
-
-    } else {
-
-        cryptoAmount = entered;
-
-        fiatAmount =
-            cryptoAmount * price;
-    }
 
     /*
-     Existing CryptoVault fee:
-     0.5%
+     0.5% trading fee
     */
 
     const fee =
         fiatAmount * 0.005;
+
 
     const total =
         currentSide === "buy"
             ? fiatAmount + fee
             : fiatAmount - fee;
 
+
     tradeCalculation.innerHTML = `
 
         <div class="trade-box">
-            <small>Crypto</small>
+
+            <small>
+                Crypto
+            </small>
+
             <strong>
+
                 ${formatNumber(
                     cryptoAmount
                 )}
-                ${escapeHtml(currentAsset)}
+
+                ${escapeHtml(
+                    currentAsset
+                )}
+
             </strong>
+
         </div>
 
+
         <div class="trade-box">
-            <small>Fiat value</small>
+
+            <small>
+                Fiat value
+            </small>
+
             <strong>
+
                 ${formatNumber(
                     fiatAmount,
                     2
                 )}
-                ${escapeHtml(currentFiat)}
+
+                ${escapeHtml(
+                    currentFiat
+                )}
+
             </strong>
+
         </div>
 
+
         <div class="trade-box">
-            <small>Trading fee</small>
+
+            <small>
+                Trading fee
+            </small>
+
             <strong>
+
                 ${formatNumber(
                     fee,
                     2
                 )}
-                ${escapeHtml(currentFiat)}
+
+                ${escapeHtml(
+                    currentFiat
+                )}
+
             </strong>
+
         </div>
 
+
         <div class="trade-box">
+
             <small>
+
                 ${
                     currentSide === "buy"
                         ? "You pay"
                         : "You receive"
                 }
+
             </small>
+
             <strong>
+
                 ${formatNumber(
                     total,
                     2
                 )}
-                ${escapeHtml(currentFiat)}
+
+                ${escapeHtml(
+                    currentFiat
+                )}
+
             </strong>
+
         </div>
+
     `;
 }
 
-/* CREATE TRADE */
+
+/* =========================================================
+   CREATE TRADE
+========================================================= */
 
 document.getElementById(
     "createTradeBtn"
@@ -1787,6 +2554,7 @@ document.getElementById(
     "click",
     createTrade
 );
+
 
 async function createTrade() {
 
@@ -1800,23 +2568,32 @@ async function createTrade() {
         return;
     }
 
+
     const entered =
-        Number(tradeAmount.value);
+        Number(
+            tradeAmount.value
+        );
+
 
     if (
-        !Number.isFinite(entered) ||
+        !Number.isFinite(
+            entered
+        ) ||
         entered <= 0
     ) {
 
         showTradeMessage(
-            "Enter a valid amount.",
+            "Enter a valid crypto amount.",
             "error"
         );
 
         return;
     }
 
-    if (!tradePaymentMethod.value) {
+
+    if (
+        !tradePaymentMethod.value
+    ) {
 
         showTradeMessage(
             "Please select a payment method.",
@@ -1826,71 +2603,106 @@ async function createTrade() {
         return;
     }
 
+
     const price =
-        Number(selectedOffer.price);
+        Number(
+            selectedOffer.price
+        );
 
-    let cryptoAmount;
-    let fiatAmount;
 
-    if (currentSide === "buy") {
+    if (
+        !Number.isFinite(
+            price
+        ) ||
+        price <= 0
+    ) {
 
-        fiatAmount = entered;
+        showTradeMessage(
+            "Invalid offer price.",
+            "error"
+        );
 
-        cryptoAmount =
-            fiatAmount / price;
-
-    } else {
-
-        cryptoAmount = entered;
-
-        fiatAmount =
-            cryptoAmount * price;
+        return;
     }
 
-    const minFiat =
-        Number(selectedOffer.min_amount || 0);
-
-    const maxFiat =
-        Number(selectedOffer.max_amount || 0);
 
     /*
-     Limits are stored in fiat.
+     BOTH BUY AND SELL:
+
+     User enters crypto amount.
     */
 
-    if (
-        minFiat > 0 &&
-        fiatAmount < minFiat
-    ) {
+    const cryptoAmount =
+        entered;
 
-        showTradeMessage(
-            `Minimum trade amount is ${formatNumber(minFiat, 2)} ${currentFiat}.`,
-            "error"
-        );
 
-        return;
-    }
+    const fiatAmount =
+        cryptoAmount * price;
 
-    if (
-        maxFiat > 0 &&
-        fiatAmount > maxFiat
-    ) {
-
-        showTradeMessage(
-            `Maximum trade amount is ${formatNumber(maxFiat, 2)} ${currentFiat}.`,
-            "error"
-        );
-
-        return;
-    }
 
     /*
-     Prevent trading more than the offer.
+     Limits are stored in crypto.
+    */
+
+    const minCrypto =
+        Number(
+            selectedOffer.min_amount ||
+            0
+        );
+
+
+    const maxCrypto =
+        Number(
+            selectedOffer.max_amount ||
+            0
+        );
+
+
+    if (
+        minCrypto > 0 &&
+        cryptoAmount < minCrypto
+    ) {
+
+        showTradeMessage(
+            `Minimum trade amount is ${formatNumber(
+                minCrypto,
+                8
+            )} ${currentAsset}.`,
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (
+        maxCrypto > 0 &&
+        cryptoAmount > maxCrypto
+    ) {
+
+        showTradeMessage(
+            `Maximum trade amount is ${formatNumber(
+                maxCrypto,
+                8
+            )} ${currentAsset}.`,
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+     Prevent trading more than
+     the offer's available crypto.
     */
 
     const available =
         Number(
-            selectedOffer.available_amount || 0
+            selectedOffer.available_amount ||
+            0
         );
+
 
     if (
         available > 0 &&
@@ -1898,76 +2710,88 @@ async function createTrade() {
     ) {
 
         showTradeMessage(
-            `This offer has only ${formatNumber(available)} ${currentAsset} available.`,
+            `This offer has only ${formatNumber(
+                available
+            )} ${currentAsset} available.`,
             "error"
         );
 
         return;
     }
 
+
+    /*
+     0.5% fee
+    */
+
     const fee =
         fiatAmount * 0.005;
 
+
     const expiresAt =
         new Date(
-            Date.now() + 30 * 60 * 1000
+            Date.now() +
+            30 * 60 * 1000
         ).toISOString();
+
 
     const button =
         document.getElementById(
             "createTradeBtn"
         );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
+
     button.textContent =
         "Creating trade...";
 
+
     hideTradeMessage();
 
+
     try {
-
-        /*
-         IMPORTANT:
-         The existing RPC determines the actual
-         buyer/seller from the selected offer.
-
-         We intentionally do not send p_side because
-         the existing RPC signature did not confirm
-         such a parameter.
-        */
 
         const {
             data,
             error
-        } = await supabaseClient.rpc(
-            "create_p2p_trade",
-            {
-                p_offer_id:
-                    selectedOffer.id,
+        } =
+            await supabaseClient.rpc(
+                "create_p2p_trade",
+                {
 
-                p_crypto_amount:
-                    cryptoAmount,
+                    p_offer_id:
+                        selectedOffer.id,
 
-                p_fiat_amount:
-                    fiatAmount,
+                    p_crypto_amount:
+                        cryptoAmount,
 
-                p_price:
-                    price,
+                    p_fiat_amount:
+                        fiatAmount,
 
-                p_trading_fee:
-                    fee,
+                    p_price:
+                        price,
 
-                p_payment_method_id:
-                    tradePaymentMethod.value,
+                    p_trading_fee:
+                        fee,
 
-                p_expires_at:
-                    expiresAt
-            }
-        );
+                    p_payment_method_id:
+                        tradePaymentMethod.value,
+
+                    p_expires_at:
+                        expiresAt
+
+                }
+            );
+
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "CREATE TRADE ERROR:",
+                error
+            );
 
             showTradeMessage(
                 error.message ||
@@ -1978,44 +2802,68 @@ async function createTrade() {
             return;
         }
 
+
         let tradeId = null;
 
-        if (typeof data === "string") {
-            tradeId = data;
-        } else if (Array.isArray(data)) {
+
+        if (
+            typeof data === "string"
+        ) {
+
+            tradeId =
+                data;
+
+        } else if (
+            Array.isArray(data)
+        ) {
+
             tradeId =
                 data[0]?.id ||
                 data[0]?.trade_id;
+
         } else if (data) {
+
             tradeId =
                 data.id ||
                 data.trade_id;
         }
+
 
         showTradeMessage(
             "Trade created successfully.",
             "success"
         );
 
-        setTimeout(() => {
 
-            closeTradeModal();
+        setTimeout(
+            () => {
 
-            if (tradeId) {
+                closeTradeModal();
 
-                window.location.href =
-                    `p2p.html?trade_id=${encodeURIComponent(tradeId)}`;
 
-            } else {
+                if (tradeId) {
 
-                loadTrades();
-            }
+                    window.location.href =
+                        `p2p.html?trade_id=${encodeURIComponent(
+                            tradeId
+                        )}`;
 
-        }, 700);
+                } else {
+
+                    loadTrades();
+                }
+
+            },
+            700
+        );
+
 
     } catch (err) {
 
-        console.error(err);
+        console.error(
+            "CREATE TRADE EXCEPTION:",
+            err
+        );
 
         showTradeMessage(
             err.message ||
@@ -2023,23 +2871,35 @@ async function createTrade() {
             "error"
         );
 
+
     } finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
+
         button.textContent =
             "Create Trade";
     }
 }
 
-/* CLOSE TRADE MODAL */
+
+/* =========================================================
+   CLOSE TRADE MODAL
+========================================================= */
 
 function closeTradeModal() {
 
-    tradeModal.classList.remove("show");
+    tradeModal.classList.remove(
+        "show"
+    );
 
-    selectedOffer = null;
-    selectedOfferPaymentMethods = [];
+    selectedOffer =
+        null;
+
+    selectedOfferPaymentMethods =
+        [];
 }
+
 
 document.getElementById(
     "closeTradeModal"
@@ -2048,6 +2908,7 @@ document.getElementById(
     closeTradeModal
 );
 
+
 document.getElementById(
     "cancelTradeModal"
 ).addEventListener(
@@ -2055,7 +2916,10 @@ document.getElementById(
     closeTradeModal
 );
 
-/* LOAD TRADES */
+
+/* =========================================================
+   LOAD TRADES
+========================================================= */
 
 async function loadTrades() {
 
@@ -2064,24 +2928,29 @@ async function loadTrades() {
             "tradeList"
         );
 
+
     tradeList.innerHTML =
         '<div class="loading">Loading trades...</div>';
+
 
     const {
         data,
         error
-    } = await supabaseClient
-        .from("p2p_trades")
-        .select("*")
-        .or(
-            `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
+    } =
+        await supabaseClient
+            .from("p2p_trades")
+            .select("*")
+            .or(
+                `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:
+                        false
+                }
+            );
+
 
     if (error) {
 
@@ -2089,11 +2958,14 @@ async function loadTrades() {
 
         tradeList.innerHTML =
             `<div class="empty">
-                ${escapeHtml(error.message)}
+                ${escapeHtml(
+                    error.message
+                )}
             </div>`;
 
         return;
     }
+
 
     currentTrades =
         data || [];
@@ -2101,64 +2973,89 @@ async function loadTrades() {
     renderTrades();
 }
 
-/* TRADE FILTER */
+
+/* =========================================================
+   TRADE FILTER
+========================================================= */
 
 document
-    .querySelectorAll(".trade-filter")
-    .forEach(button => {
+    .querySelectorAll(
+        ".trade-filter"
+    )
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                document
-                    .querySelectorAll(
-                        ".trade-filter"
-                    )
-                    .forEach(btn =>
-                        btn.classList.remove(
-                            "active"
+                    document
+                        .querySelectorAll(
+                            ".trade-filter"
                         )
+                        .forEach(
+                            btn =>
+                                btn.classList.remove(
+                                    "active"
+                                )
+                        );
+
+                    button.classList.add(
+                        "active"
                     );
 
-                button.classList.add(
-                    "active"
-                );
+                    currentTradeFilter =
+                        button.dataset.filter;
 
-                currentTradeFilter =
-                    button.dataset.filter;
+                    renderTrades();
+                }
+            );
+        }
+    );
 
-                renderTrades();
-            }
-        );
-    });
 
-function tradeNeedsAction(trade) {
+function tradeNeedsAction(
+    trade
+) {
 
     const status =
         normalizeStatus(
             trade.status
         );
 
+
     const userIsBuyer =
-        String(trade.buyer_id) ===
-        String(currentUserId);
+        String(
+            trade.buyer_id
+        ) ===
+        String(
+            currentUserId
+        );
+
 
     const userIsSeller =
-        String(trade.seller_id) ===
-        String(currentUserId);
+        String(
+            trade.seller_id
+        ) ===
+        String(
+            currentUserId
+        );
+
 
     if (
         [
             "completed",
             "released",
+            "crypto_released",
             "cancelled",
             "canceled",
             "closed"
         ].includes(status)
     ) {
+
         return false;
     }
+
 
     if (
         userIsBuyer &&
@@ -2169,8 +3066,10 @@ function tradeNeedsAction(trade) {
             "open"
         ].includes(status)
     ) {
+
         return true;
     }
+
 
     if (
         userIsSeller &&
@@ -2181,11 +3080,18 @@ function tradeNeedsAction(trade) {
             "payment_submitted"
         ].includes(status)
     ) {
+
         return true;
     }
 
+
     return false;
 }
+
+
+/* =========================================================
+   RENDER TRADES
+========================================================= */
 
 function renderTrades() {
 
@@ -2194,10 +3100,15 @@ function renderTrades() {
             "tradeList"
         );
 
+
     let trades =
         [...currentTrades];
 
-    if (currentTradeFilter === "active") {
+
+    if (
+        currentTradeFilter ===
+        "active"
+    ) {
 
         trades =
             trades.filter(
@@ -2208,7 +3119,11 @@ function renderTrades() {
             );
     }
 
-    if (currentTradeFilter === "completed") {
+
+    if (
+        currentTradeFilter ===
+        "completed"
+    ) {
 
         trades =
             trades.filter(
@@ -2219,54 +3134,94 @@ function renderTrades() {
             );
     }
 
-    if (currentTradeFilter === "action") {
+
+    if (
+        currentTradeFilter ===
+        "action"
+    ) {
 
         trades =
             trades.filter(
                 trade =>
-                    tradeNeedsAction(trade)
+                    tradeNeedsAction(
+                        trade
+                    )
             );
     }
+
 
     if (!trades.length) {
 
         tradeList.innerHTML =
-            `<div class="empty">
+            `
+            <div class="empty">
                 No trades found.
-            </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     tradeList.innerHTML =
-        trades.map(renderTradeCard).join("");
+        trades
+            .map(
+                renderTradeCard
+            )
+            .join("");
 }
 
-function renderTradeCard(trade) {
+
+/* =========================================================
+   TRADE CARD
+========================================================= */
+
+function renderTradeCard(
+    trade
+) {
 
     const side =
-        getTradeSide(trade);
+        getTradeSide(
+            trade
+        );
+
 
     const asset =
-        getTradeAsset(trade);
+        getTradeAsset(
+            trade
+        );
+
 
     const crypto =
-        getCryptoAmount(trade);
+        getCryptoAmount(
+            trade
+        );
+
 
     const fiat =
-        getFiatAmount(trade);
+        getFiatAmount(
+            trade
+        );
+
 
     const price =
-        getPrice(trade);
+        getPrice(
+            trade
+        );
+
 
     const status =
         trade.status ||
         "unknown";
 
+
     const action =
-        tradeNeedsAction(trade)
+        tradeNeedsAction(
+            trade
+        )
             ? "Needs your action"
             : "No action required";
+
 
     const created =
         trade.created_at
@@ -2275,34 +3230,61 @@ function renderTradeCard(trade) {
             ).toLocaleString()
             : "";
 
+
     return `
+
         <div class="trade-card">
 
             <div class="trade-header">
 
                 <div>
+
                     <strong>
-                        Trade #${escapeHtml(
-                            String(trade.id).slice(0, 12)
+
+                        Trade #
+                        ${escapeHtml(
+                            String(
+                                trade.id
+                            ).slice(
+                                0,
+                                12
+                            )
                         )}
+
                     </strong>
 
                     <div class="muted">
-                        ${escapeHtml(created)}
+
+                        ${escapeHtml(
+                            created
+                        )}
+
                     </div>
+
                 </div>
 
+
                 <span class="badge">
-                    ${escapeHtml(status)}
+
+                    ${escapeHtml(
+                        status
+                    )}
+
                 </span>
 
             </div>
 
+
             <div class="trade-meta">
 
                 <div>
-                    <small>Your role</small>
+
+                    <small>
+                        Your role
+                    </small>
+
                     <strong>
+
                         ${
                             side === "buy"
                                 ? "Buyer"
@@ -2310,55 +3292,106 @@ function renderTradeCard(trade) {
                                     ? "Seller"
                                     : "Trader"
                         }
+
                     </strong>
+
                 </div>
 
-                <div>
-                    <small>Crypto</small>
-                    <strong>
-                        ${formatNumber(crypto)}
-                        ${escapeHtml(asset)}
-                    </strong>
-                </div>
 
                 <div>
-                    <small>Fiat</small>
+
+                    <small>
+                        Crypto
+                    </small>
+
                     <strong>
-                        ${formatNumber(fiat, 2)}
+
+                        ${formatNumber(
+                            crypto
+                        )}
+
+                        ${escapeHtml(
+                            asset
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Fiat
+                    </small>
+
+                    <strong>
+
+                        ${formatNumber(
+                            fiat,
+                            2
+                        )}
+
                         ${escapeHtml(
                             trade.fiat ||
                             currentFiat
                         )}
+
                     </strong>
+
                 </div>
+
 
                 <div>
-                    <small>Price</small>
+
+                    <small>
+                        Price
+                    </small>
+
                     <strong>
-                        ${formatNumber(price, 8)}
+
+                        ${formatNumber(
+                            price,
+                            8
+                        )}
+
                     </strong>
+
                 </div>
 
             </div>
 
-            <div style="margin-top:12px;">
+
+            <div
+                style="margin-top:12px;"
+            >
+
                 <strong>
-                    ${escapeHtml(action)}
+                    ${escapeHtml(
+                        action
+                    )}
                 </strong>
+
             </div>
+
 
             <div class="actions">
 
                 <button
                     class="secondary"
-                    onclick="showTradeDetails('${escapeHtml(trade.id)}')"
+                    onclick="showTradeDetails('${escapeHtml(
+                        trade.id
+                    )}')"
                 >
                     Details
                 </button>
 
+
                 <button
                     class="primary"
-                    onclick="openTrade('${escapeHtml(trade.id)}')"
+                    onclick="openTrade('${escapeHtml(
+                        trade.id
+                    )}')"
                 >
                     Open Trade
                 </button>
@@ -2366,41 +3399,69 @@ function renderTradeCard(trade) {
             </div>
 
         </div>
+
     `;
 }
 
-/* TRADE DETAILS */
 
-function showTradeDetails(tradeId) {
+/* =========================================================
+   TRADE DETAILS
+========================================================= */
+
+function showTradeDetails(
+    tradeId
+) {
 
     const trade =
         currentTrades.find(
             item =>
-                String(item.id) ===
-                String(tradeId)
+                String(
+                    item.id
+                ) ===
+                String(
+                    tradeId
+                )
         );
+
 
     if (!trade) {
         return;
     }
 
+
     currentDetailTrade =
         trade;
 
+
     const side =
-        getTradeSide(trade);
+        getTradeSide(
+            trade
+        );
+
 
     const asset =
-        getTradeAsset(trade);
+        getTradeAsset(
+            trade
+        );
+
 
     const crypto =
-        getCryptoAmount(trade);
+        getCryptoAmount(
+            trade
+        );
+
 
     const fiat =
-        getFiatAmount(trade);
+        getFiatAmount(
+            trade
+        );
+
 
     const price =
-        getPrice(trade);
+        getPrice(
+            trade
+        );
+
 
     document.getElementById(
         "tradeDetails"
@@ -2409,94 +3470,186 @@ function showTradeDetails(tradeId) {
         <div class="trade-summary">
 
             <div class="trade-box">
-                <small>Trade ID</small>
+
+                <small>
+                    Trade ID
+                </small>
+
                 <strong>
-                    ${escapeHtml(trade.id)}
+                    ${escapeHtml(
+                        trade.id
+                    )}
                 </strong>
+
             </div>
 
+
             <div class="trade-box">
-                <small>Your role</small>
+
+                <small>
+                    Your role
+                </small>
+
                 <strong>
+
                     ${
                         side === "buy"
                             ? "Buyer"
                             : "Seller"
                     }
+
                 </strong>
+
             </div>
 
+
             <div class="trade-box">
-                <small>Status</small>
+
+                <small>
+                    Status
+                </small>
+
                 <strong>
+
                     ${escapeHtml(
-                        trade.status || ""
+                        trade.status ||
+                        ""
                     )}
+
                 </strong>
+
             </div>
 
-            <div class="trade-box">
-                <small>Asset</small>
-                <strong>
-                    ${escapeHtml(asset)}
-                </strong>
-            </div>
 
             <div class="trade-box">
-                <small>Crypto amount</small>
-                <strong>
-                    ${formatNumber(crypto)}
-                </strong>
-            </div>
 
-            <div class="trade-box">
-                <small>Fiat amount</small>
-                <strong>
-                    ${formatNumber(fiat, 2)}
-                </strong>
-            </div>
+                <small>
+                    Asset
+                </small>
 
-            <div class="trade-box">
-                <small>Price</small>
                 <strong>
-                    ${formatNumber(price, 8)}
-                </strong>
-            </div>
 
-            <div class="trade-box">
-                <small>Buyer</small>
-                <strong>
                     ${escapeHtml(
-                        trade.buyer_id || ""
+                        asset
                     )}
+
                 </strong>
+
             </div>
 
+
             <div class="trade-box">
-                <small>Seller</small>
+
+                <small>
+                    Crypto amount
+                </small>
+
                 <strong>
-                    ${escapeHtml(
-                        trade.seller_id || ""
+
+                    ${formatNumber(
+                        crypto
                     )}
+
                 </strong>
+
+            </div>
+
+
+            <div class="trade-box">
+
+                <small>
+                    Fiat amount
+                </small>
+
+                <strong>
+
+                    ${formatNumber(
+                        fiat,
+                        2
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-box">
+
+                <small>
+                    Price
+                </small>
+
+                <strong>
+
+                    ${formatNumber(
+                        price,
+                        8
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-box">
+
+                <small>
+                    Buyer
+                </small>
+
+                <strong>
+
+                    ${escapeHtml(
+                        trade.buyer_id ||
+                        ""
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-box">
+
+                <small>
+                    Seller
+                </small>
+
+                <strong>
+
+                    ${escapeHtml(
+                        trade.seller_id ||
+                        ""
+                    )}
+
+                </strong>
+
             </div>
 
         </div>
+
     `;
 
-    detailModal.classList.add("show");
+
+    detailModal.classList.add(
+        "show"
+    );
 }
+
 
 document.getElementById(
     "closeDetailModal"
 ).addEventListener(
     "click",
     () => {
+
         detailModal.classList.remove(
             "show"
         );
+
     }
 );
+
 
 document.getElementById(
     "openTradePageBtn"
@@ -2504,23 +3657,34 @@ document.getElementById(
     "click",
     () => {
 
-        if (!currentDetailTrade) {
+        if (
+            !currentDetailTrade
+        ) {
             return;
         }
 
         openTrade(
             currentDetailTrade.id
         );
+
     }
 );
 
-function openTrade(tradeId) {
+
+function openTrade(
+    tradeId
+) {
 
     window.location.href =
-        `p2p.html?trade_id=${encodeURIComponent(tradeId)}`;
+        `p2p.html?trade_id=${encodeURIComponent(
+            tradeId
+        )}`;
 }
 
-/* URL TRADE */
+
+/* =========================================================
+   URL TRADE
+========================================================= */
 
 async function loadTradeFromUrl() {
 
@@ -2529,23 +3693,36 @@ async function loadTradeFromUrl() {
             window.location.search
         );
 
+
     const tradeId =
-        params.get("trade_id");
+        params.get(
+            "trade_id"
+        );
+
 
     if (!tradeId) {
         return;
     }
 
+
     const {
         data,
         error
-    } = await supabaseClient
-        .from("p2p_trades")
-        .select("*")
-        .eq("id", tradeId)
-        .single();
+    } =
+        await supabaseClient
+            .from("p2p_trades")
+            .select("*")
+            .eq(
+                "id",
+                tradeId
+            )
+            .single();
 
-    if (error || !data) {
+
+    if (
+        error ||
+        !data
+    ) {
 
         showGlobalMessage(
             "Trade could not be loaded.",
@@ -2555,11 +3732,21 @@ async function loadTradeFromUrl() {
         return;
     }
 
+
     const allowed =
-        String(data.buyer_id) ===
-            String(currentUserId) ||
-        String(data.seller_id) ===
-            String(currentUserId);
+        String(
+            data.buyer_id
+        ) ===
+        String(
+            currentUserId
+        ) ||
+        String(
+            data.seller_id
+        ) ===
+        String(
+            currentUserId
+        );
+
 
     if (!allowed) {
 
@@ -2571,22 +3758,20 @@ async function loadTradeFromUrl() {
         return;
     }
 
-    /*
-     Keep the existing p2p trade page architecture.
-
-     If your existing trade-detail UI is handled by
-     your RPC/chat implementation, show the trade here.
-    */
 
     currentDetailTrade =
         data;
+
 
     showTradeDetails(
         data.id
     );
 }
 
-/* LOGOUT */
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 document.getElementById(
     "logoutBtn"
@@ -2594,53 +3779,72 @@ document.getElementById(
     "click",
     async () => {
 
-        await supabaseClient.auth.signOut();
+        await supabaseClient
+            .auth
+            .signOut();
 
         window.location.href =
             "login.html";
     }
 );
 
-/* INITIALIZE */
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 async function initialize() {
 
     const authenticated =
         await checkAuth();
 
+
     if (!authenticated) {
         return;
     }
 
+
     fiatSelect.value =
         currentFiat;
+
 
     countrySelect.value =
         "ET";
 
+
     assetSelect.value =
         currentAsset;
 
+
     await loadMarket();
+
 
     await loadTrades();
 
+
     await loadTradeFromUrl();
 
+
     /*
-     Refresh marketplace/trades periodically.
+     Refresh marketplace and trades
+     every 30 seconds.
     */
 
     setInterval(
         async () => {
+
             await loadMarket();
+
             await loadTrades();
+
         },
         30000
     );
 }
 
+
 initialize();
+
 </script>
 
 </body>
