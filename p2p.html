@@ -39,7 +39,7 @@
     }
 
     button:disabled {
-      opacity: .5;
+      opacity: .55;
       cursor: not-allowed;
     }
 
@@ -133,6 +133,12 @@
       background: #f0fdf4;
       border-color: #bbf7d0;
       color: #166534;
+    }
+
+    .notice.error {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
     }
 
     .filter-card,
@@ -259,14 +265,26 @@
       color: #111827;
     }
 
+    .secondary-btn:hover {
+      background: #d1d5db;
+    }
+
     .danger-btn {
       background: #dc2626;
       color: white;
     }
 
+    .danger-btn:hover {
+      background: #b91c1c;
+    }
+
     .success-btn {
       background: #2563eb;
       color: white;
+    }
+
+    .success-btn:hover {
+      background: #1d4ed8;
     }
 
     .back-btn {
@@ -337,6 +355,7 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
+      flex-shrink: 0;
     }
 
     .trader-name {
@@ -710,6 +729,7 @@
       font-size: 11px;
       color: #667085;
       word-break: break-all;
+      margin-top: 3px;
     }
 
     .role-badge {
@@ -740,6 +760,63 @@
       color: #166534;
       font-size: 13px;
       margin-bottom: 12px;
+    }
+
+    .info-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 12px;
+      color: #1e40af;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .lifecycle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 14px 0;
+    }
+
+    .life-step {
+      padding: 6px 9px;
+      border-radius: 7px;
+      background: #f3f4f6;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .life-step.current {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .life-step.done {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .copy-btn {
+      min-height: 30px;
+      padding: 0 8px;
+      border: 1px solid #d1d5db;
+      background: white;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
+    .copy-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .refresh-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
     }
 
     .hidden {
@@ -812,6 +889,14 @@
         align-items: flex-start;
         flex-direction: column;
       }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -836,34 +921,23 @@
 
 <main class="container">
 
-  <!-- =========================================================
-       HERO
-       ========================================================= -->
-
   <section class="hero">
-
-    <h1 id="pageTitle">
-      P2P Marketplace
-    </h1>
+    <h1 id="pageTitle">P2P Marketplace</h1>
 
     <p id="pageDescription">
       Find a trader, choose your payment method,
       and trade directly through CryptoVault.
     </p>
-
   </section>
 
   <div id="globalNotice" class="notice"></div>
 
 
   <!-- =========================================================
-       TRADE DETAIL MODE HEADER
+       TRADE CENTER
        ========================================================= -->
 
-  <section
-    id="tradeCenterSection"
-    class="trade-center hidden"
-  >
+  <section id="tradeCenterSection" class="trade-center hidden">
 
     <button
       id="backToMarketplaceBtn"
@@ -878,9 +952,7 @@
       <div class="trade-center-header">
 
         <div>
-          <h2>
-            Trade Center
-          </h2>
+          <h2>Trade Center</h2>
 
           <div
             id="tradeCenterId"
@@ -896,13 +968,25 @@
         Loading trade...
       </div>
 
+      <div class="refresh-row">
+
+        <button
+          id="refreshTradeBtn"
+          class="secondary-btn"
+          type="button"
+        >
+          Refresh Trade
+        </button>
+
+      </div>
+
     </div>
 
   </section>
 
 
   <!-- =========================================================
-       MARKETPLACE FILTERS
+       MARKETPLACE
        ========================================================= -->
 
   <section
@@ -918,43 +1002,18 @@
 
       <div class="field">
 
-        <label>
-          Country
-        </label>
+        <label>Country</label>
 
         <select id="countrySelect">
 
-          <option value="ET">
-            Ethiopia
-          </option>
-
-          <option value="KE">
-            Kenya
-          </option>
-
-          <option value="NG">
-            Nigeria
-          </option>
-
-          <option value="GH">
-            Ghana
-          </option>
-
-          <option value="UG">
-            Uganda
-          </option>
-
-          <option value="TZ">
-            Tanzania
-          </option>
-
-          <option value="ZA">
-            South Africa
-          </option>
-
-          <option value="INT">
-            International
-          </option>
+          <option value="ET">Ethiopia</option>
+          <option value="KE">Kenya</option>
+          <option value="NG">Nigeria</option>
+          <option value="GH">Ghana</option>
+          <option value="UG">Uganda</option>
+          <option value="TZ">Tanzania</option>
+          <option value="ZA">South Africa</option>
+          <option value="INT">International</option>
 
         </select>
 
@@ -963,43 +1022,18 @@
 
       <div class="field">
 
-        <label>
-          Currency
-        </label>
+        <label>Currency</label>
 
         <select id="fiatSelect" disabled>
 
-          <option value="ETB">
-            ETB
-          </option>
-
-          <option value="KES">
-            KES
-          </option>
-
-          <option value="NGN">
-            NGN
-          </option>
-
-          <option value="GHS">
-            GHS
-          </option>
-
-          <option value="UGX">
-            UGX
-          </option>
-
-          <option value="TZS">
-            TZS
-          </option>
-
-          <option value="ZAR">
-            ZAR
-          </option>
-
-          <option value="USD">
-            USD
-          </option>
+          <option value="ETB">ETB</option>
+          <option value="KES">KES</option>
+          <option value="NGN">NGN</option>
+          <option value="GHS">GHS</option>
+          <option value="UGX">UGX</option>
+          <option value="TZS">TZS</option>
+          <option value="ZAR">ZAR</option>
+          <option value="USD">USD</option>
 
         </select>
 
@@ -1008,9 +1042,7 @@
 
       <div class="field">
 
-        <label>
-          Trade Type
-        </label>
+        <label>Trade Type</label>
 
         <div class="side-tabs">
 
@@ -1037,23 +1069,13 @@
 
       <div class="field">
 
-        <label>
-          Cryptocurrency
-        </label>
+        <label>Cryptocurrency</label>
 
         <select id="assetSelect">
 
-          <option value="USDT">
-            USDT
-          </option>
-
-          <option value="BTC">
-            BTC
-          </option>
-
-          <option value="ETH">
-            ETH
-          </option>
+          <option value="USDT">USDT</option>
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
 
         </select>
 
@@ -1062,9 +1084,7 @@
 
       <div class="field">
 
-        <label>
-          Payment Method
-        </label>
+        <label>Payment Method</label>
 
         <select id="paymentFilter">
 
@@ -1096,9 +1116,7 @@
 
       <div class="field">
 
-        <label>
-          Matching
-        </label>
+        <label>Matching</label>
 
         <select id="sortSelect">
 
@@ -1242,6 +1260,7 @@
         >
 
           <div class="calc-row">
+
             <span>
               Crypto amount
             </span>
@@ -1249,9 +1268,11 @@
             <strong id="calcCrypto">
               0
             </strong>
+
           </div>
 
           <div class="calc-row">
+
             <span>
               Fiat amount
             </span>
@@ -1259,9 +1280,11 @@
             <strong id="calcFiat">
               0
             </strong>
+
           </div>
 
           <div class="calc-row">
+
             <span>
               Trading fee
             </span>
@@ -1269,9 +1292,11 @@
             <strong id="calcFee">
               0
             </strong>
+
           </div>
 
           <div class="calc-row total">
+
             <span>
               Total
             </span>
@@ -1279,6 +1304,7 @@
             <strong id="calcTotal">
               0
             </strong>
+
           </div>
 
         </div>
@@ -1450,11 +1476,17 @@ let filteredOffers = [];
 
 let chatInterval = null;
 
+let tradeRefreshInterval = null;
+
 let offersLoading = false;
+
+let tradeLoading = false;
 
 let tradeDetailMode = false;
 
 let requestedTradeId = null;
+
+let actionProcessing = false;
 
 
 /* ============================================================
@@ -1657,6 +1689,11 @@ const tradeCenterRole =
 const backToMarketplaceBtn =
   document.getElementById(
     "backToMarketplaceBtn"
+  );
+
+const refreshTradeBtn =
+  document.getElementById(
+    "refreshTradeBtn"
   );
 
 const marketplaceSection =
@@ -1864,6 +1901,16 @@ function statusLabel(status) {
 }
 
 
+function normalizeStatus(status) {
+
+  return String(
+    status || ""
+  )
+    .trim()
+    .toLowerCase();
+}
+
+
 function isClosedTrade(status) {
 
   return [
@@ -1872,17 +1919,62 @@ function isClosedTrade(status) {
     "expired",
     "completed"
 
-  ].includes(status);
+  ].includes(
+    normalizeStatus(status)
+  );
 }
 
 
-function normalizeStatus(status) {
+function getTradeAsset(trade) {
 
-  return String(
-    status || ""
-  )
-    .trim()
-    .toLowerCase();
+  return (
+    trade?.asset ||
+    currentAsset ||
+    "Crypto"
+  );
+}
+
+
+function getTradeFiat(trade) {
+
+  return (
+    trade?.fiat ||
+    currentFiat ||
+    "Fiat"
+  );
+}
+
+
+function getTradeRole(trade) {
+
+  if (
+    String(trade?.buyer_id) ===
+    String(currentUserId)
+  ) {
+
+    return "BUYER";
+
+  }
+
+  if (
+    String(trade?.seller_id) ===
+    String(currentUserId)
+  ) {
+
+    return "SELLER";
+
+  }
+
+  return "TRADER";
+}
+
+
+function getTradeSide(trade) {
+
+  return getTradeRole(trade) ===
+    "BUYER"
+      ? "BUY"
+      : "SELL";
 }
 
 
@@ -1906,6 +1998,7 @@ function readURLParameters() {
   requestedTradeId =
     params.get("trade_id");
 
+
   if (
     type === "buy" ||
     type === "sell"
@@ -1914,26 +2007,6 @@ function readURLParameters() {
     currentSide =
       type;
 
-    if (type === "buy") {
-
-      buyBtn.classList.add(
-        "active"
-      );
-
-      sellBtn.classList.remove(
-        "active"
-      );
-
-    } else {
-
-      sellBtn.classList.add(
-        "active"
-      );
-
-      buyBtn.classList.remove(
-        "active"
-      );
-    }
   }
 
 
@@ -1951,20 +2024,25 @@ function readURLParameters() {
     currentAsset =
       asset.toUpperCase();
 
-    assetSelect.value =
-      currentAsset;
   }
 
 
-  if (requestedTradeId) {
+  tradeDetailMode =
+    !!requestedTradeId;
 
-    tradeDetailMode = true;
 
-  } else {
+  buyBtn.classList.toggle(
+    "active",
+    currentSide === "buy"
+  );
 
-    tradeDetailMode = false;
+  sellBtn.classList.toggle(
+    "active",
+    currentSide === "sell"
+  );
 
-  }
+  assetSelect.value =
+    currentAsset;
 }
 
 
@@ -1987,15 +2065,18 @@ function updateCurrencyFromCountry() {
   fiatSelect.value =
     currency;
 
+
   amountLabel.textContent =
     currentSide === "buy"
       ? `Amount in ${currency}`
       : `Amount in ${currentAsset}`;
 
+
   tradeAmountLabel.textContent =
     currentSide === "buy"
       ? `Fiat Amount (${currency})`
       : `Crypto Amount (${currentAsset})`;
+
 
   updateMarketTitle();
 }
@@ -2014,7 +2095,7 @@ function updateMarketTitle() {
 
 buyBtn.addEventListener(
   "click",
-  () => {
+  async () => {
 
     currentSide =
       "buy";
@@ -2027,22 +2108,17 @@ buyBtn.addEventListener(
       "active"
     );
 
-    amountLabel.textContent =
-      `Amount in ${currentFiat}`;
+    updateCurrencyFromCountry();
 
-    tradeAmountLabel.textContent =
-      `Fiat Amount (${currentFiat})`;
+    await loadMarket();
 
-    updateMarketTitle();
-
-    loadMarket();
   }
 );
 
 
 sellBtn.addEventListener(
   "click",
-  () => {
+  async () => {
 
     currentSide =
       "sell";
@@ -2055,26 +2131,21 @@ sellBtn.addEventListener(
       "active"
     );
 
-    amountLabel.textContent =
-      `Amount in ${currentAsset}`;
+    updateCurrencyFromCountry();
 
-    tradeAmountLabel.textContent =
-      `Crypto Amount (${currentAsset})`;
+    await loadMarket();
 
-    updateMarketTitle();
-
-    loadMarket();
   }
 );
 
 
 countrySelect.addEventListener(
   "change",
-  () => {
+  async () => {
 
     updateCurrencyFromCountry();
 
-    loadMarket();
+    await loadMarket();
 
   }
 );
@@ -2082,24 +2153,14 @@ countrySelect.addEventListener(
 
 assetSelect.addEventListener(
   "change",
-  () => {
+  async () => {
 
     currentAsset =
       assetSelect.value;
 
-    amountLabel.textContent =
-      currentSide === "buy"
-        ? `Amount in ${currentFiat}`
-        : `Amount in ${currentAsset}`;
+    updateCurrencyFromCountry();
 
-    tradeAmountLabel.textContent =
-      currentSide === "buy"
-        ? `Fiat Amount (${currentFiat})`
-        : `Crypto Amount (${currentAsset})`;
-
-    updateMarketTitle();
-
-    loadMarket();
+    await loadMarket();
 
   }
 );
@@ -2157,8 +2218,11 @@ async function loadPaymentMethods(
     !offers ||
     offers.length === 0
   ) {
+
     return offers || [];
+
   }
+
 
   const enriched =
     await Promise.all(
@@ -2180,6 +2244,7 @@ async function loadPaymentMethods(
                 }
               );
 
+
             if (error) {
 
               console.warn(
@@ -2191,13 +2256,16 @@ async function loadPaymentMethods(
                 ...offer,
                 paymentMethods: []
               };
+
             }
+
 
             return {
               ...offer,
               paymentMethods:
                 data || []
             };
+
 
           } catch (error) {
 
@@ -2210,12 +2278,14 @@ async function loadPaymentMethods(
               ...offer,
               paymentMethods: []
             };
+
           }
 
         }
       )
 
     );
+
 
   return enriched;
 }
@@ -2233,8 +2303,11 @@ async function enrichOffers(
     !offers ||
     offers.length === 0
   ) {
+
     return [];
+
   }
+
 
   const traderIds = [
     ...new Set(
@@ -2247,11 +2320,15 @@ async function enrichOffers(
     )
   ];
 
+
   if (
     traderIds.length === 0
   ) {
+
     return offers;
+
   }
+
 
   let profiles = [];
 
@@ -2269,6 +2346,7 @@ async function enrichOffers(
           traderIds
         );
 
+
     if (!result.error) {
 
       profiles =
@@ -2278,7 +2356,10 @@ async function enrichOffers(
 
   } catch (error) {
 
-    console.warn(error);
+    console.warn(
+      "Profile loading error:",
+      error
+    );
 
   }
 
@@ -2294,6 +2375,7 @@ async function enrichOffers(
           traderIds
         );
 
+
     if (!result.error) {
 
       stats =
@@ -2303,7 +2385,10 @@ async function enrichOffers(
 
   } catch (error) {
 
-    console.warn(error);
+    console.warn(
+      "Trader stats loading error:",
+      error
+    );
 
   }
 
@@ -2314,16 +2399,18 @@ async function enrichOffers(
       const profile =
         profiles.find(
           profile =>
-            profile.id ===
-            offer.trader_id
+            String(profile.id) ===
+            String(offer.trader_id)
         ) || null;
+
 
       const traderStats =
         stats.find(
           stat =>
-            stat.user_id ===
-            offer.trader_id
+            String(stat.user_id) ===
+            String(offer.trader_id)
         ) || null;
+
 
       return {
         ...offer,
@@ -2342,17 +2429,26 @@ async function enrichOffers(
 
 async function loadMarket() {
 
-  if (offersLoading) {
+  if (
+    offersLoading ||
+    tradeDetailMode
+  ) {
+
     return;
+
   }
 
-  offersLoading = true;
+
+  offersLoading =
+    true;
+
 
   offersContainer.innerHTML = `
     <div class="loading">
       Loading offers...
     </div>
   `;
+
 
   marketCount.textContent =
     "Loading...";
@@ -2432,7 +2528,9 @@ async function loadMarket() {
       error
     );
 
+
     offersContainer.innerHTML = `
+
       <div class="empty">
 
         <strong>
@@ -2450,7 +2548,9 @@ async function loadMarket() {
         </small>
 
       </div>
+
     `;
+
 
     marketCount.textContent =
       "Error";
@@ -2476,6 +2576,7 @@ function populatePaymentFilter(
   const currentValue =
     paymentFilter.value;
 
+
   const names = [];
 
 
@@ -2492,6 +2593,7 @@ function populatePaymentFilter(
             getPaymentMethodName(
               method
             );
+
 
           if (
             name &&
@@ -2516,9 +2618,11 @@ function populatePaymentFilter(
 
 
   paymentFilter.innerHTML =
-    `<option value="">
-      All payment methods
-    </option>`;
+    `
+      <option value="">
+        All payment methods
+      </option>
+    `;
 
 
   names.forEach(
@@ -2693,6 +2797,7 @@ function calculateSmartScore(
       offer
     );
 
+
   let score = 0;
 
 
@@ -2720,6 +2825,7 @@ function calculateSmartScore(
     getTrustScore(
       offer
     );
+
 
   const completed =
     getCompletedTrades(
@@ -2824,12 +2930,8 @@ function applyOfferFilters(
 
     offers.sort(
       (a, b) =>
-        calculateSmartScore(
-          b
-        ) -
-        calculateSmartScore(
-          a
-        )
+        calculateSmartScore(b) -
+        calculateSmartScore(a)
     );
 
   } else if (
@@ -2923,6 +3025,7 @@ function renderOffers(
   if (!offers.length) {
 
     offersContainer.innerHTML = `
+
       <div class="empty">
 
         <strong>
@@ -2934,6 +3037,7 @@ function renderOffers(
         or currency.
 
       </div>
+
     `;
 
     return;
@@ -2962,16 +3066,14 @@ function renderOffers(
             const offerId =
               button.dataset.offerId;
 
+
             const offer =
               allLoadedOffers.find(
                 offer =>
-                  String(
-                    offer.id
-                  ) ===
-                  String(
-                    offerId
-                  )
+                  String(offer.id) ===
+                  String(offerId)
               );
+
 
             if (offer) {
 
@@ -3002,40 +3104,48 @@ function renderOffer(
       offer
     );
 
+
   const trust =
     getTrustScore(
       offer
     );
+
 
   const completed =
     getCompletedTrades(
       offer
     );
 
+
   const price =
     Number(
       offer.price
     );
+
 
   const available =
     Number(
       offer.available_amount
     );
 
+
   const min =
     Number(
       offer.min_amount
     );
+
 
   const max =
     Number(
       offer.max_amount
     );
 
+
   const amountMatch =
     getAmountMatch(
       offer
     );
+
 
   const payments =
     offer.paymentMethods ||
@@ -3049,21 +3159,23 @@ function renderOffer(
           .slice(0, 5)
           .map(
             method =>
-              `<span class="payment-tag">
-                ${escapeHTML(
-                  getPaymentMethodName(
-                    method
-                  )
-                )}
-              </span>`
+              `
+                <span class="payment-tag">
+                  ${escapeHTML(
+                    getPaymentMethodName(
+                      method
+                    )
+                  )}
+                </span>
+              `
           )
           .join("")
 
       : `
-        <span class="payment-tag">
-          Payment method available after selection
-        </span>
-      `;
+          <span class="payment-tag">
+            Payment method available after selection
+          </span>
+        `;
 
 
   const amountStatus =
@@ -3074,16 +3186,16 @@ function renderOffer(
       ? amountMatch.matches
 
         ? `
-          <div class="fit good">
-            ✓ Your amount fits this offer
-          </div>
-        `
+            <div class="fit good">
+              ✓ Your amount fits this offer
+            </div>
+          `
 
         : `
-          <div class="fit bad">
-            ✕ Your amount does not fit this offer
-          </div>
-        `
+            <div class="fit bad">
+              ✕ Your amount does not fit this offer
+            </div>
+          `
 
       : "";
 
@@ -3278,9 +3390,7 @@ function renderOffer(
 
 
       <div class="payment-tags">
-
         ${paymentTags}
-
       </div>
 
 
@@ -3312,6 +3422,7 @@ function renderOffer(
       </div>
 
     </article>
+
   `;
 }
 
@@ -3378,9 +3489,7 @@ async function selectOffer(
 
     <br>
 
-    <small
-      style="color:#667085;"
-    >
+    <small style="color:#667085;">
 
       Limit:
 
@@ -3427,13 +3536,16 @@ async function selectOffer(
             "option"
           );
 
+
         option.value =
           method.id;
+
 
         option.textContent =
           getPaymentMethodName(
             method
           );
+
 
         tradePaymentMethod
           .appendChild(
@@ -3445,8 +3557,7 @@ async function selectOffer(
 
 
   tradePaymentMethod.disabled =
-    selectedOfferPaymentMethods
-      .length === 0;
+    selectedOfferPaymentMethods.length === 0;
 
 
   tradeAmountInput.value =
@@ -3469,8 +3580,7 @@ async function selectOffer(
 
 
   if (
-    selectedOfferPaymentMethods
-      .length === 0
+    selectedOfferPaymentMethods.length === 0
   ) {
 
     showNotice(
@@ -3514,20 +3624,24 @@ function calculateTrade() {
       tradeAmountInput.value
     );
 
+
   const price =
     Number(
       selectedOffer.price
     );
+
 
   const min =
     Number(
       selectedOffer.min_amount
     );
 
+
   const max =
     Number(
       selectedOffer.max_amount
     );
+
 
   const available =
     Number(
@@ -3566,8 +3680,7 @@ function calculateTrade() {
       amount;
 
     cryptoAmount =
-      amount /
-      price;
+      amount / price;
 
   } else {
 
@@ -3575,8 +3688,7 @@ function calculateTrade() {
       amount;
 
     fiatAmount =
-      amount *
-      price;
+      amount * price;
 
   }
 
@@ -3589,8 +3701,7 @@ function calculateTrade() {
 
 
   const fee =
-    fiatAmount *
-    0.005;
+    fiatAmount * 0.005;
 
 
   const total =
@@ -3689,6 +3800,13 @@ createTradeBtn.addEventListener(
 
 async function createTrade() {
 
+  if (
+    actionProcessing
+  ) {
+    return;
+  }
+
+
   if (!selectedOffer) {
 
     showNotice(
@@ -3712,12 +3830,8 @@ async function createTrade() {
 
 
   if (
-    String(
-      selectedOffer.trader_id
-    ) ===
-    String(
-      currentUserId
-    )
+    String(selectedOffer.trader_id) ===
+    String(currentUserId)
   ) {
 
     showNotice(
@@ -3733,6 +3847,7 @@ async function createTrade() {
     Number(
       tradeAmountInput.value
     );
+
 
   const price =
     Number(
@@ -3769,8 +3884,7 @@ async function createTrade() {
       amount;
 
     cryptoAmount =
-      amount /
-      price;
+      amount / price;
 
   } else {
 
@@ -3778,8 +3892,7 @@ async function createTrade() {
       amount;
 
     fiatAmount =
-      amount *
-      price;
+      amount * price;
 
   }
 
@@ -3789,10 +3902,12 @@ async function createTrade() {
       selectedOffer.min_amount
     );
 
+
   const max =
     Number(
       selectedOffer.max_amount
     );
+
 
   const available =
     Number(
@@ -3853,8 +3968,7 @@ async function createTrade() {
 
 
   const fee =
-    fiatAmount *
-    0.005;
+    fiatAmount * 0.005;
 
 
   const expiresAt =
@@ -3862,6 +3976,10 @@ async function createTrade() {
       Date.now() +
       30 * 60 * 1000
     ).toISOString();
+
+
+  actionProcessing =
+    true;
 
 
   createTradeBtn.disabled =
@@ -3917,18 +4035,18 @@ async function createTrade() {
         : data;
 
 
-    showNotice(
-      "Trade created successfully.",
-      "success"
-    );
-
-
     selectedOffer =
       null;
 
 
     tradeSection.classList.add(
       "hidden"
+    );
+
+
+    showNotice(
+      "Trade created successfully.",
+      "success"
     );
 
 
@@ -3957,14 +4075,18 @@ async function createTrade() {
       error
     );
 
+
     showNotice(
       error.message ||
       "Unable to create trade.",
-      "warning"
+      "error"
     );
 
 
   } finally {
+
+    actionProcessing =
+      false;
 
     createTradeBtn.disabled =
       false;
@@ -3977,84 +4099,111 @@ async function createTrade() {
 
 
 /* ============================================================
-   FIND SPECIFIC TRADE
+   LOAD SPECIFIC TRADE
    ============================================================ */
 
 async function loadTradeById(
   tradeId
 ) {
 
-  if (!tradeId) {
+  if (
+    !tradeId ||
+    !currentUserId
+  ) {
+
     return null;
+
   }
 
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("p2p_trades")
+      .select("*")
+      .eq(
+        "id",
+        tradeId
+      )
+      .or(
+        `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
+      )
+      .maybeSingle();
+
+
+  if (error) {
+    throw error;
+  }
+
+
+  return data || null;
+}
+
+
+/* ============================================================
+   LOAD LATEST TRADE
+   ============================================================ */
+
+async function loadLatestTrade() {
 
   if (!currentUserId) {
     return null;
   }
 
 
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("p2p_trades")
-        .select("*")
-        .eq(
-          "id",
-          tradeId
-        )
-        .or(
-          `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
-        )
-        .maybeSingle();
-
-
-    if (error) {
-      throw error;
-    }
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("p2p_trades")
+      .select("*")
+      .or(
+        `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(1)
+      .maybeSingle();
 
 
-    return data || null;
-
-
-  } catch (error) {
-
-    console.error(
-      "Specific trade loading error:",
-      error
-    );
-
+  if (error) {
     throw error;
-
   }
+
+
+  return data || null;
 }
 
 
 /* ============================================================
-   LOAD CURRENT / LATEST TRADE
+   LOAD CURRENT TRADE
    ============================================================ */
 
 async function loadCurrentTrade() {
 
   if (!currentUserId) {
 
-    myTradeSection.classList.add(
-      "hidden"
-    );
-
-    chatSection.classList.add(
-      "hidden"
-    );
-
-    stopChatPolling();
+    hideTradeAreas();
 
     return;
 
   }
+
+
+  if (tradeLoading) {
+    return;
+  }
+
+
+  tradeLoading =
+    true;
 
 
   try {
@@ -4073,33 +4222,8 @@ async function loadCurrentTrade() {
 
     } else {
 
-      const {
-        data: latestTrade,
-        error
-      } =
-        await supabaseClient
-          .from("p2p_trades")
-          .select("*")
-          .or(
-            `buyer_id.eq.${currentUserId},seller_id.eq.${currentUserId}`
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          )
-          .limit(1)
-          .maybeSingle();
-
-
-      if (error) {
-        throw error;
-      }
-
-
       data =
-        latestTrade;
+        await loadLatestTrade();
 
     }
 
@@ -4110,16 +4234,7 @@ async function loadCurrentTrade() {
         null;
 
 
-      myTradeSection.classList.add(
-        "hidden"
-      );
-
-      chatSection.classList.add(
-        "hidden"
-      );
-
-
-      stopChatPolling();
+      hideTradeAreas();
 
 
       if (
@@ -4147,7 +4262,12 @@ async function loadCurrentTrade() {
     );
 
 
-    loadChat(
+    renderTradeCenter(
+      data
+    );
+
+
+    await loadChat(
       data.id
     );
 
@@ -4157,15 +4277,9 @@ async function loadCurrentTrade() {
     );
 
 
-    if (
-      tradeDetailMode
-    ) {
-
-      renderTradeCenter(
-        data
-      );
-
-    }
+    startTradeRefresh(
+      data.id
+    );
 
 
   } catch (error) {
@@ -4175,13 +4289,40 @@ async function loadCurrentTrade() {
       error
     );
 
+
     showNotice(
       error.message ||
       "Unable to load trade.",
-      "warning"
+      "error"
     );
 
+
+  } finally {
+
+    tradeLoading =
+      false;
+
   }
+}
+
+
+/* ============================================================
+   HIDE TRADE AREAS
+   ============================================================ */
+
+function hideTradeAreas() {
+
+  myTradeSection.classList.add(
+    "hidden"
+  );
+
+  chatSection.classList.add(
+    "hidden"
+  );
+
+  stopChatPolling();
+
+  stopTradeRefresh();
 }
 
 
@@ -4221,40 +4362,33 @@ function renderTradeCenter(
     "Manage your selected P2P trade securely from one place.";
 
 
-  tradeCenterId.textContent =
-    `Trade ID: ${trade.id}`;
+  tradeCenterId.innerHTML = `
 
+    Trade ID:
 
-  const isBuyer =
-    String(
-      trade.buyer_id
-    ) ===
-    String(
-      currentUserId
-    );
+    <strong>
+      ${escapeHTML(
+        trade.id
+      )}
+    </strong>
 
+    <button
+      class="copy-btn"
+      type="button"
+      onclick="copyTradeId()"
+    >
+      Copy
+    </button>
 
-  const isSeller =
-    String(
-      trade.seller_id
-    ) ===
-    String(
-      currentUserId
-    );
+  `;
 
 
   tradeCenterRole.innerHTML = `
 
     <span class="role-badge">
-
-      ${
-        isBuyer
-          ? "BUYER"
-          : isSeller
-            ? "SELLER"
-            : "TRADER"
-      }
-
+      ${escapeHTML(
+        getTradeRole(trade)
+      )}
     </span>
 
   `;
@@ -4277,34 +4411,30 @@ function renderTradeCenterSummary(
     );
 
 
-  const isBuyer =
-    String(
-      trade.buyer_id
-    ) ===
-    String(
-      currentUserId
+  const role =
+    getTradeRole(
+      trade
     );
+
+
+  const isBuyer =
+    role === "BUYER";
 
 
   const isSeller =
-    String(
-      trade.seller_id
-    ) ===
-    String(
-      currentUserId
-    );
+    role === "SELLER";
 
 
   const asset =
-    trade.asset ||
-    currentAsset ||
-    "";
+    getTradeAsset(
+      trade
+    );
 
 
   const fiat =
-    trade.fiat ||
-    currentFiat ||
-    "";
+    getTradeFiat(
+      trade
+    );
 
 
   const paymentMethod =
@@ -4323,8 +4453,7 @@ function renderTradeCenterSummary(
 
 
   if (
-    status ===
-    "awaiting_payment" &&
+    status === "awaiting_payment" &&
     isBuyer
   ) {
 
@@ -4341,13 +4470,17 @@ function renderTradeCenterSummary(
         Send the payment to the seller
         using the payment information below.
 
+        <br><br>
+
+        After you have actually paid,
+        mark the payment as sent.
+
       </div>
 
     `;
 
   } else if (
-    status ===
-    "payment_sent" &&
+    status === "payment_sent" &&
     isSeller
   ) {
 
@@ -4362,15 +4495,15 @@ function renderTradeCenterSummary(
         <br>
 
         The buyer says payment has been sent.
-        Verify your account before confirming.
+        Check your own payment account before
+        confirming receipt.
 
       </div>
 
     `;
 
   } else if (
-    status ===
-    "payment_confirmed" &&
+    status === "payment_confirmed" &&
     isSeller
   ) {
 
@@ -4385,16 +4518,15 @@ function renderTradeCenterSummary(
         <br>
 
         Payment is confirmed.
-        You can release the crypto after verifying
-        the payment.
+        Release the crypto only after
+        verifying the payment.
 
       </div>
 
     `;
 
   } else if (
-    status ===
-    "payment_sent" &&
+    status === "payment_sent" &&
     isBuyer
   ) {
 
@@ -4410,8 +4542,7 @@ function renderTradeCenterSummary(
     `;
 
   } else if (
-    status ===
-    "payment_confirmed" &&
+    status === "payment_confirmed" &&
     isBuyer
   ) {
 
@@ -4427,35 +4558,92 @@ function renderTradeCenterSummary(
     `;
 
   } else if (
-    status ===
-    "crypto_released" ||
-    status ===
-    "completed"
+    status === "crypto_released"
   ) {
 
     actionBox = `
 
       <div class="success-box">
 
-        ✓ This trade has successfully
-        completed its crypto release stage.
+        ✓ Crypto has been released.
 
       </div>
 
     `;
 
   } else if (
-    status ===
-    "disputed"
+    status === "completed"
+  ) {
+
+    actionBox = `
+
+      <div class="success-box">
+
+        ✓ Trade completed successfully.
+
+      </div>
+
+    `;
+
+  } else if (
+    status === "cancelled"
   ) {
 
     actionBox = `
 
       <div class="warning-box">
 
-        This trade is disputed.
+        This trade has been cancelled.
+
+      </div>
+
+    `;
+
+  } else if (
+    status === "expired"
+  ) {
+
+    actionBox = `
+
+      <div class="warning-box">
+
+        This trade has expired.
+
+      </div>
+
+    `;
+
+  } else if (
+    status === "disputed"
+  ) {
+
+    actionBox = `
+
+      <div class="warning-box">
+
+        <strong>
+          Trade disputed
+        </strong>
+
+        <br>
+
         Do not send additional payment.
-        Use the trade chat and support process.
+        Keep all communication inside the trade.
+
+      </div>
+
+    `;
+
+  } else {
+
+    actionBox = `
+
+      <div class="info-box">
+
+        Current trade status:
+        ${escapeHTML(
+          statusLabel(status)
+        )}
 
       </div>
 
@@ -4467,6 +4655,9 @@ function renderTradeCenterSummary(
   return `
 
     ${actionBox}
+
+
+    ${renderLifecycle(status)}
 
 
     <div class="trade-details">
@@ -4495,11 +4686,11 @@ function renderTradeCenterSummary(
       <div class="trade-detail">
 
         <small>
-          Side
+          Role
         </small>
 
         <strong>
-          ${isBuyer ? "BUY" : "SELL"}
+          ${escapeHTML(role)}
         </strong>
 
       </div>
@@ -4720,8 +4911,7 @@ function renderTradeCenterSummary(
 
 
     ${
-      status ===
-        "awaiting_payment" &&
+      status === "awaiting_payment" &&
       isBuyer
 
         ? `
@@ -4753,28 +4943,33 @@ function renderTradeCenterSummary(
     <div class="actions">
 
       ${
-        status ===
-          "awaiting_payment" &&
+        status === "awaiting_payment" &&
         isBuyer
 
           ? `
 
             <button
+              id="saveReferenceBtn"
               class="secondary-btn"
+              type="button"
               onclick="savePaymentReference()"
             >
               Save Reference
             </button>
 
             <button
+              id="paymentSentBtn"
               class="success-btn"
+              type="button"
               onclick="markPaymentSent()"
             >
               I Have Paid
             </button>
 
             <button
+              id="cancelTradeBtn"
               class="danger-btn"
+              type="button"
               onclick="cancelCurrentTrade()"
             >
               Cancel Trade
@@ -4787,21 +4982,24 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "payment_sent" &&
+        status === "payment_sent" &&
         isSeller
 
           ? `
 
             <button
+              id="confirmPaymentBtn"
               class="success-btn"
+              type="button"
               onclick="confirmPaymentReceived()"
             >
               Confirm Payment Received
             </button>
 
             <button
+              id="cancelTradeBtn"
               class="danger-btn"
+              type="button"
               onclick="cancelCurrentTrade()"
             >
               Cancel Trade
@@ -4814,14 +5012,15 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "payment_confirmed" &&
+        status === "payment_confirmed" &&
         isSeller
 
           ? `
 
             <button
+              id="releaseCryptoBtn"
               class="primary-btn"
+              type="button"
               onclick="releaseCrypto()"
             >
               Release Crypto
@@ -4834,8 +5033,7 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "payment_sent" &&
+        status === "payment_sent" &&
         isBuyer
 
           ? `
@@ -4854,8 +5052,7 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "payment_confirmed" &&
+        status === "payment_confirmed" &&
         isBuyer
 
           ? `
@@ -4863,7 +5060,7 @@ function renderTradeCenterSummary(
             <div class="action-info">
 
               Payment confirmed.
-              Waiting for crypto release.
+              Waiting for seller to release crypto.
 
             </div>
 
@@ -4874,8 +5071,7 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "crypto_released"
+        status === "crypto_released"
 
           ? `
 
@@ -4892,8 +5088,7 @@ function renderTradeCenterSummary(
 
 
       ${
-        status ===
-          "completed"
+        status === "completed"
 
           ? `
 
@@ -4933,7 +5128,7 @@ function renderTradeCenterSummary(
 
         Verify payment directly in your
         own account before confirming
-        or releasing crypto.
+        payment or releasing crypto.
 
       </div>
 
@@ -4942,6 +5137,103 @@ function renderTradeCenterSummary(
   `;
 }
 
+
+/* ============================================================
+   TRADE LIFECYCLE
+   ============================================================ */
+
+function renderLifecycle(
+  status
+) {
+
+  const steps = [
+
+    {
+      key: "awaiting_payment",
+      label: "1. Awaiting Payment"
+    },
+
+    {
+      key: "payment_sent",
+      label: "2. Payment Sent"
+    },
+
+    {
+      key: "payment_confirmed",
+      label: "3. Payment Confirmed"
+    },
+
+    {
+      key: "crypto_released",
+      label: "4. Crypto Released"
+    },
+
+    {
+      key: "completed",
+      label: "5. Completed"
+    }
+
+  ];
+
+
+  const currentIndex =
+    steps.findIndex(
+      step =>
+        step.key === status
+    );
+
+
+  return `
+
+    <div class="lifecycle">
+
+      ${steps.map(
+        (step, index) => {
+
+          let className =
+            "life-step";
+
+
+          if (
+            index === currentIndex
+          ) {
+
+            className +=
+              " current";
+
+          } else if (
+            currentIndex >= 0 &&
+            index < currentIndex
+          ) {
+
+            className +=
+              " done";
+
+          }
+
+
+          return `
+
+            <div class="${className}">
+              ${escapeHTML(
+                step.label
+              )}
+            </div>
+
+          `;
+
+        }
+      ).join("")}
+
+    </div>
+
+  `;
+}
+
+
+/* ============================================================
+   TRADE ERROR
+   ============================================================ */
 
 function showTradeCenterError(
   message
@@ -4958,6 +5250,14 @@ function showTradeCenterError(
   marketSection.classList.add(
     "hidden"
   );
+
+  pageTitle.textContent =
+    "Trade Center";
+
+
+  pageDescription.textContent =
+    "Manage your selected P2P trade securely from one place.";
+
 
   tradeCenterContent.innerHTML = `
 
@@ -4978,6 +5278,47 @@ function showTradeCenterError(
 
 
 /* ============================================================
+   COPY TRADE ID
+   ============================================================ */
+
+async function copyTradeId() {
+
+  if (
+    !currentTrade?.id
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await navigator.clipboard.writeText(
+      String(
+        currentTrade.id
+      )
+    );
+
+
+    showNotice(
+      "Trade ID copied.",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    showNotice(
+      "Unable to copy Trade ID.",
+      "warning"
+    );
+
+  }
+}
+
+
+/* ============================================================
    OPEN TRADE DETAIL
    ============================================================ */
 
@@ -4990,14 +5331,10 @@ function openTradeDetail(
   }
 
 
-  const url =
+  window.location.href =
     `p2p.html?trade_id=${encodeURIComponent(
       tradeId
     )}`;
-
-
-  window.location.href =
-    url;
 }
 
 
@@ -5009,8 +5346,94 @@ backToMarketplaceBtn.addEventListener(
   "click",
   () => {
 
+    stopChatPolling();
+
+    stopTradeRefresh();
+
     window.location.href =
       "p2p.html";
+
+  }
+);
+
+
+/* ============================================================
+   REFRESH TRADE
+   ============================================================ */
+
+refreshTradeBtn.addEventListener(
+  "click",
+  async () => {
+
+    if (
+      !currentTrade?.id
+    ) {
+
+      return;
+
+    }
+
+
+    refreshTradeBtn.disabled =
+      true;
+
+    refreshTradeBtn.textContent =
+      "Refreshing...";
+
+
+    try {
+
+      const freshTrade =
+        await loadTradeById(
+          currentTrade.id
+        );
+
+
+      if (!freshTrade) {
+
+        showTradeCenterError(
+          "This trade is no longer available."
+        );
+
+        return;
+
+      }
+
+
+      currentTrade =
+        freshTrade;
+
+
+      renderCurrentTrade(
+        freshTrade
+      );
+
+
+      await loadChat(
+        freshTrade.id
+      );
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      showNotice(
+        error.message ||
+        "Unable to refresh trade.",
+        "error"
+      );
+
+
+    } finally {
+
+      refreshTradeBtn.disabled =
+        false;
+
+      refreshTradeBtn.textContent =
+        "Refresh Trade";
+
+    }
 
   }
 );
@@ -5033,22 +5456,18 @@ function renderCurrentTrade(
   );
 
 
-  const isBuyer =
-    String(
-      trade.buyer_id
-    ) ===
-    String(
-      currentUserId
+  const role =
+    getTradeRole(
+      trade
     );
+
+
+  const isBuyer =
+    role === "BUYER";
 
 
   const isSeller =
-    String(
-      trade.seller_id
-    ) ===
-    String(
-      currentUserId
-    );
+    role === "SELLER";
 
 
   const status =
@@ -5073,8 +5492,7 @@ function renderCurrentTrade(
 
 
   if (
-    status ===
-      "awaiting_payment" &&
+    status === "awaiting_payment" &&
     isBuyer
   ) {
 
@@ -5096,10 +5514,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "payment_sent" &&
+    status === "payment_sent" &&
     isSeller
   ) {
 
@@ -5121,10 +5537,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "payment_confirmed" &&
+    status === "payment_confirmed" &&
     isSeller
   ) {
 
@@ -5139,10 +5553,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "payment_sent" &&
+    status === "payment_sent" &&
     isBuyer
   ) {
 
@@ -5157,10 +5569,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "payment_confirmed" &&
+    status === "payment_confirmed" &&
     isBuyer
   ) {
 
@@ -5175,10 +5585,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "crypto_released"
+    status === "crypto_released"
   ) {
 
     actions = `
@@ -5191,10 +5599,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "completed"
+    status === "completed"
   ) {
 
     actions = `
@@ -5207,10 +5613,8 @@ function renderCurrentTrade(
 
     `;
 
-
   } else if (
-    status ===
-      "disputed"
+    status === "disputed"
   ) {
 
     actions = `
@@ -5230,9 +5634,7 @@ function renderCurrentTrade(
   tradeDetailsContainer.innerHTML = `
 
     <div
-      class="trade-status status-${escapeHTML(
-        status
-      )}"
+      class="trade-status status-${escapeHTML(status)}"
     >
 
       ${escapeHTML(
@@ -5243,6 +5645,19 @@ function renderCurrentTrade(
 
 
     <div class="trade-details">
+
+      <div class="trade-detail">
+
+        <small>
+          Role
+        </small>
+
+        <strong>
+          ${escapeHTML(role)}
+        </strong>
+
+      </div>
+
 
       <div class="trade-detail">
 
@@ -5258,8 +5673,7 @@ function renderCurrentTrade(
           )}
 
           ${escapeHTML(
-            trade.asset ||
-            currentAsset
+            getTradeAsset(trade)
           )}
 
         </strong>
@@ -5281,8 +5695,7 @@ function renderCurrentTrade(
           )}
 
           ${escapeHTML(
-            trade.fiat ||
-            currentFiat
+            getTradeFiat(trade)
           )}
 
         </strong>
@@ -5303,6 +5716,10 @@ function renderCurrentTrade(
             2
           )}
 
+          ${escapeHTML(
+            getTradeFiat(trade)
+          )}
+
         </strong>
 
       </div>
@@ -5319,6 +5736,10 @@ function renderCurrentTrade(
           ${formatNumber(
             trade.trading_fee,
             2
+          )}
+
+          ${escapeHTML(
+            getTradeFiat(trade)
           )}
 
         </strong>
@@ -5452,8 +5873,7 @@ function renderCurrentTrade(
 
 
     ${
-      status ===
-        "awaiting_payment" &&
+      status === "awaiting_payment" &&
       isBuyer
 
         ? `
@@ -5485,8 +5905,7 @@ function renderCurrentTrade(
     <div class="actions">
 
       ${
-        status ===
-          "awaiting_payment" &&
+        status === "awaiting_payment" &&
         isBuyer
 
           ? `
@@ -5502,6 +5921,7 @@ function renderCurrentTrade(
 
           : ""
       }
+
 
       ${actions}
 
@@ -5528,8 +5948,13 @@ function renderCurrentTrade(
 
 async function savePaymentReference() {
 
-  if (!currentTrade) {
+  if (
+    !currentTrade ||
+    actionProcessing
+  ) {
+
     return;
+
   }
 
 
@@ -5543,6 +5968,10 @@ async function savePaymentReference() {
     input
       ? input.value.trim()
       : "";
+
+
+  actionProcessing =
+    true;
 
 
   try {
@@ -5585,8 +6014,14 @@ async function savePaymentReference() {
     showNotice(
       error.message ||
       "Unable to save payment reference.",
-      "warning"
+      "error"
     );
+
+
+  } finally {
+
+    actionProcessing =
+      false;
 
   }
 }
@@ -5598,8 +6033,13 @@ async function savePaymentReference() {
 
 async function markPaymentSent() {
 
-  if (!currentTrade) {
+  if (
+    !currentTrade ||
+    actionProcessing
+  ) {
+
     return;
+
   }
 
 
@@ -5612,6 +6052,10 @@ async function markPaymentSent() {
   if (!confirmed) {
     return;
   }
+
+
+  actionProcessing =
+    true;
 
 
   try {
@@ -5651,8 +6095,14 @@ async function markPaymentSent() {
     showNotice(
       error.message ||
       "Unable to mark payment as sent.",
-      "warning"
+      "error"
     );
+
+
+  } finally {
+
+    actionProcessing =
+      false;
 
   }
 }
@@ -5664,20 +6114,29 @@ async function markPaymentSent() {
 
 async function confirmPaymentReceived() {
 
-  if (!currentTrade) {
+  if (
+    !currentTrade ||
+    actionProcessing
+  ) {
+
     return;
+
   }
 
 
   const confirmed =
     confirm(
-      "Confirm that you received the correct payment?"
+      "Confirm that you received the correct payment in your own account?"
     );
 
 
   if (!confirmed) {
     return;
   }
+
+
+  actionProcessing =
+    true;
 
 
   try {
@@ -5717,8 +6176,14 @@ async function confirmPaymentReceived() {
     showNotice(
       error.message ||
       "Unable to confirm payment.",
-      "warning"
+      "error"
     );
+
+
+  } finally {
+
+    actionProcessing =
+      false;
 
   }
 }
@@ -5730,20 +6195,29 @@ async function confirmPaymentReceived() {
 
 async function releaseCrypto() {
 
-  if (!currentTrade) {
+  if (
+    !currentTrade ||
+    actionProcessing
+  ) {
+
     return;
+
   }
 
 
   const confirmed =
     confirm(
-      "Confirm that payment was received and release the crypto?"
+      "Confirm that you received the payment and want to release the crypto?"
     );
 
 
   if (!confirmed) {
     return;
   }
+
+
+  actionProcessing =
+    true;
 
 
   try {
@@ -5785,8 +6259,14 @@ async function releaseCrypto() {
     showNotice(
       error.message ||
       "Unable to release crypto.",
-      "warning"
+      "error"
     );
+
+
+  } finally {
+
+    actionProcessing =
+      false;
 
   }
 }
@@ -5798,18 +6278,26 @@ async function releaseCrypto() {
 
 async function cancelCurrentTrade() {
 
-  if (!currentTrade) {
+  if (
+    !currentTrade ||
+    actionProcessing
+  ) {
+
     return;
+
   }
 
 
   if (
     isClosedTrade(
-      normalizeStatus(
-        currentTrade.status
-      )
+      currentTrade.status
     )
   ) {
+
+    showNotice(
+      "This trade is already closed.",
+      "warning"
+    );
 
     return;
 
@@ -5825,6 +6313,10 @@ async function cancelCurrentTrade() {
   if (!confirmed) {
     return;
   }
+
+
+  actionProcessing =
+    true;
 
 
   try {
@@ -5866,8 +6358,14 @@ async function cancelCurrentTrade() {
     showNotice(
       error.message ||
       "Unable to cancel trade.",
-      "warning"
+      "error"
     );
+
+
+  } finally {
+
+    actionProcessing =
+      false;
 
   }
 }
@@ -6029,7 +6527,8 @@ async function sendMessage() {
 
   if (
     !currentTrade ||
-    !currentUserId
+    !currentUserId ||
+    actionProcessing
   ) {
 
     return;
@@ -6039,9 +6538,7 @@ async function sendMessage() {
 
   if (
     isClosedTrade(
-      normalizeStatus(
-        currentTrade.status
-      )
+      currentTrade.status
     )
   ) {
 
@@ -6073,6 +6570,7 @@ async function sendMessage() {
     );
 
     return;
+
   }
 
 
@@ -6124,7 +6622,7 @@ async function sendMessage() {
     showNotice(
       error.message ||
       "Unable to send message.",
-      "warning"
+      "error"
     );
 
 
@@ -6182,9 +6680,7 @@ function startChatPolling(
           String(
             currentTrade.id
           ) ===
-          String(
-            tradeId
-          )
+          String(tradeId)
         ) {
 
           await loadChat(
@@ -6208,6 +6704,85 @@ function stopChatPolling() {
     );
 
     chatInterval =
+      null;
+
+  }
+}
+
+
+/* ============================================================
+   TRADE REFRESH
+   ============================================================ */
+
+function startTradeRefresh(
+  tradeId
+) {
+
+  stopTradeRefresh();
+
+
+  tradeRefreshInterval =
+    setInterval(
+      async () => {
+
+        if (
+          currentTrade &&
+          String(
+            currentTrade.id
+          ) ===
+          String(tradeId)
+        ) {
+
+          try {
+
+            const freshTrade =
+              await loadTradeById(
+                tradeId
+              );
+
+
+            if (
+              freshTrade
+            ) {
+
+              currentTrade =
+                freshTrade;
+
+
+              renderCurrentTrade(
+                freshTrade
+              );
+
+            }
+
+          } catch (error) {
+
+            console.warn(
+              "Trade refresh error:",
+              error
+            );
+
+          }
+
+        }
+
+      },
+      10000
+    );
+}
+
+
+function stopTradeRefresh() {
+
+  if (
+    tradeRefreshInterval
+  ) {
+
+    clearInterval(
+      tradeRefreshInterval
+    );
+
+    tradeRefreshInterval =
       null;
 
   }
@@ -6249,6 +6824,7 @@ async function checkAuth() {
         );
 
       return false;
+
     }
 
 
@@ -6272,6 +6848,7 @@ async function checkAuth() {
 
 
     return false;
+
   }
 }
 
@@ -6295,24 +6872,39 @@ supabaseClient.auth.onAuthStateChange(
       currentUserId
     ) {
 
-      await loadCurrentTrade();
+      if (
+        requestedTradeId ||
+        currentTrade
+      ) {
+
+        await loadCurrentTrade();
+
+      }
 
     } else {
 
       currentTrade =
         null;
 
-      myTradeSection.classList.add(
-        "hidden"
-      );
-
-      chatSection.classList.add(
-        "hidden"
-      );
-
-      stopChatPolling();
+      hideTradeAreas();
 
     }
+
+  }
+);
+
+
+/* ============================================================
+   CLEANUP
+   ============================================================ */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    stopChatPolling();
+
+    stopTradeRefresh();
 
   }
 );
@@ -6343,10 +6935,10 @@ async function initialize() {
 
 
   /*
-    If Dashboard sends:
+    Dashboard:
     p2p.html?trade_id=XXXX
 
-    open the exact trade.
+    opens exact trade.
   */
 
   if (
@@ -6365,7 +6957,9 @@ async function initialize() {
     tradeCenterContent.innerHTML = `
 
       <div class="loading">
+
         Loading selected trade...
+
       </div>
 
     `;
