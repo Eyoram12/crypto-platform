@@ -67,14 +67,13 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
     .nav-links a {
       color: #d1d5db;
       font-size: 14px;
-      transition: 0.2s;
     }
 
     .nav-links a:hover,
@@ -129,6 +128,26 @@
       color: #344054;
     }
 
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .online-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .online-text {
+      color: #16a34a;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
     .actions {
       display: flex;
       gap: 10px;
@@ -141,6 +160,7 @@
       padding: 10px 15px;
       cursor: pointer;
       font-weight: 600;
+      display: inline-block;
     }
 
     .btn-primary {
@@ -163,31 +183,22 @@
     }
 
     /* =========================
-       STATUS
+       ERROR
     ========================= */
 
-    .status-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .online-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #22c55e;
-    }
-
-    .online-text {
-      color: #16a34a;
+    .error-box {
+      background: #fef3f2;
+      color: #b42318;
+      border: 1px solid #fecdca;
+      padding: 12px 15px;
+      border-radius: 9px;
       font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 20px;
+      display: none;
     }
 
     /* =========================
-       SUMMARY CARDS
+       SUMMARY
     ========================= */
 
     .summary-grid {
@@ -212,7 +223,7 @@
     }
 
     .summary-card .value {
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 700;
       word-break: break-word;
     }
@@ -419,7 +430,8 @@
       color: #be123c;
     }
 
-    .badge.completed {
+    .badge.completed,
+    .badge.active {
       background: #ecfdf3;
       color: #027a48;
     }
@@ -432,11 +444,6 @@
     .badge.pending {
       background: #fffaeb;
       color: #b54708;
-    }
-
-    .badge.active {
-      background: #ecfdf3;
-      color: #027a48;
     }
 
     /* =========================
@@ -455,17 +462,6 @@
       padding: 25px;
       color: #667085;
       font-size: 14px;
-    }
-
-    .error-box {
-      background: #fef3f2;
-      color: #b42318;
-      border: 1px solid #fecdca;
-      padding: 12px 15px;
-      border-radius: 9px;
-      font-size: 13px;
-      margin-bottom: 20px;
-      display: none;
     }
 
     /* =========================
@@ -528,6 +524,7 @@
     ========================= */
 
     @media (max-width: 900px) {
+
       .summary-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -543,17 +540,10 @@
       .security-grid {
         grid-template-columns: 1fr;
       }
-
-      .nav {
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        gap: 12px;
-      }
     }
 
     @media (max-width: 600px) {
+
       header {
         position: static;
       }
@@ -564,6 +554,7 @@
 
       .nav {
         flex-direction: column;
+        align-items: flex-start;
       }
 
       .nav-links {
@@ -608,6 +599,7 @@
 
       .p2p-banner .btn {
         width: 100%;
+        text-align: center;
       }
 
       #toast {
@@ -622,625 +614,1094 @@
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================= -->
+<header>
 
-  <header>
-    <div class="nav">
+  <div class="nav">
 
-      <a href="index.html" class="logo">
-        Crypto<span>Vault</span>
+    <a href="index.html" class="logo">
+      Crypto<span>Vault</span>
+    </a>
+
+    <nav class="nav-links">
+
+      <a href="index.html">
+        Home
       </a>
 
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="dashboard.html" class="active">Dashboard</a>
-        <a href="p2p.html">P2P Trading</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="settings.html">Settings</a>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </nav>
+      <a href="dashboard.html" class="active">
+        Dashboard
+      </a>
+
+      <a href="p2p.html">
+        P2P Trading
+      </a>
+
+      <a href="transactions.html">
+        Transactions
+      </a>
+
+      <a href="settings.html">
+        Settings
+      </a>
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <div
+    id="errorBox"
+    class="error-box">
+  </div>
+
+
+  <!-- =========================
+       WELCOME
+  ========================= -->
+
+  <section class="welcome">
+
+    <div>
+
+      <h1>
+        Welcome back 👋
+      </h1>
+
+      <p>
+        Manage your CryptoVault wallet and P2P trading activity.
+      </p>
+
+      <div class="status-row">
+
+        <span class="online-dot"></span>
+
+        <span class="online-text">
+          Account connected
+        </span>
+
+      </div>
+
+      <p style="margin-top:8px;">
+
+        <span
+          id="userEmail"
+          class="user-email">
+          Loading...
+        </span>
+
+      </p>
 
     </div>
-  </header>
+
+
+    <div class="actions">
+
+      <button
+        class="btn btn-light"
+        onclick="toggleBalance()">
+
+        👁️
+        <span id="balanceButtonText">
+          Hide Balance
+        </span>
+
+      </button>
+
+      <button
+        class="btn btn-primary"
+        onclick="refreshDashboard()">
+
+        ↻ Refresh
+
+      </button>
+
+    </div>
+
+  </section>
 
 
   <!-- =========================
-       MAIN
+       WALLET SUMMARY
   ========================= -->
 
-  <main>
+  <section class="summary-grid">
 
-    <div id="errorBox" class="error-box"></div>
+    <div class="summary-card">
 
-    <!-- Welcome -->
+      <div class="label">
+        Total USDT
+      </div>
 
-    <section class="welcome">
+      <div
+        class="value"
+        id="totalBalance">
+        0.00 USDT
+      </div>
+
+      <div class="small">
+        Wallet balance
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="label">
+        Available USDT
+      </div>
+
+      <div
+        class="value"
+        id="availableBalance">
+        0.00 USDT
+      </div>
+
+      <div class="small">
+        Currently available
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="label">
+        BTC Balance
+      </div>
+
+      <div
+        class="value"
+        id="btcSummary">
+        0 BTC
+      </div>
+
+      <div class="small">
+        Bitcoin
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="label">
+        Active P2P Offers
+      </div>
+
+      <div
+        class="value"
+        id="activeOffersCount">
+        0
+      </div>
+
+      <div class="small">
+        Your active offers
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ASSETS
+  ========================= -->
+
+  <section class="section">
+
+    <div class="section-header">
 
       <div>
-        <h1>Welcome back 👋</h1>
+
+        <h2>
+          Your Assets
+        </h2>
 
         <p>
-          Manage your CryptoVault wallet and P2P trading activity.
+          Current balances in your CryptoVault wallet.
         </p>
 
-        <div class="status-row">
-          <span class="online-dot"></span>
-          <span class="online-text">Account connected</span>
-        </div>
-
-        <p style="margin-top:8px;">
-          <span id="userEmail" class="user-email">Loading...</span>
-        </p>
       </div>
 
-      <div class="actions">
-        <button class="btn btn-light" onclick="toggleBalance()">
-          👁️ <span id="balanceButtonText">Hide Balance</span>
-        </button>
-
-        <button class="btn btn-primary" onclick="refreshDashboard()">
-          ↻ Refresh
-        </button>
-      </div>
-
-    </section>
+    </div>
 
 
-    <!-- =========================
-         WALLET SUMMARY
-    ========================= -->
+    <div class="assets-grid">
 
-    <section class="summary-grid">
+      <div class="asset-card">
 
-      <div class="summary-card">
-        <div class="label">Total USDT</div>
-        <div class="value" id="totalBalance">0.00 USDT</div>
-        <div class="small">Wallet balance</div>
-      </div>
+        <div class="asset-top">
 
-      <div class="summary-card">
-        <div class="label">Available USDT</div>
-        <div class="value" id="availableBalance">0.00 USDT</div>
-        <div class="small">Currently available</div>
-      </div>
+          <div>
 
-      <div class="summary-card">
-        <div class="label">BTC Balance</div>
-        <div class="value" id="btcSummary">0 BTC</div>
-        <div class="small">Bitcoin</div>
-      </div>
-
-      <div class="summary-card">
-        <div class="label">Active P2P Offers</div>
-        <div class="value" id="activeOffersCount">0</div>
-        <div class="small">Your active offers</div>
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         ASSETS
-    ========================= -->
-
-    <section class="section">
-
-      <div class="section-header">
-        <div>
-          <h2>Your Assets</h2>
-          <p>Current balances in your CryptoVault wallet.</p>
-        </div>
-      </div>
-
-      <div class="assets-grid">
-
-        <div class="asset-card">
-
-          <div class="asset-top">
-            <div>
-              <div class="asset-name">Tether</div>
-              <div class="asset-symbol">USDT</div>
+            <div class="asset-name">
+              Tether
             </div>
 
-            <strong>₮</strong>
-          </div>
-
-          <div class="asset-balance" id="usdtAmount">
-            0.00 USDT
-          </div>
-
-        </div>
-
-
-        <div class="asset-card">
-
-          <div class="asset-top">
-            <div>
-              <div class="asset-name">Bitcoin</div>
-              <div class="asset-symbol">BTC</div>
+            <div class="asset-symbol">
+              USDT
             </div>
 
-            <strong>₿</strong>
           </div>
 
-          <div class="asset-balance" id="btcAmount">
-            0 BTC
-          </div>
+          <strong>
+            ₮
+          </strong>
 
         </div>
 
+        <div
+          class="asset-balance"
+          id="usdtAmount">
+          0.00 USDT
+        </div>
 
-        <div class="asset-card">
+      </div>
 
-          <div class="asset-top">
-            <div>
-              <div class="asset-name">Ethereum</div>
-              <div class="asset-symbol">ETH</div>
+
+      <div class="asset-card">
+
+        <div class="asset-top">
+
+          <div>
+
+            <div class="asset-name">
+              Bitcoin
             </div>
 
-            <strong>Ξ</strong>
+            <div class="asset-symbol">
+              BTC
+            </div>
+
           </div>
 
-          <div class="asset-balance" id="ethAmount">
-            0 ETH
+          <strong>
+            ₿
+          </strong>
+
+        </div>
+
+        <div
+          class="asset-balance"
+          id="btcAmount">
+          0 BTC
+        </div>
+
+      </div>
+
+
+      <div class="asset-card">
+
+        <div class="asset-top">
+
+          <div>
+
+            <div class="asset-name">
+              Ethereum
+            </div>
+
+            <div class="asset-symbol">
+              ETH
+            </div>
+
           </div>
 
+          <strong>
+            Ξ
+          </strong>
+
+        </div>
+
+        <div
+          class="asset-balance"
+          id="ethAmount">
+          0 ETH
         </div>
 
       </div>
 
-    </section>
+    </div>
 
-
-    <!-- =========================
-         QUICK ACTIONS
-    ========================= -->
-
-    <section class="section">
-
-      <div class="section-header">
-        <div>
-          <h2>Quick Actions</h2>
-          <p>Common wallet actions.</p>
-        </div>
-      </div>
-
-      <div class="quick-grid">
-
-        <a href="deposit.html" class="quick-action">
-          <div class="quick-icon">↓</div>
-          <div class="quick-title">Deposit</div>
-          <div class="quick-description">
-            Add crypto to your wallet
-          </div>
-        </a>
-
-        <a href="withdrawal.html" class="quick-action">
-          <div class="quick-icon">↑</div>
-          <div class="quick-title">Withdraw</div>
-          <div class="quick-description">
-            Withdraw crypto
-          </div>
-        </a>
-
-        <a href="send.html" class="quick-action">
-          <div class="quick-icon">➤</div>
-          <div class="quick-title">Send</div>
-          <div class="quick-description">
-            Send crypto
-          </div>
-        </a>
-
-        <a href="received.html" class="quick-action">
-          <div class="quick-icon">✓</div>
-          <div class="quick-title">Received</div>
-          <div class="quick-description">
-            View received funds
-          </div>
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         P2P
-    ========================= -->
-
-    <section class="section">
-
-      <div class="p2p-banner">
-
-        <div>
-          <h2>P2P Marketplace</h2>
-
-          <p>
-            Buy and sell crypto directly through available P2P offers.
-          </p>
-        </div>
-
-        <a href="p2p.html" class="btn">
-          Open P2P Marketplace →
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         MY P2P OFFERS
-    ========================= -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <div>
-          <h2>My P2P Offers</h2>
-          <p>Your current marketplace offers.</p>
-        </div>
-
-        <a href="p2p.html" class="btn btn-light">
-          Manage P2P
-        </a>
-
-      </div>
-
-      <div class="table-wrapper">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Asset</th>
-              <th>Fiat</th>
-              <th>Price</th>
-              <th>Available</th>
-              <th>Limits</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody id="offersTable">
-
-            <tr>
-              <td colspan="7">
-                <div class="loading">
-                  Loading offers...
-                </div>
-              </td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         RECENT P2P TRADES
-    ========================= -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <div>
-          <h2>Recent P2P Trades</h2>
-          <p>Your latest P2P trading activity.</p>
-        </div>
-
-        <a href="transactions.html" class="btn btn-light">
-          View Transactions
-        </a>
-
-      </div>
-
-      <div class="table-wrapper">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Asset</th>
-              <th>Crypto Amount</th>
-              <th>Fiat Amount</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-
-          <tbody id="tradesTable">
-
-            <tr>
-              <td colspan="6">
-                <div class="loading">
-                  Loading trades...
-                </div>
-              </td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SECURITY
-    ========================= -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <div>
-          <h2>Security & Account</h2>
-          <p>Review your account security settings.</p>
-        </div>
-
-        <a href="settings.html" class="btn btn-light">
-          Settings
-        </a>
-
-      </div>
-
-      <div class="security-grid">
-
-        <div class="security-item">
-          <strong>🔐 Authentication</strong>
-          <span>
-            Your account is authenticated through Supabase.
-          </span>
-        </div>
-
-        <div class="security-item">
-          <strong>👤 Account</strong>
-          <span id="securityEmail">
-            Loading account...
-          </span>
-        </div>
-
-        <div class="security-item">
-          <strong>🛡️ P2P Protection</strong>
-          <span>
-            P2P trades follow the configured trade lifecycle.
-          </span>
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+  </section>
 
 
   <!-- =========================
-       FOOTER
+       QUICK ACTIONS
   ========================= -->
 
-  <footer>
-    © 2026 CryptoVault. All rights reserved.
-  </footer>
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Quick Actions
+        </h2>
+
+        <p>
+          Common wallet actions.
+        </p>
+
+      </div>
+
+    </div>
 
 
-  <div id="toast"></div>
+    <div class="quick-grid">
+
+      <a
+        href="deposit.html"
+        class="quick-action">
+
+        <div class="quick-icon">
+          ↓
+        </div>
+
+        <div class="quick-title">
+          Deposit
+        </div>
+
+        <div class="quick-description">
+          Add crypto to your wallet
+        </div>
+
+      </a>
+
+
+      <a
+        href="withdrawal.html"
+        class="quick-action">
+
+        <div class="quick-icon">
+          ↑
+        </div>
+
+        <div class="quick-title">
+          Withdraw
+        </div>
+
+        <div class="quick-description">
+          Withdraw crypto
+        </div>
+
+      </a>
+
+
+      <a
+        href="send.html"
+        class="quick-action">
+
+        <div class="quick-icon">
+          ➤
+        </div>
+
+        <div class="quick-title">
+          Send
+        </div>
+
+        <div class="quick-description">
+          Send crypto
+        </div>
+
+      </a>
+
+
+      <a
+        href="received.html"
+        class="quick-action">
+
+        <div class="quick-icon">
+          ✓
+        </div>
+
+        <div class="quick-title">
+          Received
+        </div>
+
+        <div class="quick-description">
+          View received funds
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
 
 
   <!-- =========================
-       JAVASCRIPT
+       P2P MARKETPLACE
   ========================= -->
 
-  <script>
+  <section class="section">
 
-    /* =========================================
-       SUPABASE CONFIGURATION
-    ========================================= */
+    <div class="p2p-banner">
 
-    const SUPABASE_URL =
-      "https://zihxnxnviknexlqjjdot.supabase.co";
+      <div>
 
-    const SUPABASE_KEY =
-      "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+        <h2>
+          P2P Marketplace
+        </h2>
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+        <p>
+          Buy and sell crypto directly through available P2P offers.
+        </p>
 
+      </div>
 
-    /* =========================================
-       GLOBAL VARIABLES
-    ========================================= */
+      <a
+        href="p2p.html"
+        class="btn">
 
-    let currentUser = null;
+        Open P2P Marketplace →
 
-    let realUsdtBalance = 0;
-    let realAvailableBalance = 0;
+      </a>
 
-    let balanceIsHidden = false;
+    </div>
+
+  </section>
 
 
-    /* =========================================
-       HTML ESCAPE
-    ========================================= */
+  <!-- =========================
+       P2P OVERVIEW
+  ========================= -->
 
-    function escapeHTML(value) {
+  <section class="section">
 
-      if (value === null || value === undefined) {
-        return "";
-      }
+    <div class="section-header">
 
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      <div>
+
+        <h2>
+          P2P Overview
+        </h2>
+
+        <p>
+          Your current P2P trading activity.
+        </p>
+
+      </div>
+
+      <a
+        href="p2p.html"
+        class="btn btn-primary">
+
+        Trade Now →
+
+      </a>
+
+    </div>
+
+
+    <div
+      class="summary-grid"
+      style="margin-bottom:0;">
+
+      <div class="summary-card">
+
+        <div class="label">
+          Active Offers
+        </div>
+
+        <div
+          class="value"
+          id="p2pActiveOffers">
+          0
+        </div>
+
+        <div class="small">
+          Currently active
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="label">
+          Total Offers
+        </div>
+
+        <div
+          class="value"
+          id="p2pTotalOffers">
+          0
+        </div>
+
+        <div class="small">
+          Your marketplace offers
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="label">
+          Open Trades
+        </div>
+
+        <div
+          class="value"
+          id="p2pOpenTrades">
+          0
+        </div>
+
+        <div class="small">
+          Needs attention
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="label">
+          Completed Trades
+        </div>
+
+        <div
+          class="value"
+          id="p2pCompletedTrades">
+          0
+        </div>
+
+        <div class="small">
+          Successfully completed
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MY P2P OFFERS
+  ========================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          My P2P Offers
+        </h2>
+
+        <p>
+          Your current marketplace offers.
+        </p>
+
+      </div>
+
+      <a
+        href="p2p.html"
+        class="btn btn-light">
+
+        Manage P2P
+
+      </a>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Asset
+            </th>
+
+            <th>
+              Fiat
+            </th>
+
+            <th>
+              Price
+            </th>
+
+            <th>
+              Available
+            </th>
+
+            <th>
+              Limits
+            </th>
+
+            <th>
+              Status
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="offersTable">
+
+          <tr>
+
+            <td colspan="7">
+
+              <div class="loading">
+                Loading offers...
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       RECENT P2P TRADES
+  ========================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Recent P2P Trades
+        </h2>
+
+        <p>
+          Your latest P2P trading activity.
+        </p>
+
+      </div>
+
+      <a
+        href="transactions.html"
+        class="btn btn-light">
+
+        View Transactions
+
+      </a>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Asset
+            </th>
+
+            <th>
+              Crypto Amount
+            </th>
+
+            <th>
+              Fiat Amount
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Date
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="tradesTable">
+
+          <tr>
+
+            <td colspan="6">
+
+              <div class="loading">
+                Loading trades...
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       SECURITY
+  ========================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Security & Account
+        </h2>
+
+        <p>
+          Review your account security settings.
+        </p>
+
+      </div>
+
+      <a
+        href="settings.html"
+        class="btn btn-light">
+
+        Settings
+
+      </a>
+
+    </div>
+
+
+    <div class="security-grid">
+
+      <div class="security-item">
+
+        <strong>
+          🔐 Authentication
+        </strong>
+
+        <span>
+          Your account is authenticated through Supabase.
+        </span>
+
+      </div>
+
+
+      <div class="security-item">
+
+        <strong>
+          👤 Account
+        </strong>
+
+        <span id="securityEmail">
+          Loading account...
+        </span>
+
+      </div>
+
+
+      <div class="security-item">
+
+        <strong>
+          🛡️ P2P Protection
+        </strong>
+
+        <span>
+          P2P trades follow the configured trade lifecycle.
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  © 2026 CryptoVault. All rights reserved.
+
+</footer>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+  /* =========================================
+     SUPABASE
+  ========================================= */
+
+  const SUPABASE_URL =
+    "https://zihxnxnviknexlqjjdot.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* =========================================
+     VARIABLES
+  ========================================= */
+
+  let currentUser = null;
+
+  let realUsdtBalance = 0;
+
+  let realAvailableBalance = 0;
+
+  let balanceIsHidden = false;
+
+
+  /* =========================================
+     ESCAPE HTML
+  ========================================= */
+
+  function escapeHTML(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "";
     }
 
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-    /* =========================================
-       NUMBER FORMAT
-    ========================================= */
 
-    function formatNumber(value, decimals = 8) {
+  /* =========================================
+     FORMAT NUMBER
+  ========================================= */
 
-      const number = Number(value);
+  function formatNumber(
+    value,
+    decimals = 8
+  ) {
 
-      if (!Number.isFinite(number)) {
-        return "0";
-      }
+    const number =
+      Number(value);
 
-      return number.toLocaleString(
-        undefined,
-        {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: decimals
-        }
-      );
+    if (
+      !Number.isFinite(number)
+    ) {
+      return "0";
     }
 
-
-    /* =========================================
-       DATE FORMAT
-    ========================================= */
-
-    function formatDate(value) {
-
-      if (!value) {
-        return "-";
+    return number.toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimals
       }
+    );
+  }
 
-      const date = new Date(value);
 
-      if (Number.isNaN(date.getTime())) {
-        return "-";
-      }
+  /* =========================================
+     FORMAT DATE
+  ========================================= */
 
-      return date.toLocaleString(
-        undefined,
-        {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }
-      );
+  function formatDate(value) {
+
+    if (!value) {
+      return "-";
     }
 
+    const date =
+      new Date(value);
 
-    /* =========================================
-       ERROR DISPLAY
-    ========================================= */
-
-    function showError(message) {
-
-      const box =
-        document.getElementById("errorBox");
-
-      box.textContent = message;
-      box.style.display = "block";
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return "-";
     }
 
-
-    function clearError() {
-
-      const box =
-        document.getElementById("errorBox");
-
-      box.textContent = "";
-      box.style.display = "none";
-    }
-
-
-    /* =========================================
-       TOAST
-    ========================================= */
-
-    function showToast(message) {
-
-      const toast =
-        document.getElementById("toast");
-
-      toast.textContent = message;
-      toast.style.display = "block";
-
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 2500);
-    }
-
-
-    /* =========================================
-       LOAD USER
-    ========================================= */
-
-    async function loadUser() {
-
-      const {
-        data,
-        error
-      } = await supabaseClient.auth.getUser();
-
-      if (error) {
-        console.error(error);
-        throw error;
+    return date.toLocaleString(
+      undefined,
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
       }
+    );
+  }
 
-      if (!data || !data.user) {
 
-        window.location.href =
-          "login.html?next=dashboard.html";
+  /* =========================================
+     ERROR
+  ========================================= */
 
-        return null;
-      }
+  function showError(message) {
 
-      currentUser = data.user;
-
-      const email =
-        currentUser.email || "Account";
-
+    const box =
       document.getElementById(
-        "userEmail"
-      ).textContent = email;
+        "errorBox"
+      );
 
+    box.textContent =
+      message;
+
+    box.style.display =
+      "block";
+  }
+
+
+  function clearError() {
+
+    const box =
       document.getElementById(
-        "securityEmail"
-      ).textContent = email;
+        "errorBox"
+      );
 
-      return currentUser;
+    box.textContent =
+      "";
+
+    box.style.display =
+      "none";
+  }
+
+
+  /* =========================================
+     TOAST
+  ========================================= */
+
+  function showToast(message) {
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+    toast.textContent =
+      message;
+
+    toast.style.display =
+      "block";
+
+    setTimeout(() => {
+
+      toast.style.display =
+        "none";
+
+    }, 2500);
+  }
+
+
+  /* =========================================
+     LOAD USER
+  ========================================= */
+
+  async function loadUser() {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getUser();
+
+    if (error) {
+      throw error;
     }
 
+    if (
+      !data ||
+      !data.user
+    ) {
 
-    /* =========================================
-       LOAD WALLET
-    ========================================= */
+      window.location.href =
+        "login.html?next=dashboard.html";
 
-    async function loadWallet() {
+      return null;
+    }
 
-      if (!currentUser) {
-        return;
-      }
+    currentUser =
+      data.user;
 
-      const {
-        data,
-        error
-      } = await supabaseClient
+    const email =
+      currentUser.email ||
+      "Account";
+
+    document.getElementById(
+      "userEmail"
+    ).textContent =
+      email;
+
+    document.getElementById(
+      "securityEmail"
+    ).textContent =
+      email;
+
+    return currentUser;
+  }
+
+
+  /* =========================================
+     LOAD WALLET
+  ========================================= */
+
+  async function loadWallet() {
+
+    if (!currentUser) {
+      return;
+    }
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
         .from("wallets")
         .select(
           "usdt_balance, btc_balance, eth_balance"
@@ -1251,137 +1712,170 @@
         )
         .maybeSingle();
 
-      if (error) {
+    if (error) {
 
-        console.error(
-          "Wallet error:",
-          error
-        );
-
-        showError(
-          "Wallet information could not be loaded."
-        );
-
-        return;
-      }
-
-      const wallet = data || {};
-
-      realUsdtBalance =
-        Number(wallet.usdt_balance || 0);
-
-      realAvailableBalance =
-        realUsdtBalance;
-
-      const btc =
-        Number(wallet.btc_balance || 0);
-
-      const eth =
-        Number(wallet.eth_balance || 0);
-
-
-      updateBalanceDisplay();
-
-      document.getElementById(
-        "btcSummary"
-      ).textContent =
-        formatNumber(btc, 8) + " BTC";
-
-      document.getElementById(
-        "btcAmount"
-      ).textContent =
-        formatNumber(btc, 8) + " BTC";
-
-      document.getElementById(
-        "ethAmount"
-      ).textContent =
-        formatNumber(eth, 8) + " ETH";
-    }
-
-
-    /* =========================================
-       BALANCE DISPLAY
-    ========================================= */
-
-    function updateBalanceDisplay() {
-
-      const total =
-        document.getElementById(
-          "totalBalance"
-        );
-
-      const available =
-        document.getElementById(
-          "availableBalance"
-        );
-
-      const usdt =
-        document.getElementById(
-          "usdtAmount"
-        );
-
-      if (balanceIsHidden) {
-
-        total.textContent = "•••••• USDT";
-        available.textContent = "•••••• USDT";
-        usdt.textContent = "•••••• USDT";
-
-      } else {
-
-        total.textContent =
-          formatNumber(realUsdtBalance, 6)
-          + " USDT";
-
-        available.textContent =
-          formatNumber(realAvailableBalance, 6)
-          + " USDT";
-
-        usdt.textContent =
-          formatNumber(realUsdtBalance, 6)
-          + " USDT";
-      }
-
-      document.getElementById(
-        "balanceButtonText"
-      ).textContent =
-        balanceIsHidden
-          ? "Show Balance"
-          : "Hide Balance";
-    }
-
-
-    /* =========================================
-       TOGGLE BALANCE
-    ========================================= */
-
-    function toggleBalance() {
-
-      balanceIsHidden =
-        !balanceIsHidden;
-
-      updateBalanceDisplay();
-    }
-
-
-    /* =========================================
-       LOAD P2P OFFERS
-    ========================================= */
-
-    async function loadOffers() {
-
-      if (!currentUser) {
-        return;
-      }
-
-      const table =
-        document.getElementById(
-          "offersTable"
-        );
-
-      const {
-        data,
+      console.error(
+        "Wallet error:",
         error
-      } = await supabaseClient
+      );
+
+      showError(
+        "Wallet information could not be loaded."
+      );
+
+      return;
+    }
+
+    const wallet =
+      data || {};
+
+    realUsdtBalance =
+      Number(
+        wallet.usdt_balance || 0
+      );
+
+    realAvailableBalance =
+      realUsdtBalance;
+
+    const btc =
+      Number(
+        wallet.btc_balance || 0
+      );
+
+    const eth =
+      Number(
+        wallet.eth_balance || 0
+      );
+
+    updateBalanceDisplay();
+
+
+    document.getElementById(
+      "btcSummary"
+    ).textContent =
+      formatNumber(
+        btc,
+        8
+      ) + " BTC";
+
+
+    document.getElementById(
+      "btcAmount"
+    ).textContent =
+      formatNumber(
+        btc,
+        8
+      ) + " BTC";
+
+
+    document.getElementById(
+      "ethAmount"
+    ).textContent =
+      formatNumber(
+        eth,
+        8
+      ) + " ETH";
+  }
+
+
+  /* =========================================
+     BALANCE DISPLAY
+  ========================================= */
+
+  function updateBalanceDisplay() {
+
+    const total =
+      document.getElementById(
+        "totalBalance"
+      );
+
+    const available =
+      document.getElementById(
+        "availableBalance"
+      );
+
+    const usdt =
+      document.getElementById(
+        "usdtAmount"
+      );
+
+
+    if (balanceIsHidden) {
+
+      total.textContent =
+        "•••••• USDT";
+
+      available.textContent =
+        "•••••• USDT";
+
+      usdt.textContent =
+        "•••••• USDT";
+
+    } else {
+
+      total.textContent =
+        formatNumber(
+          realUsdtBalance,
+          6
+        ) + " USDT";
+
+      available.textContent =
+        formatNumber(
+          realAvailableBalance,
+          6
+        ) + " USDT";
+
+      usdt.textContent =
+        formatNumber(
+          realUsdtBalance,
+          6
+        ) + " USDT";
+    }
+
+
+    document.getElementById(
+      "balanceButtonText"
+    ).textContent =
+      balanceIsHidden
+        ? "Show Balance"
+        : "Hide Balance";
+  }
+
+
+  /* =========================================
+     TOGGLE BALANCE
+  ========================================= */
+
+  function toggleBalance() {
+
+    balanceIsHidden =
+      !balanceIsHidden;
+
+    updateBalanceDisplay();
+  }
+
+
+  /* =========================================
+     LOAD OFFERS
+  ========================================= */
+
+  async function loadOffers() {
+
+    if (!currentUser) {
+      return;
+    }
+
+    const table =
+      document.getElementById(
+        "offersTable"
+      );
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
         .from("p2p_offers")
         .select(
           "id, side, asset, fiat, price, available_amount, min_amount, max_amount, status"
@@ -1391,63 +1885,87 @@
           currentUser.id
         );
 
-      if (error) {
 
-        console.error(
-          "Offers error:",
-          error
-        );
+    if (error) {
 
-        table.innerHTML = `
-          <tr>
-            <td colspan="7">
-              <div class="empty">
-                Unable to load P2P offers.
-              </div>
-            </td>
-          </tr>
-        `;
+      console.error(
+        "Offers error:",
+        error
+      );
 
-        return;
-      }
+      table.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty">
+              Unable to load P2P offers.
+            </div>
+          </td>
+        </tr>
+      `;
 
-      const offers =
-        data || [];
-
-      const activeOffers =
-        offers.filter(
-          offer =>
-            String(
-              offer.status || ""
-            ).toLowerCase() === "active"
-        );
-
-      document.getElementById(
-        "activeOffersCount"
-      ).textContent =
-        activeOffers.length;
+      return;
+    }
 
 
-      if (!offers.length) {
-
-        table.innerHTML = `
-          <tr>
-            <td colspan="7">
-              <div class="empty">
-                You have no P2P offers yet.
-                <br><br>
-                Open the P2P marketplace to create or manage offers.
-              </div>
-            </td>
-          </tr>
-        `;
-
-        return;
-      }
+    const offers =
+      data || [];
 
 
-      table.innerHTML =
-        offers.slice(0, 10).map(
+    const activeOffers =
+      offers.filter(
+        offer =>
+          String(
+            offer.status || ""
+          ).toLowerCase() === "active"
+      );
+
+
+    /* P2P OVERVIEW */
+
+    document.getElementById(
+      "activeOffersCount"
+    ).textContent =
+      activeOffers.length;
+
+
+    document.getElementById(
+      "p2pActiveOffers"
+    ).textContent =
+      activeOffers.length;
+
+
+    document.getElementById(
+      "p2pTotalOffers"
+    ).textContent =
+      offers.length;
+
+
+    if (!offers.length) {
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty">
+
+              You have no P2P offers yet.
+
+              <br><br>
+
+              Open the P2P marketplace to create or manage offers.
+
+            </div>
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+
+    table.innerHTML =
+      offers
+        .slice(0, 10)
+        .map(
           offer => {
 
             const side =
@@ -1460,24 +1978,35 @@
                 ? "buy"
                 : "sell";
 
+
             const status =
               String(
                 offer.status || "-"
               );
 
+
             const statusClass =
-              status.toLowerCase() === "active"
+              status.toLowerCase() ===
+              "active"
                 ? "active"
                 : "";
 
+
             return `
+
               <tr>
 
                 <td>
-                  <span class="badge ${sideClass}">
+
+                  <span
+                    class="badge ${sideClass}">
+
                     ${escapeHTML(side)}
+
                   </span>
+
                 </td>
+
 
                 <td>
                   ${escapeHTML(
@@ -1485,11 +2014,13 @@
                   )}
                 </td>
 
+
                 <td>
                   ${escapeHTML(
                     offer.fiat || "-"
                   )}
                 </td>
+
 
                 <td>
                   ${formatNumber(
@@ -1498,6 +2029,7 @@
                   )}
                 </td>
 
+
                 <td>
                   ${formatNumber(
                     offer.available_amount,
@@ -1505,141 +2037,170 @@
                   )}
                 </td>
 
+
                 <td>
+
                   ${formatNumber(
                     offer.min_amount,
                     2
                   )}
+
                   -
+
                   ${formatNumber(
                     offer.max_amount,
                     2
                   )}
+
                 </td>
 
+
                 <td>
-                  <span class="badge ${statusClass}">
+
+                  <span
+                    class="badge ${statusClass}">
+
                     ${escapeHTML(
                       status
                     )}
+
                   </span>
+
                 </td>
 
               </tr>
+
             `;
           }
-        ).join("");
+        )
+        .join("");
+  }
+
+
+  /* =========================================
+     TRADE STATUS
+  ========================================= */
+
+  function readableTradeStatus(
+    status
+  ) {
+
+    const map = {
+
+      awaiting_payment:
+        "Awaiting Payment",
+
+      payment_sent:
+        "Payment Sent",
+
+      payment_confirmed:
+        "Payment Confirmed",
+
+      crypto_released:
+        "Crypto Released",
+
+      completed:
+        "Completed",
+
+      cancelled:
+        "Cancelled",
+
+      expired:
+        "Expired",
+
+      disputed:
+        "Disputed",
+
+      pending:
+        "Pending"
+    };
+
+
+    const key =
+      String(
+        status || ""
+      ).toLowerCase();
+
+
+    return map[key] ||
+      String(
+        status || "-"
+      ).replace(
+        /_/g,
+        " "
+      );
+  }
+
+
+  /* =========================================
+     TRADE STATUS CLASS
+  ========================================= */
+
+  function tradeStatusClass(
+    status
+  ) {
+
+    const value =
+      String(
+        status || ""
+      ).toLowerCase();
+
+
+    if (
+      value === "completed" ||
+      value === "crypto_released"
+    ) {
+
+      return "completed";
     }
 
 
-    /* =========================================
-       TRADE STATUS
-    ========================================= */
+    if (
+      value === "cancelled" ||
+      value === "expired"
+    ) {
 
-    function readableTradeStatus(status) {
-
-      const map = {
-
-        awaiting_payment:
-          "Awaiting Payment",
-
-        payment_sent:
-          "Payment Sent",
-
-        payment_confirmed:
-          "Payment Confirmed",
-
-        crypto_released:
-          "Crypto Released",
-
-        completed:
-          "Completed",
-
-        cancelled:
-          "Cancelled",
-
-        expired:
-          "Expired",
-
-        disputed:
-          "Disputed",
-
-        pending:
-          "Pending"
-      };
-
-      const key =
-        String(
-          status || ""
-        ).toLowerCase();
-
-      return map[key] ||
-        String(
-          status || "-"
-        ).replace(
-          /_/g,
-          " "
-        );
+      return "cancelled";
     }
 
 
-    /* =========================================
-       TRADE STATUS CLASS
-    ========================================= */
+    if (
+      value === "awaiting_payment" ||
+      value === "payment_sent" ||
+      value === "payment_confirmed" ||
+      value === "pending"
+    ) {
 
-    function tradeStatusClass(status) {
-
-      const value =
-        String(
-          status || ""
-        ).toLowerCase();
-
-      if (
-        value === "completed" ||
-        value === "crypto_released"
-      ) {
-        return "completed";
-      }
-
-      if (
-        value === "cancelled" ||
-        value === "expired"
-      ) {
-        return "cancelled";
-      }
-
-      if (
-        value === "awaiting_payment" ||
-        value === "payment_sent" ||
-        value === "payment_confirmed" ||
-        value === "pending"
-      ) {
-        return "pending";
-      }
-
-      return "";
+      return "pending";
     }
 
 
-    /* =========================================
-       LOAD P2P TRADES
-    ========================================= */
+    return "";
+  }
 
-    async function loadTrades() {
 
-      if (!currentUser) {
-        return;
-      }
+  /* =========================================
+     LOAD TRADES
+  ========================================= */
 
-      const table =
-        document.getElementById(
-          "tradesTable"
-        );
+  async function loadTrades() {
 
-      const {
-        data,
-        error
-      } = await supabaseClient
+    if (!currentUser) {
+      return;
+    }
+
+
+    const table =
+      document.getElementById(
+        "tradesTable"
+      );
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
         .from("p2p_trades")
         .select("*")
         .or(
@@ -1647,76 +2208,139 @@
         )
         .limit(20);
 
-      if (error) {
 
-        console.error(
-          "Trades error:",
-          error
-        );
+    if (error) {
 
-        table.innerHTML = `
-          <tr>
-            <td colspan="6">
-              <div class="empty">
-                Unable to load recent P2P trades.
-              </div>
-            </td>
-          </tr>
-        `;
+      console.error(
+        "Trades error:",
+        error
+      );
 
-        return;
-      }
+      table.innerHTML = `
+        <tr>
+          <td colspan="6">
+            <div class="empty">
+              Unable to load recent P2P trades.
+            </div>
+          </td>
+        </tr>
+      `;
 
-      let trades =
-        data || [];
+      return;
+    }
 
 
-      trades.sort(
-        (a, b) => {
+    let trades =
+      data || [];
 
-          const dateA =
-            new Date(
-              a.created_at || 0
-            ).getTime();
 
-          const dateB =
-            new Date(
-              b.created_at || 0
-            ).getTime();
+    /* P2P TRADE OVERVIEW */
 
-          return dateB - dateA;
+    const completedStatuses = [
+      "completed",
+      "crypto_released"
+    ];
+
+
+    const completedTrades =
+      trades.filter(
+        trade =>
+          completedStatuses.includes(
+            String(
+              trade.status || ""
+            ).toLowerCase()
+          )
+      );
+
+
+    const openTrades =
+      trades.filter(
+        trade => {
+
+          const status =
+            String(
+              trade.status || ""
+            ).toLowerCase();
+
+
+          return ![
+            "completed",
+            "crypto_released",
+            "cancelled",
+            "expired"
+          ].includes(status);
         }
       );
 
 
-      if (!trades.length) {
+    document.getElementById(
+      "p2pOpenTrades"
+    ).textContent =
+      openTrades.length;
 
-        table.innerHTML = `
-          <tr>
-            <td colspan="6">
-              <div class="empty">
-                No P2P trades yet.
-              </div>
-            </td>
-          </tr>
-        `;
 
-        return;
+    document.getElementById(
+      "p2pCompletedTrades"
+    ).textContent =
+      completedTrades.length;
+
+
+    /* SORT */
+
+    trades.sort(
+      (a, b) => {
+
+        const dateA =
+          new Date(
+            a.created_at || 0
+          ).getTime();
+
+
+        const dateB =
+          new Date(
+            b.created_at || 0
+          ).getTime();
+
+
+        return dateB - dateA;
       }
+    );
 
 
-      table.innerHTML =
-        trades.slice(0, 10).map(
+    if (!trades.length) {
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="6">
+
+            <div class="empty">
+              No P2P trades yet.
+            </div>
+
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+
+    table.innerHTML =
+      trades
+        .slice(0, 10)
+        .map(
           trade => {
 
             const isBuyer =
               trade.buyer_id ===
               currentUser.id;
 
+
             const type =
               isBuyer
                 ? "BUY"
                 : "SELL";
+
 
             const typeClass =
               isBuyer
@@ -1749,17 +2373,25 @@
 
 
             return `
+
               <tr>
 
                 <td>
-                  <span class="badge ${typeClass}">
+
+                  <span
+                    class="badge ${typeClass}">
+
                     ${type}
+
                   </span>
+
                 </td>
+
 
                 <td>
                   ${escapeHTML(asset)}
                 </td>
+
 
                 <td>
                   ${formatNumber(
@@ -1768,6 +2400,7 @@
                   )}
                 </td>
 
+
                 <td>
                   ${formatNumber(
                     fiatAmount,
@@ -1775,15 +2408,22 @@
                   )}
                 </td>
 
+
                 <td>
-                  <span class="badge ${tradeStatusClass(status)}">
+
+                  <span
+                    class="badge ${tradeStatusClass(status)}">
+
                     ${escapeHTML(
                       readableTradeStatus(
                         status
                       )
                     )}
+
                   </span>
+
                 </td>
+
 
                 <td>
                   ${escapeHTML(
@@ -1794,150 +2434,165 @@
                 </td>
 
               </tr>
+
             `;
           }
-        ).join("");
-    }
+        )
+        .join("");
+  }
 
 
-    /* =========================================
-       REFRESH DASHBOARD
-    ========================================= */
+  /* =========================================
+     REFRESH
+  ========================================= */
 
-    async function refreshDashboard() {
+  async function refreshDashboard() {
 
-      clearError();
+    clearError();
 
-      showToast(
-        "Refreshing dashboard..."
-      );
-
-      try {
-
-        await loadUser();
-
-        await Promise.all([
-          loadWallet(),
-          loadOffers(),
-          loadTrades()
-        ]);
-
-        showToast(
-          "Dashboard updated"
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Dashboard refresh error:",
-          error
-        );
-
-        showError(
-          "Something went wrong while loading your dashboard."
-        );
-      }
-    }
-
-
-    /* =========================================
-       LOGOUT
-    ========================================= */
-
-    async function logout() {
-
-      const confirmed =
-        confirm(
-          "Are you sure you want to logout?"
-        );
-
-      if (!confirmed) {
-        return;
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient.auth.signOut();
-
-      if (error) {
-
-        console.error(error);
-
-        showError(
-          "Unable to logout. Please try again."
-        );
-
-        return;
-      }
-
-      window.location.href =
-        "login.html";
-    }
-
-
-    /* =========================================
-       AUTH STATE
-    ========================================= */
-
-    supabaseClient.auth.onAuthStateChange(
-      (event) => {
-
-        if (
-          event === "SIGNED_OUT"
-        ) {
-          window.location.href =
-            "login.html";
-        }
-
-      }
+    showToast(
+      "Refreshing dashboard..."
     );
 
 
-    /* =========================================
-       START DASHBOARD
-    ========================================= */
+    try {
 
-    async function startDashboard() {
+      await loadUser();
 
-      try {
 
-        clearError();
+      await Promise.all([
+        loadWallet(),
+        loadOffers(),
+        loadTrades()
+      ]);
 
-        const user =
-          await loadUser();
 
-        if (!user) {
-          return;
-        }
+      showToast(
+        "Dashboard updated"
+      );
 
-        await Promise.all([
-          loadWallet(),
-          loadOffers(),
-          loadTrades()
-        ]);
+    } catch (error) {
 
-      } catch (error) {
+      console.error(
+        "Refresh error:",
+        error
+      );
 
-        console.error(
-          "Dashboard startup error:",
-          error
-        );
+      showError(
+        "Something went wrong while loading your dashboard."
+      );
+    }
+  }
 
-        showError(
-          "Unable to load your dashboard. Please refresh the page."
-        );
-      }
+
+  /* =========================================
+     LOGOUT
+  ========================================= */
+
+  async function logout() {
+
+    const confirmed =
+      confirm(
+        "Are you sure you want to logout?"
+      );
+
+
+    if (!confirmed) {
+      return;
     }
 
 
-    /* =========================================
-       START
-    ========================================= */
+    const {
+      error
+    } =
+      await supabaseClient.auth.signOut();
 
-    startDashboard();
 
-  </script>
+    if (error) {
+
+      console.error(error);
+
+      showError(
+        "Unable to logout. Please try again."
+      );
+
+      return;
+    }
+
+
+    window.location.href =
+      "login.html";
+  }
+
+
+  /* =========================================
+     AUTH LISTENER
+  ========================================= */
+
+  supabaseClient.auth.onAuthStateChange(
+    event => {
+
+      if (
+        event === "SIGNED_OUT"
+      ) {
+
+        window.location.href =
+          "login.html";
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     START DASHBOARD
+  ========================================= */
+
+  async function startDashboard() {
+
+    try {
+
+      clearError();
+
+
+      const user =
+        await loadUser();
+
+
+      if (!user) {
+        return;
+      }
+
+
+      await Promise.all([
+        loadWallet(),
+        loadOffers(),
+        loadTrades()
+      ]);
+
+
+    } catch (error) {
+
+      console.error(
+        "Dashboard error:",
+        error
+      );
+
+
+      showError(
+        "Unable to load your dashboard. Please refresh the page."
+      );
+    }
+  }
+
+
+  /* =========================================
+     START
+  ========================================= */
+
+  startDashboard();
+
+</script>
 
 </body>
 </html>
