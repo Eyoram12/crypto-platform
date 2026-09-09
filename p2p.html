@@ -37,7 +37,10 @@ body{
     min-height:100vh;
 }
 
-button,input,select{
+button,
+input,
+select,
+textarea{
     font:inherit;
 }
 
@@ -47,6 +50,7 @@ button{
 
 button:disabled{
     cursor:not-allowed;
+    opacity:.6;
 }
 
 a{
@@ -216,6 +220,16 @@ a{
     background:rgba(239,91,104,.2);
 }
 
+.btn-warning{
+    background:rgba(243,189,79,.12);
+    color:#f3bd4f;
+    border:1px solid rgba(243,189,79,.25);
+}
+
+.btn-warning:hover{
+    background:rgba(243,189,79,.2);
+}
+
 .btn-small{
     padding:8px 11px;
     font-size:12px;
@@ -352,7 +366,8 @@ a{
 
 .marketplace,
 .quick-trade,
-.trade-center{
+.trade-center,
+.my-offers{
     background:var(--panel);
     border:1px solid var(--border);
     border-radius:15px;
@@ -613,6 +628,16 @@ a{
     white-space:nowrap;
 }
 
+.status-active{
+    background:rgba(37,197,138,.12);
+    color:#46d9a2;
+}
+
+.status-inactive{
+    background:rgba(239,91,104,.12);
+    color:#ff7d88;
+}
+
 .status-awaiting_payment{
     background:rgba(243,189,79,.12);
     color:var(--yellow);
@@ -665,6 +690,250 @@ a{
 }
 
 /* ============================================================
+   MY OFFERS
+   ============================================================ */
+
+.my-offers{
+    margin-top:18px;
+}
+
+.my-offers-list{
+    padding:13px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.my-offer-card{
+    background:#0c192a;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+}
+
+.my-offer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.my-offer-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+.my-offer-title strong{
+    font-size:15px;
+}
+
+.side-badge{
+    padding:5px 8px;
+    border-radius:6px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.side-sell{
+    background:rgba(239,91,104,.12);
+    color:#ff7d88;
+}
+
+.side-buy{
+    background:rgba(37,197,138,.12);
+    color:#46d9a2;
+}
+
+.my-offer-price{
+    font-size:18px;
+    font-weight:800;
+    text-align:right;
+}
+
+.my-offer-meta{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.my-offer-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:13px;
+}
+
+.my-offer-grid div{
+    background:#101f32;
+    padding:10px;
+    border-radius:8px;
+}
+
+.my-offer-grid small{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    margin-bottom:4px;
+}
+
+.my-offer-grid strong{
+    font-size:12px;
+}
+
+.my-offer-payments{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:12px;
+}
+
+.my-offer-terms{
+    margin-top:11px;
+    padding:10px;
+    border-radius:8px;
+    background:#0a1727;
+    color:#aebdd0;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.my-offer-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:13px;
+}
+
+.my-offer-actions button{
+    flex:0 0 auto;
+}
+
+/* ============================================================
+   FORM STYLES
+   ============================================================ */
+
+.offer-modal{
+    width:min(720px,95vw);
+    max-height:94vh;
+    overflow-y:auto;
+}
+
+.modal-subtitle{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:600;
+    font-size:13px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px 14px;
+    border:1px solid #374151;
+    border-radius:8px;
+    background:#111827;
+    color:#fff;
+    font-size:14px;
+    outline:none;
+}
+
+.form-group textarea{
+    resize:vertical;
+    min-height:100px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--primary);
+}
+
+.form-group input:disabled,
+.form-group select:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.form-group small{
+    display:block;
+    margin-top:6px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.4;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.payment-method-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:8px;
+}
+
+.payment-method-option{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    border:1px solid #374151;
+    border-radius:8px;
+    background:#111827;
+    cursor:pointer;
+}
+
+.payment-method-option:hover{
+    border-color:var(--primary);
+}
+
+.payment-method-option input{
+    width:auto;
+    margin-top:2px;
+}
+
+.payment-method-info{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.payment-method-name{
+    font-weight:600;
+    font-size:13px;
+}
+
+.payment-method-description{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.4;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:25px;
+}
+
+/* ============================================================
    MODALS
    ============================================================ */
 
@@ -705,7 +974,8 @@ a{
     z-index:2;
 }
 
-.modal-header h3{
+.modal-header h3,
+.modal-header h2{
     font-size:18px;
 }
 
@@ -1037,8 +1307,17 @@ a{
     }
 
     .offer-details,
-    .trade-grid{
+    .trade-grid,
+    .my-offer-grid{
         grid-template-columns:repeat(2,1fr);
+    }
+
+    .my-offer-top{
+        flex-direction:column;
+    }
+
+    .my-offer-price{
+        text-align:left;
     }
 }
 
@@ -1104,6 +1383,27 @@ a{
     .review-row{
         font-size:12px;
     }
+
+    .form-row,
+    .payment-method-grid{
+        grid-template-columns:1fr;
+    }
+
+    .modal-actions{
+        flex-direction:column;
+    }
+
+    .modal-actions button{
+        width:100%;
+    }
+
+    .my-offer-actions{
+        flex-direction:column;
+    }
+
+    .my-offer-actions button{
+        width:100%;
+    }
 }
 </style>
 </head>
@@ -1153,7 +1453,7 @@ a{
         </button>
 
         <button class="btn btn-primary"
-                onclick="showNotification('Create Offer will be connected in the next step.')">
+                onclick="openCreateOfferModal()">
             ＋ Create Offer
         </button>
 
@@ -1162,7 +1462,9 @@ a{
 </section>
 
 
-<!-- MARKET FILTERS -->
+<!-- ============================================================
+     MARKET FILTERS
+     ============================================================ -->
 
 <section class="market-bar">
 
@@ -1273,7 +1575,9 @@ a{
 </section>
 
 
-<!-- STATS -->
+<!-- ============================================================
+     STATS
+     ============================================================ -->
 
 <section class="stats">
 
@@ -1344,7 +1648,9 @@ a{
 </section>
 
 
-<!-- MARKETPLACE + QUICK TRADE -->
+<!-- ============================================================
+     MARKETPLACE + QUICK TRADE
+     ============================================================ -->
 
 <section class="main-grid">
 
@@ -1540,7 +1846,9 @@ a{
 </section>
 
 
-<!-- TRADE CENTER -->
+<!-- ============================================================
+     TRADE CENTER
+     ============================================================ -->
 
 <section class="trade-center">
 
@@ -1567,7 +1875,331 @@ a{
 
 </section>
 
+
+<!-- ============================================================
+     MY OFFERS
+     ============================================================ -->
+
+<section class="my-offers">
+
+    <div class="section-header">
+
+        <div>
+            <h2>
+                My Offers
+            </h2>
+
+            <span>
+                Manage your P2P offers
+            </span>
+        </div>
+
+        <span id="myOffersCount">
+            0 offers
+        </span>
+
+    </div>
+
+    <div class="my-offers-list"
+         id="myOffersContainer">
+
+        <div class="loading">
+            Loading your offers...
+        </div>
+
+    </div>
+
+</section>
+
 </main>
+
+
+<!-- ============================================================
+     CREATE / EDIT OFFER MODAL
+     ============================================================ -->
+
+<div class="modal"
+     id="offerModal">
+
+    <div class="modal-box offer-modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2 id="offerModalTitle">
+                    Create P2P Offer
+                </h2>
+
+                <p class="modal-subtitle">
+                    Publish your cryptocurrency trading offer.
+                </p>
+
+            </div>
+
+            <button class="close"
+                    onclick="closeOfferModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <form id="offerForm"
+                  onsubmit="submitOfferForm(event)">
+
+                <!-- SIDE -->
+
+                <div class="form-group">
+
+                    <label for="offerSide">
+                        Offer Type
+                    </label>
+
+                    <select id="offerSide"
+                            required>
+
+                        <option value="sell">
+                            Sell Crypto
+                        </option>
+
+                        <option value="buy">
+                            Buy Crypto
+                        </option>
+
+                    </select>
+
+                    <small id="offerSideHelp">
+
+                        Sell Crypto means you are offering crypto
+                        to another trader.
+
+                    </small>
+
+                </div>
+
+
+                <!-- ASSET + FIAT -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="offerAsset">
+                            Crypto Asset
+                        </label>
+
+                        <select id="offerAsset"
+                                required>
+
+                            <option value="USDT">
+                                USDT
+                            </option>
+
+                            <option value="BTC">
+                                BTC
+                            </option>
+
+                            <option value="ETH">
+                                ETH
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="offerFiat">
+                            Fiat Currency
+                        </label>
+
+                        <select id="offerFiat"
+                                required>
+
+                            <option value="ETB">
+                                ETB
+                            </option>
+
+                            <option value="USD">
+                                USD
+                            </option>
+
+                            <option value="EUR">
+                                EUR
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+                    <label for="offerPrice">
+                        Price per crypto unit
+                    </label>
+
+                    <input
+                        type="number"
+                        id="offerPrice"
+                        min="0.00000001"
+                        step="any"
+                        placeholder="Example: 155"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MIN + MAX -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="offerMinAmount">
+                            Minimum Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            id="offerMinAmount"
+                            min="0.00000001"
+                            step="any"
+                            placeholder="Example: 10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="offerMaxAmount">
+                            Maximum Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            id="offerMaxAmount"
+                            min="0.00000001"
+                            step="any"
+                            placeholder="Example: 1000"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- AVAILABLE -->
+
+                <div class="form-group">
+
+                    <label for="offerAvailableAmount">
+                        Available Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="offerAvailableAmount"
+                        min="0.00000001"
+                        step="any"
+                        placeholder="Example: 500"
+                        required
+                    >
+
+                    <small>
+                        Total crypto available for this offer.
+                    </small>
+
+                </div>
+
+
+                <!-- PAYMENT METHODS -->
+
+                <div class="form-group">
+
+                    <label>
+                        Payment Methods
+                    </label>
+
+                    <div
+                        id="offerPaymentMethods"
+                        class="payment-method-grid">
+
+                        <div class="loading">
+                            Loading payment methods...
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <div class="form-group">
+
+                    <label for="offerTerms">
+                        Trading Terms
+                    </label>
+
+                    <textarea
+                        id="offerTerms"
+                        rows="4"
+                        maxlength="2000"
+                        placeholder="Example: Payment must be completed within 15 minutes."
+                    ></textarea>
+
+                    <small>
+                        Optional. Maximum 2,000 characters.
+                    </small>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="closeOfferModal()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="offerSubmitButton">
+
+                        Create Offer
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- ============================================================
@@ -1894,9 +2526,7 @@ a{
         </div>
 
 
-        <!-- ====================================================
-             LIVE BUYER / SELLER CHAT
-             ==================================================== -->
+        <!-- LIVE CHAT -->
 
         <div class="chat-box">
 
@@ -2034,6 +2664,17 @@ let notificationTimer = null;
 
 
 /* ============================================================
+   MY OFFER VARIABLES
+   ============================================================ */
+
+let myOffers = [];
+
+let editingOfferId = null;
+
+let offerPaymentMethods = [];
+
+
+/* ============================================================
    CHAT GLOBAL VARIABLES
    ============================================================ */
 
@@ -2055,6 +2696,8 @@ document.addEventListener(
     async function(){
 
         setupChatInput();
+
+        setupOfferFormListeners();
 
         await checkLogin();
 
@@ -2163,7 +2806,8 @@ async function loadAll(){
 
     await Promise.all([
         loadOffers(),
-        loadTrades()
+        loadTrades(),
+        loadMyOffers()
     ]);
 
 }
@@ -2262,7 +2906,7 @@ function updateMarketTitle(){
 
 
 /* ============================================================
-   LOAD OFFERS
+   LOAD MARKET OFFERS
    ============================================================ */
 
 async function loadOffers(){
@@ -2305,14 +2949,17 @@ async function loadOffers(){
          </div>`;
 
 
-    let query =
-        supabaseClient
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
         .from("p2p_offers")
         .select("*")
-        .eq("side", dbSide)
-        .eq("asset", asset)
-        .eq("fiat", fiat)
-        .eq("status", "active")
+        .eq("side",dbSide)
+        .eq("asset",asset)
+        .eq("fiat",fiat)
+        .eq("status","active")
         .order(
             "price",
             {
@@ -2320,13 +2967,6 @@ async function loadOffers(){
                     currentMarket === "buy"
             }
         );
-
-
-    const {
-        data,
-        error
-    } =
-    await query;
 
 
     if(error){
@@ -2370,7 +3010,7 @@ async function loadOffers(){
 
 
 /* ============================================================
-   ENRICH OFFERS
+   ENRICH MARKET OFFERS
    ============================================================ */
 
 async function enrichOffers(){
@@ -2415,22 +3055,26 @@ async function enrichOffers(){
         }
 
 
-        offer.initial =
+        const traderId =
             String(
                 offer.trader_id || "T"
-            )
-            .charAt(0)
-            .toUpperCase();
+            );
+
+
+        offer.initial =
+            traderId
+                .charAt(0)
+                .toUpperCase();
 
 
         offer.name =
-            "Trader " +
-            String(
-                offer.trader_id || ""
-            ).substring(
-                0,
-                6
-            );
+            offer.trader_id === currentUser.id
+            ? "You"
+            : "Trader " +
+              traderId.substring(
+                  0,
+                  6
+              );
 
     }
 
@@ -2438,7 +3082,7 @@ async function enrichOffers(){
 
 
 /* ============================================================
-   RENDER OFFERS
+   RENDER MARKET OFFERS
    ============================================================ */
 
 function renderOffers(){
@@ -2653,6 +3297,12 @@ function renderOffers(){
             "ETB";
 
 
+        const traderText =
+            offer.trader_id === currentUser.id
+            ? "Your offer"
+            : "Active trader";
+
+
         card.innerHTML = `
 
             <div class="offer-top">
@@ -2682,7 +3332,7 @@ function renderOffers(){
                             <div class="green"
                                  style="font-size:11px">
 
-                                Active trader
+                                ${traderText}
 
                             </div>
 
@@ -2731,7 +3381,12 @@ function renderOffers(){
 
                         ${Number(
                             offer.available_amount
-                        ).toLocaleString()}
+                        ).toLocaleString(
+                            undefined,
+                            {
+                                maximumFractionDigits:8
+                            }
+                        )}
 
                         ${escapeHTML(
                             asset
@@ -2752,7 +3407,12 @@ function renderOffers(){
 
                         ${Number(
                             offer.min_amount
-                        ).toLocaleString()}
+                        ).toLocaleString(
+                            undefined,
+                            {
+                                maximumFractionDigits:8
+                            }
+                        )}
 
                         ${escapeHTML(
                             asset
@@ -2773,7 +3433,12 @@ function renderOffers(){
 
                         ${Number(
                             offer.max_amount
-                        ).toLocaleString()}
+                        ).toLocaleString(
+                            undefined,
+                            {
+                                maximumFractionDigits:8
+                            }
+                        )}
 
                         ${escapeHTML(
                             asset
@@ -2787,16 +3452,14 @@ function renderOffers(){
                 <div class="detail">
 
                     <small>
-                        Response
+                        Terms
                     </small>
 
                     <strong>
 
-                        ${Number(
-                            offer.response_time_seconds || 0
-                        )}
-
-                        sec
+                        ${offer.terms
+                            ? "Available"
+                            : "Standard"}
 
                     </strong>
 
@@ -3621,6 +4284,8 @@ async function confirmCreateTrade(){
 
         await loadTrades();
 
+        await loadMyOffers();
+
         await openTrade(
             tradeId
         );
@@ -3653,10 +4318,1109 @@ async function confirmCreateTrade(){
 
 
 /* ============================================================
-   LOAD USER TRADES
+   ============================================================
+   CREATE / EDIT OFFER SYSTEM
+   ============================================================
    ============================================================ */
 
-async function loadTrades(){
+
+/* ============================================================
+   OFFER FORM LISTENERS
+   ============================================================ */
+
+function setupOfferFormListeners(){
+
+    const side =
+        document.getElementById(
+            "offerSide"
+        );
+
+
+    if(side){
+
+        side.addEventListener(
+            "change",
+            updateOfferSideHelp
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   OFFER SIDE HELP
+   ============================================================ */
+
+function updateOfferSideHelp(){
+
+    const side =
+        document.getElementById(
+            "offerSide"
+        ).value;
+
+
+    const help =
+        document.getElementById(
+            "offerSideHelp"
+        );
+
+
+    if(!help){
+
+        return;
+
+    }
+
+
+    if(side === "sell"){
+
+        help.textContent =
+            "Sell Crypto means you are offering crypto to another trader.";
+
+    }else{
+
+        help.textContent =
+            "Buy Crypto means you are looking to purchase crypto from another trader.";
+
+    }
+
+}
+
+
+/* ============================================================
+   LOAD PAYMENT METHODS FOR OFFER FORM
+   ============================================================ */
+
+async function loadPaymentMethodsForOfferForm(
+    selectedIds = []
+){
+
+    const container =
+        document.getElementById(
+            "offerPaymentMethods"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        `<div class="loading"
+              style="padding:20px">
+
+            Loading payment methods...
+
+         </div>`;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("payment_methods")
+        .select(
+            "id,name,description"
+        )
+        .eq(
+            "is_active",
+            true
+        )
+        .order(
+            "name"
+        );
+
+
+    if(error){
+
+        console.error(
+            "LOAD OFFER PAYMENT METHODS ERROR:",
+            error
+        );
+
+
+        container.innerHTML =
+            `<div class="empty"
+                  style="padding:20px">
+
+                <strong>
+                    Unable to load payment methods
+                </strong>
+
+                <span>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </span>
+
+             </div>`;
+
+        return;
+
+    }
+
+
+    offerPaymentMethods =
+        data || [];
+
+
+    if(!offerPaymentMethods.length){
+
+        container.innerHTML =
+            `<div class="empty"
+                  style="padding:20px">
+
+                <strong>
+                    No payment methods available
+                </strong>
+
+                <span>
+                    Add active payment methods in Supabase first.
+                </span>
+
+             </div>`;
+
+        return;
+
+    }
+
+
+    const selectedSet =
+        new Set(
+            (selectedIds || [])
+            .map(
+                id =>
+                String(id)
+            )
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    offerPaymentMethods.forEach(
+        function(method){
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+
+            label.className =
+                "payment-method-option";
+
+
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
+
+
+            checkbox.type =
+                "checkbox";
+
+
+            checkbox.name =
+                "offerPaymentMethod";
+
+
+            checkbox.value =
+                method.id;
+
+
+            checkbox.checked =
+                selectedSet.has(
+                    String(method.id)
+                );
+
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+
+            info.className =
+                "payment-method-info";
+
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+
+            name.className =
+                "payment-method-name";
+
+
+            name.textContent =
+                method.name;
+
+
+            const description =
+                document.createElement(
+                    "span"
+                );
+
+
+            description.className =
+                "payment-method-description";
+
+
+            description.textContent =
+                method.description ||
+                "Available payment method";
+
+
+            info.appendChild(
+                name
+            );
+
+
+            info.appendChild(
+                description
+            );
+
+
+            label.appendChild(
+                checkbox
+            );
+
+
+            label.appendChild(
+                info
+            );
+
+
+            container.appendChild(
+                label
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   OPEN CREATE OFFER MODAL
+   ============================================================ */
+
+async function openCreateOfferModal(){
+
+    if(!currentUser){
+
+        showNotification(
+            "Please log in first."
+        );
+
+        return;
+
+    }
+
+
+    editingOfferId =
+        null;
+
+
+    document.getElementById(
+        "offerModalTitle"
+    ).textContent =
+        "Create P2P Offer";
+
+
+    document.getElementById(
+        "offerSubmitButton"
+    ).textContent =
+        "Create Offer";
+
+
+    const form =
+        document.getElementById(
+            "offerForm"
+        );
+
+
+    if(form){
+
+        form.reset();
+
+    }
+
+
+    document.getElementById(
+        "offerSide"
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        "offerAsset"
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        "offerFiat"
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        "offerPrice"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "offerMinAmount"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "offerMaxAmount"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "offerAvailableAmount"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "offerTerms"
+    ).value =
+        "";
+
+
+    updateOfferSideHelp();
+
+
+    await loadPaymentMethodsForOfferForm(
+        []
+    );
+
+
+    document.getElementById(
+        "offerModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* ============================================================
+   EDIT OFFER
+   ============================================================ */
+
+async function editOffer(
+    offerId
+){
+
+    if(!currentUser){
+
+        showNotification(
+            "Please log in first."
+        );
+
+        return;
+
+    }
+
+
+    const offer =
+        myOffers.find(
+            x =>
+            String(x.id) ===
+            String(offerId)
+        );
+
+
+    if(!offer){
+
+        showNotification(
+            "Offer not found."
+        );
+
+        return;
+
+    }
+
+
+    editingOfferId =
+        offer.id;
+
+
+    document.getElementById(
+        "offerModalTitle"
+    ).textContent =
+        "Edit P2P Offer";
+
+
+    document.getElementById(
+        "offerSubmitButton"
+    ).textContent =
+        "Save Changes";
+
+
+    document.getElementById(
+        "offerSide"
+    ).value =
+        offer.side;
+
+
+    document.getElementById(
+        "offerAsset"
+    ).value =
+        offer.asset;
+
+
+    document.getElementById(
+        "offerFiat"
+    ).value =
+        offer.fiat;
+
+
+    document.getElementById(
+        "offerPrice"
+    ).value =
+        offer.price;
+
+
+    document.getElementById(
+        "offerMinAmount"
+    ).value =
+        offer.min_amount;
+
+
+    document.getElementById(
+        "offerMaxAmount"
+    ).value =
+        offer.max_amount;
+
+
+    document.getElementById(
+        "offerAvailableAmount"
+    ).value =
+        offer.available_amount;
+
+
+    document.getElementById(
+        "offerTerms"
+    ).value =
+        offer.terms || "";
+
+
+    /*
+      The update RPC changes price,
+      amounts and terms only.
+      Side, asset and fiat remain fixed.
+    */
+
+    document.getElementById(
+        "offerSide"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "offerAsset"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "offerFiat"
+    ).disabled =
+        true;
+
+
+    updateOfferSideHelp();
+
+
+    let selectedPaymentIds = [];
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.rpc(
+            "get_offer_payment_methods",
+            {
+                p_offer_id:
+                    offer.id
+            }
+        );
+
+
+        if(!error && data){
+
+            selectedPaymentIds =
+                data.map(
+                    x =>
+                    x.id
+                );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "LOAD EDIT PAYMENT METHODS ERROR:",
+            error
+        );
+
+    }
+
+
+    await loadPaymentMethodsForOfferForm(
+        selectedPaymentIds
+    );
+
+
+    document.getElementById(
+        "offerModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* ============================================================
+   SUBMIT CREATE / EDIT OFFER
+   ============================================================ */
+
+async function submitOfferForm(
+    event
+){
+
+    event.preventDefault();
+
+
+    if(!currentUser){
+
+        showNotification(
+            "Please log in first."
+        );
+
+        return;
+
+    }
+
+
+    const side =
+        document.getElementById(
+            "offerSide"
+        ).value;
+
+
+    const asset =
+        document.getElementById(
+            "offerAsset"
+        ).value;
+
+
+    const fiat =
+        document.getElementById(
+            "offerFiat"
+        ).value;
+
+
+    const price =
+        Number(
+            document.getElementById(
+                "offerPrice"
+            ).value
+        );
+
+
+    const minAmount =
+        Number(
+            document.getElementById(
+                "offerMinAmount"
+            ).value
+        );
+
+
+    const maxAmount =
+        Number(
+            document.getElementById(
+                "offerMaxAmount"
+            ).value
+        );
+
+
+    const availableAmount =
+        Number(
+            document.getElementById(
+                "offerAvailableAmount"
+            ).value
+        );
+
+
+    const terms =
+        document.getElementById(
+            "offerTerms"
+        ).value
+        .trim();
+
+
+    const checkedPaymentMethods =
+        Array.from(
+            document.querySelectorAll(
+                'input[name="offerPaymentMethod"]:checked'
+            )
+        );
+
+
+    const paymentMethodIds =
+        checkedPaymentMethods.map(
+            checkbox =>
+            checkbox.value
+        );
+
+
+    /* --------------------------------------------------------
+       VALIDATION
+       -------------------------------------------------------- */
+
+    if(
+        !["sell","buy"].includes(
+            side
+        )
+    ){
+
+        showNotification(
+            "Select a valid offer type."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !["USDT","BTC","ETH"].includes(
+            asset
+        )
+    ){
+
+        showNotification(
+            "Select a valid crypto asset."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !["ETB","USD","EUR"].includes(
+            fiat
+        )
+    ){
+
+        showNotification(
+            "Select a valid fiat currency."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(price) ||
+        price <= 0
+    ){
+
+        showNotification(
+            "Enter a valid price."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(minAmount) ||
+        minAmount <= 0
+    ){
+
+        showNotification(
+            "Enter a valid minimum amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(maxAmount) ||
+        maxAmount <= 0
+    ){
+
+        showNotification(
+            "Enter a valid maximum amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        minAmount >
+        maxAmount
+    ){
+
+        showNotification(
+            "Minimum amount cannot exceed maximum amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(availableAmount) ||
+        availableAmount <= 0
+    ){
+
+        showNotification(
+            "Enter a valid available amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        availableAmount <
+        minAmount
+    ){
+
+        showNotification(
+            "Available amount must be at least the minimum amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        paymentMethodIds.length ===
+        0
+    ){
+
+        showNotification(
+            "Select at least one payment method."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        terms.length >
+        2000
+    ){
+
+        showNotification(
+            "Trading terms are too long."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "offerSubmitButton"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        editingOfferId
+        ? "Saving..."
+        : "Creating...";
+
+
+    try{
+
+        let data;
+        let error;
+
+
+        /* ----------------------------------------------------
+           UPDATE EXISTING OFFER
+           ---------------------------------------------------- */
+
+        if(editingOfferId){
+
+            const result =
+                await supabaseClient.rpc(
+                    "update_p2p_offer",
+                    {
+                        p_offer_id:
+                            editingOfferId,
+
+                        p_price:
+                            price,
+
+                        p_min_amount:
+                            minAmount,
+
+                        p_max_amount:
+                            maxAmount,
+
+                        p_available_amount:
+                            availableAmount,
+
+                        p_terms:
+                            terms || null,
+
+                        p_payment_method_ids:
+                            paymentMethodIds
+                    }
+                );
+
+
+            data =
+                result.data;
+
+            error =
+                result.error;
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(data !== true){
+
+                throw new Error(
+                    "Offer update was not completed."
+                );
+
+            }
+
+
+            showNotification(
+                "Offer updated successfully."
+            );
+
+        }else{
+
+            /* ------------------------------------------------
+               CREATE NEW OFFER
+               ------------------------------------------------ */
+
+            const result =
+                await supabaseClient.rpc(
+                    "create_p2p_offer",
+                    {
+                        p_side:
+                            side,
+
+                        p_asset:
+                            asset,
+
+                        p_fiat:
+                            fiat,
+
+                        p_price:
+                            price,
+
+                        p_min_amount:
+                            minAmount,
+
+                        p_max_amount:
+                            maxAmount,
+
+                        p_available_amount:
+                            availableAmount,
+
+                        p_terms:
+                            terms || null,
+
+                        p_payment_method_ids:
+                            paymentMethodIds
+                    }
+                );
+
+
+            data =
+                result.data;
+
+            error =
+                result.error;
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(!data){
+
+                throw new Error(
+                    "Offer was not created."
+                );
+
+            }
+
+
+            showNotification(
+                "P2P offer created successfully."
+            );
+
+        }
+
+
+        closeOfferModal();
+
+
+        await loadOffers();
+
+        await loadMyOffers();
+
+
+    }catch(error){
+
+        console.error(
+            "SUBMIT OFFER ERROR:",
+            error
+        );
+
+
+        showNotification(
+            error.message ||
+            "Unable to save offer."
+        );
+
+    }finally{
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            editingOfferId
+            ? "Save Changes"
+            : "Create Offer";
+
+    }
+
+}
+
+
+/* ============================================================
+   CLOSE OFFER MODAL
+   ============================================================ */
+
+function closeOfferModal(){
+
+    const modal =
+        document.getElementById(
+            "offerModal"
+        );
+
+
+    if(modal){
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    editingOfferId =
+        null;
+
+
+    const side =
+        document.getElementById(
+            "offerSide"
+        );
+
+
+    const asset =
+        document.getElementById(
+            "offerAsset"
+        );
+
+
+    const fiat =
+        document.getElementById(
+            "offerFiat"
+        );
+
+
+    if(side){
+
+        side.disabled =
+            false;
+
+    }
+
+
+    if(asset){
+
+        asset.disabled =
+            false;
+
+    }
+
+
+    if(fiat){
+
+        fiat.disabled =
+            false;
+
+    }
+
+}
+
+
+/* ============================================================
+   LOAD MY OFFERS
+   ============================================================ */
+
+async function loadMyOffers(){
 
     if(!currentUser){
 
@@ -3665,39 +5429,47 @@ async function loadTrades(){
     }
 
 
+    const container =
+        document.getElementById(
+            "myOffersContainer"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        `<div class="loading">
+            Loading your offers...
+         </div>`;
+
+
     const {
         data,
         error
     } =
-    await supabaseClient
-    .from("p2p_trades")
-    .select("*")
-    .or(
-        `buyer_id.eq.${currentUser.id},seller_id.eq.${currentUser.id}`
-    )
-    .order(
-        "created_at",
-        {
-            ascending:false
-        }
+    await supabaseClient.rpc(
+        "get_my_p2p_offers"
     );
 
 
     if(error){
 
         console.error(
-            "LOAD TRADES ERROR:",
+            "LOAD MY OFFERS ERROR:",
             error
         );
 
 
-        document.getElementById(
-            "tradesContainer"
-        ).innerHTML =
+        container.innerHTML =
             `<div class="empty">
 
                 <strong>
-                    Unable to load trades
+                    Unable to load your offers
                 </strong>
 
                 <span>
@@ -3714,282 +5486,498 @@ async function loadTrades(){
     }
 
 
-    const trades =
+    myOffers =
         data || [];
 
 
-    const active =
-        trades.filter(
-            t =>
-            ![
-                "completed",
-                "cancelled",
-                "canceled",
-                "closed"
-            ].includes(
-                String(
-                    t.status
-                ).toLowerCase()
-            )
-        ).length;
+    /*
+      Sort newest first.
+    */
 
+    myOffers.sort(
+        function(a,b){
 
-    document.getElementById(
-        "activeTradeStat"
-    ).textContent =
-        active;
+            return new Date(
+                b.created_at || 0
+            ) -
+            new Date(
+                a.created_at || 0
+            );
 
-
-    document.getElementById(
-        "tradeCount"
-    ).textContent =
-        trades.length +
-        (
-            trades.length === 1
-            ? " trade"
-            : " trades"
-        );
-
-
-    renderTrades(
-        trades
+        }
     );
+
+
+    await enrichMyOffers();
+
+    renderMyOffers();
 
 }
 
 
 /* ============================================================
-   RENDER TRADES
+   ENRICH MY OFFERS
    ============================================================ */
 
-function renderTrades(trades){
+async function enrichMyOffers(){
+
+    for(const offer of myOffers){
+
+        offer.payment = [];
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.rpc(
+                "get_offer_payment_methods",
+                {
+                    p_offer_id:
+                        offer.id
+                }
+            );
+
+
+            if(!error && data){
+
+                offer.payment =
+                    data.map(
+                        function(method){
+
+                            return {
+                                id:
+                                    method.id,
+
+                                name:
+                                    method.name,
+
+                                description:
+                                    method.description
+                            };
+
+                        }
+                    );
+
+            }
+
+        }catch(error){
+
+            console.error(
+                "MY OFFER PAYMENT ERROR:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ============================================================
+   RENDER MY OFFERS
+   ============================================================ */
+
+function renderMyOffers(){
 
     const container =
         document.getElementById(
-            "tradesContainer"
+            "myOffersContainer"
         );
 
 
-    container.innerHTML =
-        "";
-
-
-    if(!trades.length){
-
-        container.innerHTML =
-            `<div class="empty">
-
-                <strong>
-                    No P2P trades yet
-                </strong>
-
-                <span>
-                    Create a trade from an offer above.
-                </span>
-
-             </div>`;
-
+    if(!container){
 
         return;
 
     }
 
 
-    trades.forEach(function(trade){
-
-        const isBuyer =
-            trade.buyer_id ===
-            currentUser.id;
+    container.innerHTML =
+        "";
 
 
-        const status =
-            String(
-                trade.status || ""
-            ).toLowerCase();
+    const countElement =
+        document.getElementById(
+            "myOffersCount"
+        );
 
 
-        const asset =
-            trade.asset ||
-            "USDT";
+    if(countElement){
 
-
-        const fiat =
-            trade.fiat ||
-            "ETB";
-
-
-        const card =
-            document.createElement(
-                "div"
+        countElement.textContent =
+            myOffers.length +
+            (
+                myOffers.length === 1
+                ? " offer"
+                : " offers"
             );
 
-
-        card.className =
-            "trade-card";
+    }
 
 
-        const shortId =
-            String(
-                trade.id
-            ).substring(
-                0,
-                8
-            );
+    if(!myOffers.length){
+
+        container.innerHTML =
+            `<div class="empty">
+
+                <strong>
+                    You have no P2P offers
+                </strong>
+
+                <span>
+                    Click "Create Offer" to publish your first offer.
+                </span>
+
+             </div>`;
+
+        return;
+
+    }
 
 
-        card.innerHTML = `
+    myOffers.forEach(
+        function(offer){
 
-            <div class="trade-card-top">
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-                <div>
 
-                    <strong>
-                        ${escapeHTML(
-                            asset
-                        )}
-                    </strong>
+            card.className =
+                "my-offer-card";
 
-                    <div class="trade-id">
 
-                        Trade #
-                        ${escapeHTML(
-                            shortId
-                        )}
+            const status =
+                String(
+                    offer.status || ""
+                ).toLowerCase();
+
+
+            const side =
+                String(
+                    offer.side || ""
+                ).toLowerCase();
+
+
+            const asset =
+                offer.asset ||
+                "USDT";
+
+
+            const fiat =
+                offer.fiat ||
+                "ETB";
+
+
+            const payments =
+                (offer.payment || [])
+                .map(
+                    function(method){
+
+                        return `
+                            <span class="tag">
+                                ${escapeHTML(
+                                    method.name
+                                )}
+                            </span>
+                        `;
+
+                    }
+                )
+                .join("");
+
+
+            const sideClass =
+                side === "sell"
+                ? "side-sell"
+                : "side-buy";
+
+
+            const sideText =
+                side === "sell"
+                ? "SELL"
+                : "BUY";
+
+
+            const statusClass =
+                status === "active"
+                ? "status-active"
+                : "status-inactive";
+
+
+            const statusText =
+                status === "active"
+                ? "Active"
+                : "Inactive";
+
+
+            const toggleText =
+                status === "active"
+                ? "Deactivate"
+                : "Activate";
+
+
+            const toggleClass =
+                status === "active"
+                ? "btn-warning"
+                : "btn-success";
+
+
+            const createdDate =
+                offer.created_at
+                ? new Date(
+                    offer.created_at
+                  ).toLocaleString(
+                      undefined,
+                      {
+                          year:"numeric",
+                          month:"short",
+                          day:"numeric"
+                      }
+                  )
+                : "Unknown";
+
+
+            card.innerHTML = `
+
+                <div class="my-offer-top">
+
+                    <div>
+
+                        <div class="my-offer-title">
+
+                            <strong>
+                                ${escapeHTML(asset)}
+                            </strong>
+
+                            <span class="side-badge ${sideClass}">
+                                ${sideText}
+                            </span>
+
+                            <span class="status-badge ${statusClass}">
+                                ${statusText}
+                            </span>
+
+                        </div>
+
+                        <div class="my-offer-meta">
+
+                            Created ${escapeHTML(
+                                createdDate
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="my-offer-price">
+
+                        ${Number(
+                            offer.price || 0
+                        ).toFixed(2)}
+
+                        ${escapeHTML(fiat)}
+
+                        <div class="my-offer-meta">
+                            per ${escapeHTML(asset)}
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <span class="status-badge
-                    status-${escapeHTML(
-                        status
-                    )}">
+                <div class="my-offer-grid">
 
-                    ${escapeHTML(
-                        formatStatus(
-                            trade.status
-                        )
-                    )}
+                    <div>
 
-                </span>
+                        <small>
+                            Available
+                        </small>
 
-            </div>
+                        <strong>
+
+                            ${Number(
+                                offer.available_amount || 0
+                            ).toLocaleString(
+                                undefined,
+                                {
+                                    maximumFractionDigits:8
+                                }
+                            )}
+
+                            ${escapeHTML(asset)}
+
+                        </strong>
+
+                    </div>
 
 
-            <div class="trade-grid">
+                    <div>
 
-                <div>
+                        <small>
+                            Minimum
+                        </small>
 
-                    <small>
-                        Role
-                    </small>
+                        <strong>
 
-                    <strong>
-                        ${isBuyer
-                            ? "Buyer"
-                            : "Seller"}
-                    </strong>
+                            ${Number(
+                                offer.min_amount || 0
+                            ).toLocaleString(
+                                undefined,
+                                {
+                                    maximumFractionDigits:8
+                                }
+                            )}
+
+                            ${escapeHTML(asset)}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Maximum
+                        </small>
+
+                        <strong>
+
+                            ${Number(
+                                offer.max_amount || 0
+                            ).toLocaleString(
+                                undefined,
+                                {
+                                    maximumFractionDigits:8
+                                }
+                            )}
+
+                            ${escapeHTML(asset)}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Offer ID
+                        </small>
+
+                        <strong>
+
+                            ${escapeHTML(
+                                String(
+                                    offer.id
+                                ).substring(
+                                    0,
+                                    8
+                                )
+                            )}
+
+                        </strong>
+
+                    </div>
 
                 </div>
 
 
-                <div>
+                <div class="my-offer-payments">
 
-                    <small>
-                        Crypto
-                    </small>
-
-                    <strong>
-
-                        ${Number(
-                            trade.crypto_amount || 0
-                        ).toFixed(4)}
-
-                        ${escapeHTML(
-                            asset
-                        )}
-
-                    </strong>
+                    ${payments || `
+                        <span class="tag">
+                            No payment methods
+                        </span>
+                    `}
 
                 </div>
 
 
-                <div>
+                ${
+                    offer.terms
+                    ? `
+                        <div class="my-offer-terms">
+                            <strong>Terms:</strong>
+                            ${escapeHTML(
+                                offer.terms
+                            )}
+                        </div>
+                      `
+                    : ""
+                }
 
-                    <small>
-                        Fiat
-                    </small>
 
-                    <strong>
+                <div class="my-offer-actions">
 
-                        ${Number(
-                            trade.fiat_amount || 0
-                        ).toFixed(2)}
+                    <button
+                        class="btn btn-primary btn-small"
+                        onclick="editOffer('${escapeJS(
+                            offer.id
+                        )}')">
 
-                        ${escapeHTML(
-                            fiat
-                        )}
+                        ✎ Edit
 
-                    </strong>
+                    </button>
+
+
+                    <button
+                        class="btn ${toggleClass} btn-small"
+                        onclick="toggleOfferStatus(
+                            '${escapeJS(
+                                offer.id
+                            )}',
+                            '${status === "active"
+                                ? "inactive"
+                                : "active"}'
+                        )">
+
+                        ${toggleText}
+
+                    </button>
+
+
+                    <button
+                        class="btn btn-danger btn-small"
+                        onclick="deleteOffer('${escapeJS(
+                            offer.id
+                        )}')">
+
+                        🗑 Delete
+
+                    </button>
 
                 </div>
 
-
-                <div>
-
-                    <small>
-                        Price
-                    </small>
-
-                    <strong>
-
-                        ${Number(
-                            trade.price || 0
-                        ).toFixed(2)}
-
-                        ${escapeHTML(
-                            fiat
-                        )}
-
-                    </strong>
-
-                </div>
-
-            </div>
+            `;
 
 
-            <div class="trade-card-actions">
+            container.appendChild(
+                card
+            );
 
-                <button
-                    class="btn btn-primary btn-small"
-                    onclick="openTrade('${escapeJS(
-                        trade.id
-                    )}')">
-
-                    Open Trade
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(
-            card
-        );
-
-    });
+        }
+    );
 
 }
 
 
 /* ============================================================
-   OPEN TRADE
+   ACTIVATE / DEACTIVATE OFFER
    ============================================================ */
 
-async function openTrade(tradeId){
+async function toggleOfferStatus(
+    offerId,
+    newStatus
+){
 
     if(!currentUser){
 
@@ -4002,30 +5990,18 @@ async function openTrade(tradeId){
     }
 
 
-    const {
-        data:trade,
-        error
-    } =
-    await supabaseClient
-    .from("p2p_trades")
-    .select("*")
-    .eq(
-        "id",
-        tradeId
-    )
-    .maybeSingle();
-
-
-    if(error){
-
-        console.error(
-            "OPEN TRADE ERROR:",
-            error
+    const offer =
+        myOffers.find(
+            x =>
+            String(x.id) ===
+            String(offerId)
         );
 
+
+    if(!offer){
 
         showNotification(
-            error.message
+            "Offer not found."
         );
 
         return;
@@ -4033,866 +6009,21 @@ async function openTrade(tradeId){
     }
 
 
-    if(!trade){
-
-        showNotification(
-            "Trade not found."
-        );
-
-        return;
-
-    }
-
-
-    const isBuyer =
-        trade.buyer_id ===
-        currentUser.id;
-
-
-    const isSeller =
-        trade.seller_id ===
-        currentUser.id;
-
-
-    if(!isBuyer && !isSeller){
-
-        showNotification(
-            "You are not authorized to view this trade."
-        );
-
-        return;
-
-    }
-
-
-    selectedTrade =
-        trade;
-
-
-    await showTradeDetails(
-        true
-    );
-
-}
-
-
-/* ============================================================
-   SHOW TRADE DETAILS
-   ============================================================ */
-
-async function showTradeDetails(
-    firstOpen = false
-){
-
-    if(!selectedTrade){
-
-        return;
-
-    }
-
-
-    const trade =
-        selectedTrade;
-
-
-    const isBuyer =
-        trade.buyer_id ===
-        currentUser.id;
-
-
-    const isSeller =
-        trade.seller_id ===
-        currentUser.id;
-
-
-    const status =
-        String(
-            trade.status || ""
-        ).toLowerCase();
-
-
-    const asset =
-        trade.asset ||
-        "USDT";
-
-
-    const fiat =
-        trade.fiat ||
-        "ETB";
-
-
-    document.getElementById(
-        "tradeId"
-    ).textContent =
-        String(
-            trade.id
-        ).substring(
-            0,
-            12
-        );
-
-
-    document.getElementById(
-        "tradeStatus"
-    ).textContent =
-        formatStatus(
-            trade.status
-        );
-
-
-    const statusElement =
-        document.getElementById(
-            "tradeStatus"
-        );
-
-
-    statusElement.className =
-        status === "completed"
-        ? "green"
-        : (
-            status === "payment_sent"
-            ? "green"
-            : (
-                status === "cancelled" ||
-                status === "canceled" ||
-                status === "closed"
-                ? "red"
-                : "yellow"
-            )
-        );
-
-
-    document.getElementById(
-        "tradeRole"
-    ).textContent =
-        isBuyer
-        ? "Buyer"
-        : "Seller";
-
-
-    document.getElementById(
-        "tradeCrypto"
-    ).textContent =
-        Number(
-            trade.crypto_amount || 0
-        ).toFixed(4)
-        + " "
-        + asset;
-
-
-    document.getElementById(
-        "tradeFiat"
-    ).textContent =
-        Number(
-            trade.fiat_amount || 0
-        ).toFixed(2)
-        + " "
-        + fiat;
-
-
-    document.getElementById(
-        "tradePrice"
-    ).textContent =
-        Number(
-            trade.price || 0
-        ).toFixed(2)
-        + " "
-        + fiat;
-
-
-    document.getElementById(
-        "tradeReference"
-    ).textContent =
-        trade.payment_reference ||
-        "Not submitted";
-
-
-    const paymentReferenceInput =
-        document.getElementById(
-            "paymentReferenceInput"
-        );
-
-
-    if(paymentReferenceInput){
-
-        paymentReferenceInput.value =
-            trade.payment_reference ||
-            "";
-
-    }
-
-
-    await loadTradePaymentMethod(
-        trade
-    );
-
-
-    /*
-      BUYER STEP 3
-    */
-
-    const buyerBox =
-        document.getElementById(
-            "buyerPaymentBox"
-        );
-
-
-    const paymentSentBox =
-        document.getElementById(
-            "paymentSentBox"
-        );
-
-
-    const markPaidButton =
-        document.getElementById(
-            "markPaidButton"
-        );
-
-
-    if(
-        isBuyer &&
-        status === "awaiting_payment"
-    ){
-
-        buyerBox.style.display =
-            "block";
-
-        paymentSentBox.style.display =
-            "none";
-
-        markPaidButton.disabled =
-            false;
-
-        markPaidButton.textContent =
-            "✓ I Have Paid";
-
-    }else{
-
-        buyerBox.style.display =
-            "none";
-
-    }
-
-
-    /*
-      PAYMENT SENT
-    */
-
-    if(
-        isBuyer &&
-        status === "payment_sent"
-    ){
-
-        paymentSentBox.style.display =
-            "block";
-
-    }else{
-
-        paymentSentBox.style.display =
-            "none";
-
-    }
-
-
-    /*
-      SELLER RELEASE
-    */
-
-    const sellerBox =
-        document.getElementById(
-            "sellerReleaseBox"
-        );
-
-
-    if(
-        isSeller &&
-        status === "payment_sent"
-    ){
-
-        sellerBox.style.display =
-            "block";
-
-    }else{
-
-        sellerBox.style.display =
-            "none";
-
-    }
-
-
-    /*
-      CANCEL
-    */
-
-    const cancelButton =
-        document.getElementById(
-            "cancelTradeButton"
-        );
-
-
-    cancelButton.style.display =
-        (
-            status === "awaiting_payment" ||
-            status === "payment_sent"
-        )
-        ? "block"
-        : "none";
-
-
-    /*
-      CHAT PARTICIPANT LABEL
-    */
-
-    const chatParticipant =
-        document.getElementById(
-            "chatParticipant"
-        );
-
-
-    if(chatParticipant){
-
-        chatParticipant.textContent =
-            isBuyer
-            ? "You are Buyer"
-            : "You are Seller";
-
-    }
-
-
-    document.getElementById(
-        "tradeModal"
-    ).classList.add(
-        "show"
-    );
-
-
-    /*
-      Only load the chat when:
-      1. The trade is opened for the first time.
-      2. A different trade is opened.
-      3. The chat has not already been loaded.
-    */
-
-    const currentChatTrade =
-        String(
-            chatTradeId || ""
-        );
-
-
-    const thisTradeId =
-        String(
-            trade.id
-        );
-
-
-    if(
-        firstOpen ||
-        chatLoadedTradeId !== thisTradeId ||
-        currentChatTrade !== thisTradeId
-    ){
-
-        await loadTradeChat();
-
-    }
-
-}
-
-
-/* ============================================================
-   LOAD PAYMENT METHOD
-   ============================================================ */
-
-async function loadTradePaymentMethod(
-    trade
-){
-
-    const paymentElement =
-        document.getElementById(
-            "tradePayment"
-        );
-
-
-    paymentElement.textContent =
-        "Loading...";
-
-
-    if(!trade.payment_method_id){
-
-        paymentElement.textContent =
-            "Payment method selected";
-
-        return;
-
-    }
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("payment_methods")
-    .select("name")
-    .eq(
-        "id",
-        trade.payment_method_id
-    )
-    .maybeSingle();
-
-
-    if(
-        !error &&
-        data
-    ){
-
-        paymentElement.textContent =
-            data.name;
-
-    }else{
-
-        paymentElement.textContent =
-            "Selected payment method";
-
-    }
-
-}
-
-
-/* ============================================================
-   STEP 3
-   BUYER MARKS PAYMENT SENT
-   ============================================================ */
-
-async function markPaid(){
-
-    if(!selectedTrade){
-
-        showNotification(
-            "No trade selected."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        selectedTrade.buyer_id !==
-        currentUser.id
-    ){
-
-        showNotification(
-            "Only the buyer can mark payment as sent."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        String(
-            selectedTrade.status
-        ).toLowerCase() !==
-        "awaiting_payment"
-    ){
-
-        showNotification(
-            "This trade is not waiting for payment."
-        );
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "paymentReferenceInput"
-        );
-
-
-    const reference =
-        input.value.trim();
-
-
-    if(!reference){
-
-        showNotification(
-            "Enter the payment reference first."
-        );
-
-        input.focus();
-
-        return;
-
-    }
-
-
-    if(reference.length < 3){
-
-        showNotification(
-            "Payment reference is too short."
-        );
-
-        input.focus();
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "markPaidButton"
-        );
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "Submitting payment...";
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.rpc(
-            "mark_payment_sent",
-            {
-                p_trade_id:
-                    selectedTrade.id,
-
-                p_payment_reference:
-                    reference
-            }
-        );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        if(data !== true){
-
-            throw new Error(
-                "Payment could not be marked as sent."
-            );
-
-        }
-
-
-        showNotification(
-            "Payment marked as sent successfully."
-        );
-
-
-        await refreshCurrentTrade();
-
-        await loadTrades();
-
-
-    }catch(error){
-
-        console.error(
-            "MARK PAYMENT SENT ERROR:",
-            error
-        );
-
-
-        showNotification(
-            error.message ||
-            "Unable to mark payment as sent."
-        );
-
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "✓ I Have Paid";
-
-    }
-
-}
-
-
-/* ============================================================
-   REFRESH CURRENT TRADE
-   ============================================================ */
-
-async function refreshCurrentTrade(){
-
-    if(!selectedTrade){
-
-        return;
-
-    }
-
-
-    const tradeId =
-        selectedTrade.id;
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("p2p_trades")
-    .select("*")
-    .eq(
-        "id",
-        tradeId
-    )
-    .maybeSingle();
-
-
-    if(error){
-
-        console.error(
-            "REFRESH TRADE ERROR:",
-            error
-        );
-
-
-        showNotification(
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    if(!data){
-
-        showNotification(
-            "Trade no longer exists."
-        );
-
-        closeModal(
-            "tradeModal"
-        );
-
-        return;
-
-    }
-
-
-    selectedTrade =
-        data;
-
-
-    await showTradeDetails(
-        false
-    );
-
-}
-
-
-/* ============================================================
-   SELLER RELEASES CRYPTO
-   ============================================================ */
-
-async function releaseCrypto(){
-
-    if(!selectedTrade){
-
-        return;
-
-    }
-
-
-    if(
-        selectedTrade.seller_id !==
-        currentUser.id
-    ){
-
-        showNotification(
-            "Only the seller can release the crypto."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        String(
-            selectedTrade.status
-        ).toLowerCase() !==
-        "payment_sent"
-    ){
-
-        showNotification(
-            "The trade must have payment_sent status before release."
-        );
-
-        return;
-
-    }
-
-
-    const confirmed =
-        confirm(
-            "Have you independently verified the fiat payment? Only release crypto after confirming the payment."
-        );
-
-
-    if(!confirmed){
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "releaseButton"
-        );
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "Releasing crypto...";
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.rpc(
-            "release_p2p_crypto",
-            {
-                p_trade_id:
-                    selectedTrade.id
-            }
-        );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        if(data !== true){
-
-            throw new Error(
-                "Crypto release was not completed."
-            );
-
-        }
-
-
-        showNotification(
-            "Crypto released successfully. Trade completed."
-        );
-
-
-        await refreshCurrentTrade();
-
-        await loadTrades();
-
-        await loadOffers();
-
-
-    }catch(error){
-
-        console.error(
-            "RELEASE ERROR:",
-            error
-        );
-
-
-        showNotification(
-            error.message ||
-            "Unable to release crypto."
-        );
-
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "✓ Payment Verified, Release Crypto";
-
-    }
-
-}
-
-
-/* ============================================================
-   CANCEL TRADE
-   ============================================================ */
-
-async function cancelTrade(){
-
-    if(!selectedTrade){
-
-        return;
-
-    }
-
-
-    const status =
-        String(
-            selectedTrade.status
-        ).toLowerCase();
-
-
-    if(
-        status !== "awaiting_payment" &&
-        status !== "payment_sent"
-    ){
-
-        showNotification(
-            "This trade cannot be cancelled."
-        );
-
-        return;
-
-    }
+    const actionText =
+        newStatus === "active"
+        ? "activate"
+        : "deactivate";
 
 
     if(
         !confirm(
-            "Are you sure you want to cancel this trade?"
+            `Are you sure you want to ${actionText} this offer?`
         )
     ){
 
         return;
 
     }
-
-
-    const button =
-        document.getElementById(
-            "cancelTradeButton"
-        );
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "Cancelling...";
 
 
     try{
@@ -4902,10 +6033,13 @@ async function cancelTrade(){
             error
         } =
         await supabaseClient.rpc(
-            "cancel_p2p_trade",
+            "set_p2p_offer_status",
             {
-                p_trade_id:
-                    selectedTrade.id
+                p_offer_id:
+                    offerId,
+
+                p_status:
+                    newStatus
             }
         );
 
@@ -4920,1417 +6054,11 @@ async function cancelTrade(){
         if(data !== true){
 
             throw new Error(
-                "Trade cancellation failed."
+                "Offer status was not changed."
             );
 
         }
 
 
         showNotification(
-            "Trade cancelled successfully."
-        );
-
-
-        await refreshCurrentTrade();
-
-        await loadTrades();
-
-        await loadOffers();
-
-
-    }catch(error){
-
-        console.error(
-            "CANCEL ERROR:",
-            error
-        );
-
-
-        showNotification(
-            error.message ||
-            "Unable to cancel trade."
-        );
-
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "Cancel Trade";
-
-    }
-
-}
-
-
-/* ============================================================
-   ============================================================
-   LIVE P2P CHAT
-   ============================================================
-   ============================================================ */
-
-
-/* ============================================================
-   LOAD CHAT
-   ============================================================ */
-
-async function loadTradeChat(){
-
-    if(
-        !selectedTrade ||
-        !currentUser
-    ){
-
-        return;
-
-    }
-
-
-    const tradeId =
-        String(
-            selectedTrade.id
-        );
-
-
-    const isBuyer =
-        selectedTrade.buyer_id ===
-        currentUser.id;
-
-
-    const isSeller =
-        selectedTrade.seller_id ===
-        currentUser.id;
-
-
-    const messagesBox =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    if(!messagesBox){
-
-        return;
-
-    }
-
-
-    if(!isBuyer && !isSeller){
-
-        messagesBox.innerHTML =
-            `<div class="chat-empty">
-
-                You are not part of this trade.
-
-             </div>`;
-
-        return;
-
-    }
-
-
-    messagesBox.innerHTML =
-        `<div class="loading"
-              style="padding:30px 10px">
-
-            Loading conversation...
-
-         </div>`;
-
-
-    const statusElement =
-        document.getElementById(
-            "chatStatus"
-        );
-
-
-    if(statusElement){
-
-        statusElement.textContent =
-            "Loading secure conversation...";
-
-    }
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("p2p_messages")
-        .select(
-            "id,trade_id,sender_id,message,created_at"
-        )
-        .eq(
-            "trade_id",
-            tradeId
-        )
-        .order(
-            "created_at",
-            {
-                ascending:true
-            }
-        );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        renderChatMessages(
-            data || []
-        );
-
-
-        chatLoadedTradeId =
-            tradeId;
-
-
-        setupChatRealtime(
-            tradeId
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "LOAD CHAT ERROR:",
-            error
-        );
-
-
-        messagesBox.innerHTML =
-            `<div class="chat-empty">
-
-                Unable to load conversation.
-
-                <br><br>
-
-                ${escapeHTML(
-                    error.message ||
-                    "Unknown chat error"
-                )}
-
-             </div>`;
-
-
-        if(statusElement){
-
-            statusElement.textContent =
-                "Chat unavailable";
-
-        }
-
-    }
-
-}
-
-
-/* ============================================================
-   RENDER CHAT MESSAGES
-   ============================================================ */
-
-function renderChatMessages(
-    messages
-){
-
-    const container =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        "";
-
-
-    if(!messages.length){
-
-        container.innerHTML =
-            `<div class="chat-empty">
-
-                No messages yet.
-
-                <br>
-
-                Say hello to the other trader.
-
-             </div>`;
-
-        return;
-
-    }
-
-
-    messages.forEach(
-        function(message){
-
-            appendChatMessage(
-                message,
-                false
-            );
-
-        }
-    );
-
-
-    scrollChatToBottom();
-
-}
-
-
-/* ============================================================
-   CHECK DUPLICATE MESSAGE
-   ============================================================ */
-
-function chatMessageExists(
-    messageId
-){
-
-    const container =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    if(!container){
-
-        return false;
-
-    }
-
-
-    const wantedId =
-        String(
-            messageId
-        );
-
-
-    const messages =
-        container.querySelectorAll(
-            "[data-message-id]"
-        );
-
-
-    for(
-        const element
-        of messages
-    ){
-
-        if(
-            element.dataset.messageId ===
-            wantedId
-        ){
-
-            return true;
-
-        }
-
-    }
-
-
-    return false;
-
-}
-
-
-/* ============================================================
-   APPEND CHAT MESSAGE
-   ============================================================ */
-
-function appendChatMessage(
-    message,
-    scroll = true
-){
-
-    if(
-        !message ||
-        !message.id ||
-        !message.sender_id
-    ){
-
-        return;
-
-    }
-
-
-    const container =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    if(
-        chatMessageExists(
-            message.id
-        )
-    ){
-
-        return;
-
-    }
-
-
-    const empty =
-        container.querySelector(
-            ".chat-empty,.loading"
-        );
-
-
-    if(empty){
-
-        empty.remove();
-
-    }
-
-
-    const mine =
-        message.sender_id ===
-        currentUser.id;
-
-
-    const wrapper =
-        document.createElement(
-            "div"
-        );
-
-
-    wrapper.className =
-        "chat-message " +
-        (
-            mine
-            ? "mine"
-            : "theirs"
-        );
-
-
-    wrapper.dataset.messageId =
-        String(
-            message.id
-        );
-
-
-    let senderName =
-        "Trader";
-
-
-    if(mine){
-
-        senderName =
-            "You";
-
-    }else if(
-        selectedTrade &&
-        message.sender_id ===
-        selectedTrade.buyer_id
-    ){
-
-        senderName =
-            "Buyer";
-
-    }else if(
-        selectedTrade &&
-        message.sender_id ===
-        selectedTrade.seller_id
-    ){
-
-        senderName =
-            "Seller";
-
-    }
-
-
-    const sender =
-        document.createElement(
-            "div"
-        );
-
-
-    sender.className =
-        "chat-sender";
-
-
-    sender.textContent =
-        senderName;
-
-
-    const bubble =
-        document.createElement(
-            "div"
-        );
-
-
-    bubble.className =
-        "chat-bubble";
-
-
-    /*
-      textContent is deliberately used here.
-      This prevents HTML/script injection.
-    */
-
-    bubble.textContent =
-        message.message;
-
-
-    const meta =
-        document.createElement(
-            "div"
-        );
-
-
-    meta.className =
-        "chat-meta";
-
-
-    meta.textContent =
-        formatChatTime(
-            message.created_at
-        );
-
-
-    wrapper.appendChild(
-        sender
-    );
-
-
-    wrapper.appendChild(
-        bubble
-    );
-
-
-    wrapper.appendChild(
-        meta
-    );
-
-
-    container.appendChild(
-        wrapper
-    );
-
-
-    if(scroll){
-
-        scrollChatToBottom();
-
-    }
-
-}
-
-
-/* ============================================================
-   SEND CHAT MESSAGE
-   ============================================================ */
-
-async function sendChatMessage(){
-
-    if(chatSending){
-
-        return;
-
-    }
-
-
-    if(!currentUser){
-
-        showNotification(
-            "Please log in first."
-        );
-
-        return;
-
-    }
-
-
-    if(!selectedTrade){
-
-        showNotification(
-            "Open a trade before sending a message."
-        );
-
-        return;
-
-    }
-
-
-    const isBuyer =
-        selectedTrade.buyer_id ===
-        currentUser.id;
-
-
-    const isSeller =
-        selectedTrade.seller_id ===
-        currentUser.id;
-
-
-    if(!isBuyer && !isSeller){
-
-        showNotification(
-            "You are not authorized to use this conversation."
-        );
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "chatInput"
-        );
-
-
-    const button =
-        document.getElementById(
-            "chatSendButton"
-        );
-
-
-    if(
-        !input ||
-        !button
-    ){
-
-        return;
-
-    }
-
-
-    const message =
-        input.value.trim();
-
-
-    if(!message){
-
-        input.focus();
-
-        return;
-
-    }
-
-
-    if(message.length > 2000){
-
-        showNotification(
-            "Message is too long."
-        );
-
-        return;
-
-    }
-
-
-    chatSending =
-        true;
-
-
-    input.disabled =
-        true;
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "Sending...";
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("p2p_messages")
-        .insert({
-            trade_id:
-                selectedTrade.id,
-
-            sender_id:
-                currentUser.id,
-
-            message:
-                message
-        })
-        .select(
-            "id,trade_id,sender_id,message,created_at"
-        )
-        .single();
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        /*
-          Add immediately.
-
-          Realtime may also deliver the same message.
-          chatMessageExists() prevents duplicates.
-        */
-
-        if(data){
-
-            appendChatMessage(
-                data,
-                true
-            );
-
-        }
-
-
-        input.value =
-            "";
-
-
-        input.focus();
-
-
-    }catch(error){
-
-        console.error(
-            "SEND CHAT ERROR:",
-            error
-        );
-
-
-        showNotification(
-            error.message ||
-            "Unable to send message."
-        );
-
-    }finally{
-
-        chatSending =
-            false;
-
-
-        input.disabled =
-            false;
-
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "Send";
-
-    }
-
-}
-
-
-/* ============================================================
-   CHAT REALTIME
-   ============================================================ */
-
-function setupChatRealtime(
-    tradeId
-){
-
-    tradeId =
-        String(
-            tradeId
-        );
-
-
-    if(
-        chatChannel &&
-        chatTradeId ===
-        tradeId
-    ){
-
-        return;
-
-    }
-
-
-    removeChatRealtime();
-
-
-    chatTradeId =
-        tradeId;
-
-
-    chatChannel =
-        supabaseClient
-        .channel(
-            "p2p-chat-" +
-            tradeId
-        )
-        .on(
-            "postgres_changes",
-            {
-                event:"INSERT",
-                schema:"public",
-                table:"p2p_messages",
-                filter:
-                    "trade_id=eq." +
-                    tradeId
-            },
-            function(payload){
-
-                if(
-                    payload &&
-                    payload.new &&
-                    String(
-                        payload.new.trade_id
-                    ) ===
-                    tradeId
-                ){
-
-                    appendChatMessage(
-                        payload.new,
-                        true
-                    );
-
-                }
-
-            }
-        )
-        .subscribe(
-            function(status){
-
-                const statusElement =
-                    document.getElementById(
-                        "chatStatus"
-                    );
-
-
-                if(!statusElement){
-
-                    return;
-
-                }
-
-
-                if(
-                    status ===
-                    "SUBSCRIBED"
-                ){
-
-                    statusElement.textContent =
-                        "🟢 Live conversation";
-
-                }else if(
-                    status ===
-                    "CHANNEL_ERROR"
-                ){
-
-                    statusElement.textContent =
-                        "🔴 Chat connection error";
-
-                }else if(
-                    status ===
-                    "TIMED_OUT"
-                ){
-
-                    statusElement.textContent =
-                        "🟠 Chat connection timed out";
-
-                }else if(
-                    status ===
-                    "CLOSED"
-                ){
-
-                    statusElement.textContent =
-                        "Chat disconnected";
-
-                }
-
-            }
-        );
-
-}
-
-
-/* ============================================================
-   REMOVE REALTIME CHANNEL
-   ============================================================ */
-
-function removeChatRealtime(){
-
-    if(chatChannel){
-
-        try{
-
-            supabaseClient
-                .removeChannel(
-                    chatChannel
-                );
-
-        }catch(error){
-
-            console.error(
-                "REMOVE CHAT CHANNEL ERROR:",
-                error
-            );
-
-        }
-
-    }
-
-
-    chatChannel =
-        null;
-
-
-    chatTradeId =
-        null;
-
-}
-
-
-/* ============================================================
-   CHAT INPUT
-   ============================================================ */
-
-function setupChatInput(){
-
-    const input =
-        document.getElementById(
-            "chatInput"
-        );
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-    input.addEventListener(
-        "keydown",
-        function(event){
-
-            if(
-                event.key ===
-                "Enter" &&
-                !event.shiftKey
-            ){
-
-                event.preventDefault();
-
-                sendChatMessage();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   CHAT TIME
-   ============================================================ */
-
-function formatChatTime(
-    timestamp
-){
-
-    if(!timestamp){
-
-        return "";
-
-    }
-
-
-    const date =
-        new Date(
-            timestamp
-        );
-
-
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
-
-        return "";
-
-    }
-
-
-    return date.toLocaleString(
-        undefined,
-        {
-            month:"short",
-            day:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
-        }
-    );
-
-}
-
-
-/* ============================================================
-   SCROLL CHAT
-   ============================================================ */
-
-function scrollChatToBottom(){
-
-    const container =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    requestAnimationFrame(
-        function(){
-
-            container.scrollTop =
-                container.scrollHeight;
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   STATUS FORMAT
-   ============================================================ */
-
-function formatStatus(
-    status
-){
-
-    if(!status){
-
-        return "Unknown";
-
-    }
-
-
-    return String(
-        status
-    )
-    .replaceAll(
-        "_",
-        " "
-    )
-    .replace(
-        /\b\w/g,
-        x =>
-        x.toUpperCase()
-    );
-
-}
-
-
-/* ============================================================
-   MODALS
-   ============================================================ */
-
-function closeModal(
-    id
-){
-
-    const modal =
-        document.getElementById(
-            id
-        );
-
-
-    if(modal){
-
-        modal.classList.remove(
-            "show"
-        );
-
-    }
-
-
-    if(
-        id ===
-        "tradeModal"
-    ){
-
-        /*
-          Stop realtime when
-          trade modal closes.
-        */
-
-        removeChatRealtime();
-
-
-        chatLoadedTradeId =
-            null;
-
-
-        const input =
-            document.getElementById(
-                "chatInput"
-            );
-
-
-        if(input){
-
-            input.value =
-                "";
-
-        }
-
-
-        const messages =
-            document.getElementById(
-                "chatMessages"
-            );
-
-
-        if(messages){
-
-            messages.innerHTML =
-                `<div class="loading"
-                      style="padding:30px 10px">
-
-                    Open a trade to view the conversation.
-
-                 </div>`;
-
-        }
-
-
-        const status =
-            document.getElementById(
-                "chatStatus"
-            );
-
-
-        if(status){
-
-            status.textContent =
-                "Secure trade conversation";
-
-        }
-
-    }
-
-}
-
-
-/* ============================================================
-   MODAL BACKGROUND CLICK
-   ============================================================ */
-
-window.addEventListener(
-    "click",
-    function(event){
-
-        document
-        .querySelectorAll(
-            ".modal"
-        )
-        .forEach(
-            function(modal){
-
-                if(
-                    event.target ===
-                    modal
-                ){
-
-                    modal.classList.remove(
-                        "show"
-                    );
-
-
-                    if(
-                        modal.id ===
-                        "tradeModal"
-                    ){
-
-                        removeChatRealtime();
-
-                        chatLoadedTradeId =
-                            null;
-
-                    }
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-/* ============================================================
-   ESC KEY
-   ============================================================ */
-
-document.addEventListener(
-    "keydown",
-    function(event){
-
-        if(
-            event.key ===
-            "Escape"
-        ){
-
-            const tradeModal =
-                document.getElementById(
-                    "tradeModal"
-                );
-
-
-            const reviewModal =
-                document.getElementById(
-                    "reviewModal"
-                );
-
-
-            if(
-                tradeModal &&
-                tradeModal.classList.contains(
-                    "show"
-                )
-            ){
-
-                closeModal(
-                    "tradeModal"
-                );
-
-            }
-
-
-            if(
-                reviewModal &&
-                reviewModal.classList.contains(
-                    "show"
-                )
-            ){
-
-                closeModal(
-                    "reviewModal"
-                );
-
-            }
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   NOTIFICATION
-   ============================================================ */
-
-function showNotification(
-    message
-){
-
-    const box =
-        document.getElementById(
-            "notification"
-        );
-
-
-    if(!box){
-
-        return;
-
-    }
-
-
-    box.textContent =
-        message;
-
-
-    box.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        notificationTimer
-    );
-
-
-    notificationTimer =
-        setTimeout(
-            function(){
-
-                box.classList.remove(
-                    "show"
-                );
-
-            },
-            4000
-        );
-
-}
-
-
-/* ============================================================
-   HTML SECURITY
-   ============================================================ */
-
-function escapeHTML(
-    value
-){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        value == null
-        ? ""
-        : String(value);
-
-
-    return div.innerHTML;
-
-}
-
-
-/* ============================================================
-   JAVASCRIPT STRING SECURITY
-   ============================================================ */
-
-function escapeJS(
-    value
-){
-
-    return String(
-        value == null
-        ? ""
-        : value
-    )
-    .replace(
-        /\\/g,
-        "\\\\"
-    )
-    .replace(
-        /'/g,
-        "\\'"
-    )
-    .replace(
-        /\r/g,
-        "\\r"
-    )
-    .replace(
-        /\n/g,
-        "\\n"
-    );
-
-}
-
-
-/* ============================================================
-   AUTO REFRESH
-   ============================================================ */
-
-setInterval(
-    async function(){
-
-        if(!currentUser){
-
-            return;
-
-        }
-
-
-        try{
-
-            await loadOffers();
-
-            await loadTrades();
-
-
-            /*
-              If trade modal is open,
-              refresh only the trade status/data.
-
-              Chat is NOT reloaded unnecessarily.
-            */
-
-            const tradeModal =
-                document.getElementById(
-                    "tradeModal"
-                );
-
-
-            if(
-                selectedTrade &&
-                tradeModal &&
-                tradeModal.classList.contains(
-                    "show"
-                )
-            ){
-
-                await refreshCurrentTrade();
-
-            }
-
-        }catch(error){
-
-            console.error(
-                "AUTO REFRESH ERROR:",
-                error
-            );
-
-        }
-
-    },
-    30000
-);
-
-
-/* ============================================================
-   CLEANUP BEFORE PAGE LEAVE
-   ============================================================ */
-
-window.addEventListener(
-    "beforeunload",
-    function(){
-
-        removeChatRealtime();
-
-    }
-);
-
-</script>
-
-</body>
-</html>
+            newStatus === "active
