@@ -1,11 +1,13 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CryptoVault | Sign In</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
@@ -31,7 +33,6 @@ header {
     padding: 16px 22px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .brand {
@@ -158,6 +159,8 @@ input:focus {
     align-items: center;
     gap: 7px;
     color: #64748b;
+    margin: 0;
+    font-weight: normal;
 }
 
 .remember input {
@@ -248,6 +251,32 @@ input:focus {
     color: #b91c1c;
 }
 
+.message.success {
+    display: block;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.message.info {
+    display: block;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
+.reset-box {
+    display: none;
+}
+
+.reset-box.active {
+    display: block;
+}
+
+.login-form.hidden {
+    display: none;
+}
+
 .demo {
     text-align: center;
     margin-top: 18px;
@@ -264,9 +293,12 @@ input:focus {
     h1 {
         font-size: 26px;
     }
+
+    .options {
+        gap: 10px;
+    }
 }
 </style>
-
 </head>
 
 <body>
@@ -274,116 +306,208 @@ input:focus {
 <header>
     <div class="navbar">
 
-```
-    <div class="brand">
+        <div class="brand">
 
-        <div class="logo">CV</div>
+            <div class="logo">CV</div>
 
-        <div class="brand-text">
-            <strong>CryptoVault</strong>
-            <span>DIGITAL ASSET PLATFORM</span>
+            <div class="brand-text">
+                <strong>CryptoVault</strong>
+                <span>DIGITAL ASSET PLATFORM</span>
+            </div>
+
         </div>
 
     </div>
-
-</div>
-```
-
 </header>
 
 <main>
 
-```
 <div class="login-card">
 
-    <span class="badge">SECURE SIGN IN</span>
+    <span class="badge" id="badgeText">SECURE SIGN IN</span>
 
-    <h1>Welcome Back</h1>
+    <h1 id="pageTitle">Welcome Back</h1>
 
-    <p class="subtitle">
+    <p class="subtitle" id="pageSubtitle">
         Sign in to access your CryptoVault dashboard
         and digital asset services.
     </p>
 
-    <form onsubmit="signIn(event)">
+    <!-- LOGIN FORM -->
 
-        <label for="email">
-            Email Address
-        </label>
+    <div id="loginFormContainer" class="login-form">
 
-        <input
-            type="email"
-            id="email"
-            placeholder="you@example.com"
-            required
-        >
+        <form onsubmit="signIn(event)">
 
-        <label for="password">
-            Password
-        </label>
-
-        <div class="password-box">
+            <label for="email">
+                Email Address
+            </label>
 
             <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                autocomplete="email"
                 required
             >
 
-            <button
-                type="button"
-                class="show-btn"
-                onclick="togglePassword()"
-                id="showButton"
-            >
-                Show
-            </button>
-
-        </div>
-
-        <div class="options">
-
-            <label class="remember">
-                <input type="checkbox" id="remember">
-                Remember me
+            <label for="password">
+                Password
             </label>
 
-            <a
-                href="#"
-                class="forgot"
-                onclick="forgotPassword(event)"
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword('password','showButton')"
+                    id="showButton"
+                >
+                    Show
+                </button>
+
+            </div>
+
+            <div class="options">
+
+                <label class="remember">
+                    <input
+                        type="checkbox"
+                        id="remember"
+                        checked
+                    >
+                    Remember me
+                </label>
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="showResetForm(event)"
+                >
+                    Forgot password?
+                </a>
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn"
+                id="loginButton"
             >
-                Forgot password?
-            </a>
+                Sign In
+            </button>
 
-        </div>
+            <div id="message" class="message"></div>
 
-        <button
-            type="submit"
-            class="primary-btn"
-            id="loginButton"
-        >
-            Sign In
-        </button>
+        </form>
 
-        <div id="message" class="message"></div>
+    </div>
 
-    </form>
+    <!-- PASSWORD RESET FORM -->
 
-    <div class="divider">
+    <div id="resetBox" class="reset-box">
+
+        <form onsubmit="resetPassword(event)">
+
+            <label for="newPassword">
+                New Password
+            </label>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                    minlength="6"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword('newPassword','newPasswordButton')"
+                    id="newPasswordButton"
+                >
+                    Show
+                </button>
+
+            </div>
+
+            <label for="confirmNewPassword">
+                Confirm New Password
+            </label>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="confirmNewPassword"
+                    placeholder="Confirm new password"
+                    minlength="6"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="togglePassword('confirmNewPassword','confirmNewPasswordButton')"
+                    id="confirmNewPasswordButton"
+                >
+                    Show
+                </button>
+
+            </div>
+
+            <button
+                type="submit"
+                class="primary-btn"
+                id="resetButton"
+            >
+                Update Password
+            </button>
+
+            <div
+                id="resetMessage"
+                class="message"
+            ></div>
+
+        </form>
+
+    </div>
+
+    <div
+        class="divider"
+        id="divider"
+    >
         OR
     </div>
 
-    <div class="create">
+    <div
+        class="create"
+        id="createAccountBox"
+    >
         Don't have an account?
-        <a href="register.html">Create Account</a>
+        <a href="register.html">
+            Create Account
+        </a>
     </div>
 
     <div class="security">
+
         <strong>Security Notice</strong><br>
-        CryptoVault uses Supabase Authentication to securely
-        manage your account login.
+
+        CryptoVault uses Supabase Authentication to
+        securely manage your account login and password.
+
     </div>
 
     <div class="demo">
@@ -391,52 +515,75 @@ input:focus {
     </div>
 
 </div>
-```
 
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+const SUPABASE_URL =
+    "https://zihxnxnviknexlqjjdot.supabase.co";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+const SUPABASE_ANON_KEY =
+    "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
+    );
 
 
-function togglePassword() {
+function showMessage(
+    message,
+    type = "error",
+    elementId = "message"
+) {
 
-    const password =
-        document.getElementById("password");
+    const box =
+        document.getElementById(elementId);
+
+    box.textContent = message;
+
+    box.className =
+        "message " + type;
+}
+
+
+function clearMessage(elementId = "message") {
+
+    const box =
+        document.getElementById(elementId);
+
+    box.textContent = "";
+    box.className = "message";
+}
+
+
+function togglePassword(inputId, buttonId) {
+
+    const input =
+        document.getElementById(inputId);
 
     const button =
-        document.getElementById("showButton");
+        document.getElementById(buttonId);
 
-    if (password.type === "password") {
+    if (input.type === "password") {
 
-        password.type = "text";
+        input.type = "text";
         button.textContent = "Hide";
 
     } else {
 
-        password.type = "password";
+        input.type = "password";
         button.textContent = "Show";
-
     }
-}
-
-
-function showError(message) {
-
-    const messageBox =
-        document.getElementById("message");
-
-    messageBox.textContent = message;
-    messageBox.className = "message error";
 }
 
 
@@ -444,98 +591,203 @@ async function signIn(event) {
 
     event.preventDefault();
 
+    clearMessage();
+
     const email =
-        document.getElementById("email").value.trim();
+        document.getElementById("email").value
+            .trim()
+            .toLowerCase();
 
     const password =
         document.getElementById("password").value;
-
-    const remember =
-        document.getElementById("remember").checked;
 
     const button =
         document.getElementById("loginButton");
 
     if (!email || !password) {
 
-        showError("Please enter your email and password.");
-        return;
+        showMessage(
+            "Please enter your email and password."
+        );
 
+        return;
     }
 
     button.disabled = true;
     button.textContent = "Signing In...";
 
-showError("Connecting to Supabase...");
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.signInWithPassword({
 
-const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
         email: email,
         password: password
-    });
 
+    });
 
     if (error) {
 
         button.disabled = false;
         button.textContent = "Sign In";
 
-        showError(error.message);
+        showMessage(
+            getFriendlyAuthError(error)
+        );
 
         return;
     }
 
-
-    if (!data.user) {
+    if (!data || !data.user) {
 
         button.disabled = false;
         button.textContent = "Sign In";
 
-        showError("Login was not completed. Please try again.");
+        showMessage(
+            "Login was not completed. Please try again."
+        );
 
         return;
     }
 
+    localStorage.setItem(
+        "cryptoVaultRemember",
+        document.getElementById("remember").checked
+            ? "true"
+            : "false"
+    );
 
-    if (remember) {
+    showMessage(
+        "Login successful. Opening your dashboard...",
+        "success"
+    );
 
-        localStorage.setItem(
-            "cryptoVaultRemember",
-            "true"
-        );
+    setTimeout(() => {
 
-    } else {
+        window.location.href =
+            "dashboard.html";
 
-        localStorage.removeItem(
-            "cryptoVaultRemember"
-        );
-
-    }
-
-
-    window.location.href = "dashboard.html";
+    }, 700);
 }
 
 
-async function forgotPassword(event) {
+function getFriendlyAuthError(error) {
+
+    const message =
+        String(error?.message || "")
+            .toLowerCase();
+
+    if (
+        message.includes("invalid login credentials")
+    ) {
+
+        return "Incorrect email or password.";
+    }
+
+    if (
+        message.includes("email not confirmed")
+    ) {
+
+        return "Your email has not been confirmed. Please check your email and confirm your account first.";
+    }
+
+    if (
+        message.includes("too many requests")
+    ) {
+
+        return "Too many attempts. Please wait and try again.";
+    }
+
+    if (
+        message.includes("network")
+    ) {
+
+        return "Network connection problem. Please check your internet connection.";
+    }
+
+    return error?.message ||
+        "Unable to complete authentication.";
+}
+
+
+async function showResetForm(event) {
 
     event.preventDefault();
 
+    clearMessage();
+
+    const emailInput =
+        document.getElementById("email");
+
     const email =
-        document.getElementById("email").value.trim();
+        emailInput.value.trim();
 
-    if (!email) {
+    if (email) {
 
-        showError(
-            "Enter your email address first, then select Forgot password."
-        );
+        const confirmed =
+            window.confirm(
+                "Send a password reset email to " +
+                email +
+                "?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        await sendPasswordReset(email);
 
         return;
     }
 
+    document
+        .getElementById("loginFormContainer")
+        .classList.add("hidden");
 
-    const { error } =
-        await supabaseClient.auth.resetPasswordForEmail(
+    document
+        .getElementById("resetBox")
+        .classList.add("active");
+
+    document
+        .getElementById("createAccountBox")
+        .style.display = "none";
+
+    document
+        .getElementById("divider")
+        .style.display = "none";
+
+    document
+        .getElementById("badgeText")
+        .textContent = "PASSWORD RESET";
+
+    document
+        .getElementById("pageTitle")
+        .textContent = "Reset Password";
+
+    document
+        .getElementById("pageSubtitle")
+        .textContent =
+            "Enter a new password for your CryptoVault account.";
+
+    showMessage(
+        "Enter your email on the sign-in form first if you want us to send a reset link.",
+        "info",
+        "resetMessage"
+    );
+}
+
+
+async function sendPasswordReset(email) {
+
+    showMessage(
+        "Sending password reset email...",
+        "info"
+    );
+
+    const {
+        error
+    } = await supabaseClient.auth
+        .resetPasswordForEmail(
             email,
             {
                 redirectTo:
@@ -543,22 +795,193 @@ async function forgotPassword(event) {
             }
         );
 
+    if (error) {
+
+        showMessage(
+            getFriendlyAuthError(error)
+        );
+
+        return;
+    }
+
+    showMessage(
+        "Password reset email sent. Check your email and follow the reset link.",
+        "success"
+    );
+}
+
+
+async function resetPassword(event) {
+
+    event.preventDefault();
+
+    const password =
+        document.getElementById("newPassword").value;
+
+    const confirmPassword =
+        document.getElementById("confirmNewPassword").value;
+
+    const button =
+        document.getElementById("resetButton");
+
+    clearMessage("resetMessage");
+
+    if (password.length < 6) {
+
+        showMessage(
+            "Password must contain at least 6 characters.",
+            "error",
+            "resetMessage"
+        );
+
+        return;
+    }
+
+    if (password !== confirmPassword) {
+
+        showMessage(
+            "Passwords do not match.",
+            "error",
+            "resetMessage"
+        );
+
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Updating...";
+
+    const {
+        error
+    } = await supabaseClient.auth.updateUser({
+
+        password: password
+
+    });
 
     if (error) {
 
-        showError(error.message);
-        return;
+        button.disabled = false;
+        button.textContent = "Update Password";
 
+        showMessage(
+            getFriendlyAuthError(error),
+            "error",
+            "resetMessage"
+        );
+
+        return;
     }
 
-
-    alert(
-        "A password reset email has been sent to your email address."
+    showMessage(
+        "Password updated successfully. You can now sign in with your new password.",
+        "success",
+        "resetMessage"
     );
 
+    await supabaseClient.auth.signOut();
+
+    setTimeout(() => {
+
+        window.location.href =
+            "login.html";
+
+    }, 1500);
 }
+
+
+async function checkExistingSession() {
+
+    const {
+        data
+    } = await supabaseClient.auth.getSession();
+
+    const session =
+        data?.session;
+
+    if (!session) {
+        return;
+    }
+
+    const hash =
+        window.location.hash;
+
+    const isRecovery =
+        hash.includes("type=recovery");
+
+    if (isRecovery) {
+
+        document
+            .getElementById("loginFormContainer")
+            .classList.add("hidden");
+
+        document
+            .getElementById("resetBox")
+            .classList.add("active");
+
+        document
+            .getElementById("createAccountBox")
+            .style.display = "none";
+
+        document
+            .getElementById("divider")
+            .style.display = "none";
+
+        document
+            .getElementById("badgeText")
+            .textContent =
+                "PASSWORD RESET";
+
+        document
+            .getElementById("pageTitle")
+            .textContent =
+                "Create New Password";
+
+        document
+            .getElementById("pageSubtitle")
+            .textContent =
+                "Choose a new password for your CryptoVault account.";
+
+        return;
+    }
+
+    window.location.href =
+        "dashboard.html";
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        if (
+            event === "SIGNED_IN" &&
+            session
+        ) {
+
+            if (
+                !window.location.hash
+                    .includes("type=recovery")
+            ) {
+
+                window.location.href =
+                    "dashboard.html";
+            }
+        }
+    }
+);
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        checkExistingSession();
+
+    }
+);
 
 </script>
 
 </body>
 </html>
+```
