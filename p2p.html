@@ -2787,9 +2787,7 @@ async function loadAll(){
 
         const {
             data
-        } =
-        await supabaseClient.auth.getUser();
-
+        } = await supabaseClient.auth.getUser();
 
         if(!data || !data.user){
 
@@ -2797,12 +2795,9 @@ async function loadAll(){
 
         }
 
-
-        currentUser =
-            data.user;
+        currentUser = data.user;
 
     }
-
 
     await Promise.all([
         loadOffers(),
@@ -2811,7 +2806,6 @@ async function loadAll(){
     ]);
 
 }
-
 
 /* ============================================================
    MARKET SIDE
