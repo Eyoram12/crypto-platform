@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,16 +8,6 @@
 <title>CryptoVault | Create Account</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "https://zihxnxnviknexlqjjdot.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
-
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
-</script>
 
 <style>
 * {
@@ -43,7 +33,6 @@ header {
     padding: 16px 22px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .brand {
@@ -260,15 +249,38 @@ input:focus {
     line-height: 1.6;
 }
 
-.demo {
-    text-align: center;
-    margin-top: 18px;
-    color: #64748b;
-    font-size: 11px;
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 13px;
     line-height: 1.5;
 }
 
+.message.error {
+    display: block;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.message.success {
+    display: block;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.message.info {
+    display: block;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
 @media (max-width: 500px) {
+
     .register-card {
         padding: 25px;
     }
@@ -285,37 +297,43 @@ input:focus {
 
 <header>
 
-```
-<div class="navbar">
+    <div class="navbar">
 
-    <div class="brand">
+        <div class="brand">
 
-        <div class="logo">CV</div>
+            <div class="logo">CV</div>
 
-        <div class="brand-text">
-            <strong>CryptoVault</strong>
-            <span>DIGITAL ASSET PLATFORM</span>
+            <div class="brand-text">
+
+                <strong>CryptoVault</strong>
+
+                <span>
+                    DIGITAL ASSET PLATFORM
+                </span>
+
+            </div>
+
         </div>
 
     </div>
-
-</div>
-```
 
 </header>
 
 <main>
 
-```
 <div class="register-card">
 
-    <span class="badge">CREATE ACCOUNT</span>
+    <span class="badge">
+        CREATE ACCOUNT
+    </span>
 
-    <h1>Join CryptoVault</h1>
+    <h1>
+        Join CryptoVault
+    </h1>
 
     <p class="subtitle">
-        Create your CryptoVault account to access your
-        digital asset dashboard.
+        Create your CryptoVault account to access
+        your digital asset dashboard.
     </p>
 
     <form onsubmit="createAccount(event)">
@@ -328,6 +346,8 @@ input:focus {
             type="text"
             id="fullName"
             placeholder="Enter your full name"
+            autocomplete="name"
+            maxlength="100"
             required
         >
 
@@ -339,6 +359,7 @@ input:focus {
             type="email"
             id="email"
             placeholder="you@example.com"
+            autocomplete="email"
             required
         >
 
@@ -352,15 +373,17 @@ input:focus {
                 type="password"
                 id="password"
                 placeholder="Create a password"
+                autocomplete="new-password"
                 required
                 minlength="6"
+                maxlength="72"
                 oninput="checkPassword()"
             >
 
             <button
                 type="button"
                 class="show-btn"
-                onclick="togglePassword('password', 'showPassword')"
+                onclick="togglePassword('password','showPassword')"
                 id="showPassword"
             >
                 Show
@@ -369,10 +392,12 @@ input:focus {
         </div>
 
         <div class="password-strength">
+
             <div
                 class="strength-bar"
                 id="strengthBar"
             ></div>
+
         </div>
 
         <div
@@ -392,14 +417,16 @@ input:focus {
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm your password"
+                autocomplete="new-password"
                 required
                 minlength="6"
+                maxlength="72"
             >
 
             <button
                 type="button"
                 class="show-btn"
-                onclick="togglePassword('confirmPassword', 'showConfirm')"
+                onclick="togglePassword('confirmPassword','showConfirm')"
                 id="showConfirm"
             >
                 Show
@@ -416,20 +443,25 @@ input:focus {
             >
 
             <span>
+
                 I agree to the
+
                 <a
                     href="#"
                     onclick="showTerms(event)"
                 >
                     Terms of Use
                 </a>
+
                 and
+
                 <a
                     href="#"
                     onclick="showPrivacy(event)"
                 >
                     Privacy Notice
                 </a>.
+
             </span>
 
         </label>
@@ -441,6 +473,11 @@ input:focus {
         >
             Create Account
         </button>
+
+        <div
+            id="message"
+            class="message"
+        ></div>
 
     </form>
 
@@ -474,13 +511,60 @@ input:focus {
     </div>
 
 </div>
-```
 
 </main>
 
 <script>
 
-function togglePassword(inputId, buttonId) {
+const SUPABASE_URL =
+    "https://zihxnxnviknexlqjjdot.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
+    );
+
+
+function showMessage(
+    message,
+    type = "error"
+) {
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = message;
+
+    box.className =
+        "message " + type;
+}
+
+
+function clearMessage() {
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = "";
+    box.className = "message";
+}
+
+
+function togglePassword(
+    inputId,
+    buttonId
+) {
 
     const input =
         document.getElementById(inputId);
@@ -526,6 +610,10 @@ function checkPassword() {
         strength++;
     }
 
+    if (/[a-z]/.test(password)) {
+        strength++;
+    }
+
     if (/[0-9]/.test(password)) {
         strength++;
     }
@@ -537,27 +625,77 @@ function checkPassword() {
     if (password.length === 0) {
 
         bar.style.width = "0%";
+
         text.textContent =
             "Enter at least 6 characters.";
 
     } else if (strength <= 2) {
 
-        bar.style.width = "35%";
+        bar.style.width = "30%";
+
         text.textContent =
             "Password strength: Weak";
 
     } else if (strength <= 4) {
 
-        bar.style.width = "70%";
+        bar.style.width = "65%";
+
         text.textContent =
             "Password strength: Good";
 
     } else {
 
         bar.style.width = "100%";
+
         text.textContent =
             "Password strength: Strong";
     }
+}
+
+
+function getFriendlyAuthError(error) {
+
+    const message =
+        String(error?.message || "")
+            .toLowerCase();
+
+    if (
+        message.includes("user already registered")
+    ) {
+
+        return "An account with this email already exists. Please sign in.";
+    }
+
+    if (
+        message.includes("password")
+    ) {
+
+        return error.message;
+    }
+
+    if (
+        message.includes("invalid email")
+    ) {
+
+        return "Please enter a valid email address.";
+    }
+
+    if (
+        message.includes("too many requests")
+    ) {
+
+        return "Too many requests. Please wait and try again.";
+    }
+
+    if (
+        message.includes("network")
+    ) {
+
+        return "Network connection problem. Please check your internet connection.";
+    }
+
+    return error?.message ||
+        "Unable to create your account.";
 }
 
 
@@ -565,56 +703,68 @@ async function createAccount(event) {
 
     event.preventDefault();
 
+    clearMessage();
+
     const fullName =
-        document.getElementById("fullName").value.trim();
+        document.getElementById("fullName")
+            .value
+            .trim();
 
     const email =
-        document.getElementById("email").value.trim();
+        document.getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
 
     const password =
-        document.getElementById("password").value;
+        document.getElementById("password")
+            .value;
 
     const confirmPassword =
-        document.getElementById("confirmPassword").value;
+        document.getElementById("confirmPassword")
+            .value;
 
     const terms =
-        document.getElementById("terms").checked;
+        document.getElementById("terms")
+            .checked;
 
-    const registerButton =
+    const button =
         document.getElementById("registerButton");
 
 
-    if (!fullName) {
+    if (fullName.length < 2) {
 
-        alert("Please enter your full name.");
-        return;
-    }
+        showMessage(
+            "Please enter your full name."
+        );
 
-
-    if (!email) {
-
-        alert("Please enter your email address.");
         return;
     }
 
 
     if (password.length < 6) {
 
-        alert("Password must contain at least 6 characters.");
+        showMessage(
+            "Password must contain at least 6 characters."
+        );
+
         return;
     }
 
 
     if (password !== confirmPassword) {
 
-        alert("Passwords do not match.");
+        showMessage(
+            "Passwords do not match."
+        );
+
         return;
     }
 
 
     if (!terms) {
 
-        alert(
+        showMessage(
             "Please accept the Terms of Use and Privacy Notice."
         );
 
@@ -622,81 +772,96 @@ async function createAccount(event) {
     }
 
 
-    registerButton.disabled = true;
-    registerButton.textContent = "Creating Account...";
+    button.disabled = true;
+    button.textContent =
+        "Creating Account...";
 
 
-   const { data, error } =
-await supabaseClient.auth.signUp({
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signUp({
 
-    email: email,
+            email: email,
 
-    password: password,
+            password: password,
 
-    options: {
+            options: {
 
-        emailRedirectTo:
-            "https://eyoram12.github.io/crypto-platform/login.html",
+                emailRedirectTo:
+                    "https://eyoram12.github.io/crypto-platform/login.html",
 
-        data: {
-            full_name: fullName
-        }
+                data: {
 
-    }
+                    full_name:
+                        fullName
 
-});
+                }
+
+            }
+
+        });
 
 
     if (error) {
 
-        registerButton.disabled = false;
-        registerButton.textContent = "Create Account";
+        button.disabled = false;
 
-        alert(error.message);
+        button.textContent =
+            "Create Account";
 
-        return;
-    }
-
-
-    if (!data.user) {
-
-        registerButton.disabled = false;
-        registerButton.textContent = "Create Account";
-
-        alert("Registration could not be completed.");
+        showMessage(
+            getFriendlyAuthError(error)
+        );
 
         return;
     }
 
 
-    localStorage.setItem(
-        "cryptoVaultDemoUser",
-        JSON.stringify({
+    if (!data || !data.user) {
 
-            name: fullName,
+        button.disabled = false;
 
-            email: email,
+        button.textContent =
+            "Create Account";
 
-            id: data.user.id
+        showMessage(
+            "Registration could not be completed."
+        );
 
-        })
-    );
+        return;
+    }
 
 
     if (data.session) {
 
-        alert("Account created successfully.");
-
-    } else {
-
-        alert(
-            "Account created successfully. Please check your email to confirm your account."
+        showMessage(
+            "Account created successfully. Opening your dashboard...",
+            "success"
         );
 
+        setTimeout(() => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }, 1000);
+
+        return;
     }
 
 
-    window.location.href = "login.html";
+    showMessage(
+        "Account created successfully. Please check your email and confirm your account before signing in.",
+        "success"
+    );
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "Create Account";
 }
 
 
@@ -704,8 +869,8 @@ function showTerms(event) {
 
     event.preventDefault();
 
-    alert(
-        "Terms of Use: CryptoVault is a digital asset platform interface."
+    window.alert(
+        "Terms of Use: CryptoVault is a digital asset platform interface. Use of the platform is subject to applicable laws and the rules presented by the platform."
     );
 }
 
@@ -714,12 +879,38 @@ function showPrivacy(event) {
 
     event.preventDefault();
 
-    alert(
-        "Privacy Notice: Your authentication account is managed through Supabase."
+    window.alert(
+        "Privacy Notice: Account authentication is handled through Supabase. CryptoVault does not store your password in this webpage."
     );
 }
+
+
+async function checkExistingSession() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+    if (data?.session) {
+
+        window.location.href =
+            "dashboard.html";
+    }
+}
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        checkExistingSession();
+
+    }
+);
 
 </script>
 
 </body>
 </html>
+```
