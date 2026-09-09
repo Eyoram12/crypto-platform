@@ -1,328 +1,3834 @@
-<!-- CONTINUATION FROM LAST BLOCK: add new best-practice features and modular elements -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CryptoVault P2P Marketplace</title>
+
+<meta name="description" content="CryptoVault secure peer-to-peer marketplace">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+<style>
+
+*{
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+
+
+:root{
+
+    --bg:#07111f;
+
+    --bg2:#0b1728;
+
+    --panel:#101e31;
+
+    --panel2:#14243a;
+
+    --border:#233650;
+
+    --text:#f4f7fb;
+
+    --muted:#91a4bd;
+
+    --primary:#4f8cff;
+
+    --primary2:#6aa0ff;
+
+    --green:#25c58a;
+
+    --red:#ef5b68;
+
+    --yellow:#f3bd4f;
+
+}
+
+
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+}
+
+
+
+button,
+
+input,
+
+select,
+
+textarea{
+
+    font:inherit;
+
+}
+
+
+
+button{
+
+    cursor:pointer;
+
+}
+
+
+
+button:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.6;
+
+}
+
+
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+
+/* ============================================================
+
+   HEADER
+
+   ============================================================ */
+
+
+
+.header{
+
+    height:72px;
+
+    background:#081525;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 28px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:21px;
+
+    font-weight:800;
+
+}
+
+
+
+.logo-icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:11px;
+
+    background:linear-gradient(135deg,#4f8cff,#7b5cff);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:900;
+
+}
+
+
+
+.nav{
+
+    display:flex;
+
+    gap:5px;
+
+}
+
+
+
+.nav a{
+
+    padding:10px 13px;
+
+    color:var(--muted);
+
+    border-radius:8px;
+
+    font-size:14px;
+
+}
+
+
+
+.nav a:hover,
+
+.nav a.active{
+
+    background:#13243a;
+
+    color:#fff;
+
+}
+
+
+
+.header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+
+
+.user-email{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+
+.avatar{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#4f8cff,#9c5cff);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+}
+
+
+
+/* ============================================================
+
+   PAGE
+
+   ============================================================ */
+
+
+
+.page{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:28px;
+
+}
+
+
+
+.hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    gap:20px;
+
+    margin-bottom:22px;
+
+}
+
+
+
+.hero h1{
+
+    font-size:32px;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.hero p{
+
+    color:var(--muted);
+
+    max-width:760px;
+
+    line-height:1.5;
+
+}
+
+
+
+.hero-actions{
+
+    display:flex;
+
+    gap:9px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+/* ============================================================
+
+   BUTTONS
+
+   ============================================================ */
+
+
+
+.btn{
+
+    border:none;
+
+    border-radius:9px;
+
+    padding:11px 16px;
+
+    font-weight:700;
+
+    transition:.2s;
+
+}
+
+
+
+.btn-primary{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+
+.btn-primary:hover{
+
+    background:var(--primary2);
+
+}
+
+
+
+.btn-secondary{
+
+    background:#14263d;
+
+    border:1px solid var(--border);
+
+    color:#fff;
+
+}
+
+
+
+.btn-secondary:hover{
+
+    background:#1a304d;
+
+}
+
+
+
+.btn-success{
+
+    background:rgba(37,197,138,.13);
+
+    color:#46d9a2;
+
+    border:1px solid rgba(37,197,138,.25);
+
+}
+
+
+
+.btn-success:hover{
+
+    background:rgba(37,197,138,.2);
+
+}
+
+
+
+.btn-danger{
+
+    background:rgba(239,91,104,.12);
+
+    color:#ff7d88;
+
+    border:1px solid rgba(239,91,104,.25);
+
+}
+
+
+
+.btn-danger:hover{
+
+    background:rgba(239,91,104,.2);
+
+}
+
+
+
+.btn-warning{
+
+    background:rgba(243,189,79,.12);
+
+    color:#f3bd4f;
+
+    border:1px solid rgba(243,189,79,.25);
+
+}
+
+
+
+.btn-warning:hover{
+
+    background:rgba(243,189,79,.2);
+
+}
+
+
+
+.btn-small{
+
+    padding:8px 11px;
+
+    font-size:12px;
+
+}
+
+
+
+.full{
+
+    width:100%;
+
+}
+
+
+
+/* ============================================================
+
+   MARKET BAR
+
+   ============================================================ */
+
+
+
+.market-bar{
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:15px;
+
+    display:flex;
+
+    align-items:end;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.market-tabs{
+
+    display:flex;
+
+    background:#091525;
+
+    border-radius:10px;
+
+    padding:4px;
+
+}
+
+
+
+.market-tab{
+
+    border:0;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    padding:10px 20px;
+
+    border-radius:7px;
+
+    font-weight:700;
+
+}
+
+
+
+.market-tab.active{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+
+.control{
+
+    flex:1;
+
+    min-width:135px;
+
+}
+
+
+
+.control.search{
+
+    flex:1.5;
+
+    min-width:210px;
+
+}
+
+
+
+.control label{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-bottom:6px;
+
+}
+
+
+
+.control input,
+
+.control select,
+
+.quick-field input,
+
+.quick-field select{
+
+    width:100%;
+
+    background:#0a1727;
+
+    color:#fff;
+
+    border:1px solid var(--border);
+
+    padding:11px;
+
+    border-radius:8px;
+
+    outline:none;
+
+}
+
+
+
+.control input:focus,
+
+.control select:focus,
+
+.quick-field input:focus,
+
+.quick-field select:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+
+/* ============================================================
+
+   STATS
+
+   ============================================================ */
+
+
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.stat{
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:15px;
+
+}
+
+
+
+.stat-label{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-bottom:6px;
+
+}
+
+
+
+.stat-value{
+
+    font-size:19px;
+
+    font-weight:800;
+
+}
+
+
+
+.green{
+
+    color:var(--green);
+
+}
+
+
+
+.yellow{
+
+    color:var(--yellow);
+
+}
+
+
+
+.red{
+
+    color:var(--red);
+
+}
+
+
+
+/* ============================================================
+
+   MAIN GRID
+
+   ============================================================ */
+
+
+
+.main-grid{
+
+    display:grid;
+
+    grid-template-columns:minmax(0,1fr) 360px;
+
+    gap:18px;
+
+}
+
+
+
+.marketplace,
+
+.quick-trade,
+
+.trade-center,
+
+.my-offers{
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+
+
+.section-header{
+
+    padding:17px 18px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+.section-header h2{
+
+    font-size:17px;
+
+}
+
+
+
+.section-header span{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+
+/* ============================================================
+
+   OFFERS
+
+   ============================================================ */
+
+
+
+.offers{
+
+    padding:13px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:11px;
+
+}
+
+
+
+.offer{
+
+    border:1px solid var(--border);
+
+    background:#0c192a;
+
+    border-radius:13px;
+
+    padding:15px;
+
+    transition:.2s;
+
+}
+
+
+
+.offer:hover{
+
+    border-color:#365277;
+
+    transform:translateY(-1px);
+
+}
+
+
+
+.offer-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+
+
+.trader{
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+
+}
+
+
+
+.trader-avatar{
+
+    width:43px;
+
+    height:43px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#4f8cff,#785cff);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+}
+
+
+
+.trader-name{
+
+    font-weight:800;
+
+    font-size:14px;
+
+}
+
+
+
+.price{
+
+    text-align:right;
+
+}
+
+
+
+.price strong{
+
+    display:block;
+
+    font-size:21px;
+
+}
+
+
+
+.price small{
+
+    color:var(--muted);
+
+}
+
+
+
+.offer-details{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
+
+    margin:14px 0;
+
+}
+
+
+
+.detail{
+
+    background:#101f32;
+
+    padding:10px;
+
+    border-radius:8px;
+
+}
+
+
+
+.detail small{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    margin-bottom:4px;
+
+}
+
+
+
+.detail strong{
+
+    font-size:12px;
+
+}
+
+
+
+.payment-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+.payment-tags{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:5px;
+
+}
+
+
+
+.tag{
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    background:#172b44;
+
+    color:#b8c9de;
+
+    font-size:10px;
+
+}
+
+
+
+.offer-actions{
+
+    display:flex;
+
+    gap:7px;
+
+}
+
+
+
+.empty{
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+}
+
+
+
+.empty strong{
+
+    display:block;
+
+    color:#fff;
+
+    font-size:16px;
+
+    margin-bottom:6px;
+
+}
+
+
+
+/* ============================================================
+
+   QUICK TRADE
+
+   ============================================================ */
+
+
+
+.quick-body{
+
+    padding:18px;
+
+}
+
+
+
+.selected-trader{
+
+    background:#0b192a;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.selected-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+.selected-avatar{
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#4f8cff,#7c5cff);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+}
+
+
+
+.quick-field{
+
+    margin-bottom:14px;
+
+}
+
+
+
+.quick-field label{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-bottom:7px;
+
+}
+
+
+
+.calculation{
+
+    border-top:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    padding:15px 0;
+
+    margin:10px 0 15px;
+
+}
+
+
+
+.calc-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:9px;
+
+    font-size:13px;
+
+}
+
+
+
+.calc-row:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+
+.calc-row span:first-child{
+
+    color:var(--muted);
+
+}
+
+
+
+/* ============================================================
+
+   TRADE CENTER
+
+   ============================================================ */
+
+
+
+.trade-center{
+
+    margin-top:18px;
+
+}
+
+
+
+.trades{
+
+    padding:13px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+.trade-card{
+
+    background:#0c192a;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:15px;
+
+}
+
+
+
+.trade-card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:12px;
+
+}
+
+
+
+.trade-id{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:3px;
+
+}
+
+
+
+.status-badge{
+
+    padding:5px 9px;
+
+    border-radius:7px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+
+.status-active{
+
+    background:rgba(37,197,138,.12);
+
+    color:#46d9a2;
+
+}
+
+
+
+.status-inactive{
+
+    background:rgba(239,91,104,.12);
+
+    color:#ff7d88;
+
+}
+
+
+
+.status-awaiting_payment{
+
+    background:rgba(243,189,79,.12);
+
+    color:var(--yellow);
+
+}
+
+
+
+.status-payment_sent{
+
+    background:rgba(79,140,255,.12);
+
+    color:#8bb4ff;
+
+}
+
+
+
+.status-completed{
+
+    background:rgba(37,197,138,.12);
+
+    color:#46d9a2;
+
+}
+
+
+
+.status-cancelled,
+
+.status-canceled,
+
+.status-closed{
+
+    background:rgba(239,91,104,.12);
+
+    color:#ff7d88;
+
+}
+
+
+
+.trade-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:10px;
+
+}
+
+
+
+.trade-grid div{
+
+    background:#101f32;
+
+    padding:9px;
+
+    border-radius:7px;
+
+}
+
+
+
+.trade-grid small{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    margin-bottom:4px;
+
+}
+
+
+
+.trade-grid strong{
+
+    font-size:12px;
+
+}
+
+
+
+.trade-card-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:12px;
+
+}
+
+
+
+/* ============================================================
+
+   MY OFFERS
+
+   ============================================================ */
+
+
+
+.my-offers{
+
+    margin-top:18px;
+
+}
+
+
+
+.my-offers-list{
+
+    padding:13px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+.my-offer-card{
+
+    background:#0c192a;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:15px;
+
+}
+
+
+
+.my-offer-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+}
+
+
+
+.my-offer-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.my-offer-title strong{
+
+    font-size:15px;
+
+}
+
+
+
+.side-badge{
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+}
+
+
+
+.side-sell{
+
+    background:rgba(239,91,104,.12);
+
+    color:#ff7d88;
+
+}
+
+
+
+.side-buy{
+
+    background:rgba(37,197,138,.12);
+
+    color:#46d9a2;
+
+}
+
+
+
+.my-offer-price{
+
+    font-size:18px;
+
+    font-weight:800;
+
+    text-align:right;
+
+}
+
+
+
+.my-offer-meta{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:4px;
+
+}
+
+
+
+.my-offer-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
+
+    margin-top:13px;
+
+}
+
+
+
+.my-offer-grid div{
+
+    background:#101f32;
+
+    padding:10px;
+
+    border-radius:8px;
+
+}
+
+
+
+.my-offer-grid small{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    margin-bottom:4px;
+
+}
+
+
+
+.my-offer-grid strong{
+
+    font-size:12px;
+
+}
+
+
+
+.my-offer-payments{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:5px;
+
+    margin-top:12px;
+
+}
+
+
+
+.my-offer-terms{
+
+    margin-top:11px;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    background:#0a1727;
+
+    color:#aebdd0;
+
+    font-size:11px;
+
+    line-height:1.5;
+
+}
+
+
+
+.my-offer-actions{
+
+    display:flex;
+
+    gap:7px;
+
+    flex-wrap:wrap;
+
+    margin-top:13px;
+
+}
+
+
+
+.my-offer-actions button{
+
+    flex:0 0 auto;
+
+}
+
+
+
+/* ============================================================
+
+   FORM STYLES
+
+   ============================================================ */
+
+
+
+.offer-modal{
+
+    width:min(720px,95vw);
+
+    max-height:94vh;
+
+    overflow-y:auto;
+
+}
+
+
+
+.modal-subtitle{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+
+.form-group{
+
+    margin-bottom:18px;
+
+}
+
+
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    font-weight:600;
+
+    font-size:13px;
+
+}
+
+
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:12px 14px;
+
+    border:1px solid #374151;
+
+    border-radius:8px;
+
+    background:#111827;
+
+    color:#fff;
+
+    font-size:14px;
+
+    outline:none;
+
+}
+
+
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:100px;
+
+}
+
+
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+
+.form-group input:disabled,
+
+.form-group select:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+}
+
+
+
+.form-group small{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    line-height:1.4;
+
+}
+
+
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+}
+
+
+
+.payment-method-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:10px;
+
+    margin-top:8px;
+
+}
+
+
+
+.payment-method-option{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+    padding:12px;
+
+    border:1px solid #374151;
+
+    border-radius:8px;
+
+    background:#111827;
+
+    cursor:pointer;
+
+}
+
+
+
+.payment-method-option:hover{
+
+    border-color:var(--primary);
+
+}
+
+
+
+.payment-method-option input{
+
+    width:auto;
+
+    margin-top:2px;
+
+}
+
+
+
+.payment-method-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+
+}
+
+
+
+.payment-method-name{
+
+    font-weight:600;
+
+    font-size:13px;
+
+}
+
+
+
+.payment-method-description{
+
+    font-size:11px;
+
+    color:var(--muted);
+
+    line-height:1.4;
+
+}
+
+
+
+.modal-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+
+
+/* ============================================================
+
+   MODALS
+
+   ============================================================ */
+
+
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.78);
+
+    z-index:500;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+}
+
+
+
+.modal.show{
+
+    display:flex;
+
+}
+
+
+
+.modal-box{
+
+    width:100%;
+
+    max-width:680px;
+
+    max-height:94vh;
+
+    overflow-y:auto;
+
+    background:#0e1d30;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+}
+
+
+
+.modal-header{
+
+    padding:18px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:sticky;
+
+    top:0;
+
+    background:#0e1d30;
+
+    z-index:2;
+
+}
+
+
+
+.modal-header h3,
+
+.modal-header h2{
+
+    font-size:18px;
+
+}
+
+
+
+.close{
+
+    border:0;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    font-size:24px;
+
+    line-height:1;
+
+}
+
+
+
+.close:hover{
+
+    color:#fff;
+
+}
+
+
+
+.modal-body{
+
+    padding:20px;
+
+}
+
+
+
+/* ============================================================
+
+   REVIEW / PAYMENT
+
+   ============================================================ */
+
+
+
+.review-card{
+
+    background:#0a1727;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    padding:15px;
+
+    margin-bottom:14px;
+
+}
+
+
+
+.review-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-bottom:10px;
+
+    font-size:13px;
+
+}
+
+
+
+.review-row:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+
+.review-row span{
+
+    color:var(--muted);
+
+}
+
+
+
+.warning{
+
+    background:rgba(243,189,79,.08);
+
+    border:1px solid rgba(243,189,79,.2);
+
+    color:#e7c87d;
+
+    padding:12px;
+
+    border-radius:9px;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+}
+
+
+
+.payment-box{
+
+    background:#091626;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    padding:15px;
+
+    margin-top:14px;
+
+}
+
+
+
+.payment-box h4{
+
+    margin-bottom:8px;
+
+}
+
+
+
+.payment-box p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    margin-bottom:12px;
+
+}
+
+
+
+.payment-reference{
+
+    width:100%;
+
+    background:#07111f;
+
+    border:1px solid var(--border);
+
+    color:#fff;
+
+    padding:13px;
+
+    border-radius:8px;
+
+    outline:none;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.payment-reference:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+
+.trade-actions{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    margin-top:15px;
+
+}
+
+
+
+.trade-actions button:disabled{
+
+    opacity:.45;
+
+}
+
+
+
+.success-box{
+
+    background:rgba(37,197,138,.08);
+
+    border:1px solid rgba(37,197,138,.2);
+
+    color:#6de2b5;
+
+    padding:12px;
+
+    border-radius:9px;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    margin-top:12px;
+
+}
+
+
+
+/* ============================================================
+
+   CHAT
+
+   ============================================================ */
+
+
+
+.chat-box{
+
+    margin-top:16px;
+
+    background:#091626;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+
+
+.chat-header{
+
+    padding:13px 15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+.chat-header strong{
+
+    font-size:14px;
+
+}
+
+
+
+.chat-header span{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+}
+
+
+
+.chat-messages{
+
+    height:280px;
+
+    overflow-y:auto;
+
+    padding:13px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
+
+    scroll-behavior:smooth;
+
+}
+
+
+
+.chat-empty{
+
+    min-height:240px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    padding:20px;
+
+}
+
+
+
+.chat-message{
+
+    display:flex;
+
+    flex-direction:column;
+
+    max-width:82%;
+
+}
+
+
+
+.chat-message.mine{
+
+    align-self:flex-end;
+
+    align-items:flex-end;
+
+}
+
+
+
+.chat-message.theirs{
+
+    align-self:flex-start;
+
+    align-items:flex-start;
+
+}
+
+
+
+.chat-sender{
+
+    margin-bottom:3px;
+
+    color:#9eb4cf;
+
+    font-size:10px;
+
+    font-weight:700;
+
+}
+
+
+
+.chat-bubble{
+
+    padding:9px 12px;
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    line-height:1.45;
+
+    word-break:break-word;
+
+    white-space:pre-wrap;
+
+}
+
+
+
+.chat-message.mine .chat-bubble{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    border-bottom-right-radius:3px;
+
+}
+
+
+
+.chat-message.theirs .chat-bubble{
+
+    background:#14263d;
+
+    color:#e8eef7;
+
+    border-bottom-left-radius:3px;
+
+}
+
+
+
+.chat-meta{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+
+
+.chat-input-row{
+
+    display:flex;
+
+    gap:7px;
+
+    padding:10px;
+
+    border-top:1px solid var(--border);
+
+}
+
+
+
+.chat-input{
+
+    flex:1;
+
+    min-width:0;
+
+    background:#07111f;
+
+    color:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    padding:11px;
+
+    outline:none;
+
+}
+
+
+
+.chat-input:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+
+.chat-send{
+
+    border:0;
+
+    border-radius:8px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    padding:0 16px;
+
+    font-weight:700;
+
+}
+
+
+
+.chat-send:hover{
+
+    background:var(--primary2);
+
+}
+
+
+
+.chat-send:disabled{
+
+    opacity:.5;
+
+}
+
+
+
+.chat-status{
+
+    padding:0 12px 9px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+
+/* ============================================================
+
+   OTHER
+
+   ============================================================ */
+
+
+
+.notification{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    background:#14263d;
+
+    border:1px solid var(--border);
+
+    padding:14px 17px;
+
+    border-radius:10px;
+
+    max-width:340px;
+
+    display:none;
+
+    z-index:900;
+
+    font-size:13px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+}
+
+
+
+.notification.show{
+
+    display:block;
+
+}
+
+
+
+.loading{
+
+    padding:35px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+}
+
+
+
+/* ============================================================
+
+   RESPONSIVE
+
+   ============================================================ */
+
+
+
+@media(max-width:1150px){
+
+
+
+    .main-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .stats{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+
+
+@media(max-width:800px){
+
+
+
+    .header{
+
+        padding:0 14px;
+
+    }
+
+
+
+    .nav{
+
+        display:none;
+
+    }
+
+
+
+    .user-email{
+
+        display:none;
+
+    }
+
+
+
+    .page{
+
+        padding:16px;
+
+    }
+
+
+
+    .hero{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+
+
+    .hero h1{
+
+        font-size:25px;
+
+    }
+
+
+
+    .offer-details,
+
+    .trade-grid,
+
+    .my-offer-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+
+
+    .my-offer-top{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .my-offer-price{
+
+        text-align:left;
+
+    }
+
+}
+
+
+
+@media(max-width:520px){
+
+
+
+    .stats{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+
+
+    .market-bar{
+
+        display:block;
+
+    }
+
+
+
+    .control{
+
+        margin-bottom:10px;
+
+    }
+
+
+
+    .offer-top{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .price{
+
+        text-align:left;
+
+    }
+
+
+
+    .payment-row{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+
+
+    .offer-actions{
+
+        width:100%;
+
+    }
+
+
+
+    .offer-actions button{
+
+        flex:1;
+
+    }
+
+
+
+    .trade-actions{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .chat-messages{
+
+        height:250px;
+
+    }
+
+
+
+    .chat-message{
+
+        max-width:90%;
+
+    }
+
+
+
+    .chat-input-row{
+
+        padding:8px;
+
+    }
+
+
+
+    .chat-send{
+
+        padding:0 13px;
+
+    }
+
+
+
+    .modal-body{
+
+        padding:14px;
+
+    }
+
+
+
+    .review-row{
+
+        font-size:12px;
+
+    }
+
+
+
+    .form-row,
+
+    .payment-method-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .modal-actions{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .modal-actions button{
+
+        width:100%;
+
+    }
+
+
+
+    .my-offer-actions{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .my-offer-actions button{
+
+        width:100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<header class="header">
+
+
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">C</div>
+
+        <span>CryptoVault</span>
+
+    </a>
+
+
+
+    <nav class="nav">
+
+        <a href="index.html">Home</a>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="p2p.html" class="active">P2P</a>
+
+        <a href="transactions.html">Transactions</a>
+
+        <a href="settings.html">Settings</a>
+
+    </nav>
+
+
+
+    <div class="header-right">
+
+        <div class="user-email" id="userEmail">Loading...</div>
+
+        <div class="avatar" id="avatar">G</div>
+
+    </div>
+
+
+
+</header>
+
+
+
+<main class="page">
+
+
+
+<section class="hero">
+
+
+
+    <div>
+
+        <h1>Professional P2P Marketplace</h1>
+
+
+
+        <p>
+
+            Buy and sell crypto directly with other verified traders.
+
+            CryptoVault protects the crypto through the P2P trade workflow.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="hero-actions">
+
+
+
+        <button class="btn btn-secondary"
+
+                onclick="loadAll()">
+
+            ↻ Refresh
+
+        </button>
+
+
+
+        <button class="btn btn-primary"
+
+                onclick="openCreateOfferModal()">
+
+            ＋ Create Offer
+
+        </button>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+
 
 <!-- ============================================================
-     DISPUTE RESOLUTION MODAL (Escrow Safety)
+
+     MARKET FILTERS
+
      ============================================================ -->
 
-<div class="modal" id="disputeModal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <div>
-                <h3>Open Trade Dispute</h3>
-                <div class="modal-subtitle">Request CryptoVault Moderator Assistance</div>
-            </div>
-            <button class="close" onclick="closeDisputeModal()">&times;</button>
-        </div>
 
-        <div class="modal-body">
-            <div class="warning" style="margin-bottom:15px;">
-                ⚠️ Fraudulent disputes violate CryptoVault Terms. Submitting false evidence will result in immediate account suspension and loss of platform reputation.
-            </div>
 
-            <form id="disputeForm" onsubmit="handleDisputeSubmit(event)">
-                <div class="form-group">
-                    <label for="disputeReason">Reason for Dispute</label>
-                    <select id="disputeReason" required>
-                        <option value="">Select a reason...</option>
-                        <option value="payment_not_received">Paid fiat but seller refuses to release crypto</option>
-                        <option value="invalid_payment">Seller claims payment reference is invalid</option>
-                        <option value="unresponsive">Counterparty went inactive after trade start</option>
-                        <option value="wrong_amount">Received incorrect fiat amount</option>
-                        <option value="other">Other issue requiring intervention</option>
-                    </select>
-                </div>
+<section class="market-bar">
 
-                <div class="form-group">
-                    <label for="disputeDetails">Explanation & Evidence Notes</label>
-                    <textarea id="disputeDetails" placeholder="Describe the transaction sequence, bank ref, or specific payment mismatch..." required></textarea>
-                </div>
 
-                <div class="form-group">
-                    <label for="disputeProof">Proof of Payment / Screenshot URL</label>
-                    <input type="url" id="disputeProof" placeholder="https://imgur.com/... or cloud link to payment receipt">
-                    <small>Upload receipt or bank transaction slip to a image host and paste link here.</small>
-                </div>
 
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeDisputeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-danger" id="submitDisputeBtn">Submit Dispute to Escrow Agent</button>
-                </div>
-            </form>
-        </div>
+    <div class="market-tabs">
+
+
+
+        <button class="market-tab active"
+
+                id="buyTab"
+
+                onclick="setMarket('buy')">
+
+            Buy
+
+        </button>
+
+
+
+        <button class="market-tab"
+
+                id="sellTab"
+
+                onclick="setMarket('sell')">
+
+            Sell
+
+        </button>
+
+
+
     </div>
+
+
+
+    <div class="control">
+
+
+
+        <label>Asset</label>
+
+
+
+        <select id="assetSelect"
+
+                onchange="loadOffers()">
+
+
+
+            <option value="USDT">USDT</option>
+
+            <option value="BTC">BTC</option>
+
+            <option value="ETH">ETH</option>
+
+
+
+        </select>
+
+
+
+    </div>
+
+
+
+    <div class="control">
+
+
+
+        <label>Fiat</label>
+
+
+
+        <select id="fiatSelect"
+
+                onchange="loadOffers()">
+
+
+
+            <option value="ETB">ETB</option>
+
+            <option value="USD">USD</option>
+
+            <option value="EUR">EUR</option>
+
+
+
+        </select>
+
+
+
+    </div>
+
+
+
+    <div class="control search">
+
+
+
+        <label>Search</label>
+
+
+
+        <input id="searchInput"
+
+               type="search"
+
+               placeholder="Trader or payment method"
+
+               oninput="renderOffers()">
+
+
+
+    </div>
+
+
+
+    <div class="control">
+
+
+
+        <label>Crypto amount</label>
+
+
+
+        <input id="amountFilter"
+
+               type="number"
+
+               min="0"
+
+               placeholder="USDT"
+
+               oninput="renderOffers()">
+
+
+
+    </div>
+
+
+
+    <div class="control">
+
+
+
+        <label>Payment method</label>
+
+
+
+        <select id="paymentFilter"
+
+                onchange="renderOffers()">
+
+
+
+            <option value="all">
+
+                All methods
+
+            </option>
+
+
+
+            <option value="Bank Transfer">
+
+                Bank Transfer
+
+            </option>
+
+
+
+            <option value="Mobile Money">
+
+                Mobile Money
+
+            </option>
+
+
+
+            <option value="Telebirr">
+
+                Telebirr
+
+            </option>
+
+
+
+            <option value="Cash">
+
+                Cash
+
+            </option>
+
+
+
+            <option value="CBE Birr">
+
+                CBE Birr
+
+            </option>
+
+
+
+        </select>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+
+
+<!-- ============================================================
+
+     STATS
+
+     ============================================================ -->
+
+
+
+<section class="stats">
+
+
+
+    <div class="stat">
+
+
+
+        <div class="stat-label">
+
+            Current offers
+
+        </div>
+
+
+
+        <div class="stat-value"
+
+             id="offerStat">
+
+            0
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="stat">
+
+
+
+        <div class="stat-label">
+
+            Active trades
+
+        </div>
+
+
+
+        <div class="stat-value"
+
+             id="activeTradeStat">
+
+            0
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="stat">
+
+
+
+        <div class="stat-label">
+
+            Lowest price
+
+        </div>
+
+
+
+        <div class="stat-value"
+
+             id="lowestPrice">
+
+            --
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="stat">
+
+
+
+        <div class="stat-label">
+
+            Average price
+
+        </div>
+
+
+
+        <div class="stat-value"
+
+             id="averagePrice">
+
+            --
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="stat">
+
+
+
+        <div class="stat-label">
+
+            Platform status
+
+        </div>
+
+
+
+        <div class="stat-value green">
+
+            Protected
+
+        </div>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+
+
+<!-- ============================================================
+
+     MARKETPLACE + QUICK TRADE
+
+     ============================================================ -->
+
+
+
+<section class="main-grid">
+
+
+
+<div class="marketplace">
+
+
+
+    <div class="section-header">
+
+
+
+        <h2 id="marketTitle">
+
+            Buy USDT with ETB
+
+        </h2>
+
+
+
+        <span id="offerCount">
+
+            Loading...
+
+        </span>
+
+
+
+    </div>
+
+
+
+    <div class="offers"
+
+         id="offersContainer">
+
+
+
+        <div class="loading">
+
+            Loading offers...
+
+        </div>
+
+
+
+    </div>
+
+
+
 </div>
 
 
-<!-- ============================================================
-     RATING & REVIEWS MODAL
-     ============================================================ -->
 
-<div class="modal" id="ratingModal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h3>Leave Trader Feedback</h3>
-            <button class="close" onclick="closeRatingModal()">&times;</button>
-        </div>
 
-        <div class="modal-body">
-            <div class="review-card" style="text-align:center; padding:20px;">
-                <p style="margin-bottom:12px; color:var(--muted); font-size:13px;">How was your trade experience with counterparty?</p>
-                <div style="font-size:28px; cursor:pointer; letter-spacing:8px; margin-bottom:10px;" id="starRatingContainer">
-                    <span onclick="setRating(1)">★</span>
-                    <span onclick="setRating(2)">★</span>
-                    <span onclick="setRating(3)">★</span>
-                    <span onclick="setRating(4)">★</span>
-                    <span onclick="setRating(5)">★</span>
-                </div>
-                <div id="ratingText" style="font-size:12px; font-weight:700; color:var(--yellow);">5 Stars - Excellent</div>
-            </div>
 
-            <div class="form-group" style="margin-top:15px;">
-                <label for="feedbackComment">Trader Review</label>
-                <textarea id="feedbackComment" placeholder="Fast release, good communication, recommended trader!"></textarea>
-            </div>
+<!-- QUICK TRADE -->
 
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeRatingModal()">Skip Feedback</button>
-                <button class="btn btn-success" onclick="submitTraderRating()">Submit Feedback</button>
-            </div>
-        </div>
+
+
+<aside class="quick-trade">
+
+
+
+    <div class="section-header">
+
+
+
+        <h2>
+
+            Quick Trade
+
+        </h2>
+
+
+
+        <span>
+
+            Secure order
+
+        </span>
+
+
+
     </div>
-</div>
+
+
+
+    <div class="quick-body">
+
+
+
+        <div class="selected-trader">
+
+
+
+            <div class="selected-row">
+
+
+
+                <div class="selected-avatar"
+
+                     id="selectedAvatar">
+
+                    ?
+
+                </div>
+
+
+
+                <div>
+
+
+
+                    <strong id="selectedTrader">
+
+                        Select an offer
+
+                    </strong>
+
+
+
+                    <div class="green"
+
+                         style="font-size:11px"
+
+                         id="selectedRating">
+
+                        Choose a trader below
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+        <div class="quick-field">
+
+
+
+            <label id="amountLabel">
+
+                Amount in USDT
+
+            </label>
+
+
+
+            <input type="number"
+
+                   id="quickAmount"
+
+                   value="10"
+
+                   min="0"
+
+                   step="0.0001"
+
+                   oninput="calculateTrade()">
+
+
+
+        </div>
+
+
+
+
+
+        <div class="quick-field">
+
+
+
+            <label>
+
+                Payment method
+
+            </label>
+
+
+
+            <select id="quickPayment">
+
+
+
+                <option value="">
+
+                    Select an offer first
+
+                </option>
+
+
+
+            </select>
+
+
+
+        </div>
+
+
+
+
+
+        <div class="calculation">
+
+
+
+            <div class="calc-row">
+
+
+
+                <span>
+
+                    Rate
+
+                </span>
+
+
+
+                <span id="calcRate">
+
+                    --
+
+                </span>
+
+
+
+            </div>
+
+
+
+            <div class="calc-row">
+
+
+
+                <span>
+
+                    Crypto amount
+
+                </span>
+
+
+
+                <span id="calcCrypto">
+
+                    -- USDT
+
+                </span>
+
+
+
+            </div>
+
+
+
+            <div class="calc-row">
+
+
+
+                <span>
+
+                    Fiat amount
+
+                </span>
+
+
+
+                <span id="calcFiat">
+
+                    -- ETB
+
+                </span>
+
+
+
+            </div>
+
+
+
+            <div class="calc-row">
+
+
+
+                <span>
+
+                    Trading fee (0.5%)
+
+                </span>
+
+
+
+                <span id="calcFee">
+
+                    0.00 ETB
+
+                </span>
+
+
+
+            </div>
+
+
+
+            <div class="calc-row">
+
+
+
+                <span id="calcFinalLabel">
+
+                    You pay
+
+                </span>
+
+
+
+                <span id="calcFinal">
+
+                    --
+
+                </span>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+        <button class="btn btn-primary full"
+
+                onclick="startQuickTrade()">
+
+
+
+            Continue to Review
+
+
+
+        </button>
+
+
+
+
+
+        <div class="success-box">
+
+
+
+            🔐 Your crypto is protected by the P2P escrow workflow.
+
+            Never release crypto before independently verifying the payment.
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</aside>
+
+
+
+</section>
+
+
+
 
 
 <!-- ============================================================
-     EXPANDED SCRIPT ENHANCEMENTS
+
+     TRADE CENTER
+
      ============================================================ -->
 
-<script>
-// ADDITIONAL GLOBAL STATE FOR BEST-PRACTICE ENHANCEMENTS
-let selectedRatingValue = 5;
 
-// AUTO-CALCULATE LIVE MARKET ANALYTICS
-function calculateMarketDepth() {
-    if (!allOffers.length) return;
 
-    const totals = allOffers.reduce((acc, off) => {
-        const amt = parseFloat(off.available_amount) || 0;
-        acc.volume += amt;
-        return acc;
-    }, { volume: 0 });
+<section class="trade-center">
 
-    const marketDepthElem = document.getElementById("offerCount");
-    if (marketDepthElem) {
-        marketDepthElem.textContent = `${allOffers.length} Active Offers | Depth: ${totals.volume.toFixed(2)} ${document.getElementById("assetSelect").value}`;
-    }
-}
 
-// ENHANCED REAL-TIME ESCROW TIMER
-function startTradeCountdown(timeLimitMinutes) {
-    let secondsLeft = timeLimitMinutes * 60;
-    const indicator = document.getElementById("chatTypingIndicator");
 
-    const timerInterval = setInterval(() => {
-        if (!currentTrade || currentTrade.status !== "awaiting_payment") {
-            clearInterval(timerInterval);
-            return;
-        }
+    <div class="section-header">
 
-        secondsLeft--;
-        const mins = Math.floor(secondsLeft / 60);
-        const secs = secondsLeft % 60;
-        const timeStr = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 
-        if (indicator) {
-            indicator.textContent = `⏱️ Escrow Time Left: ${timeStr}`;
-            indicator.style.color = secondsLeft < 300 ? "var(--red)" : "var(--yellow)";
-        }
 
-        if (secondsLeft <= 0) {
-            clearInterval(timerInterval);
-            currentTrade.status = "cancelled";
-            showNotification("Trade auto-cancelled due to payment time limit expiration.");
-            updateTradeActionUI();
-            renderTrades();
-            updateStats();
-        }
-    }, 1000);
-}
+        <h2>
 
-// DISPUTE MODAL HANDLERS
-function openDisputeModal() {
-    if (!currentTrade) return;
-    document.getElementById("disputeForm").reset();
-    document.getElementById("disputeModal").classList.add("show");
-}
+            My Trade Center
 
-function closeDisputeModal() {
-    document.getElementById("disputeModal").classList.remove("show");
-}
+        </h2>
 
-async function handleDisputeSubmit(e) {
-    e.preventDefault();
-    if (!currentTrade) return;
 
-    const reason = document.getElementById("disputeReason").value;
-    const details = document.getElementById("disputeDetails").value;
-    const proof = document.getElementById("disputeProof").value;
 
-    const disputeRecord = {
-        id: "DSP-" + Math.floor(100000 + Math.random() * 900000),
-        trade_id: currentTrade.id,
-        raised_by: currentUser.id,
-        reason,
-        details,
-        proof_url: proof,
-        status: "under_review",
-        created_at: new Date().toISOString()
-    };
+        <span id="tradeCount">
 
-    currentTrade.status = "disputed";
+            0 trades
 
-    try {
-        if (supabase) {
-            await supabase.from("p2p_disputes").insert([disputeRecord]);
-            await supabase.from("p2p_trades").update({ status: "disputed" }).eq("id", currentTrade.id);
-        }
-    } catch (err) {
-        console.error("Dispute error:", err);
-    }
+        </span>
 
-    closeDisputeModal();
-    updateTradeActionUI();
-    renderTrades();
-    showNotification("Dispute initiated. An escrow moderator has been assigned.");
-}
 
-// RATING & FEEDBACK SYSTEM
-function openRatingModal() {
-    selectedRatingValue = 5;
-    setRating(5);
-    document.getElementById("ratingModal").classList.add("show");
-}
 
-function closeRatingModal() {
-    document.getElementById("ratingModal").classList.remove("show");
-}
+    </div>
 
-function setRating(val) {
-    selectedRatingValue = val;
-    const stars = document.getElementById("starRatingContainer").children;
-    for (let i = 0; i < stars.length; i++) {
-        stars[i].style.color = i < val ? "var(--yellow)" : "var(--muted)";
-    }
-    const label = document.getElementById("ratingText");
-    const descriptions = ["1 Star - Poor", "2 Stars - Fair", "3 Stars - Average", "4 Stars - Very Good", "5 Stars - Excellent"];
-    label.textContent = descriptions[val - 1];
-}
 
-async function submitTraderRating() {
-    const comment = document.getElementById("feedbackComment").value;
-    
-    if (!currentTrade) {
-        closeRatingModal();
-        return;
-    }
 
-    const review = {
-        trade_id: currentTrade.id,
-        reviewer_id: currentUser.id,
-        rating: selectedRatingValue,
-        comment,
-        created_at: new Date().toISOString()
-    };
+    <div class="trades"
 
-    try {
-        if (supabase) {
-            await supabase.from("p2p_reviews").insert([review]);
-        }
-    } catch (err) {
-        console.error("Review submission error:", err);
-    }
+         id="tradesContainer">
 
-    closeRatingModal();
-    showNotification("Feedback submitted! Thank you for rating this trader.");
-}
 
-// OVERRIDE HOOK: EXTENDED TRADE ACTION DISPATCHER
-const originalHandleTradeAction = handleTradeAction;
-handleTradeAction = async function() {
-    if (!currentTrade) return;
 
-    if (currentTrade.status === "awaiting_payment") {
-        const ref = document.getElementById("paymentReferenceInput").value.trim();
-        if (!ref) {
-            showNotification("Please supply a bank/telebirr reference code.");
-            return;
-        }
-        currentTrade.status = "payment_sent";
-        currentTrade.payment_reference = ref;
-        showNotification("Payment marked as complete! Counterparty notified.");
-        
-        // Auto system message in chat
-        sendSystemChatMessage(`System: Buyer marked trade as paid. Payment Reference: ${ref}`);
-    } else if (currentTrade.status === "payment_sent") {
-        currentTrade.status = "completed";
-        showNotification("Escrow released! Trade marked as completed.");
-        sendSystemChatMessage(`System: Escrow released. Funds transferred to buyer vault.`);
-        openRatingModal();
-    }
+        <div class="loading">
 
-    updateTradeActionUI();
-    renderTrades();
-    updateStats();
-};
+            Loading trades...
 
-function sendSystemChatMessage(sysText) {
-    const container = document.getElementById("chatMessages");
-    if (!container) return;
-    
-    if (container.querySelector(".chat-empty")) container.innerHTML = "";
-
-    container.innerHTML += `
-        <div class="chat-message mine" style="align-self:center; max-width:95%;">
-            <div class="chat-bubble" style="background:#132943; border:1px solid var(--primary); font-size:11px; text-align:center; color:#8cb4ff;">
-                ${escapeHtml(sysText)}
-            </div>
         </div>
-    `;
-    container.scrollTop = container.scrollHeight;
-}
 
-// EXTEND ACTION BUTTON UI TO INCLUDE DISPUTE BUTTONS
-const originalUpdateTradeActionUI = updateTradeActionUI;
-updateTradeActionUI = function() {
-    originalUpdateTradeActionUI();
 
-    const actionContainer = document.getElementById("tradeActionButtons");
-    if (!actionContainer || !currentTrade) return;
 
-    // Check if Dispute button already exists
-    let disputeBtn = document.getElementById("openDisputeBtn");
-    
-    if (currentTrade.status === "payment_sent" || currentTrade.status === "awaiting_payment") {
-        if (!disputeBtn) {
-            disputeBtn = document.createElement("button");
-            disputeBtn.id = "openDisputeBtn";
-            disputeBtn.className = "btn btn-warning";
-            disputeBtn.style.gridColumn = "span 2";
-            disputeBtn.textContent = "Report Mismatch / Open Dispute";
-            disputeBtn.onclick = openDisputeModal;
-            actionContainer.appendChild(disputeBtn);
-        }
-        
-        if (currentTrade.status === "awaiting_payment") {
-            startTradeCountdown(selectedOffer ? (selectedOffer.time_limit || 30) : 30);
-        }
-    } else if (disputeBtn) {
-        disputeBtn.remove();
-    }
-};
+    </div>
 
-// AUTO DATA DEPTH SYNCHRONIZATION
-const originalRenderOffers = renderOffers;
-renderOffers = function() {
-    originalRenderOffers();
-    calculateMarketDepth();
-};
-</script>
+
+
+</section>
+
+
+
+
+
+<!-- ============================================================
+
+     MY OFFERS
+
+     ============================================================ -->
+
+
+
+<section class="my-offers">
+
+
+
+    <div class="section-header">
+
+
+
+        <div>
+
+            <h2>
+
+                My Offers
+
+            </h2>
+
+
+
+            <span>
+
+                Manage your P2P offers
+
+            </span>
+
+        </div>
+
+
+
+        <span id="myOffersCount">
+
+            0 offers
+
+        </span>
+
+
+
+    </div>
+
+
+
+    <div class="my-offers-list"
+
+         id="myOffersContainer">
+
+
+
+        <div class="loading">
+
+            Loading your offers...
+
+        </div>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+
+
+
+<!-- =========================== 
+
