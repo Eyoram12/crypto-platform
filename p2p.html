@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,10 +6,13 @@
 <meta name="description" content="CryptoVault P2P Trading Marketplace">
 <title>CryptoVault P2P Trading</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 * {
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
 }
 
 body {
@@ -29,6 +31,11 @@ textarea {
 
 button {
     cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
 }
 
 .container {
@@ -64,6 +71,7 @@ textarea {
     border-radius: 7px;
     padding: 10px 12px;
     outline: none;
+    background: #fff;
 }
 
 input:focus,
@@ -145,6 +153,24 @@ textarea {
 .small {
     font-size: 12px;
     color: #6c757d;
+}
+
+.user-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    background: #f8fbff;
+    border: 1px solid #e2ebf7;
+    border-radius: 8px;
+}
+
+.user-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #198754;
 }
 
 .market-tabs {
@@ -263,6 +289,21 @@ textarea {
     color: #dc3545;
 }
 
+.status-active {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-paused {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-closed {
+    background: #e2e3e5;
+    color: #41464b;
+}
+
 .empty-state {
     text-align: center;
     color: #6c757d;
@@ -318,7 +359,8 @@ textarea {
     color: #842029;
 }
 
-.status-refunded {
+.status-refunded,
+.status-cancelled {
     background: #e2e3e5;
     color: #41464b;
 }
@@ -460,6 +502,16 @@ textarea {
     margin-bottom: 15px;
 }
 
+.notice.success {
+    background: #e7f7ed;
+    border-left-color: #198754;
+}
+
+.notice.error {
+    background: #fff0f0;
+    border-left-color: #dc3545;
+}
+
 .trade-card {
     border: 1px solid #e3e7eb;
     border-radius: 8px;
@@ -485,8 +537,44 @@ textarea {
     background: #f8fbff;
 }
 
-.no-margin {
-    margin: 0;
+.offer-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #6c757d;
+}
+
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 3000;
+    max-width: 360px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    background: #202124;
+    color: #fff;
+    display: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,.2);
+}
+
+.toast.show {
+    display: block;
+}
+
+.toast.success {
+    background: #198754;
+}
+
+.toast.error {
+    background: #dc3545;
 }
 
 @media (max-width: 1050px) {
@@ -553,623 +641,968 @@ textarea {
     .full {
         grid-column: auto;
     }
+
+    .user-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }
 </style>
-
 </head>
 
 <body>
 
+<div id="toast" class="toast"></div>
+
 <div class="container">
 
-```
 <main>
 
-    <div class="card">
+<div class="card">
 
-        <div class="header">
-            <div class="brand">
-                <h2>CryptoVault P2P</h2>
-                <div class="small">Peer-to-peer cryptocurrency marketplace</div>
-            </div>
+    <div class="header">
 
-            <button class="btn btn-success btn-sm" onclick="openOfferModal()">
-                + Create Offer
-            </button>
-        </div>
-
-        <div class="market-tabs">
-            <div
-                id="buyTab"
-                class="market-tab active"
-                onclick="switchMarketSide('buy')">
-                Buy Crypto
-            </div>
-
-            <div
-                id="sellTab"
-                class="market-tab"
-                onclick="switchMarketSide('sell')">
-                Sell Crypto
+        <div class="brand">
+            <h2>CryptoVault P2P</h2>
+            <div class="small">
+                Peer-to-peer cryptocurrency marketplace
             </div>
         </div>
 
-        <div class="filter-bar">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search trader, payment or terms..."
-                oninput="renderOffers()">
-
-            <input
-                type="number"
-                id="amountFilter"
-                placeholder="Fiat amount"
-                min="0"
-                oninput="renderOffers()">
-
-            <select id="assetFilter" onchange="renderOffers()">
-                <option value="">All assets</option>
-            </select>
-
-            <select id="paymentFilter" onchange="renderOffers()">
-                <option value="">All payment methods</option>
-            </select>
-
-        </div>
-
-        <div
-            id="offerCount"
-            class="small"
-            style="margin-bottom:10px;">
-            0 offers
-        </div>
-
-        <div class="offer-header">
-            <div>TRADER</div>
-            <div>PRICE</div>
-            <div>AMOUNT</div>
-            <div>PAYMENT</div>
-            <div>ACTION</div>
-        </div>
-
-        <div id="offersContainer"></div>
+        <button
+            class="btn btn-success btn-sm"
+            onclick="openOfferModal()">
+            + Create Offer
+        </button>
 
     </div>
 
-    <div class="card">
+    <div class="user-bar">
+        <span class="user-dot"></span>
 
-        <h3>My Offers</h3>
+        <div>
+            <strong id="currentUserName">Loading...</strong>
+            <div
+                id="currentUserEmail"
+                class="small">
+                Checking account...
+            </div>
+        </div>
+
+        <button
+            class="btn btn-light btn-sm"
+            onclick="logout()"
+            style="margin-left:auto;">
+            Logout
+        </button>
+    </div>
+
+    <div class="market-tabs">
 
         <div
-            id="myOffersContainer">
+            id="buyTab"
+            class="market-tab active"
+            onclick="switchMarketSide('buy')">
+            Buy Crypto
+        </div>
+
+        <div
+            id="sellTab"
+            class="market-tab"
+            onclick="switchMarketSide('sell')">
+            Sell Crypto
         </div>
 
     </div>
+
+    <div class="filter-bar">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search trader, payment or terms..."
+            oninput="renderOffers()">
+
+        <input
+            type="number"
+            id="amountFilter"
+            placeholder="Fiat amount"
+            min="0"
+            oninput="renderOffers()">
+
+        <select
+            id="assetFilter"
+            onchange="renderOffers()">
+            <option value="">All assets</option>
+        </select>
+
+        <select
+            id="paymentFilter"
+            onchange="renderOffers()">
+            <option value="">All payment methods</option>
+        </select>
+
+    </div>
+
+    <div
+        id="offerCount"
+        class="small"
+        style="margin-bottom:10px;">
+        Loading offers...
+    </div>
+
+    <div class="offer-header">
+        <div>TRADER</div>
+        <div>PRICE</div>
+        <div>AMOUNT</div>
+        <div>PAYMENT</div>
+        <div>ACTION</div>
+    </div>
+
+    <div id="offersContainer">
+        <div class="loading">
+            Loading offers...
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h3>My Offers</h3>
+
+    <div id="myOffersContainer">
+        <div class="loading">
+            Loading your offers...
+        </div>
+    </div>
+
+</div>
 
 </main>
 
+
 <aside>
 
-    <div class="card">
+<div class="card">
 
-        <h3>Quick Trade</h3>
+    <h3>Quick Trade</h3>
 
-        <div class="trader" style="margin-bottom:15px;">
-
-            <div
-                class="avatar"
-                id="selectedAvatar">
-                ?
-            </div>
-
-            <div>
-                <strong id="selectedTraderName">
-                    No trader selected
-                </strong>
-
-                <div
-                    id="selectedOfferInfo"
-                    class="small">
-                    Select an offer
-                </div>
-            </div>
-
-        </div>
-
-        <div style="margin-bottom:12px;">
-            <label class="small">
-                Crypto Amount
-            </label>
-
-            <input
-                type="number"
-                id="quickAmount"
-                placeholder="0.0000"
-                min="0"
-                step="0.0001"
-                oninput="calculateTrade()">
-        </div>
-
-        <div style="margin-bottom:12px;">
-            <label class="small">
-                Payment Method
-            </label>
-
-            <select id="quickPayment">
-                <option value="">
-                    Select payment method
-                </option>
-            </select>
-        </div>
-
-        <div class="calc-row">
-            <span>Unit Price</span>
-            <strong id="calcPrice">
-                0.00
-            </strong>
-        </div>
-
-        <div class="calc-row">
-            <span>Crypto Amount</span>
-            <strong id="calcCrypto">
-                0
-            </strong>
-        </div>
-
-        <div class="calc-row">
-            <span>Trading Fee 0.5%</span>
-            <strong id="calcFee">
-                0.00
-            </strong>
-        </div>
-
-        <div class="calc-row total">
-            <span>Total Fiat</span>
-            <strong id="calcFiat">
-                0.00
-            </strong>
-        </div>
-
-        <div class="action-grid">
-
-            <button
-                class="btn btn-primary"
-                onclick="initiateTrade()">
-                Start Trade
-            </button>
-
-            <button
-                class="btn btn-light"
-                onclick="resetCalculator()">
-                Reset
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3 id="tradePanelTitle">
-            Current Trade
-        </h3>
+    <div
+        class="trader"
+        style="margin-bottom:15px;">
 
         <div
-            id="tradePanel">
-            <div class="empty-state" style="padding:20px 5px;">
-                No active trade.
-            </div>
+            class="avatar"
+            id="selectedAvatar">
+            ?
         </div>
 
-    </div>
+        <div>
 
-    <div class="card">
-
-        <h3 id="chatTitle">
-            Trade Chat
-        </h3>
-
-        <div
-            id="chatBox"
-            class="chat-box">
+            <strong id="selectedTraderName">
+                No trader selected
+            </strong>
 
             <div
-                class="empty-state"
-                style="padding:15px;">
-                Start a trade to open chat.
+                id="selectedOfferInfo"
+                class="small">
+                Select an offer
             </div>
-
-        </div>
-
-        <div class="chat-input-group">
-
-            <input
-                type="text"
-                id="chatInput"
-                placeholder="Type a message..."
-                maxlength="500"
-                onkeydown="handleChatKeyPress(event)">
-
-            <button
-                class="btn btn-primary btn-sm"
-                onclick="sendChatMessage()">
-                Send
-            </button>
 
         </div>
 
     </div>
 
-</aside>
-```
+
+    <div style="margin-bottom:12px;">
+
+        <label class="small">
+            Crypto Amount
+        </label>
+
+        <input
+            type="number"
+            id="quickAmount"
+            placeholder="0.0000"
+            min="0"
+            step="0.00000001"
+            oninput="calculateTrade()">
+
+    </div>
+
+
+    <div style="margin-bottom:12px;">
+
+        <label class="small">
+            Payment Method
+        </label>
+
+        <select id="quickPayment">
+
+            <option value="">
+                Select payment method
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="calc-row">
+
+        <span>Unit Price</span>
+
+        <strong id="calcPrice">
+            0.00
+        </strong>
+
+    </div>
+
+
+    <div class="calc-row">
+
+        <span>Crypto Amount</span>
+
+        <strong id="calcCrypto">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="calc-row">
+
+        <span>Trading Fee 0.5%</span>
+
+        <strong id="calcFee">
+            0.00
+        </strong>
+
+    </div>
+
+
+    <div class="calc-row total">
+
+        <span>Total Fiat</span>
+
+        <strong id="calcFiat">
+            0.00
+        </strong>
+
+    </div>
+
+
+    <div class="action-grid">
+
+        <button
+            id="startTradeButton"
+            class="btn btn-primary"
+            onclick="initiateTrade()">
+            Start Trade
+        </button>
+
+        <button
+            class="btn btn-light"
+            onclick="resetCalculator()">
+            Reset
+        </button>
+
+    </div>
 
 </div>
+
+
+<div class="card">
+
+    <h3 id="tradePanelTitle">
+        Current Trade
+    </h3>
+
+    <div id="tradePanel">
+
+        <div
+            class="empty-state"
+            style="padding:20px 5px;">
+            No active trade.
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h3 id="chatTitle">
+        Trade Chat
+    </h3>
+
+    <div
+        id="chatBox"
+        class="chat-box">
+
+        <div
+            class="empty-state"
+            style="padding:15px;">
+            Start a trade to open chat.
+        </div>
+
+    </div>
+
+    <div class="chat-input-group">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type a message..."
+            maxlength="500"
+            onkeydown="handleChatKeyPress(event)">
+
+        <button
+            id="sendChatButton"
+            class="btn btn-primary btn-sm"
+            onclick="sendChatMessage()">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+</aside>
+
+</div>
+
+
+<!-- OFFER MODAL -->
 
 <div
     id="offerModal"
     class="modal">
 
-```
-<div class="modal-content">
+    <div class="modal-content">
 
-    <div class="modal-header">
+        <div class="modal-header">
 
-        <h3 id="offerModalTitle">
-            Create Trading Offer
-        </h3>
+            <h3 id="offerModalTitle">
+                Create Trading Offer
+            </h3>
 
-        <button
-            class="close-btn"
-            onclick="closeOfferModal()">
-            &times;
-        </button>
-
-    </div>
-
-    <div class="notice">
-        This is a demo marketplace. Do not enter real private keys,
-        seed phrases, passwords, or payment credentials.
-    </div>
-
-    <form onsubmit="saveOffer(event)">
-
-        <input
-            type="hidden"
-            id="editingOfferId">
-
-        <div class="form-group">
-
-            <label>
-                Trading Side
-            </label>
-
-            <select id="newSide" required>
-                <option value="buy">
-                    Buy Crypto
-                </option>
-
-                <option value="sell">
-                    Sell Crypto
-                </option>
-            </select>
+            <button
+                class="close-btn"
+                onclick="closeOfferModal()">
+                &times;
+            </button>
 
         </div>
 
-        <div class="form-row">
+        <div class="notice">
+            Never enter private keys, seed phrases,
+            passwords, or payment credentials.
+        </div>
+
+        <form onsubmit="saveOffer(event)">
+
+            <input
+                type="hidden"
+                id="editingOfferId">
 
             <div class="form-group">
 
                 <label>
-                    Asset
+                    Trading Side
                 </label>
 
-                <input
-                    type="text"
-                    id="newAsset"
-                    value="BTC"
-                    maxlength="10"
+                <select
+                    id="newSide"
                     required>
 
-            </div>
+                    <option value="buy">
+                        Buy Crypto
+                    </option>
 
-            <div class="form-group">
+                    <option value="sell">
+                        Sell Crypto
+                    </option>
 
-                <label>
-                    Fiat Currency
-                </label>
-
-                <select id="newFiat">
-                    <option value="USD">USD</option>
-                    <option value="ETB">ETB</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
                 </select>
 
             </div>
 
-        </div>
 
-        <div class="form-row">
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Asset
+                    </label>
+
+                    <input
+                        type="text"
+                        id="newAsset"
+                        value="BTC"
+                        maxlength="10"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Fiat Currency
+                    </label>
+
+                    <select id="newFiat">
+
+                        <option value="USD">
+                            USD
+                        </option>
+
+                        <option value="ETB">
+                            ETB
+                        </option>
+
+                        <option value="EUR">
+                            EUR
+                        </option>
+
+                        <option value="GBP">
+                            GBP
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="newPrice"
+                        min="0.000001"
+                        step="0.000001"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Available Crypto
+                    </label>
+
+                    <input
+                        type="number"
+                        id="newAmount"
+                        min="0.00000001"
+                        step="0.00000001"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Minimum Fiat Limit
+                    </label>
+
+                    <input
+                        type="number"
+                        id="newMin"
+                        min="0"
+                        step="0.01"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Maximum Fiat Limit
+                    </label>
+
+                    <input
+                        type="number"
+                        id="newMax"
+                        min="0"
+                        step="0.01"
+                        required>
+
+                </div>
+
+            </div>
+
 
             <div class="form-group">
 
                 <label>
-                    Price
+                    Payment Method
                 </label>
 
                 <input
-                    type="number"
-                    id="newPrice"
-                    min="0.000001"
-                    step="0.000001"
+                    type="text"
+                    id="newPayment"
+                    placeholder="Bank Transfer, Telebirr, PayPal..."
+                    maxlength="100"
                     required>
 
             </div>
+
 
             <div class="form-group">
 
                 <label>
-                    Available Crypto
+                    Terms
                 </label>
 
-                <input
-                    type="number"
-                    id="newAmount"
-                    min="0.00000001"
-                    step="0.00000001"
-                    required>
+                <textarea
+                    id="newTerms"
+                    rows="3"
+                    maxlength="500"
+                    placeholder="Enter your trading terms..."></textarea>
 
             </div>
 
-        </div>
 
-        <div class="form-row">
+            <button
+                type="submit"
+                class="btn btn-primary">
+                Save Offer
+            </button>
 
-            <div class="form-group">
+        </form>
 
-                <label>
-                    Minimum Fiat Limit
-                </label>
-
-                <input
-                    type="number"
-                    id="newMin"
-                    min="0"
-                    step="0.01"
-                    required>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-                    Maximum Fiat Limit
-                </label>
-
-                <input
-                    type="number"
-                    id="newMax"
-                    min="0"
-                    step="0.01"
-                    required>
-
-            </div>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>
-                Payment Method
-            </label>
-
-            <input
-                type="text"
-                id="newPayment"
-                placeholder="Bank Transfer, Telebirr, PayPal..."
-                required>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>
-                Terms
-            </label>
-
-            <textarea
-                id="newTerms"
-                rows="3"
-                maxlength="500"
-                placeholder="Enter your trading terms..."></textarea>
-
-        </div>
-
-        <button
-            type="submit"
-            class="btn btn-primary">
-            Save Offer
-        </button>
-
-    </form>
+    </div>
 
 </div>
-```
 
-</div>
 
 <script>
 
-const STORAGE_KEY = "cryptovault_p2p_state_v3";
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-let currentUser = {
-    id: 1,
-    name: "You"
-};
+const SUPABASE_URL =
+    "https://zihxnxnviknexlqjjdot.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_A5KO4RzERX6ZOTR5vPS4kQ_GkmbxNlc";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
+    );
+
+
+/* =========================================================
+   APPLICATION STATE
+========================================================= */
+
+let currentUser = null;
+let currentProfile = null;
 
 let currentMarketSide = "buy";
+
 let selectedOffer = null;
+
 let activeTrade = null;
 
-let allOffers = [
-    {
-        id: "offer_1",
-        trader_id: 101,
-        trader_name: "Abebe",
-        rating: 100,
-        side: "buy",
-        asset: "BTC",
-        fiat: "USD",
-        price: 50000,
-        available_amount: 0.5,
-        min_limit: 100,
-        max_limit: 5000,
-        terms: "Instant release after payment.",
-        paymentMethods: [
-            {
-                id: "bank",
-                name: "Bank Transfer"
-            },
-            {
-                id: "zelle",
-                name: "Zelle"
-            }
-        ],
-        created_at: Date.now()
-    },
+let allOffers = [];
 
-    {
-        id: "offer_2",
-        trader_id: 102,
-        trader_name: "Hana",
-        rating: 98,
-        side: "buy",
-        asset: "BTC",
-        fiat: "USD",
-        price: 50250,
-        available_amount: 1.2,
-        min_limit: 500,
-        max_limit: 10000,
-        terms: "No third party payments allowed.",
-        paymentMethods: [
-            {
-                id: "paypal",
-                name: "PayPal"
-            }
-        ],
-        created_at: Date.now()
-    },
-
-    {
-        id: "offer_3",
-        trader_id: 103,
-        trader_name: "Dawit",
-        rating: 99,
-        side: "sell",
-        asset: "BTC",
-        fiat: "USD",
-        price: 49800,
-        available_amount: 0.8,
-        min_limit: 200,
-        max_limit: 8000,
-        terms: "Payment confirmation required before release.",
-        paymentMethods: [
-            {
-                id: "bank",
-                name: "Bank Transfer"
-            }
-        ],
-        created_at: Date.now()
-    }
-];
+let myOffers = [];
 
 let chatMessages = [];
 
-let tradeHistory = [];
+let realtimeChannel = null;
 
 
 /* =========================================================
    INITIALIZATION
 ========================================================= */
 
-function init() {
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
-    loadState();
 
-    updateFilters();
+async function init() {
 
-    renderOffers();
+    try {
 
-    renderMyOffers();
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
 
-    renderTradePanel();
+        if (error) {
+            throw error;
+        }
 
-    renderChat();
+        currentUser =
+            data.session?.user || null;
 
-    updateTabs();
+        if (!currentUser) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+        await loadCurrentProfile();
+
+        updateUserDisplay();
+
+        await loadOffers();
+
+        await loadMyOffers();
+
+        await loadMyActiveTrade();
+
+        updateFilters();
+
+        renderOffers();
+
+        renderMyOffers();
+
+        renderTradePanel();
+
+        await loadTradeChat();
+
+        renderChat();
+
+        updateTabs();
+
+        setupRealtime();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast(
+            getErrorMessage(error),
+            "error"
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   LOCAL STORAGE
+   PROFILE
 ========================================================= */
 
-function saveState() {
+async function loadCurrentProfile() {
 
-    const state = {
-        allOffers,
-        activeTrade,
-        chatMessages,
-        tradeHistory
-    };
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", currentUser.id)
+            .maybeSingle();
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(state)
-    );
+    if (error) {
+        console.warn(
+            "Profile could not be loaded:",
+            error
+        );
+    }
+
+    currentProfile = data || null;
+
 }
 
 
-function loadState() {
+function getCurrentUserName() {
 
-    try {
+    return (
+        currentProfile?.full_name ||
+        currentUser?.user_metadata?.full_name ||
+        currentUser?.email?.split("@")[0] ||
+        "User"
+    );
 
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
+}
 
-        if (!saved) return;
 
-        const state =
-            JSON.parse(saved);
+function updateUserDisplay() {
 
-        if (Array.isArray(state.allOffers)) {
-            allOffers = state.allOffers;
-        }
+    document
+        .getElementById("currentUserName")
+        .textContent =
+        getCurrentUserName();
 
-        activeTrade =
-            state.activeTrade || null;
+    document
+        .getElementById("currentUserEmail")
+        .textContent =
+        currentUser.email || "";
 
-        chatMessages =
-            Array.isArray(state.chatMessages)
-                ? state.chatMessages
-                : [];
+}
 
-        tradeHistory =
-            Array.isArray(state.tradeHistory)
-                ? state.tradeHistory
-                : [];
 
-    } catch (error) {
+/* =========================================================
+   AUTH
+========================================================= */
 
-        console.error(
-            "Unable to load saved P2P state",
-            error
+async function logout() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   LOAD OFFERS
+========================================================= */
+
+async function loadOffers() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("offers")
+            .select("*")
+            .eq("status", "active")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+    if (error) {
+        throw error;
+    }
+
+    allOffers =
+        (data || []).map(normalizeOffer);
+
+}
+
+
+async function loadMyOffers() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("offers")
+            .select("*")
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+    if (error) {
+        throw error;
+    }
+
+    myOffers =
+        (data || []).map(normalizeOffer);
+
+}
+
+
+function normalizeOffer(offer) {
+
+    return {
+
+        ...offer,
+
+        paymentMethods:
+            normalizePaymentMethods(
+                offer.payment_methods
+            ),
+
+        trader_id:
+            offer.user_id,
+
+        trader_name:
+            offer.trader_name ||
+            "Trader",
+
+        available_amount:
+            Number(
+                offer.available_amount || 0
+            ),
+
+        price:
+            Number(
+                offer.price || 0
+            ),
+
+        min_limit:
+            Number(
+                offer.min_limit || 0
+            ),
+
+        max_limit:
+            Number(
+                offer.max_limit || 0
+            ),
+
+        rating:
+            Number(
+                offer.rating || 100
+            )
+
+    };
+
+}
+
+
+function normalizePaymentMethods(value) {
+
+    if (Array.isArray(value)) {
+
+        return value.map(
+            (item, index) => {
+
+                if (
+                    typeof item ===
+                    "string"
+                ) {
+
+                    return {
+                        id:
+                            slugify(item) +
+                            "_" +
+                            index,
+
+                        name: item
+                    };
+
+                }
+
+                return {
+                    id:
+                        item.id ||
+                        slugify(
+                            item.name ||
+                            "payment"
+                        ) +
+                        "_" +
+                        index,
+
+                    name:
+                        item.name ||
+                        "Payment"
+                };
+
+            }
         );
 
     }
+
+    if (
+        typeof value ===
+        "string"
+    ) {
+
+        return value
+            .split(",")
+            .map(
+                (item, index) => {
+
+                    const name =
+                        item.trim();
+
+                    return {
+                        id:
+                            slugify(name) +
+                            "_" +
+                            index,
+
+                        name
+                    };
+
+                }
+            )
+            .filter(
+                item =>
+                    item.name
+            );
+
+    }
+
+    return [];
+
+}
+
+
+function slugify(value) {
+
+    return String(value || "")
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9]+/g,
+            "_"
+        )
+        .replace(
+            /^_|_$/g,
+            ""
+        ) ||
+        "payment";
 
 }
 
@@ -1180,7 +1613,8 @@ function loadState() {
 
 function switchMarketSide(side) {
 
-    currentMarketSide = side;
+    currentMarketSide =
+        side;
 
     updateTabs();
 
@@ -1195,14 +1629,16 @@ function updateTabs() {
         .getElementById("buyTab")
         .classList.toggle(
             "active",
-            currentMarketSide === "buy"
+            currentMarketSide ===
+            "buy"
         );
 
     document
         .getElementById("sellTab")
         .classList.toggle(
             "active",
-            currentMarketSide === "sell"
+            currentMarketSide ===
+            "sell"
         );
 
 }
@@ -1215,53 +1651,97 @@ function updateTabs() {
 function updateFilters() {
 
     const assetFilter =
-        document.getElementById("assetFilter");
+        document.getElementById(
+            "assetFilter"
+        );
 
     const paymentFilter =
-        document.getElementById("paymentFilter");
+        document.getElementById(
+            "paymentFilter"
+        );
 
     const assets =
-        [...new Set(
-            allOffers.map(
-                offer => offer.asset
+        [
+            ...new Set(
+                allOffers.map(
+                    offer =>
+                        offer.asset
+                )
             )
-        )].sort();
+        ]
+        .filter(Boolean)
+        .sort();
 
     const payments =
         new Map();
 
-    allOffers.forEach(offer => {
+    allOffers.forEach(
+        offer => {
 
-        (offer.paymentMethods || [])
-            .forEach(method => {
+            (
+                offer.paymentMethods ||
+                []
+            ).forEach(
+                method => {
 
-                payments.set(
-                    String(method.id),
-                    method.name
-                );
+                    payments.set(
+                        String(
+                            method.id
+                        ),
+                        method.name
+                    );
 
-            });
+                }
+            );
 
-    });
+        }
+    );
+
+    const currentAsset =
+        assetFilter.value;
+
+    const currentPayment =
+        paymentFilter.value;
 
     assetFilter.innerHTML =
         `<option value="">All assets</option>` +
-        assets.map(asset =>
-            `<option value="${escapeHTML(asset)}">
-                ${escapeHTML(asset)}
-            </option>`
-        ).join("");
+        assets
+            .map(
+                asset =>
+                    `<option value="${escapeHTML(asset)}">
+                        ${escapeHTML(asset)}
+                    </option>`
+            )
+            .join("");
 
     paymentFilter.innerHTML =
-        `<option value="">
-            All payment methods
-        </option>` +
+        `<option value="">All payment methods</option>` +
         [...payments.entries()]
-            .map(([id, name]) =>
-                `<option value="${escapeHTML(id)}">
-                    ${escapeHTML(name)}
-                </option>`
-            ).join("");
+            .map(
+                ([id, name]) =>
+                    `<option value="${escapeHTML(id)}">
+                        ${escapeHTML(name)}
+                    </option>`
+            )
+            .join("");
+
+    if (
+        assets.includes(
+            currentAsset
+        )
+    ) {
+        assetFilter.value =
+            currentAsset;
+    }
+
+    if (
+        payments.has(
+            currentPayment
+        )
+    ) {
+        paymentFilter.value =
+            currentPayment;
+    }
 
 }
 
@@ -1279,7 +1759,9 @@ function renderOffers() {
 
     const search =
         document
-            .getElementById("searchInput")
+            .getElementById(
+                "searchInput"
+            )
             .value
             .trim()
             .toLowerCase();
@@ -1287,96 +1769,145 @@ function renderOffers() {
     const amount =
         parseFloat(
             document
-                .getElementById("amountFilter")
+                .getElementById(
+                    "amountFilter"
+                )
                 .value
         ) || 0;
 
     const asset =
         document
-            .getElementById("assetFilter")
+            .getElementById(
+                "assetFilter"
+            )
             .value;
 
     const payment =
         document
-            .getElementById("paymentFilter")
+            .getElementById(
+                "paymentFilter"
+            )
             .value;
 
     const offers =
-        allOffers.filter(offer => {
+        allOffers.filter(
+            offer => {
 
-            if (
-                offer.side !==
-                currentMarketSide
-            ) {
-                return false;
-            }
+                if (
+                    offer.side !==
+                    currentMarketSide
+                ) {
+                    return false;
+                }
 
-            const trader =
-                traderDisplayName(
-                    offer.trader_id,
-                    offer
-                ).toLowerCase();
+                const trader =
+                    traderDisplayName(
+                        offer.trader_id,
+                        offer
+                    )
+                    .toLowerCase();
 
-            const paymentText =
-                (offer.paymentMethods || [])
-                    .map(p => p.name)
+                const paymentText =
+                    (
+                        offer.paymentMethods ||
+                        []
+                    )
+                    .map(
+                        p =>
+                            p.name
+                    )
                     .join(" ")
                     .toLowerCase();
 
-            const terms =
-                (offer.terms || "")
+                const terms =
+                    (
+                        offer.terms ||
+                        ""
+                    )
                     .toLowerCase();
 
-            const searchMatch =
-                !search ||
-                trader.includes(search) ||
-                paymentText.includes(search) ||
-                terms.includes(search) ||
-                offer.asset
+                const searchMatch =
+                    !search ||
+                    trader.includes(
+                        search
+                    ) ||
+                    paymentText.includes(
+                        search
+                    ) ||
+                    terms.includes(
+                        search
+                    ) ||
+                    String(
+                        offer.asset
+                    )
                     .toLowerCase()
-                    .includes(search);
-
-            const amountMatch =
-                !amount ||
-                (
-                    amount >=
-                    Number(offer.min_limit) &&
-                    amount <=
-                    Number(offer.max_limit)
-                );
-
-            const assetMatch =
-                !asset ||
-                offer.asset === asset;
-
-            const paymentMatch =
-                !payment ||
-                (offer.paymentMethods || [])
-                    .some(
-                        p =>
-                            String(p.id) ===
-                            String(payment)
+                    .includes(
+                        search
                     );
 
-            return (
-                searchMatch &&
-                amountMatch &&
-                assetMatch &&
-                paymentMatch
-            );
+                const amountMatch =
+                    !amount ||
+                    (
+                        amount >=
+                            Number(
+                                offer.min_limit
+                            ) &&
+                        amount <=
+                            Number(
+                                offer.max_limit
+                            )
+                    );
 
-        });
+                const assetMatch =
+                    !asset ||
+                    offer.asset ===
+                        asset;
+
+                const paymentMatch =
+                    !payment ||
+                    (
+                        offer.paymentMethods ||
+                        []
+                    ).some(
+                        method =>
+                            String(
+                                method.id
+                            ) ===
+                            String(
+                                payment
+                            )
+                    );
+
+                return (
+                    searchMatch &&
+                    amountMatch &&
+                    assetMatch &&
+                    paymentMatch
+                );
+
+            }
+        );
 
     document
-        .getElementById("offerCount")
+        .getElementById(
+            "offerCount"
+        )
         .textContent =
-        `${offers.length} offer${offers.length === 1 ? "" : "s"}`;
+        `${offers.length} offer${
+            offers.length === 1
+                ? ""
+                : "s"
+        }`;
 
     if (!offers.length) {
 
         container.innerHTML = `
             <div class="empty-state">
-                No matching ${currentMarketSide} offers found.
+                No matching
+                ${escapeHTML(
+                    currentMarketSide
+                )}
+                offers found.
             </div>
         `;
 
@@ -1384,7 +1915,9 @@ function renderOffers() {
     }
 
     container.innerHTML =
-        offers.map(renderOffer).join("");
+        offers
+            .map(renderOffer)
+            .join("");
 
 }
 
@@ -1403,38 +1936,62 @@ function renderOffer(offer) {
             .toUpperCase();
 
     const isMine =
-        offer.trader_id === currentUser.id;
+        String(
+            offer.trader_id
+        ) ===
+        String(
+            currentUser.id
+        );
 
     const tags =
-        (offer.paymentMethods || [])
-            .map(method =>
+        (
+            offer.paymentMethods ||
+            []
+        )
+        .map(
+            method =>
                 `<span class="payment-tag">
-                    ${escapeHTML(method.name)}
+                    ${escapeHTML(
+                        method.name
+                    )}
                 </span>`
-            )
-            .join("");
+        )
+        .join("");
 
     return `
-        <div class="offer-row ${isMine ? "my-offer" : ""}">
+
+        <div class="offer-row ${
+            isMine
+                ? "my-offer"
+                : ""
+        }">
 
             <div>
 
                 <div class="trader">
 
                     <div class="avatar">
-                        ${escapeHTML(initial)}
+                        ${escapeHTML(
+                            initial
+                        )}
                     </div>
 
                     <div>
 
                         <strong>
-                            ${escapeHTML(traderName)}
+                            ${escapeHTML(
+                                traderName
+                            )}
                         </strong>
 
                         <div class="rating">
                             ★★★★★
+
                             <span class="small">
-                                (${Number(offer.rating || 100)}%)
+                                (${Number(
+                                    offer.rating ||
+                                    100
+                                )}%)
                             </span>
                         </div>
 
@@ -1445,18 +2002,26 @@ function renderOffer(offer) {
                 <div style="margin-top:6px;">
 
                     <span class="side-badge ${
-                        offer.side === "buy"
+                        offer.side ===
+                        "buy"
                             ? "side-buy"
                             : "side-sell"
                     }">
-                        ${offer.side.toUpperCase()}
+
+                        ${escapeHTML(
+                            offer.side
+                                .toUpperCase()
+                        )}
+
                     </span>
 
                     ${
                         isMine
-                            ? `<span class="small">
-                                Your offer
-                               </span>`
+                            ? `
+                                <span class="small">
+                                    Your offer
+                                </span>
+                              `
                             : ""
                     }
 
@@ -1464,72 +2029,117 @@ function renderOffer(offer) {
 
             </div>
 
+
             <div>
 
                 <div class="price">
-                    ${formatNumber(offer.price)}
-                    ${escapeHTML(offer.fiat)}
+
+                    ${formatNumber(
+                        offer.price
+                    )}
+
+                    ${escapeHTML(
+                        offer.fiat
+                    )}
+
                 </div>
 
                 <div class="small">
-                    per ${escapeHTML(offer.asset)}
+                    per
+                    ${escapeHTML(
+                        offer.asset
+                    )}
                 </div>
 
             </div>
+
 
             <div>
 
                 <div class="amount">
-                    ${formatCrypto(offer.available_amount)}
-                    ${escapeHTML(offer.asset)}
+
+                    ${formatCrypto(
+                        offer.available_amount
+                    )}
+
+                    ${escapeHTML(
+                        offer.asset
+                    )}
+
                 </div>
 
                 <div class="small">
-                    ${formatNumber(offer.min_limit)}
+
+                    ${formatNumber(
+                        offer.min_limit
+                    )}
+
                     -
-                    ${formatNumber(offer.max_limit)}
-                    ${escapeHTML(offer.fiat)}
+
+                    ${formatNumber(
+                        offer.max_limit
+                    )}
+
+                    ${escapeHTML(
+                        offer.fiat
+                    )}
+
                 </div>
 
             </div>
 
+
             <div>
-                ${tags || `<span class="small">None</span>`}
+
+                ${
+                    tags ||
+                    `<span class="small">
+                        None
+                     </span>`
+                }
+
             </div>
+
 
             <div>
 
                 ${
                     isMine
-                    ? `
-                        <button
-                            class="btn btn-secondary btn-sm"
-                            onclick="editOffer('${offer.id}')">
-                            Edit
-                        </button>
+                        ? `
 
-                        <button
-                            class="btn btn-danger btn-sm"
-                            onclick="deleteOffer('${offer.id}')">
-                            Delete
-                        </button>
-                      `
-                    : `
-                        <button
-                            class="btn btn-primary btn-sm"
-                            onclick="selectOffer('${offer.id}')">
-                            ${currentMarketSide === "buy"
-                                ? "Buy"
-                                : "Sell"}
-                            ${escapeHTML(offer.asset)}
-                        </button>
-                      `
+                            <button
+                                class="btn btn-secondary btn-sm"
+                                onclick="editOffer('${offer.id}')">
+                                Edit
+                            </button>
+
+                            <button
+                                class="btn btn-danger btn-sm"
+                                onclick="deleteOffer('${offer.id}')">
+                                Delete
+                            </button>
+
+                          `
+                        : `
+
+                            <button
+                                class="btn btn-primary btn-sm"
+                                onclick="selectOffer('${offer.id}')">
+                                Trade
+                                ${escapeHTML(
+                                    offer.asset
+                                )}
+                            </button>
+
+                          `
                 }
 
             </div>
 
         </div>
+
     `;
+
 }
 
 
@@ -1544,14 +2154,7 @@ function renderMyOffers() {
             "myOffersContainer"
         );
 
-    const mine =
-        allOffers.filter(
-            offer =>
-                offer.trader_id ===
-                currentUser.id
-        );
-
-    if (!mine.length) {
+    if (!myOffers.length) {
 
         container.innerHTML = `
             <div class="empty-state">
@@ -1563,57 +2166,125 @@ function renderMyOffers() {
     }
 
     container.innerHTML =
-        mine.map(offer => `
+        myOffers
+            .map(
+                offer => `
 
-            <div class="trade-card">
+                    <div class="trade-card">
 
-                <div class="trade-detail">
-                    <strong>
-                        ${offer.side.toUpperCase()}
-                        ${escapeHTML(offer.asset)}
-                    </strong>
+                        <div class="trade-detail">
 
-                    <span>
-                        ${formatNumber(offer.price)}
-                        ${escapeHTML(offer.fiat)}
-                    </span>
-                </div>
+                            <strong>
 
-                <div class="trade-detail">
-                    <span>Available</span>
-                    <strong>
-                        ${formatCrypto(offer.available_amount)}
-                    </strong>
-                </div>
+                                ${escapeHTML(
+                                    offer.side
+                                        .toUpperCase()
+                                )}
 
-                <div class="trade-detail">
-                    <span>Limits</span>
-                    <strong>
-                        ${formatNumber(offer.min_limit)}
-                        -
-                        ${formatNumber(offer.max_limit)}
-                    </strong>
-                </div>
+                                ${escapeHTML(
+                                    offer.asset
+                                )}
 
-                <div style="margin-top:10px;">
+                            </strong>
 
-                    <button
-                        class="btn btn-secondary btn-sm"
-                        onclick="editOffer('${offer.id}')">
-                        Edit
-                    </button>
+                            <span>
 
-                    <button
-                        class="btn btn-danger btn-sm"
-                        onclick="deleteOffer('${offer.id}')">
-                        Delete
-                    </button>
+                                ${formatNumber(
+                                    offer.price
+                                )}
 
-                </div>
+                                ${escapeHTML(
+                                    offer.fiat
+                                )}
 
-            </div>
+                            </span>
 
-        `).join("");
+                        </div>
+
+
+                        <div class="trade-detail">
+
+                            <span>
+                                Available
+                            </span>
+
+                            <strong>
+
+                                ${formatCrypto(
+                                    offer.available_amount
+                                )}
+
+                                ${escapeHTML(
+                                    offer.asset
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="trade-detail">
+
+                            <span>
+                                Limits
+                            </span>
+
+                            <strong>
+
+                                ${formatNumber(
+                                    offer.min_limit
+                                )}
+
+                                -
+
+                                ${formatNumber(
+                                    offer.max_limit
+                                )}
+
+                                ${escapeHTML(
+                                    offer.fiat
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="offer-status-row">
+
+                            <span class="trade-status status-${escapeHTML(
+                                offer.status
+                            )}">
+
+                                ${escapeHTML(
+                                    offer.status
+                                )}
+
+                            </span>
+
+                            <div>
+
+                                <button
+                                    class="btn btn-secondary btn-sm"
+                                    onclick="editOffer('${offer.id}')">
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="btn btn-danger btn-sm"
+                                    onclick="deleteOffer('${offer.id}')">
+                                    Delete
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
 
 }
 
@@ -1626,12 +2297,17 @@ function selectOffer(offerId) {
 
     const offer =
         allOffers.find(
-            item => item.id === offerId
+            item =>
+                String(item.id) ===
+                String(offerId)
         );
 
-    if (!offer) return;
+    if (!offer) {
+        return;
+    }
 
-    selectedOffer = offer;
+    selectedOffer =
+        offer;
 
     const traderName =
         traderDisplayName(
@@ -1640,26 +2316,46 @@ function selectOffer(offerId) {
         );
 
     document
-        .getElementById("selectedTraderName")
+        .getElementById(
+            "selectedTraderName"
+        )
         .textContent =
         traderName;
 
     document
-        .getElementById("selectedAvatar")
+        .getElementById(
+            "selectedAvatar"
+        )
         .textContent =
         traderName
             .charAt(0)
             .toUpperCase();
 
     document
-        .getElementById("selectedOfferInfo")
+        .getElementById(
+            "selectedOfferInfo"
+        )
         .textContent =
-        `${offer.side.toUpperCase()} ${offer.asset} at ${formatNumber(offer.price)} ${offer.fiat}`;
+        `${offer.side.toUpperCase()} ${
+            offer.asset
+        } at ${
+            formatNumber(
+                offer.price
+            )
+        } ${
+            offer.fiat
+        }`;
 
     document
-        .getElementById("calcPrice")
+        .getElementById(
+            "calcPrice"
+        )
         .textContent =
-        `${formatNumber(offer.price)} ${offer.fiat}`;
+        `${formatNumber(
+            offer.price
+        )} ${
+            offer.fiat
+        }`;
 
     const paymentSelect =
         document.getElementById(
@@ -1670,13 +2366,21 @@ function selectOffer(offerId) {
         `<option value="">
             Select payment method
         </option>` +
-        (offer.paymentMethods || [])
-            .map(method =>
-                `<option value="${escapeHTML(method.id)}">
-                    ${escapeHTML(method.name)}
+        (
+            offer.paymentMethods ||
+            []
+        )
+        .map(
+            method =>
+                `<option value="${escapeHTML(
+                    method.id
+                )}">
+                    ${escapeHTML(
+                        method.name
+                    )}
                 </option>`
-            )
-            .join("");
+        )
+        .join("");
 
     calculateTrade();
 
@@ -1699,35 +2403,60 @@ function calculateTrade() {
     const cryptoAmount =
         parseFloat(
             document
-                .getElementById("quickAmount")
+                .getElementById(
+                    "quickAmount"
+                )
                 .value
         ) || 0;
 
     const price =
-        Number(selectedOffer.price);
+        Number(
+            selectedOffer.price
+        );
 
-    const feeRate = 0.005;
+    const feeRate =
+        0.005;
 
     const totalFiat =
-        cryptoAmount * price;
+        cryptoAmount *
+        price;
 
     const fee =
-        totalFiat * feeRate;
+        totalFiat *
+        feeRate;
 
     document
-        .getElementById("calcCrypto")
+        .getElementById(
+            "calcCrypto"
+        )
         .textContent =
-        `${formatCrypto(cryptoAmount)} ${selectedOffer.asset}`;
+        `${formatCrypto(
+            cryptoAmount
+        )} ${
+            selectedOffer.asset
+        }`;
 
     document
-        .getElementById("calcFee")
+        .getElementById(
+            "calcFee"
+        )
         .textContent =
-        `${formatNumber(fee)} ${selectedOffer.fiat}`;
+        `${formatNumber(
+            fee
+        )} ${
+            selectedOffer.fiat
+        }`;
 
     document
-        .getElementById("calcFiat")
+        .getElementById(
+            "calcFiat"
+        )
         .textContent =
-        `${formatNumber(totalFiat + fee)} ${selectedOffer.fiat}`;
+        `${formatNumber(
+            totalFiat + fee
+        )} ${
+            selectedOffer.fiat
+        }`;
 
 }
 
@@ -1735,20 +2464,32 @@ function calculateTrade() {
 function resetCalculation() {
 
     document
-        .getElementById("calcPrice")
-        .textContent = "0.00";
+        .getElementById(
+            "calcPrice"
+        )
+        .textContent =
+        "0.00";
 
     document
-        .getElementById("calcCrypto")
-        .textContent = "0";
+        .getElementById(
+            "calcCrypto"
+        )
+        .textContent =
+        "0";
 
     document
-        .getElementById("calcFee")
-        .textContent = "0.00";
+        .getElementById(
+            "calcFee"
+        )
+        .textContent =
+        "0.00";
 
     document
-        .getElementById("calcFiat")
-        .textContent = "0.00";
+        .getElementById(
+            "calcFiat"
+        )
+        .textContent =
+        "0.00";
 
 }
 
@@ -1757,12 +2498,30 @@ function resetCalculation() {
    START TRADE
 ========================================================= */
 
-function initiateTrade() {
+async function initiateTrade() {
 
     if (!selectedOffer) {
 
-        alert(
-            "Please select an offer first."
+        showToast(
+            "Please select an offer first.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (
+        String(
+            selectedOffer.user_id
+        ) ===
+        String(
+            currentUser.id
+        )
+    ) {
+
+        showToast(
+            "You cannot start a trade with your own offer.",
+            "error"
         );
 
         return;
@@ -1771,14 +2530,22 @@ function initiateTrade() {
     const amount =
         parseFloat(
             document
-                .getElementById("quickAmount")
+                .getElementById(
+                    "quickAmount"
+                )
                 .value
         );
 
-    if (!Number.isFinite(amount) || amount <= 0) {
+    if (
+        !Number.isFinite(
+            amount
+        ) ||
+        amount <= 0
+    ) {
 
-        alert(
-            "Enter a valid cryptocurrency amount."
+        showToast(
+            "Enter a valid cryptocurrency amount.",
+            "error"
         );
 
         return;
@@ -1786,13 +2553,16 @@ function initiateTrade() {
 
     const paymentId =
         document
-            .getElementById("quickPayment")
+            .getElementById(
+                "quickPayment"
+            )
             .value;
 
     if (!paymentId) {
 
-        alert(
-            "Select a payment method."
+        showToast(
+            "Select a payment method.",
+            "error"
         );
 
         return;
@@ -1800,11 +2570,14 @@ function initiateTrade() {
 
     if (
         amount >
-        Number(selectedOffer.available_amount)
+        Number(
+            selectedOffer.available_amount
+        )
     ) {
 
-        alert(
-            "The requested amount exceeds the available amount."
+        showToast(
+            "The requested amount exceeds the available amount.",
+            "error"
         );
 
         return;
@@ -1812,49 +2585,84 @@ function initiateTrade() {
 
     const fiatAmount =
         amount *
-        Number(selectedOffer.price);
+        Number(
+            selectedOffer.price
+        );
 
     if (
         fiatAmount <
-        Number(selectedOffer.min_limit) ||
+        Number(
+            selectedOffer.min_limit
+        ) ||
         fiatAmount >
-        Number(selectedOffer.max_limit)
+        Number(
+            selectedOffer.max_limit
+        )
     ) {
 
-        alert(
-            `Trade value must be between ${selectedOffer.min_limit} and ${selectedOffer.max_limit} ${selectedOffer.fiat}.`
+        showToast(
+            `Trade value must be between ${
+                selectedOffer.min_limit
+            } and ${
+                selectedOffer.max_limit
+            } ${
+                selectedOffer.fiat
+            }.`,
+            "error"
         );
 
         return;
     }
 
-    activeTrade = {
+    const selectedPayment =
+        (
+            selectedOffer.paymentMethods ||
+            []
+        ).find(
+            method =>
+                String(
+                    method.id
+                ) ===
+                String(
+                    paymentId
+                )
+        );
 
-        id:
-            "TRADE_" +
-            Date.now(),
+    const buyerId =
+        selectedOffer.side ===
+        "buy"
+            ? selectedOffer.user_id
+            : currentUser.id;
+
+    const sellerId =
+        selectedOffer.side ===
+        "sell"
+            ? selectedOffer.user_id
+            : currentUser.id;
+
+    if (
+        String(buyerId) ===
+        String(sellerId)
+    ) {
+
+        showToast(
+            "Invalid trade participants.",
+            "error"
+        );
+
+        return;
+    }
+
+    const tradeData = {
 
         offer_id:
             selectedOffer.id,
 
         buyer_id:
-            selectedOffer.side === "buy"
-                ? currentUser.id
-                : selectedOffer.trader_id,
+            buyerId,
 
         seller_id:
-            selectedOffer.side === "sell"
-                ? currentUser.id
-                : selectedOffer.trader_id,
-
-        trader_id:
-            selectedOffer.trader_id,
-
-        trader_name:
-            traderDisplayName(
-                selectedOffer.trader_id,
-                selectedOffer
-            ),
+            sellerId,
 
         asset:
             selectedOffer.asset,
@@ -1862,51 +2670,169 @@ function initiateTrade() {
         fiat:
             selectedOffer.fiat,
 
-        amount:
+        crypto_amount:
             amount,
 
-        price:
-            Number(selectedOffer.price),
+        unit_price:
+            Number(
+                selectedOffer.price
+            ),
 
         fiat_amount:
             fiatAmount,
 
-        payment_id:
+        fee:
+            fiatAmount * 0.005,
+
+        payment_method:
+            selectedPayment?.name ||
             paymentId,
 
         status:
-            "OPEN",
-
-        created_at:
-            Date.now()
+            "OPEN"
 
     };
 
-    chatMessages = [
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("trades")
+            .insert(
+                tradeData
+            )
+            .select("*")
+            .single();
 
-        {
-            sender: "them",
-            text:
-                `Hello. Trade ${activeTrade.id} has started for ${formatCrypto(amount)} ${selectedOffer.asset}.`
-        },
+    if (error) {
 
-        {
-            sender: "them",
-            text:
-                `Terms: ${selectedOffer.terms || "No additional terms."}`
-        }
+        console.error(error);
 
-    ];
+        showToast(
+            getErrorMessage(error),
+            "error"
+        );
+
+        return;
+    }
+
+    activeTrade =
+        normalizeTrade(
+            data
+        );
+
+    chatMessages = [];
+
+    await addChatMessage(
+        `Trade ${shortTradeId(
+            activeTrade.id
+        )} started for ${formatCrypto(
+            amount
+        )} ${
+            selectedOffer.asset
+        }.`
+    );
+
+    await addChatMessage(
+        `Terms: ${
+            selectedOffer.terms ||
+            "No additional terms."
+        }`
+    );
+
+    await loadTradeChat();
 
     renderTradePanel();
 
     renderChat();
 
-    saveState();
-
-    alert(
-        `Trade ${activeTrade.id} started successfully.`
+    showToast(
+        "Trade started successfully.",
+        "success"
     );
+
+}
+
+
+/* =========================================================
+   LOAD ACTIVE TRADE
+========================================================= */
+
+async function loadMyActiveTrade() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("trades")
+            .select("*")
+            .or(
+                `buyer_id.eq.${currentUser.id},seller_id.eq.${currentUser.id}`
+            )
+            .in(
+                "status",
+                [
+                    "OPEN",
+                    "LOCKED",
+                    "PAID",
+                    "DISPUTED"
+                ]
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            )
+            .limit(1);
+
+    if (error) {
+
+        console.error(
+            "Trade loading error:",
+            error
+        );
+
+        return;
+    }
+
+    activeTrade =
+        data?.[0]
+            ? normalizeTrade(
+                data[0]
+              )
+            : null;
+
+}
+
+
+function normalizeTrade(trade) {
+
+    return {
+
+        ...trade,
+
+        amount:
+            Number(
+                trade.crypto_amount ||
+                0
+            ),
+
+        price:
+            Number(
+                trade.unit_price ||
+                0
+            ),
+
+        fiat_amount:
+            Number(
+                trade.fiat_amount ||
+                0
+            )
+
+    };
 
 }
 
@@ -1925,14 +2851,17 @@ function renderTradePanel() {
     if (!activeTrade) {
 
         panel.innerHTML = `
-            <div class="empty-state"
-                 style="padding:20px 5px;">
+            <div
+                class="empty-state"
+                style="padding:20px 5px;">
                 No active trade.
             </div>
         `;
 
         document
-            .getElementById("tradePanelTitle")
+            .getElementById(
+                "tradePanelTitle"
+            )
             .textContent =
             "Current Trade";
 
@@ -1940,69 +2869,197 @@ function renderTradePanel() {
     }
 
     document
-        .getElementById("tradePanelTitle")
+        .getElementById(
+            "tradePanelTitle"
+        )
         .textContent =
-        "Trade " + activeTrade.id;
+        "Trade " +
+        shortTradeId(
+            activeTrade.id
+        );
+
+    const traderId =
+        String(
+            currentUser.id
+        ) ===
+        String(
+            activeTrade.buyer_id
+        )
+            ? activeTrade.seller_id
+            : activeTrade.buyer_id;
+
+    const traderName =
+        String(
+            traderId
+        ) ===
+        String(
+            selectedOffer?.user_id
+        )
+            ? selectedOffer.trader_name
+            : "Trading partner";
 
     panel.innerHTML = `
 
         <div class="trade-card">
 
             <div class="trade-detail">
-                <span>Trader</span>
-                <strong>
-                    ${escapeHTML(activeTrade.trader_name)}
-                </strong>
-            </div>
 
-            <div class="trade-detail">
-                <span>Asset</span>
-                <strong>
-                    ${formatCrypto(activeTrade.amount)}
-                    ${escapeHTML(activeTrade.asset)}
-                </strong>
-            </div>
-
-            <div class="trade-detail">
-                <span>Price</span>
-                <strong>
-                    ${formatNumber(activeTrade.price)}
-                    ${escapeHTML(activeTrade.fiat)}
-                </strong>
-            </div>
-
-            <div class="trade-detail">
-                <span>Fiat value</span>
-                <strong>
-                    ${formatNumber(activeTrade.fiat_amount)}
-                    ${escapeHTML(activeTrade.fiat)}
-                </strong>
-            </div>
-
-            <div class="trade-detail">
-                <span>Status</span>
-                <span class="trade-status status-${activeTrade.status.toLowerCase()}">
-                    ${escapeHTML(activeTrade.status)}
+                <span>
+                    Trading partner
                 </span>
+
+                <strong>
+                    ${escapeHTML(
+                        traderName
+                    )}
+                </strong>
+
             </div>
+
+
+            <div class="trade-detail">
+
+                <span>
+                    Asset
+                </span>
+
+                <strong>
+
+                    ${formatCrypto(
+                        activeTrade.amount
+                    )}
+
+                    ${escapeHTML(
+                        activeTrade.asset
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-detail">
+
+                <span>
+                    Price
+                </span>
+
+                <strong>
+
+                    ${formatNumber(
+                        activeTrade.price
+                    )}
+
+                    ${escapeHTML(
+                        activeTrade.fiat
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-detail">
+
+                <span>
+                    Fiat value
+                </span>
+
+                <strong>
+
+                    ${formatNumber(
+                        activeTrade.fiat_amount
+                    )}
+
+                    ${escapeHTML(
+                        activeTrade.fiat
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            <div class="trade-detail">
+
+                <span>
+                    Payment
+                </span>
+
+                <strong>
+                    ${escapeHTML(
+                        activeTrade.payment_method
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="trade-detail">
+
+                <span>
+                    Status
+                </span>
+
+                <span class="trade-status status-${escapeHTML(
+                    activeTrade.status
+                        .toLowerCase()
+                )}">
+
+                    ${escapeHTML(
+                        activeTrade.status
+                    )}
+
+                </span>
+
+            </div>
+
 
             <hr class="divider">
 
             ${renderTradeActions()}
 
         </div>
+
     `;
 
 }
 
 
+/* =========================================================
+   TRADE ACTIONS
+========================================================= */
+
 function renderTradeActions() {
 
-    switch (activeTrade.status) {
+    if (!activeTrade) {
+        return "";
+    }
+
+    const isBuyer =
+        String(
+            activeTrade.buyer_id
+        ) ===
+        String(
+            currentUser.id
+        );
+
+    const isSeller =
+        String(
+            activeTrade.seller_id
+        ) ===
+        String(
+            currentUser.id
+        );
+
+    switch (
+        activeTrade.status
+    ) {
 
         case "OPEN":
 
             return `
+
                 <div class="action-grid">
 
                     <button
@@ -2018,18 +3075,33 @@ function renderTradeActions() {
                     </button>
 
                 </div>
+
             `;
+
 
         case "LOCKED":
 
             return `
+
                 <div class="action-grid">
 
-                    <button
-                        class="btn btn-primary"
-                        onclick="markPaid()">
-                        Mark Payment Sent
-                    </button>
+                    ${
+                        isBuyer
+                            ? `
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="markPaid()">
+                                    Mark Payment Sent
+                                </button>
+                              `
+                            : `
+                                <button
+                                    class="btn btn-success"
+                                    onclick="confirmPayment()">
+                                    Confirm Payment
+                                </button>
+                              `
+                    }
 
                     <button
                         class="btn btn-danger"
@@ -2038,18 +3110,27 @@ function renderTradeActions() {
                     </button>
 
                 </div>
+
             `;
+
 
         case "PAID":
 
             return `
+
                 <div class="action-grid">
 
-                    <button
-                        class="btn btn-success"
-                        onclick="completeTrade()">
-                        Confirm & Complete
-                    </button>
+                    ${
+                        isSeller
+                            ? `
+                                <button
+                                    class="btn btn-success"
+                                    onclick="completeTrade()">
+                                    Confirm & Complete
+                                </button>
+                              `
+                            : ""
+                    }
 
                     <button
                         class="btn btn-danger"
@@ -2058,15 +3139,32 @@ function renderTradeActions() {
                     </button>
 
                 </div>
+
             `;
+
 
         case "DISPUTED":
 
             return `
-                <div class="notice">
-                    The trade is under dispute in this demo.
-                    A production implementation should send the
-                    dispute to your escrow and resolution system.
+
+                <div class="notice error">
+
+                    This trade is under dispute.
+
+                    ${
+                        activeTrade.dispute_reason
+                            ? `
+                                <br><br>
+                                <strong>
+                                    Reason:
+                                </strong>
+                                ${escapeHTML(
+                                    activeTrade.dispute_reason
+                                )}
+                              `
+                            : ""
+                    }
+
                 </div>
 
                 <button
@@ -2074,12 +3172,15 @@ function renderTradeActions() {
                     onclick="refundTrade()">
                     Refund Trade
                 </button>
+
             `;
+
 
         case "COMPLETED":
 
             return `
-                <div class="notice">
+
+                <div class="notice success">
                     Trade completed successfully.
                 </div>
 
@@ -2088,11 +3189,14 @@ function renderTradeActions() {
                     onclick="closeTrade()">
                     Close Trade
                 </button>
+
             `;
+
 
         case "REFUNDED":
 
             return `
+
                 <div class="notice">
                     Trade refunded.
                 </div>
@@ -2102,144 +3206,406 @@ function renderTradeActions() {
                     onclick="closeTrade()">
                     Close Trade
                 </button>
+
+            `;
+
+
+        case "CANCELLED":
+
+            return `
+
+                <div class="notice">
+                    Trade cancelled.
+                </div>
+
+                <button
+                    class="btn btn-light"
+                    onclick="closeTrade()">
+                    Close Trade
+                </button>
+
             `;
 
         default:
             return "";
+
     }
 
 }
 
 
 /* =========================================================
-   TRADE STATUS
+   UPDATE TRADE
 ========================================================= */
 
-function lockTrade() {
+async function updateTradeStatus(
+    status,
+    extra = {}
+) {
 
-    if (!activeTrade) return;
+    if (!activeTrade) {
+        return false;
+    }
 
-    activeTrade.status = "LOCKED";
+    const updateData = {
 
-    addSystemMessage(
-        "Trade locked. Continue with the agreed payment process."
-    );
+        status,
+
+        ...extra
+
+    };
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("trades")
+            .update(
+                updateData
+            )
+            .eq(
+                "id",
+                activeTrade.id
+            )
+            .select("*")
+            .single();
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            getErrorMessage(error),
+            "error"
+        );
+
+        return false;
+    }
+
+    activeTrade =
+        normalizeTrade(
+            data
+        );
+
+    renderTradePanel();
+
+    return true;
 
 }
 
 
-function markPaid() {
+/* =========================================================
+   LOCK TRADE
+========================================================= */
 
-    if (!activeTrade) return;
+async function lockTrade() {
 
-    activeTrade.status = "PAID";
+    if (!activeTrade) {
+        return;
+    }
 
-    addSystemMessage(
-        "Payment marked as sent. Waiting for confirmation."
-    );
+    const confirmed =
+        confirm(
+            "Lock this trade?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const success =
+        await updateTradeStatus(
+            "LOCKED"
+        );
+
+    if (success) {
+
+        await addChatMessage(
+            "Trade locked. Continue with the agreed payment process."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
 
 }
 
 
-function completeTrade() {
+/* =========================================================
+   MARK PAYMENT
+========================================================= */
 
-    if (!activeTrade) return;
+async function markPaid() {
 
-    activeTrade.status = "COMPLETED";
+    if (!activeTrade) {
+        return;
+    }
 
-    addSystemMessage(
-        "Trade completed successfully."
-    );
+    const confirmed =
+        confirm(
+            "Have you sent the agreed payment?"
+        );
 
-    tradeHistory.push({
-        ...activeTrade,
-        completed_at: Date.now()
-    });
+    if (!confirmed) {
+        return;
+    }
+
+    const success =
+        await updateTradeStatus(
+            "PAID"
+        );
+
+    if (success) {
+
+        await addChatMessage(
+            "Payment marked as sent. Waiting for seller confirmation."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
 
 }
 
 
-function openDispute() {
+/* =========================================================
+   CONFIRM PAYMENT
+========================================================= */
 
-    if (!activeTrade) return;
+async function confirmPayment() {
+
+    if (!activeTrade) {
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            "Have you received the payment?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const success =
+        await updateTradeStatus(
+            "PAID"
+        );
+
+    if (success) {
+
+        await addChatMessage(
+            "Payment received. Trade can now be completed."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
+
+}
+
+
+/* =========================================================
+   COMPLETE TRADE
+========================================================= */
+
+async function completeTrade() {
+
+    if (!activeTrade) {
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            "Confirm that the trade should be completed?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const success =
+        await updateTradeStatus(
+            "COMPLETED",
+            {
+                completed_at:
+                    new Date()
+                        .toISOString()
+            }
+        );
+
+    if (success) {
+
+        await addChatMessage(
+            "Trade completed successfully."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+        showToast(
+            "Trade completed.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPUTE
+========================================================= */
+
+async function openDispute() {
+
+    if (!activeTrade) {
+        return;
+    }
 
     const reason =
         prompt(
             "Enter the reason for the dispute:"
         );
 
-    if (!reason || !reason.trim()) {
-
+    if (
+        !reason ||
+        !reason.trim()
+    ) {
         return;
     }
 
-    activeTrade.status =
-        "DISPUTED";
+    const success =
+        await updateTradeStatus(
+            "DISPUTED",
+            {
+                dispute_reason:
+                    reason.trim()
+            }
+        );
 
-    activeTrade.dispute_reason =
-        reason.trim();
+    if (success) {
 
-    addSystemMessage(
-        `Dispute opened: ${reason.trim()}`
-    );
+        await addChatMessage(
+            `Dispute opened: ${reason.trim()}`
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+        showToast(
+            "Dispute opened.",
+            "success"
+        );
+
+    }
 
 }
 
 
-function refundTrade() {
+/* =========================================================
+   REFUND
+========================================================= */
 
-    if (!activeTrade) return;
+async function refundTrade() {
+
+    if (!activeTrade) {
+        return;
+    }
 
     const confirmed =
         confirm(
-            "Refund this demo trade?"
+            "Refund this trade?"
         );
 
-    if (!confirmed) return;
+    if (!confirmed) {
+        return;
+    }
 
-    activeTrade.status =
-        "REFUNDED";
+    const success =
+        await updateTradeStatus(
+            "REFUNDED"
+        );
 
-    addSystemMessage(
-        "Trade marked as refunded."
-    );
+    if (success) {
+
+        await addChatMessage(
+            "Trade marked as refunded."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
 
 }
 
 
-function cancelTrade() {
+/* =========================================================
+   CANCEL
+========================================================= */
 
-    if (!activeTrade) return;
+async function cancelTrade() {
+
+    if (!activeTrade) {
+        return;
+    }
 
     if (
         activeTrade.status !==
         "OPEN"
     ) {
 
-        alert(
-            "Only an open trade may be cancelled."
+        showToast(
+            "Only an open trade can be cancelled.",
+            "error"
         );
 
         return;
     }
 
-    if (
-        !confirm(
+    const confirmed =
+        confirm(
             "Cancel this trade?"
-        )
-    ) {
+        );
+
+    if (!confirmed) {
         return;
     }
 
-    activeTrade.status =
-        "REFUNDED";
+    const success =
+        await updateTradeStatus(
+            "CANCELLED"
+        );
 
-    addSystemMessage(
-        "Trade cancelled."
-    );
+    if (success) {
+
+        await addChatMessage(
+            "Trade cancelled."
+        );
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
 
 }
 
+
+/* =========================================================
+   CLOSE TRADE
+========================================================= */
 
 function closeTrade() {
 
@@ -2251,14 +3617,57 @@ function closeTrade() {
 
     renderChat();
 
-    saveState();
-
 }
 
 
 /* =========================================================
    CHAT
 ========================================================= */
+
+async function loadTradeChat() {
+
+    if (!activeTrade) {
+
+        chatMessages = [];
+
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("messages")
+            .select("*")
+            .eq(
+                "trade_id",
+                activeTrade.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: true
+                }
+            );
+
+    if (error) {
+
+        console.error(
+            "Chat loading error:",
+            error
+        );
+
+        chatMessages = [];
+
+        return;
+    }
+
+    chatMessages =
+        data || [];
+
+}
+
 
 function renderChat() {
 
@@ -2268,19 +3677,21 @@ function renderChat() {
         );
 
     if (
-        !activeTrade ||
-        !chatMessages.length
+        !activeTrade
     ) {
 
         box.innerHTML = `
-            <div class="empty-state"
-                 style="padding:15px;">
+            <div
+                class="empty-state"
+                style="padding:15px;">
                 Start a trade to open chat.
             </div>
         `;
 
         document
-            .getElementById("chatTitle")
+            .getElementById(
+                "chatTitle"
+            )
             .textContent =
             "Trade Chat";
 
@@ -2288,27 +3699,66 @@ function renderChat() {
     }
 
     document
-        .getElementById("chatTitle")
+        .getElementById(
+            "chatTitle"
+        )
         .textContent =
-        `Chat with ${activeTrade.trader_name}`;
+        "Trade Chat";
+
+    if (!chatMessages.length) {
+
+        box.innerHTML = `
+            <div
+                class="empty-state"
+                style="padding:15px;">
+                No messages yet.
+            </div>
+        `;
+
+        return;
+    }
 
     box.innerHTML =
         chatMessages
-            .map(message => `
+            .map(
+                message => {
 
-                <div class="chat-msg ${message.sender}">
+                    const mine =
+                        String(
+                            message.sender_id
+                        ) ===
+                        String(
+                            currentUser.id
+                        );
 
-                    <div>
-                        ${escapeHTML(message.text)}
-                    </div>
+                    return `
 
-                    <div class="chat-time">
-                        ${formatTime(message.time)}
-                    </div>
+                        <div class="chat-msg ${
+                            mine
+                                ? "me"
+                                : "them"
+                        }">
 
-                </div>
+                            <div>
+                                ${escapeHTML(
+                                    message.message
+                                )}
+                            </div>
 
-            `)
+                            <div class="chat-time">
+
+                                ${formatTime(
+                                    message.created_at
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
             .join("");
 
     box.scrollTop =
@@ -2317,12 +3767,13 @@ function renderChat() {
 }
 
 
-function sendChatMessage() {
+async function sendChatMessage() {
 
     if (!activeTrade) {
 
-        alert(
-            "Start a trade before sending messages."
+        showToast(
+            "Start a trade before sending messages.",
+            "error"
         );
 
         return;
@@ -2336,52 +3787,89 @@ function sendChatMessage() {
     const text =
         input.value.trim();
 
-    if (!text) return;
-
-    chatMessages.push({
-
-        sender: "me",
-
-        text: text,
-
-        time: Date.now()
-
-    });
-
-    input.value = "";
-
-    renderChat();
-
-    saveState();
-
-}
-
-
-function addSystemMessage(text) {
-
-    chatMessages.push({
-
-        sender: "them",
-
-        text: text,
-
-        time: Date.now()
-
-    });
-
-    renderChat();
-
-    renderTradePanel();
-
-    saveState();
-
-}
-
-
-function handleChatKeyPress(event) {
+    if (!text) {
+        return;
+    }
 
     if (
-        event.key === "Enter" &&
+        text.length >
+        500
+    ) {
+
+        showToast(
+            "Message is too long.",
+            "error"
+        );
+
+        return;
+    }
+
+    const success =
+        await addChatMessage(
+            text
+        );
+
+    if (success) {
+
+        input.value = "";
+
+        await loadTradeChat();
+
+        renderChat();
+
+    }
+
+}
+
+
+async function addChatMessage(
+    text
+) {
+
+    if (
+        !activeTrade ||
+        !currentUser
+    ) {
+        return false;
+    }
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("messages")
+            .insert({
+
+                trade_id:
+                    activeTrade.id,
+
+                sender_id:
+                    currentUser.id,
+
+                message:
+                    text.trim()
+
+            });
+
+    if (error) {
+
+        console.error(error);
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+function handleChatKeyPress(
+    event
+) {
+
+    if (
+        event.key ===
+        "Enter" &&
         !event.shiftKey
     ) {
 
@@ -2395,62 +3883,216 @@ function handleChatKeyPress(event) {
 
 
 /* =========================================================
-   CREATE / EDIT OFFER
+   REALTIME
+========================================================= */
+
+function setupRealtime() {
+
+    if (
+        realtimeChannel
+    ) {
+
+        supabaseClient
+            .removeChannel(
+                realtimeChannel
+            );
+
+    }
+
+    realtimeChannel =
+        supabaseClient
+            .channel(
+                "cryptovault-p2p"
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "offers"
+                },
+                async () => {
+
+                    await loadOffers();
+
+                    await loadMyOffers();
+
+                    updateFilters();
+
+                    renderOffers();
+
+                    renderMyOffers();
+
+                }
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "trades"
+                },
+                async payload => {
+
+                    const trade =
+                        payload.new;
+
+                    if (
+                        trade &&
+                        (
+                            String(
+                                trade.buyer_id
+                            ) ===
+                            String(
+                                currentUser.id
+                            ) ||
+                            String(
+                                trade.seller_id
+                            ) ===
+                            String(
+                                currentUser.id
+                            )
+                        )
+                    ) {
+
+                        activeTrade =
+                            normalizeTrade(
+                                trade
+                            );
+
+                        await loadTradeChat();
+
+                        renderTradePanel();
+
+                        renderChat();
+
+                    }
+
+                }
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "INSERT",
+                    schema: "public",
+                    table: "messages"
+                },
+                async payload => {
+
+                    if (
+                        activeTrade &&
+                        payload.new &&
+                        String(
+                            payload.new.trade_id
+                        ) ===
+                        String(
+                            activeTrade.id
+                        )
+                    ) {
+
+                        await loadTradeChat();
+
+                        renderChat();
+
+                    }
+
+                }
+            )
+            .subscribe();
+
+}
+
+
+/* =========================================================
+   OFFER MODAL
 ========================================================= */
 
 function openOfferModal() {
 
     document
-        .getElementById("offerModal")
-        .classList.add("active");
+        .getElementById(
+            "offerModal"
+        )
+        .classList.add(
+            "active"
+        );
 
     document
-        .getElementById("offerModalTitle")
+        .getElementById(
+            "offerModalTitle"
+        )
         .textContent =
         "Create Trading Offer";
 
     document
-        .getElementById("editingOfferId")
-        .value = "";
+        .getElementById(
+            "editingOfferId"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newSide")
+        .getElementById(
+            "newSide"
+        )
         .value =
         currentMarketSide;
 
     document
-        .getElementById("newAsset")
+        .getElementById(
+            "newAsset"
+        )
         .value =
         "BTC";
 
     document
-        .getElementById("newFiat")
+        .getElementById(
+            "newFiat"
+        )
         .value =
         "USD";
 
     document
-        .getElementById("newPrice")
-        .value = "";
+        .getElementById(
+            "newPrice"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newAmount")
-        .value = "";
+        .getElementById(
+            "newAmount"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newMin")
-        .value = "";
+        .getElementById(
+            "newMin"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newMax")
-        .value = "";
+        .getElementById(
+            "newMax"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newPayment")
-        .value = "";
+        .getElementById(
+            "newPayment"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("newTerms")
-        .value = "";
+        .getElementById(
+            "newTerms"
+        )
+        .value =
+        "";
 
 }
 
@@ -2458,77 +4100,134 @@ function openOfferModal() {
 function closeOfferModal() {
 
     document
-        .getElementById("offerModal")
-        .classList.remove("active");
+        .getElementById(
+            "offerModal"
+        )
+        .classList.remove(
+            "active"
+        );
 
 }
 
 
-function saveOffer(event) {
+/* =========================================================
+   SAVE OFFER
+========================================================= */
+
+async function saveOffer(
+    event
+) {
 
     event.preventDefault();
 
+    if (!currentUser) {
+
+        showToast(
+            "You must be logged in.",
+            "error"
+        );
+
+        return;
+    }
+
     const editingId =
         document
-            .getElementById("editingOfferId")
+            .getElementById(
+                "editingOfferId"
+            )
             .value;
 
     const side =
         document
-            .getElementById("newSide")
+            .getElementById(
+                "newSide"
+            )
             .value;
 
     const asset =
         document
-            .getElementById("newAsset")
+            .getElementById(
+                "newAsset"
+            )
             .value
             .trim()
             .toUpperCase();
 
     const fiat =
         document
-            .getElementById("newFiat")
+            .getElementById(
+                "newFiat"
+            )
             .value;
 
     const price =
         parseFloat(
             document
-                .getElementById("newPrice")
+                .getElementById(
+                    "newPrice"
+                )
                 .value
         );
 
     const amount =
         parseFloat(
             document
-                .getElementById("newAmount")
+                .getElementById(
+                    "newAmount"
+                )
                 .value
         );
 
     const min =
         parseFloat(
             document
-                .getElementById("newMin")
+                .getElementById(
+                    "newMin"
+                )
                 .value
         );
 
     const max =
         parseFloat(
             document
-                .getElementById("newMax")
+                .getElementById(
+                    "newMax"
+                )
                 .value
         );
 
     const payment =
         document
-            .getElementById("newPayment")
+            .getElementById(
+                "newPayment"
+            )
             .value
             .trim();
 
     const terms =
         document
-            .getElementById("newTerms")
+            .getElementById(
+                "newTerms"
+            )
             .value
             .trim();
+
+    if (
+        ![
+            "buy",
+            "sell"
+        ].includes(
+            side
+        )
+    ) {
+
+        showToast(
+            "Invalid trading side.",
+            "error"
+        );
+
+        return;
+    }
 
     if (
         !asset ||
@@ -2543,138 +4242,144 @@ function saveOffer(event) {
         !payment
     ) {
 
-        alert(
-            "Please enter valid offer information."
+        showToast(
+            "Please enter valid offer information.",
+            "error"
         );
 
         return;
     }
 
-    if (min > max) {
+    if (
+        min >
+        max
+    ) {
 
-        alert(
-            "Minimum limit cannot exceed maximum limit."
+        showToast(
+            "Minimum limit cannot exceed maximum limit.",
+            "error"
         );
 
         return;
     }
+
+    if (
+        min >
+        price * amount
+    ) {
+
+        showToast(
+            "Minimum limit cannot exceed the total value of the available amount.",
+            "error"
+        );
+
+        return;
+    }
+
+    const paymentMethods = [
+        {
+            id:
+                slugify(
+                    payment
+                ),
+            name:
+                payment
+        }
+    ];
+
+    const payload = {
+
+        user_id:
+            currentUser.id,
+
+        trader_name:
+            getCurrentUserName(),
+
+        rating:
+            100,
+
+        side,
+
+        asset,
+
+        fiat,
+
+        price,
+
+        available_amount:
+            amount,
+
+        min_limit:
+            min,
+
+        max_limit:
+            max,
+
+        payment_methods:
+            paymentMethods,
+
+        terms,
+
+        status:
+            "active"
+
+    };
+
+    let result;
 
     if (editingId) {
 
-        const offer =
-            allOffers.find(
-                item =>
-                    item.id ===
+        result =
+            await supabaseClient
+                .from("offers")
+                .update(
+                    payload
+                )
+                .eq(
+                    "id",
                     editingId
-            );
-
-        if (!offer) return;
-
-        offer.side =
-            side;
-
-        offer.asset =
-            asset;
-
-        offer.fiat =
-            fiat;
-
-        offer.price =
-            price;
-
-        offer.available_amount =
-            amount;
-
-        offer.min_limit =
-            min;
-
-        offer.max_limit =
-            max;
-
-        offer.terms =
-            terms;
-
-        offer.paymentMethods = [
-            {
-                id:
-                    offer.paymentMethods?.[0]?.id ||
-                    "payment_" + Date.now(),
-
-                name:
-                    payment
-            }
-        ];
-
-        alert(
-            "Offer updated successfully."
-        );
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+                .select("*")
+                .single();
 
     } else {
 
-        const newOffer = {
-
-            id:
-                "offer_" +
-                Date.now(),
-
-            trader_id:
-                currentUser.id,
-
-            trader_name:
-                currentUser.name,
-
-            rating:
-                100,
-
-            side:
-                side,
-
-            asset:
-                asset,
-
-            fiat:
-                fiat,
-
-            price:
-                price,
-
-            available_amount:
-                amount,
-
-            min_limit:
-                min,
-
-            max_limit:
-                max,
-
-            terms:
-                terms,
-
-            paymentMethods: [
-                {
-                    id:
-                        "payment_" +
-                        Date.now(),
-
-                    name:
-                        payment
-                }
-            ],
-
-            created_at:
-                Date.now()
-
-        };
-
-        allOffers.unshift(
-            newOffer
-        );
-
-        alert(
-            "Your offer has been posted successfully."
-        );
+        result =
+            await supabaseClient
+                .from("offers")
+                .insert(
+                    payload
+                )
+                .select("*")
+                .single();
 
     }
+
+    if (result.error) {
+
+        console.error(
+            result.error
+        );
+
+        showToast(
+            getErrorMessage(
+                result.error
+            ),
+            "error"
+        );
+
+        return;
+    }
+
+    closeOfferModal();
+
+    await loadOffers();
+
+    await loadMyOffers();
 
     updateFilters();
 
@@ -2682,9 +4387,12 @@ function saveOffer(event) {
 
     renderMyOffers();
 
-    closeOfferModal();
-
-    saveState();
+    showToast(
+        editingId
+            ? "Offer updated successfully."
+            : "Offer posted successfully.",
+        "success"
+    );
 
 }
 
@@ -2693,86 +4401,117 @@ function saveOffer(event) {
    EDIT OFFER
 ========================================================= */
 
-function editOffer(offerId) {
+function editOffer(
+    offerId
+) {
 
     const offer =
-        allOffers.find(
+        myOffers.find(
             item =>
-                item.id === offerId
+                String(
+                    item.id
+                ) ===
+                String(
+                    offerId
+                )
         );
 
-    if (!offer) return;
+    if (!offer) {
 
-    if (
-        offer.trader_id !==
-        currentUser.id
-    ) {
-
-        alert(
-            "You may only edit your own offers."
+        showToast(
+            "Offer not found.",
+            "error"
         );
 
         return;
     }
 
     document
-        .getElementById("editingOfferId")
+        .getElementById(
+            "editingOfferId"
+        )
         .value =
         offer.id;
 
     document
-        .getElementById("offerModalTitle")
+        .getElementById(
+            "offerModalTitle"
+        )
         .textContent =
         "Edit Trading Offer";
 
     document
-        .getElementById("newSide")
+        .getElementById(
+            "newSide"
+        )
         .value =
         offer.side;
 
     document
-        .getElementById("newAsset")
+        .getElementById(
+            "newAsset"
+        )
         .value =
         offer.asset;
 
     document
-        .getElementById("newFiat")
+        .getElementById(
+            "newFiat"
+        )
         .value =
         offer.fiat;
 
     document
-        .getElementById("newPrice")
+        .getElementById(
+            "newPrice"
+        )
         .value =
         offer.price;
 
     document
-        .getElementById("newAmount")
+        .getElementById(
+            "newAmount"
+        )
         .value =
         offer.available_amount;
 
     document
-        .getElementById("newMin")
+        .getElementById(
+            "newMin"
+        )
         .value =
         offer.min_limit;
 
     document
-        .getElementById("newMax")
+        .getElementById(
+            "newMax"
+        )
         .value =
         offer.max_limit;
 
     document
-        .getElementById("newPayment")
+        .getElementById(
+            "newPayment"
+        )
         .value =
-        offer.paymentMethods?.[0]?.name || "";
+        offer.paymentMethods?.[0]?.name ||
+        "";
 
     document
-        .getElementById("newTerms")
+        .getElementById(
+            "newTerms"
+        )
         .value =
-        offer.terms || "";
+        offer.terms ||
+        "";
 
     document
-        .getElementById("offerModal")
-        .classList.add("active");
+        .getElementById(
+            "offerModal"
+        )
+        .classList.add(
+            "active"
+        );
 
 }
 
@@ -2781,53 +4520,80 @@ function editOffer(offerId) {
    DELETE OFFER
 ========================================================= */
 
-function deleteOffer(offerId) {
+async function deleteOffer(
+    offerId
+) {
 
     const offer =
-        allOffers.find(
+        myOffers.find(
             item =>
-                item.id === offerId
+                String(
+                    item.id
+                ) ===
+                String(
+                    offerId
+                )
         );
 
-    if (!offer) return;
-
-    if (
-        offer.trader_id !==
-        currentUser.id
-    ) {
-
-        alert(
-            "You may only delete your own offers."
-        );
-
+    if (!offer) {
         return;
     }
 
-    if (
-        !confirm(
+    const confirmed =
+        confirm(
             "Delete this offer?"
-        )
-    ) {
+        );
 
+    if (!confirmed) {
         return;
     }
 
-    allOffers =
-        allOffers.filter(
-            item =>
-                item.id !==
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("offers")
+            .delete()
+            .eq(
+                "id",
                 offerId
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            );
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            getErrorMessage(
+                error
+            ),
+            "error"
         );
+
+        return;
+    }
 
     if (
         selectedOffer &&
-        selectedOffer.id ===
-        offerId
+        String(
+            selectedOffer.id
+        ) ===
+        String(
+            offerId
+        )
     ) {
 
         resetCalculator();
 
     }
+
+    await loadOffers();
+
+    await loadMyOffers();
 
     updateFilters();
 
@@ -2835,7 +4601,10 @@ function deleteOffer(offerId) {
 
     renderMyOffers();
 
-    saveState();
+    showToast(
+        "Offer deleted.",
+        "success"
+    );
 
 }
 
@@ -2846,29 +4615,41 @@ function deleteOffer(offerId) {
 
 function resetCalculator() {
 
-    selectedOffer = null;
+    selectedOffer =
+        null;
 
     document
-        .getElementById("selectedTraderName")
+        .getElementById(
+            "selectedTraderName"
+        )
         .textContent =
         "No trader selected";
 
     document
-        .getElementById("selectedAvatar")
+        .getElementById(
+            "selectedAvatar"
+        )
         .textContent =
         "?";
 
     document
-        .getElementById("selectedOfferInfo")
+        .getElementById(
+            "selectedOfferInfo"
+        )
         .textContent =
         "Select an offer";
 
     document
-        .getElementById("quickAmount")
-        .value = "";
+        .getElementById(
+            "quickAmount"
+        )
+        .value =
+        "";
 
     document
-        .getElementById("quickPayment")
+        .getElementById(
+            "quickPayment"
+        )
         .innerHTML =
         `<option value="">
             Select payment method
@@ -2889,8 +4670,12 @@ function traderDisplayName(
 ) {
 
     if (
-        Number(traderId) ===
-        Number(currentUser.id)
+        String(
+            traderId
+        ) ===
+        String(
+            currentUser?.id
+        )
     ) {
 
         return "You";
@@ -2906,60 +4691,109 @@ function traderDisplayName(
 
     }
 
-    return "Trader_" +
-        String(traderId)
-            .substring(0, 6);
+    return (
+        "Trader_" +
+        String(
+            traderId || ""
+        ).substring(
+            0,
+            6
+        )
+    );
 
 }
 
 
-function formatNumber(value) {
+function formatNumber(
+    value
+) {
 
     return Number(
         value || 0
     ).toLocaleString(
         undefined,
         {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            minimumFractionDigits:
+                2,
+
+            maximumFractionDigits:
+                2
         }
     );
 
 }
 
 
-function formatCrypto(value) {
+function formatCrypto(
+    value
+) {
 
     return Number(
         value || 0
     ).toLocaleString(
         undefined,
         {
-            minimumFractionDigits: 4,
-            maximumFractionDigits: 8
+            minimumFractionDigits:
+                4,
+
+            maximumFractionDigits:
+                8
         }
     );
 
 }
 
 
-function formatTime(timestamp) {
+function formatTime(
+    timestamp
+) {
 
-    if (!timestamp) return "";
+    if (!timestamp) {
+        return "";
+    }
 
-    return new Date(timestamp)
+    return new Date(
+        timestamp
+    )
         .toLocaleTimeString(
             [],
             {
-                hour: "2-digit",
-                minute: "2-digit"
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
             }
         );
 
 }
 
 
-function escapeHTML(value) {
+function shortTradeId(
+    id
+) {
+
+    if (!id) {
+        return "";
+    }
+
+    const value =
+        String(id);
+
+    return value.length >
+        12
+        ? value.substring(
+            0,
+            8
+          )
+        : value;
+
+}
+
+
+function escapeHTML(
+    value
+) {
 
     if (
         value === null ||
@@ -2971,26 +4805,96 @@ function escapeHTML(value) {
     }
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
         );
+
+}
+
+
+function getErrorMessage(
+    error
+) {
+
+    if (!error) {
+        return "Something went wrong.";
+    }
+
+    if (
+        error.code ===
+        "42501"
+    ) {
+
+        return "You do not have permission to perform this action.";
+
+    }
+
+    if (
+        error.code ===
+        "23505"
+    ) {
+
+        return "This record already exists.";
+
+    }
+
+    return (
+        error.message ||
+        error.error_description ||
+        "Something went wrong."
+    );
+
+}
+
+
+function showToast(
+    message,
+    type = ""
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent =
+        message;
+
+    toast.className =
+        "toast show " +
+        type;
+
+    setTimeout(
+        () => {
+
+            toast.className =
+                "toast";
+
+        },
+        3500
+    );
 
 }
 
@@ -3000,7 +4904,9 @@ function escapeHTML(value) {
 ========================================================= */
 
 document
-    .getElementById("offerModal")
+    .getElementById(
+        "offerModal"
+    )
     .addEventListener(
         "click",
         function(event) {
@@ -3036,13 +4942,39 @@ document.addEventListener(
 
 
 /* =========================================================
-   START APPLICATION
+   AUTH STATE CHANGES
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    init
-);
+supabaseClient.auth
+    .onAuthStateChange(
+        (
+            event,
+            session
+        ) => {
+
+            if (
+                event ===
+                "SIGNED_OUT"
+            ) {
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+            if (
+                event ===
+                "TOKEN_REFRESHED"
+            ) {
+
+                currentUser =
+                    session?.user ||
+                    currentUser;
+
+            }
+
+        }
+    );
 
 </script>
 
