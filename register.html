@@ -290,7 +290,6 @@ input:focus {
     }
 }
 </style>
-
 </head>
 
 <body>
@@ -336,7 +335,7 @@ input:focus {
         your digital asset dashboard.
     </p>
 
-    <form onsubmit="createAccount(event)">
+    <form id="registerForm">
 
         <label for="fullName">
             Full Name
@@ -377,13 +376,11 @@ input:focus {
                 required
                 minlength="6"
                 maxlength="72"
-                oninput="checkPassword()"
             >
 
             <button
                 type="button"
                 class="show-btn"
-                onclick="togglePassword('password','showPassword')"
                 id="showPassword"
             >
                 Show
@@ -426,7 +423,6 @@ input:focus {
             <button
                 type="button"
                 class="show-btn"
-                onclick="togglePassword('confirmPassword','showConfirm')"
                 id="showConfirm"
             >
                 Show
@@ -448,7 +444,7 @@ input:focus {
 
                 <a
                     href="#"
-                    onclick="showTerms(event)"
+                    id="termsLink"
                 >
                     Terms of Use
                 </a>
@@ -457,7 +453,7 @@ input:focus {
 
                 <a
                     href="#"
-                    onclick="showPrivacy(event)"
+                    id="privacyLink"
                 >
                     Privacy Notice
                 </a>.
@@ -536,6 +532,13 @@ const supabaseClient =
     );
 
 
+const registerForm =
+    document.getElementById("registerForm");
+
+const registerButton =
+    document.getElementById("registerButton");
+
+
 function showMessage(
     message,
     type = "error"
@@ -557,6 +560,7 @@ function clearMessage() {
         document.getElementById("message");
 
     box.textContent = "";
+
     box.className = "message";
 }
 
@@ -575,14 +579,48 @@ function togglePassword(
     if (input.type === "password") {
 
         input.type = "text";
-        button.textContent = "Hide";
+
+        button.textContent =
+            "Hide";
 
     } else {
 
         input.type = "password";
-        button.textContent = "Show";
+
+        button.textContent =
+            "Show";
     }
 }
+
+
+document
+    .getElementById("showPassword")
+    .addEventListener(
+        "click",
+        () => {
+
+            togglePassword(
+                "password",
+                "showPassword"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById("showConfirm")
+    .addEventListener(
+        "click",
+        () => {
+
+            togglePassword(
+                "confirmPassword",
+                "showConfirm"
+            );
+
+        }
+    );
 
 
 function checkPassword() {
@@ -597,6 +635,7 @@ function checkPassword() {
         document.getElementById("strengthText");
 
     let strength = 0;
+
 
     if (password.length >= 6) {
         strength++;
@@ -621,6 +660,7 @@ function checkPassword() {
     if (/[^A-Za-z0-9]/.test(password)) {
         strength++;
     }
+
 
     if (password.length === 0) {
 
@@ -653,46 +693,70 @@ function checkPassword() {
 }
 
 
+document
+    .getElementById("password")
+    .addEventListener(
+        "input",
+        checkPassword
+    );
+
+
 function getFriendlyAuthError(error) {
 
     const message =
         String(error?.message || "")
             .toLowerCase();
 
+
     if (
-        message.includes("user already registered")
+        message.includes(
+            "user already registered"
+        )
     ) {
 
         return "An account with this email already exists. Please sign in.";
     }
 
-    if (
-        message.includes("password")
-    ) {
-
-        return error.message;
-    }
 
     if (
-        message.includes("invalid email")
+        message.includes(
+            "invalid email"
+        )
     ) {
 
         return "Please enter a valid email address.";
     }
 
+
     if (
-        message.includes("too many requests")
+        message.includes(
+            "password"
+        )
+    ) {
+
+        return error.message;
+    }
+
+
+    if (
+        message.includes(
+            "too many requests"
+        )
     ) {
 
         return "Too many requests. Please wait and try again.";
     }
 
+
     if (
-        message.includes("network")
+        message.includes(
+            "network"
+        )
     ) {
 
         return "Network connection problem. Please check your internet connection.";
     }
+
 
     return error?.message ||
         "Unable to create your account.";
@@ -705,10 +769,12 @@ async function createAccount(event) {
 
     clearMessage();
 
+
     const fullName =
         document.getElementById("fullName")
             .value
             .trim();
+
 
     const email =
         document.getElementById("email")
@@ -716,20 +782,20 @@ async function createAccount(event) {
             .trim()
             .toLowerCase();
 
+
     const password =
         document.getElementById("password")
             .value;
+
 
     const confirmPassword =
         document.getElementById("confirmPassword")
             .value;
 
+
     const terms =
         document.getElementById("terms")
             .checked;
-
-    const button =
-        document.getElementById("registerButton");
 
 
     if (fullName.length < 2) {
@@ -772,8 +838,9 @@ async function createAccount(event) {
     }
 
 
-    button.disabled = true;
-    button.textContent =
+    registerButton.disabled = true;
+
+    registerButton.textContent =
         "Creating Account...";
 
 
@@ -806,9 +873,9 @@ async function createAccount(event) {
 
     if (error) {
 
-        button.disabled = false;
+        registerButton.disabled = false;
 
-        button.textContent =
+        registerButton.textContent =
             "Create Account";
 
         showMessage(
@@ -821,9 +888,9 @@ async function createAccount(event) {
 
     if (!data || !data.user) {
 
-        button.disabled = false;
+        registerButton.disabled = false;
 
-        button.textContent =
+        registerButton.textContent =
             "Create Account";
 
         showMessage(
@@ -841,12 +908,17 @@ async function createAccount(event) {
             "success"
         );
 
-        setTimeout(() => {
 
-            window.location.href =
-                "dashboard.html";
+        setTimeout(
+            () => {
 
-        }, 1000);
+                window.location.href =
+                    "dashboard.html";
+
+            },
+            1000
+        );
+
 
         return;
     }
@@ -858,31 +930,49 @@ async function createAccount(event) {
     );
 
 
-    button.disabled = false;
+    registerButton.disabled = false;
 
-    button.textContent =
+    registerButton.textContent =
         "Create Account";
 }
 
 
-function showTerms(event) {
+registerForm.addEventListener(
+    "submit",
+    createAccount
+);
 
-    event.preventDefault();
 
-    window.alert(
-        "Terms of Use: CryptoVault is a digital asset platform interface. Use of the platform is subject to applicable laws and the rules presented by the platform."
+document
+    .getElementById("termsLink")
+    .addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+
+            window.alert(
+                "Terms of Use: CryptoVault is a digital asset platform interface. Use of the platform is subject to applicable laws and the rules presented by the platform."
+            );
+
+        }
     );
-}
 
 
-function showPrivacy(event) {
+document
+    .getElementById("privacyLink")
+    .addEventListener(
+        "click",
+        (event) => {
 
-    event.preventDefault();
+            event.preventDefault();
 
-    window.alert(
-        "Privacy Notice: Account authentication is handled through Supabase. CryptoVault does not store your password in this webpage."
+            window.alert(
+                "Privacy Notice: Account authentication is handled through Supabase. CryptoVault does not store your password in this webpage."
+            );
+
+        }
     );
-}
 
 
 async function checkExistingSession() {
@@ -892,10 +982,12 @@ async function checkExistingSession() {
     } =
         await supabaseClient.auth.getSession();
 
+
     if (data?.session) {
 
         window.location.href =
             "dashboard.html";
+
     }
 }
 
